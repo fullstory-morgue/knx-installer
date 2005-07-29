@@ -1,0 +1,80 @@
+#!/bin/bash
+
+function update_fstab
+{
+	update_status $"Updating /etc/fstab..."
+  
+	cp $TARGET_MNT_POINT/etc/fstab $TMPDIR/
+	
+	cat <<EOF >$TARGET_MNT_POINT/etc/fstab
+# /etc/fstab: filesystem table.
+#
+# filesystem  mountpoint  type  options  dump  pass
+EOF
+
+	case $HD_FSTYPE in
+		reiser*|xfs|jfs)
+			echo "$HD_CHOICE  /  $HD_FSTYPE  defaults  0  1" >>$TARGET_MNT_POINT/etc/fstab
+		;;
+		*)
+		echo "$HD_CHOICE  /  $HD_FSTYPE  defaults,errors=remount-ro  0  1" >>$TARGET_MNT_POINT/etc/fstab
+		;;
+	esac
+
+	# Add other HD-mappings
+	for i in $HD_MAP
+	do
+		part=$(echo $i | cut -d":" -f1)
+		point=$(echo $i | cut -d":" -f2)
+		if { mount | grep -q $part ; }; then
+			hd_map_fstype="`LC_ALL=C mount | grep $part | awk '{ print $5 }'`"
+		else
+			hd_map_fstype="auto"
+		fi
+		echo "$part  $point  $hd_map_fstype  defaults,auto  0  2" >>$TARGET_MNT_POINT/etc/fstab
+	done
+
+	# Add swap devices
+	cat $TMPDIR/fstab >> $TARGET_MNT_POINT/etc/fstab
+
+	cat <<EOF >>$TARGET_MNT_POINT/etc/fstab
+proc  /proc  proc  defaults  0  0
+/dev/fd0  /floppy  vfat  defaults,user,noauto,showexec,umask=022  0  0
+usbfs  /proc/bus/usb  usbfs  devmode=0666  0  0
+sysfs  /sys  sysfs  defaults  0  0
+tmpfs  /dev/shm  tmpfs defaults  0  0
+EOF
+
+	# Add CD-Roms/DVD/...
+	
+	for i in /dev/cdrom* /dev/dvd
+	do
+		[ -L $i ] || continue
+		echo "$i /${i/\/dev\//}  iso9660  defaults,ro,users,noexec,noauto  0  0" >> $TARGET_MNT_POINT/etc/fstab
+		mkdir -p $TARGET_MNT_POINT/${i/\/dev\//}
+		readlink $i | grep -q "$DEFAULT_DIR" || cp -a $i $TARGET_MNT_POINT/dev/
+	done
+
+	# copy automounter links
+	for i in /mnt/*
+	do
+		[ -L $i ] && cp -a $i $TARGET_MNT_POINT/mnt/
+	done
+
+	# Let Knoppix detect all other partitions
+	mount --bind /proc $TARGET_MNT_POINT/proc
+	chroot "$TARGET_MNT_POINT" rebuildfstab -r
+	umount $TARGET_MNT_POINT/proc
+
+	# NTFS Partition(en) mit umask=000 Option ausstatten (by Joerg Schirottke)
+	
+	perl -pi -e 's/(ntfs noauto,users,exec,ro).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
+
+	# Alle Partitionen auf IDE Platten automatisch mounten (nur in Kano's Knoppix)
+
+	[ "$INSTALL_KANO" == "yes" ] && perl -pi -e 's|^(/dev/hd.*)noauto(.*)|\1auto\2|' $TARGET_MNT_POINT/etc/fstab
+
+	# remove uid=, gid= - entries for vfat; instead use that of running process
+
+	perl -pi -e 's/(vfat noauto,users,exec).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
+}

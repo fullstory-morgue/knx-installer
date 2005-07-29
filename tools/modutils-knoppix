@@ -1,0 +1,4 @@
+#!/bin/bash
+
+[ -x /etc/init.d/modutils ] && /etc/init.d/modutils "$@"
+[ -x /etc/init.d/module-init-tools ] && /etc/init.d/module-init-tools "$@"

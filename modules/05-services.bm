@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#
+# Setup several services - auto
+#
+
+function module_services_showinfo
+{
+  echo $"Services-Options:"
+  echo "  " $"The following services will be started, after each system bootup: $SERVICES_START"
+}
+
+function module_services_defaults
+{
+  register_var "SERVICES_START" $"Possible services are for now: kdm cupsys smail ssh samba" "" "" "kdm cupsys"
+}
+
+function module_services
+{
+  [ "$1" -lt "0" ] && return 1 # all automatic modules need to use this code
+  module_services_defaults
+  SERVICES_MODULE="configured"
+  register_vars "SERVICES_MODULE SERVICES_START"
+  return 0
+}
+
+# TODO: Add module_services_do_action

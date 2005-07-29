@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#
+# asks the user for his name
+#
+
+function module_name_showinfo
+{
+  echo $"Name-Options:"
+  echo "  " $"Your name is: $NAME_NAME"
+}
+
+function module_name
+{
+  wizard $"Here you must input your whole name. It is used to create a default user." --inputbox $"Input your whole name (name surname)" 10 70 "$NAME_NAME"
+  [ $? -eq 1 ] && return 1
+  
+  NAME_NAME="$(cat $TMP)"
+  [ -z "$NAME_MODULE" ] && NAME_MODULE="configured"
+  register_vars "NAME_MODULE NAME_NAME"
+  return 0
+}
+
+#
+# asks the user for a username and proposes: substr($Name,0,1)$Surname
+#
+
+function module_user_showinfo
+{
+  echo "  " $"Your choosen username is: $USER_NAME"
+}
+
+function module_user
+{
+  proposal=$(echo $NAME_NAME | sed 's/Dr.//g; s/von//g' | awk '{ printf("%s%s",substr(tolower($1),0,1),tolower($NF)) }')
+  [ -z "$USER_NAME" ] && USER_NAME=$proposal
+  
+  wizard $"Here you must input your preferred username. Suggested: $proposal" --inputbox $"Input your user name (perhaps you like: $proposal)" 10 70 "$USER_NAME"
+  [ $? -eq 1 ] && return 1
+  
+  USER_NAME="$(cat $TMP)"
+  [ -z "$USER_MODULE" ] && USER_MODULE="configured"
+  register_vars "USER_MODULE USER_NAME"
+  return 0
+}
+
+#
+# asks the user for the user-Password
+#
+# register: USERPASS_MODULE, USERPASS_CRYPT
+
+function module_userpass_showinfo
+{
+ true
+}
+
+
+function module_userpass
+{
+  passwordbox $"Here you must choose the password for the user $USER_NAME and input it twice. If you have already chosen one, you can leave the fields blank. But you cannot recover the password once saved, as it is encrypted." 20 70 $"Input your user-password" $"Input your user-password again" $"Passwords do not match or no password was given." "$USERPASS_CRYPT"
+  [ $? -eq 1 ] && return 1
+
+  USERPASS_CRYPT="$(cat $TMP)"
+  [ -z "$USERPASS_MODULE" ] && USERPASS_MODULE="configured"
+  register_vars "USERPASS_MODULE USERPASS_CRYPT"
+  return 0
+}
+
+#
+# asks the user for the root-Password
+#
+# register: ROOTPASS_MODULE, ROOTPASS_CRYPT
+function module_rootpass_showinfo
+{
+ true
+}
+
+function module_rootpass
+{
+  passwordbox $"Here you must choose the password for system administration (user root) and input it twice. If you have already chosen one, you can leave the fields blank. But you cannot recover the password once saved, as it is encrypted. Remember that the root-User is the Administrator of the system, so it is a very important password." 20 70 $"Input your administration password" $"Input your administration password again" $"Passwords do not match or no password was given." "$ROOTPASS_CRYPT"
+  [ $? -eq 1 ] && return 1
+
+  ROOTPASS_CRYPT="$(cat $TMP)"
+  [ -z "$ROOTPASS_MODULE" ] && ROOTPASS_MODULE="configured"
+  register_vars "ROOTPASS_MODULE ROOTPASS_CRYPT"
+  return 0
+}

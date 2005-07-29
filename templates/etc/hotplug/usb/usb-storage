@@ -1,0 +1,412 @@
+#! /bin/bash
+#
+# /etc/hotplug/usb/usb-storage
+#
+
+[ -z $TYPE ] && exit 0
+
+us_VERSION="20050308-devel"
+
+# uncomment the next line to use this user if no XUSER exists (coldplugging)
+#us_DEFAULTUSER=YOUR_USER_NAME
+# uncomment the next line to use this UID if no XUSER exists (coldplugging)
+us_DEFAULTUID=1000 # the user created when installed to hd
+#
+# $LOGFILE is /var/log/usb-storage/usb-storage.log
+#LOGFILE=$0.log
+# set to 1 if you want debugging output in $LOGFILE
+DEBUG=0
+# set to 1 if you want logging appended to $LOGFILE.all
+LOGALL=0
+#
+# Logfiles at /var/log/hotplug
+LOGDIR=/var/log/hotplug
+[ -d $LOGDIR ] || mkdir -p $LOGDIR
+LOGFILE=$LOGDIR/usb-storage.log
+#
+
+
+function debugOutput {
+cat << EOF
+---
+TYPE=$TYPE
+ACTION=$ACTION
+PRODUCT=$PRODUCT
+INTERFACE=$INTERFACE
+DEVICE=$DEVICE
+DEVPATH=$DEVPATH
+REMOVER=$REMOVER
+EOF
+set | grep '^us_'
+echo "---"
+}
+
+
+function makeCameraIcon {
+# make an icon (Camera) on Desktop
+cat << EOF > $us_XDESKTOPFILE
+[Desktop Entry]
+Name=Camera
+Name[de]=Kamera
+Type=Link
+URL=/mnt/camera/
+Actions=Sync;Digikam
+Icon=camera
+Comment=digital camera
+Comment[de]=Digitalkamera
+
+[Desktop Action Digikam]
+Exec=/usr/bin/digikam;/bin/sync
+Icon=camera
+Name=Organize pictures
+Name[de]=Bilder verwalten
+
+[Desktop Action Sync]
+Exec=/bin/sync
+Icon=filesave
+Name=Save changes
+Name[de]=Änderungen speichern
+EOF
+# write a remover file to Autostart
+cat << EOF > $us_XREMOVEFILE
+#!/bin/sh
+# remove stale camera icon if device not mounted
+mount | grep -q $us_MOUNTPOINT || rm -f $us_XDESKTOPFILE $us_XREMOVEFILE
+EOF
+}
+
+
+function makeStorageIcon {
+# make an icon (USB stick) on Desktop
+cat << EOF > $us_XDESKTOPFILE
+[Desktop Entry]
+Name=USB [$us_PARTITION]
+Name[de]=USB [$us_PARTITION]
+Type=Link
+URL=$us_MOUNTPOINT
+Actions=Sync
+Icon=usbpendrive_mount
+Comment=USB storage device
+Comment[de]=USB Speichergerät
+
+[Desktop Action Sync]
+Exec=/bin/sync
+Icon=filesave
+Name=Save changes
+Name[de]=Änderungen speichern
+EOF
+# write a remover file to Autostart
+cat << EOF > $us_XREMOVEFILE
+#!/bin/sh
+# remove stale USB storage icon if device not mounted
+mount | grep -q $us_MOUNTPOINT || rm -f $us_XDESKTOPFILE $us_XREMOVEFILE
+EOF
+}
+
+
+echo "PRODUCT=$PRODUCT" > $LOGFILE
+
+if [ $LOGALL -ne 0 ]; then
+        echo "$ACTION $PRODUCT" >> $LOGFILE.all
+fi
+
+
+us_MOUNTPOINT=" "
+#
+# (known) digicams are mounted at /mnt/camera
+#
+case "$PRODUCT" in
+        3f0/4002/100) # HP photosmart 120 (mass storage mode)
+                us_MOUNTPOINT="/mnt/camera"
+                ;;
+#        xxx/yyy/zzz) # PRODUCT ID of YOUR camera
+#                us_MOUNTPOINT="/mnt/camera"
+#                ;;
+esac
+
+
+##########
+#
+#
+#
+function PRODUCT_to_SCSI {
+        local GUID=$(echo $PRODUCT | awk -F/ '{printf "%04x%04x", strtonum("0x"$1), strtonum("0x"$2)}')
+        grep -lr "^ *GUID: $GUID" /proc/scsi/usb-storage-* | xargs grep -l "^ *Attached: Yes" | cut -d/ -f5
+}
+#
+##########
+
+
+##########
+#
+# first detecting method
+# doesn't work with multiple devices
+#
+function find_partitions_1 {
+        sleep 1
+        # find the last line with " sdx: sdxn", x=a,b,c,... and n=1,2,3,4
+        dmesg | grep "^ \(sd[[:lower:]]\): \1[1234]" | tail -1 | tr -d \<\> | cut -d\  -f3-
+}
+#
+##########
+
+
+##########
+#
+# second detecting method
+# uses scsidev command already in Kanotix
+# doesn't work with kernel 2.6.x
+#
+function find_partitions_2 {
+        local scsi=" "
+        scsidev -lde 2>/dev/null >/dev/null
+        for scsi in $(PRODUCT_to_SCSI $PRODUCT); do
+                ls -l /dev/scsi/sdc${scsi}b0t?u?p*|cut -d/ -f6
+        done
+}
+#
+##########
+
+
+##########
+#
+# third detecting method
+#
+function host_to_partitions {
+        local host=$1
+        local dev=" "
+        for dev in $(scsiinfo -l); do
+                local HOST="-1"
+                eval $(scsi_info $dev 2>/dev/null)
+                if [ $HOST = $host ]; then
+                        cat /proc/partitions | grep $(basename ${dev})[1-9] | awk '{print $4}'
+                fi
+        done
+}
+#
+#
+function find_partitions_3 {
+        local scsi=" "
+        for scsi in $(PRODUCT_to_SCSI $PRODUCT); do
+                host_to_partitions $scsi
+        done
+}
+#
+##########
+
+
+##########
+#
+# simple detecting method for kernel 2.6.x
+#
+function find_partitions_26 {
+        sleep 8
+        local devices=" "
+        devices=$(ls -d /sys$DEVPATH/host[0-9]*/target[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block)
+        [ -z "$devices"] && devices=$(ls -d /sys$DEVPATH/host[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block)
+        local link=" "
+        local dev=" "
+        for link in $devices; do
+                dev=$(basename $(readlink $link))
+                ls /sys/block/$dev | grep $dev || echo $dev
+        done
+}
+#
+##########
+
+
+##########
+#
+function fstype {
+local FILE
+dd if="$1" count=1 bs=1k >/dev/null 2>&1
+if [ $? -gt 0 ]; then
+        echo "none"
+        return
+fi
+FILE="$(LANG=C LC_ALL=C LC_MESSAGES=C file -Lkbs "$1")"
+if [ $? -gt 0 ]; then
+        echo "none"
+        return
+fi
+if [ "$FILE" = "data" ]; then
+        # could still be ReiserFS, since "file" only reads 64k in Debian
+        FILE="$(dd if="$1" skip=65536 ibs=1 count=7 2>/dev/null)"
+        case "$FILE" in
+                *[Rr][Ee][Ii][Ss][Ee][Rr]4*);;
+                *)FILE="$(dd if="$1" skip=65588 ibs=1 count=6 2>/dev/null)";;
+        esac
+fi
+case "$FILE" in
+        *extended\ partition\ table*) echo "extended";;
+        *[Rr][Ee][Ii][Ss][Ee][Rr]4*)  echo "reiserfs";;
+        *[Rr][Ee][Ii][Ss][Ee][Rr]*)   echo "reiserfs";;
+        *ISO\ 9660*)                  echo "iso9660";;
+        *[Mm][Ii][Nn][Ii][Xx]*)       echo "minix";;
+        *[Xx][Ff][Ss]*)               echo "xfs";;
+        *[Jj][Ff][Ss]*)               echo "jfs";;
+        *[Ee][Xx][Tt]3*)              echo "ext3";;
+        *[Ee][Xx][Tt]2*)              echo "ext2";;
+        *[Ss][Ww][Aa][Pp]*)           echo "swap";;
+        *[Nn][Tt][Ff][Ss]*)           echo "ntfs";;
+        *[Ff][Aa][Tt]*)               echo "vfat";;
+        x86\ boot\ sector*)
+                # check FAT12 / FAT16
+                dd if="$1" ibs=1 skip=54 count=8 2>/dev/null | grep -q FAT && echo "vfat" && return
+                # check FAT32
+                dd if="$1" ibs=1 skip=82 count=8 2>/dev/null | grep -q FAT && echo "vfat" && return
+                echo "auto"
+                ;;
+        *)                            echo "auto";;
+esac
+}
+#
+##########
+
+
+if [ "$DEVPATH" ]; then
+        us_PARTITIONS=$(find_partitions_26)
+else
+        us_PARTITIONS=$(find_partitions_3)
+fi
+
+
+if [ -z "$us_PARTITIONS" ]; then
+        echo "Device not found" >> $LOGFILE
+        debugOutput >> $LOGFILE
+        exit 0
+fi
+
+
+echo "#!/bin/sh" > $REMOVER
+chmod a+x $REMOVER
+
+# find X11 user
+#us_XUSER=$(who | grep " :0" | cut -d\  -f1)
+us_XUSER=$(ls -ot /tmp/.ICE-unix/[1-9]* 2>/dev/null | awk '{print $3}' | head -1)
+if [ $us_XUSER ]; then # user logged in at X11
+        XUID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f3)
+        XGID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f4)
+        us_OWNER="uid=$XUID,gid=$XGID"
+elif [ -d /KNOPPIX/Desktop ]; then # we're running from live CD
+        us_XUSER=knoppix
+        XUID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f3)
+        XGID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f4)
+        us_OWNER="uid=$XUID,gid=$XGID"
+elif [ $us_DEFAULTUSER ]; then # use Desktop and uid/gid of this user
+        us_XUSER=$us_DEFAULTUSER
+        XUID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f3)
+        XGID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f4)
+        us_OWNER="uid=$XUID,gid=$XGID"
+elif [ $us_DEFAULTUID ]; then # use default uid and gid of this users                 
+        us_XUSER=$(grep ".*:.*:$us_DEFAULTUID:.*" /etc/passwd | cut -d: -f1)
+        XGID=$(grep ".*:.*:$us_DEFAULTUID:.*" /etc/passwd | cut -d: -f4)
+        us_OWNER="uid=$us_DEFAULTUID,gid=$XGID"
+else
+        us_OWNER="gid=100"
+fi
+
+# mount all partitions on the USB device
+for us_PARTITION in $us_PARTITIONS; do
+        us_DEVICE=/dev/$us_PARTITION
+
+        # special case for digicam
+        if [ "$us_MOUNTPOINT" != "/mnt/camera" ]; then
+                us_MOUNTPOINT=/mnt/$us_PARTITION
+        fi
+
+        # skip if device or mountpoint already in use
+        # TODO: umount mounted devices always at remove
+        mount | grep "$us_DEVICE \| $us_MOUNTPOINT " >/dev/null
+        if [ $? -eq 0 ]; then
+                echo -n "Already mounted: " >> $LOGFILE
+                mount | grep "$us_DEVICE \| $us_MOUNTPOINT" >> $LOGFILE
+                _DEBUG=1
+                continue
+        fi
+
+        # check filesystem type
+        if [ "$us_MOUNTPOINT" = "/mnt/camera" ]; then
+                us_FSTYPE="vfat"
+        else
+                us_FSTYPE=$(fstype $us_DEVICE)
+        fi
+
+        [ $DEBUG -ne 0 ] && echo $us_DEVICE $us_FSTYPE >> $LOGFILE
+
+        case "$us_FSTYPE" in
+                ext2|ext3|reiserfs|jfs|xfs|minix)
+                        us_MOUNTCMD="/bin/mount -t $us_FSTYPE -o user $us_DEVICE $us_MOUNTPOINT"
+                        ;;
+                ntfs)
+                        # TODO: add useful options
+                        us_MOUNTCMD="/bin/mount -t $us_FSTYPE -o $us_OWNER,umask=0222,ro,user $us_DEVICE $us_MOUNTPOINT"
+                        ;;
+                vfat|auto)
+                        us_MOUNTCMD="/bin/mount -t vfat -s -o $us_OWNER,shortname=mixed,quiet,sync,umask=0002,user,showexec $us_DEVICE $us_MOUNTPOINT"
+                        ;;
+                none|extended|swap)
+                        continue
+                        ;;
+                *)
+                        # don't mount
+                        echo $us_DEVICE $us_FSTYPE >> $LOGFILE
+                        continue
+                        ;;
+        esac
+
+        # try to mount
+        mkdir -p $us_MOUNTPOINT
+        echo $us_MOUNTCMD >> $LOGFILE
+        $($us_MOUNTCMD 2>> $LOGFILE)
+        # continue if no success
+        if [ $? -ne 0 ]; then
+                continue
+        fi
+
+        # $REMOVER is executed when the device is pulled
+        echo "/bin/umount -lf $us_DEVICE" >> $REMOVER
+        echo "echo \"/bin/umount -lf $us_DEVICE\" >> $LOGFILE" >> $REMOVER
+        if [ $LOGALL -ne 0 ]; then
+                echo "echo \"umount $us_DEVICE\" >> $LOGFILE.all" >> $REMOVER
+        fi
+
+        # logging
+        if [ $LOGALL -ne 0 ]; then
+                echo "mount $us_DEVICE" >> $LOGFILE.all
+        fi
+
+        # Desktop icon for X11
+        for home in $(awk -F: '{print $6}' /etc/passwd); do
+                desktop=${home}/Desktop
+                if [ -d "$desktop" ]; then
+                        case "$us_MOUNTPOINT" in
+                                /mnt/camera)
+                                        us_XDESKTOPFILE="$desktop/Camera.desktop"
+                                        us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_Camera"
+                                        makeCameraIcon
+                                        ;;
+                                *)
+                                        us_XDESKTOPFILE="$desktop/USB_${us_PARTITION}.desktop"
+                                        us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_USB_${us_PARTITION}"
+                                        makeStorageIcon
+                                        ;;
+                        esac
+                        chown --reference=$desktop $us_XDESKTOPFILE $us_XREMOVEFILE
+                        chmod +x $us_XREMOVEFILE
+                        echo "rm -f $us_XDESKTOPFILE" >> $REMOVER
+                        echo "rm -f $us_XREMOVEFILE" >> $REMOVER
+                fi
+        done
+        usleep 500000
+done
+
+
+if [ $DEBUG -ne 0 ]; then
+        debugOutput >> $LOGFILE
+fi
+
+# hack for "coldplugging" (make $REMOVER newer then /etc/mtab created by mount cmd)
+# older files are removed when /etc/init.d/bootmisc.sh is run
+sleep 1
+echo >> $REMOVER

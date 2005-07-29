@@ -1,0 +1,665 @@
+# translation of messages.po to Turkish
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Osman Yüksel <yuxel@sonsuzdongu.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-18 17:57+0100\n"
+"PO-Revision-Date: 2004-04-09 14:03+0300\n"
+"Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
+"Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#: knoppix-installer:62
+msgid "knoppix-installer terminated"
+msgstr "Kanotix kurulum uygulaması sonlandırıldı"
+
+#: knoppix-installer:77
+msgid "Save configuration?"
+msgstr "Ayarlar kaydedilsin mi?"
+
+#: knoppix-installer:77
+msgid "Do you want to save your configuration?"
+msgstr "Ayarlarınızı kaydetmek istiyor musunuz ?"
+
+#: knoppix-installer:88
+msgid "Kanotix Installation"
+msgstr "Kanotix kurulumu"
+
+#: knoppix-installer:89
+msgid "Installation of Kanotix to harddisk (Step 0/$MAX)"
+msgstr "Sabit diske Kanotix kurulumu(Step 0/$MAX)"
+
+#: knoppix-installer:90
+msgid "Initialisation of Kanotix-Installation"
+msgstr "Kanotix kurulumu başlıyor"
+
+#: knoppix-installer:92
+msgid "Installation failed"
+msgstr "Kurulum başarısız"
+
+#: knoppix-installer:93
+msgid "Installation successfull"
+msgstr "Kurulum başarıyla tamamlandı"
+
+#: knoppix-installer:94
+msgid "Fatal dialog error"
+msgstr "Diyalog hatası"
+
+#: knoppix-installer:154
+msgid "Choose System Type"
+msgstr "Sistem tipini seçin"
+
+#: knoppix-installer:167
+msgid "Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Kanotix Yapılandırma adımı oluşturuluyor (0/$NUM_REAL_MODULES)"
+
+#: knoppix-installer:195 knoppix-installer:197
+msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
+msgstr "Hata:$1 için bilinmeyen $2 değeri \\n Öntanımlı değere ayarlanıyor($DEFAULT_TEMP)."
+
+#: knoppix-installer:206 knoppix-installer:208
+msgid ""
+"Error: Check failed for $1 ($2)\\nThe configuration module will now be "
+"started."
+msgstr "Hata: $1($2) için denetim başarısız\\n Yapılandırma modülü şimdi başlatılacak"
+
+#: knoppix-installer:223
+msgid "Loading Kanotix configuration"
+msgstr "Kanotix yapılandırması yükleniyor"
+
+#: knoppix-installer:226
+msgid "Here you can input a filename to load an existing configuration"
+msgstr "Burada var olan yapılandırmanızı yükleyeceğiniz dosya ismini girebilirsiniz"
+
+#: knoppix-installer:226
+msgid "Input the configuration filename to be loaded"
+msgstr "Yüklenecek yapılandırma dosyanızın adını girin"
+
+#: knoppix-installer:231
+msgid ""
+"File $CONFIG_USER could not be found. The loading of the configuration will "
+"be aborted."
+msgstr "$CONFIG_USER dosyası bulunamıyor.Yapılandırma dosyasının yüklenmesi iptal ediliyor"
+
+#: knoppix-installer:254
+msgid "Saving Kanotix configuration"
+msgstr "Kanotix yapılandırması kaydediliyor"
+
+#: knoppix-installer:257
+msgid "Here you can input a filename to save the configuration"
+msgstr "Burada yapılandırmanızı kaydedeceğiniz dosyanın adını girebilirsiniz"
+
+#: knoppix-installer:257
+msgid "Input a filename for the configuration"
+msgstr "Yapılandırma için bir dosya adı girin"
+
+#: knoppix-installer:263
+msgid ""
+"If you click yes, the file will be overwritten, otherwise this script will "
+"abort"
+msgstr "Eğer \"evet\"i tıklarsanız dosyanın üzerine yazılacak aksi takdirde bu betik iptal edecektir"
+
+#: knoppix-installer:263
+msgid "Do you really want to overwrite $CONFIG_USER?"
+msgstr "$CONFIG_USER dosyasının üzerine yazmak istediğininize emin misiniz ?"
+
+#: knoppix-installer:276
+msgid "Possible are:"
+msgstr "Mevcut olanlar:"
+
+#: knoppix-installer:278
+msgid "This value will be checked by function"
+msgstr "Bu değer fonksiyon tarafından kontrol edilecek"
+
+#: knoppix-installer:280
+msgid "Default value is:"
+msgstr "Öntanımlı değer:"
+
+#: knoppix-installer:299
+msgid ""
+"Several of this options can only be changed in the Configurationfile "
+"$CONFIG_FILE."
+msgstr "Bu seçeneklerin çoğu $CONFIG_FILE yapılandırma dosyasından değiştirilebilir"
+
+#: knoppix-installer:300
+msgid ""
+"The Installation will now be started. The author and knopper.net give no "
+"warranty against any damage caused by this script."
+msgstr "Kurulum şimdi başlatılacak. Yazar ve knopper.net, bu betik tarafından oluşacak zararlardan sorumlu değildir."
+
+#: knoppix-installer:302
+msgid "Do you want to proceed with these parameters?"
+msgstr "Bu parametreler ile devam etmek istiyor musunuz ?"
+
+#: knoppix-installer:304
+msgid "Make sure you agree to all parameters, if so proceed with the installation."
+msgstr "Tüm parametreleri kabul ettiğinize emin olun, eğer öyle ise kuruluma devam edin"
+
+#: knoppix-installer:319
+msgid "Converting Kanotix to Debian..."
+msgstr "Kanotix, Debian'a dönüştürülüyor"
+
+#: knoppix-installer:351 knoppix-installer:361
+msgid "Starting Kanotix installation"
+msgstr "Kanotix kurulumu başlatılıyor"
+
+#: knoppix-installer:354
+msgid "Error: No complete Configuration found"
+msgstr "Hata: Tamamlanmış bir yapılandırma dosyası bulunamadı"
+
+#: knoppix-installer:362
+msgid "Installing"
+msgstr "Kuruluyor"
+
+#: knoppix-installer:378
+msgid "Creating floppy disk"
+msgstr "Disket (floppy disk) oluşturuluyor"
+
+#: knoppix-installer:378
+msgid ""
+"Please insert now an empty floppy disk into your floppydrive. Warning: All "
+"data on it will be lost. If you don't want to create a disk you can choose "
+"No."
+msgstr "Lütfen disket sürücünüze bir floppy disk yerleştirin. Uyarı : Disket üzerindeki tüm veriler silinecektir, eğer bir disket oluşturmak istemiyorsanız Hayır'ı seçin."
+
+#: knoppix-installer:398 knoppix-installer:399
+msgid "Kanotix was successfully installed to hd."
+msgstr "Kanotix sabit diske başarıyla kuruldu"
+
+#: knoppix-installer:405
+msgid "Kanotix Main-Menu"
+msgstr "Kanotix Ana Menü"
+
+#: knoppix-installer:406
+msgid "Thats the main menu\\nChoose the action you want"
+msgstr "Burası ana menü\\nYapmak istediğiniz eylemi seçin"
+
+#: knoppix-installer:406 modules/00-hd-tools.bm:174
+msgid "Choose an action"
+msgstr "Bir eylem seçin"
+
+#: knoppix-installer:407
+msgid "Configure Installation"
+msgstr "Kurulumu yapılandır"
+
+#: knoppix-installer:407
+msgid "Create a new configuration"
+msgstr "Yeni bir yapılandırma oluştur"
+
+#: knoppix-installer:408
+msgid "Start installation"
+msgstr "Kurulumu başlat"
+
+#: knoppix-installer:408
+msgid "Start the installation"
+msgstr "Kurulumu başlat"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition"
+msgstr "Bölüm"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition the hard disk"
+msgstr "Sabit diski bölümle"
+
+#: knoppix-installer:410
+msgid "Load config"
+msgstr "Yapılandırmayı yükle"
+
+#: knoppix-installer:410
+msgid "Load an existing configuration"
+msgstr "Var olan yapılandırmayı yükle"
+
+#: knoppix-installer:411
+msgid "Save config"
+msgstr "Yapılandırmayı kaydet"
+
+#: knoppix-installer:411
+msgid "Save the configuration"
+msgstr "Yapılandırmayı kaydet"
+
+#: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
+msgid "Quit"
+msgstr "Çık"
+
+#: knoppix-installer:412 modules/00-hd-tools.bm:174
+msgid "Quit the program"
+msgstr "Programdan çık"
+
+#: knoppix-installer:417
+msgid "knoppix-installer started"
+msgstr "Kanotix Kurulum uygulaması başlatıldı"
+
+#: knoppix-installer:418
+msgid ""
+"This script will install Kanotix to harddisk. Note that this version is "
+"still an very early version and under heavy development.\n"
+"The author and knopper.net take no responsibility for data loss or hardware "
+"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
+msgstr "Bu betik Kanotix'i sabit diske kuracaktır. Bu sürümün çok yeni ve hala geliştirme aşamasında olduğunu unutmayın.\n Yazar ve knopper.net, oluşacak veri kayıpları veya donanım hasarlarında sorumluluk kabul etmez.\\n\\nYazar: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\n Cristian Perle'ün <perle@itm.tu-clausthal.de> bir çalışması üzerine geliştirilmiştir"
+
+#: knoppix-installer:427
+msgid ""
+"The installer detected that the installation requierements are not "
+"fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
+"at least $[ROOT_MIN/(1024*1024)] GB to install knoppix on. Also we need a "
+"swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
+"Memory or more.\\n\\nIn the following menu, you can start some tools to "
+"partition your harddrive.\\nIf you really really know what you are doing "
+"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
+msgstr "Kurulum uygulaması, kurulum için gerekli şartların sağlanmadığını tespit etti \\n\\nLütfen Kanotix kurmak için gerekli olan $[ROOT_MIN/(1024*1024)] GB boyutlarında boş bir bölüme sahip olduğunuzdan emin olun. Bunun haricinde bir de (eğer 512 MB veya daha fazla hafızaya sahip değilseniz) en az $[SWAP_MIN/1024] MB boyurlarında bir takas alanına ihtiyacınız var.\\n\\nGelecek olan menüde sabit diskiniz bölümlemek için kullanabileceğiniz bir kaç aracı seçebileceksiniz\\n Eğer ne yaptığınızı biliyorsanız, menüyü görmemek için IGNORE_CHECK=1 sudo knoppix-installer komutuyla başlatın"
+
+#: knoppix-installer:434
+msgid "Partition check succeeded"
+msgstr "Bölüm denetimi başarılı"
+
+#: knoppix-installer:447
+msgid "root permission needed."
+msgstr "root hakları gerekli"
+
+#: modules/booting/boot-tools.bm:445
+msgid "Creating initrd (if needed)"
+msgstr "initrd oluşturuluyor(eğer gerekliyse)"
+
+#: modules/booting/boot-tools.bm:456
+msgid "Installing LILO to $BOOT_WHERE"
+msgstr "$BOOT_WHERE üzerine LILO kuruluyor"
+
+#: modules/booting/boot-tools.bm:461
+msgid "Finishing installation"
+msgstr "Kurulum sonlandırılıyor"
+
+#: modules/01-hd.bm:11
+msgid "Determines if the HD should be formatted. (mkfs.*)"
+msgstr "Sabit diskin biçimlendirilmesinin gerektiğine karar verir(mkfs.*)"
+
+#: modules/01-hd.bm:12
+msgid "Sets the Filesystem type."
+msgstr "Dosya sistemi tipini ayarlar"
+
+#: modules/01-hd.bm:13
+msgid "Here the Kanotix-System will be installed"
+msgstr "Kanotix Sistemi kurulacak"
+
+#: modules/01-hd.bm:14
+msgid ""
+"Here you can give additional mappings. (Experimental) You need to have the "
+"partitions formatted yourself and give the correct mappings like: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr ""
+"Burada ek haritalama belirtebilirsiniz(Deneme aşamasında) Bölümleri kendiniz biçimlendirmeli ve doğru haritalamayı(mapping) kendiniz vermelisiniz  : \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\" gibi ..."
+
+#: modules/01-hd.bm:15
+msgid ""
+"If set to yes, the program will NOT check if there is enough space to "
+"install knoppix on the selected partition(s). Use at your own risk! Useful "
+"for example with HD_MAP if you only have a small root partition."
+msgstr "Eğer \"evet\" olarak ayarlarsanız, program, seçili bölüm veya bölümlerde knoppix kurulumu için yeterli yer olup olmadığına BAKMAYACAKTIR. Bunu dikkatli kullanın. Örneğin; eğer küçük bir kök dizininiz varsa HD_MAP ile kullanın."
+
+#: modules/01-hd.bm:21
+msgid "Drive-Options:"
+msgstr "Sürcü seçenekleri:"
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
+msgstr "$HD_CHOICE sürücüsü, $HD_FSTYPE ile biçimlendirilecektir."
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be used for the installation."
+msgstr "Kurulum için $HD_CHOICE sürücüsü kullanılacak."
+
+#: modules/01-hd.bm:52
+msgid "Copying files. This can take a while. Please be patient."
+msgstr "Dosyalar kopyalanıyor, bu biraz zaman alabilir, sabırlı olun."
+
+#: modules/01-hd.bm:64
+msgid "Formatting $HD_CHOICE..."
+msgstr "$HD_CHOICE biçimlendiriliyor..."
+
+#: modules/01-hd.bm:82
+msgid ""
+"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
+"$ERROR_MESSAGES"
+msgstr "$HD_CHOICE sürücüsü biçimlendirilmesi başarısız. mkfs'den gelen bir kaç mesaj. $HD_FSTYPE: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:90
+msgid "Mounting $HD_CHOICE r/w..."
+msgstr "$HD_CHOICE r/w (oku/yaz) olarak bağlanıyor..."
+
+#: modules/01-hd.bm:96
+msgid "Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+msgstr "$HD_CHOICE bağlanma işlemi başarısız. mount'dan bir kaç mesaj: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:101
+msgid "Mounting additional partitions r/w..."
+msgstr "Ek bölümler oku/yaz olarak bağlanıyor ..."
+
+#: modules/01-hd.bm:118
+msgid "Here you must choose one of the available partitions\\n for use with Kanotix."
+msgstr "Mevcut bölümlerden birisiniKanotix kullanmak\\n için seçmelisiniz."
+
+#: modules/01-hd.bm:118
+msgid "Choose the partition to install Kanotix"
+msgstr "Kanotix kurulacak bölümü seçin"
+
+#: modules/01-hd.bm:131
+msgid "Here you must choose one of the available filesystem types."
+msgstr "Mevcut dosya sistemi tiplerinden birini seçmelisiniz."
+
+#: modules/01-hd.bm:131
+msgid "Choose filesystem-type."
+msgstr "Dosya sistemi tipini seçin."
+
+#: modules/01-hd.bm:132
+msgid "Extended 2 filesystem with journal support."
+msgstr "Günlük destekli ext2 dosya sistemi."
+
+#: modules/01-hd.bm:133
+msgid "ReiserFS 3.6: journaling filesystem developed by Namesys."
+msgstr "ReiserFS 3.6: Namesys tarafından geliştirilen Young dosya sistemi."
+
+#: modules/03-host.bm:9
+msgid "Your hostname is: $HOST_NAME"
+msgstr "Makine adı : $HOST_NAME"
+
+#: modules/03-host.bm:15
+msgid "box"
+msgstr "box"
+
+#: modules/03-host.bm:16
+msgid "Here you must input your hostname. This is the name of you box."
+msgstr "Buraya makine adınızı girin. "
+
+#: modules/03-host.bm:16
+msgid "Input your preferred hostname"
+msgstr "Kullanmak istediğiniz makine adını girin"
+
+#: modules/00-dialog.bm:18
+msgid "Fatal security error."
+msgstr "Ölümcül(fatal) güvenlik hatası."
+
+#: modules/00-dialog.bm:64
+msgid "Previous"
+msgstr "Önceki"
+
+#: modules/00-dialog.bm:64
+msgid "Next"
+msgstr "Sonraki"
+
+#: modules/00-dialog.bm:64
+msgid "Help"
+msgstr "Yardım"
+
+#: modules/00-hd-tools.bm:77
+msgid "model unknown"
+msgstr "bilinmeyen model"
+
+#: modules/00-hd-tools.bm:88
+msgid ""
+"The following swap-partitions are marked as swap, but are not yet formatted. "
+"Check those you want to format. Warning, you'll loose all data on the "
+"partition."
+msgstr "Bunlar takas olarak işaretlenen,ancak henüz biçimlendirilmemiş takas alanları.Bİçimlendirmek istediğinizi seçin. Uyarı : Bölümdeki tüm bilgileri kaybedeceksiniz."
+
+#: modules/00-hd-tools.bm:141
+msgid "Partitioning harddisk for Kanotix"
+msgstr "Sabit disk Kanotix için bölümleniyor"
+
+#: modules/00-hd-tools.bm:144
+msgid ""
+"Here you must choose one of the available disks \\n and partition it for "
+"Kanotix."
+msgstr "Mevcut disklerden birisini seçip Kanotix \\n için biçimlendirmelisiniz."
+
+#: modules/00-hd-tools.bm:144
+msgid "Choose one disk"
+msgstr "Bir disk seçin"
+
+#: modules/00-hd-tools.bm:173
+msgid "Kanotix Partition-Menu"
+msgstr "Kanotix bölümleme menüsü"
+
+#: modules/00-hd-tools.bm:174
+msgid "Here you can partition your hard disk"
+msgstr "Burada sabit diskinizi biçimlendirebilirsiniz"
+
+#: modules/02-swap.bm:12
+msgid "If set to yes, the swap partitions will be autodetected."
+msgstr "Eğer \"evet\" olarak ayarlarsanız bölümler otomatik tespit edilecektir"
+
+#: modules/02-swap.bm:13
+msgid "The swap partitions to be used by the installed knoppix."
+msgstr "Kurulacak Kanotix tarafından kullanılacak takas alanları"
+
+#: modules/02-swap.bm:18
+msgid "Swapspace-Options:"
+msgstr "Takas alanı seçenekleri :"
+
+#: modules/02-swap.bm:21
+msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
+msgstr "Tespit edilen $SWAP_CHOICES takas alanları kullanılacak."
+
+#: modules/02-swap.bm:21
+msgid "The choosen swapdrives $SWAP_CHOICES will be used."
+msgstr "Seçilen $SWAP_CHOICES takas alanları kullanılacak."
+
+#: modules/02-swap.bm:23
+msgid "No swap partitions are needed."
+msgstr "Takas alanına ihtiyacınız yok"
+
+#: modules/02-swap.bm:39
+msgid "Adding swap-devices to /etc/fstab ..."
+msgstr "/etc/fstab dosyasına takas alanları ekleniyor ..."
+
+#: modules/00-setuser.bm:5
+msgid "Changing user in Passwd/Shadow..."
+msgstr "Passwd/Shadow dosyalarında kullanıcı değiştiriliyor ..."
+
+#: modules/00-setuser.bm:23
+msgid "Setting passwords ..."
+msgstr "Şifreler ayarlanıyor..."
+
+#: modules/00-setuser.bm:28
+msgid "Updating group ..."
+msgstr "group güncelleniyor ..."
+
+#: modules/04-user-name-pass.bm:9
+msgid "Name-Options:"
+msgstr "İsim seçenekleri :"
+
+#: modules/04-user-name-pass.bm:10
+msgid "Your name is: $NAME_NAME"
+msgstr "İsminiz : $NAME_NAME"
+
+#: modules/04-user-name-pass.bm:15
+msgid "Here you must input your whole name. It is used to create a default user."
+msgstr "Burada isminizi girmelisiniz. Bu öntanımlı kullanıcı oluşturmak için kullanılacak."
+
+#: modules/04-user-name-pass.bm:15
+msgid "Input your whole name (name surname)"
+msgstr "Adınızı ve soyadınızı girin ."
+
+#: modules/04-user-name-pass.bm:30
+msgid "Your choosen username is: $USER_NAME"
+msgstr "Seçtiğiniz kullanıcı adı : $USER_NAME"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Here you must input your preferred username. Suggested: $proposal"
+msgstr "Burada kullanmak istediğiniz kullanıcı adını girmelisiniz. Önerilen : $proposal"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Input your user name (perhaps you like: $proposal)"
+msgstr "Kullanıcı adınızı girin ( önerilen : $proposal )"
+
+#: modules/04-user-name-pass.bm:60
+msgid ""
+"Here you must choose the password for the user $USER_NAME and input it "
+"twice. If you have already chosen one, you can leave the fields blank. But "
+"you cannot recover the password once saved, as it is encrypted."
+msgstr "Burada $USER_NAME kullanıcısı için şifre belirlemeli ve bunu doğrulamalısınız. Eğer daha önce bir şifre atadıysanız burayı boş bırakabilirsiniz.Şifrelenmiş(encrypted) olarak kaydedildiği için bu şifreyi değiştiremezsiniz."
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password"
+msgstr "Kullanıcı şifrenizi girin"
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password again"
+msgstr "Kullanıcı şifrenizi tekrar girin"
+
+#: modules/04-user-name-pass.bm:60 modules/04-user-name-pass.bm:80
+msgid "Passwords do not match or no password was given."
+msgstr "Şifreler uyuşmuyor veya bir şifre girilmedi"
+
+#: modules/04-user-name-pass.bm:80
+msgid ""
+"Here you must choose the password for system administration (user root) and "
+"input it twice. If you have already chosen one, you can leave the fields "
+"blank. But you cannot recover the password once saved, as it is encrypted. "
+"Remember that the root-User is the Administrator of the system, so it is a "
+"very important password."
+msgstr "Burada sistem yöneticisi(root) için şifre belirlemeli ve bu şifreyi onaylamalısınız. Eğer daha önce bir şifre atadıysanız burayı boş bırakın.Şifrelenmiş(encrypted) olarak kaydedildiği için bu şifreyi değiştiremezsiniz. root kullanıcısının sistem yönetcisi olduğunu ve bu şifrenin çok önemli olduğunu unutmayın."
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password"
+msgstr "root şifrenizi girin"
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password again"
+msgstr "root şifrenizi tekrar girin"
+
+#: modules/05-services.bm:9
+msgid "Services-Options:"
+msgstr "Servis seçenekleri :"
+
+#: modules/05-services.bm:10
+msgid ""
+"The following services will be started, after each system bootup: "
+"$SERVICES_START"
+msgstr "Bu servisler sistem açılışında başlatılacaktır : $SERVICES_START"
+
+#: modules/05-services.bm:15
+msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgstr "Şu anki kullanılabilir servisler :kdm cupsys smail ssh samba"
+
+#: modules/06-boot.bm:9
+msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"
+msgstr "Açılış önyükleyicisini seçin (GRUB şu anda kullanılamıyor)"
+
+#: modules/06-boot.bm:10
+msgid "If set to 'yes' a boot disk will be created!"
+msgstr "Eğer \"evet\" olarak ayarlanmışsa bir açılış disketi oluşturulacak!"
+
+#: modules/06-boot.bm:11
+msgid "Where the Boot-Loader will be installed"
+msgstr "Açılış önyükleyicisinin kurulacağı yer"
+
+#: modules/06-boot.bm:15
+msgid "Bootloader-Options:"
+msgstr "Önyükleyici seçenekleri :"
+
+#: modules/06-boot.bm:16
+msgid "A bootdisk will be created."
+msgstr "Bir açılış disketi oluşturulacak."
+
+#: modules/06-boot.bm:16
+msgid "No bootdisk will be created."
+msgstr "Açılış disketi oluşturulmayacak"
+
+#: modules/06-boot.bm:17
+msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+msgstr "$BOOT_WHERE üzerine kurulan $BOOT_LOADER önyükleyicisi kullanılacak."
+
+#: modules/06-boot.bm:29
+msgid ""
+"Here you must choose if you want to install the boot-loader to MBR or to a "
+"partition."
+msgstr "Burada önyükleyicinin MBR'a veya başka bir bölüme kurulması gerektiğini seçeceksiniz."
+
+#: modules/06-boot.bm:29
+msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
+msgstr "Önyükleyicinin ($BOOT_LOADER) kurulmasını istediğiniz yeri seçin"
+
+#: modules/06-boot.bm:29
+msgid "Master Boot Record"
+msgstr "Ana Önyükleme Kaydı (MBR)"
+
+#: modules/06-boot.bm:29
+msgid "To Root-Partition"
+msgstr "Kök bölüme"
+
+#: modules/07-system.bm:5
+msgid ""
+"Determines if the system is a debian-derivate, a copy from CD or a nice mix "
+"of both"
+msgstr "Sistemin bir debian türevi, bir CD'den kopya veya ikisinin karışımı olup olduğu belirleniyor."
+
+#: modules/07-system.bm:11
+msgid "System-Options:"
+msgstr "Sistem seçenekleri:"
+
+#: modules/07-system.bm:12
+msgid "The installed system will be a $SYSTEM_TYPE type system."
+msgstr "Kurulacak sistem tipi : $SYSTEM_TYPE"
+
+#: modules/07-system.bm:27
+msgid ""
+"Here you must choose the type of your system. A Beginner System will have "
+"hwdetection, but also support multiple users. A Kanotix system will work "
+"exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
+"full featured debian system and works like the 'old installer'."
+msgstr "Burada kuracağınız sistemin tipini belirleyeceksiniz. Yeni kullanıcılar için Donanım tarama seçeneği ile çok kullanıcılı sistem; CD'den çalışıyormuş gibi sabit diskte çalışırtıran Kanotix tipi ve Debian gibi sabit diskte çalışmasını sağlayan Debian tipi."
+
+#: modules/07-system.bm:27
+msgid "Choose your system type"
+msgstr "Sistem tipinizi seçin"
+
+#: modules/07-system.bm:28
+msgid "Multi-User System with hw-detection (preferred way)"
+msgstr "Donanım tarama seçeneği ile çok kullanıcılı sistem (Tercih edilen yol)"
+
+#: modules/07-system.bm:29
+msgid "Kanotix system like from CD"
+msgstr "CD'den çalışıyormuş gibi, Kanotix tipi"
+
+#: modules/07-system.bm:30
+msgid "Debian-like system (old installer way)"
+msgstr "Debian tipi (eski kurulum tipi)"
+
+#: modules/install/01-fstab.bm:5
+msgid "Updating /etc/fstab..."
+msgstr "/etc/fstab güncelleniyor ..."
+
+#: modules/install/03-system_types.bm:24
+msgid "Converting Kanotix to Multi-User-System..."
+msgstr "Kanotix çok kullanıcılı sisteme çevriliyor."
+
+#: modules/install/02-install-tools.bm:51
+msgid "Copying custom configuration ..."
+msgstr "Özel ayarlar kopyalanıyor ..."
+
+#: modules/install/02-install-tools.bm:68
+msgid "Copying home directory ..."
+msgstr "Ev dizinleri kopyalanıyor ..."
+
+#: modules/install/02-install-tools.bm:183
+msgid ""
+"Warning: Templates could not be found. Not updating: profile, inittab, "
+"sudoers, hosts.allow!"
+msgstr ""
+"Uyarı : Şablonlar bulunamıyor. Güncellenemeyenler : profile, inittab, "
+"sudoers, hosts.allow!"
+
+#: modules/install/02-install-tools.bm:354
+msgid "Welcome to Kanotix"
+msgstr "Kanotix'e Hoş Geldiniz"
+

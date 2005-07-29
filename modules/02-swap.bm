@@ -1,0 +1,70 @@
+#!/bin/bash
+
+#
+# Setup swap partitions - auto
+#
+# register: SWAP_MODULE, SWAP_CHOICES, SWAP_AUTODETECT
+#
+#
+
+function module_swap_defaults
+{
+  register_var "SWAP_AUTODETECT" $"If set to yes, the swap partitions will be autodetected." "yes|no" "" "yes"
+  register_var "SWAP_CHOICES" $"The swap partitions to be used by the installed knoppix." "" "module_swap_check" ""
+}
+
+function module_swap_showinfo
+{
+  echo $"Swapspace-Options:"
+  if [ -n "$SWAP_CHOICES" ]
+  then
+    [ "$SWAP_AUTODETECT" = "yes" ] && echo "  " $"The autodetected swapdrives $SWAP_CHOICES will be used." || echo "  " $"The choosen swapdrives $SWAP_CHOICES will be used."
+  else
+    echo "  " $"No swap partitions are needed."
+  fi
+}
+
+function module_swap_check
+{
+  SWAPPARTS=$(find_swap_partitions)
+  for i in $SWAP_CHOICES; 
+  do
+    stringinstring "$i" "$SWAPPARTS" || return 1
+  done
+  return 0
+}
+
+function module_swap_doaction
+{
+  update_status $"Adding swap-devices to /etc/fstab ..."
+  #cp /etc/fstab $TARGET_MNT_POINT/etc/fstab
+
+  #if [ "$SWAP_AUTODETECT" = "no" ]
+  #then
+  #  cat /etc/fstab | grep -v "swap" > $TARGET_MNT_POINT/fstab
+  #  for i in $SWAP_CHOICES
+  #  do
+  #    echo "$i none swap defaults 0 0" >> $TARGET_MNT_POINT/fstab
+  #  done
+  #fi
+  #sleep 2
+  echo > $TARGET_MNT_POINT/etc/fstab
+  if [ "$SWAP_AUTODETECT" = "no" ]
+  then
+    for i in $SWAP_CHOICES
+    do
+      echo "$i none swap defaults 0 0" >> $TARGET_MNT_POINT/etc/fstab
+    done
+  fi
+}
+
+function module_swap
+{
+  [ "$1" -lt "0" ] && return 1 # all automatic modules need to use this code
+
+  module_swap_defaults
+  [ "$SWAP_AUTODETECT" = "yes" ] && SWAP_CHOICES=$(find_swap_partitions)
+  SWAP_MODULE="configured"
+  register_vars "SWAP_MODULE SWAP_AUTODETECT SWAP_CHOICES"
+  return 0
+}

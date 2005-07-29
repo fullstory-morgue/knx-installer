@@ -1,0 +1,289 @@
+#!/bin/bash
+# System configuration and hardware setup for hd-installation
+# (C) Fabian Franz <knoppix-installer@fabian-franz.de> 2004
+
+SYSTEM_TYPE="beginner"
+SYSTEM_HW_PROFILE="yes"
+SYSTEM_PROMPT_INTERACTIVE="no"
+SYSTEM_DMA="yes"
+
+# Localisation 
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=knoppix-installer
+
+# For ADD_CMDLINE
+[ -f /etc/default/knoppix ] && . /etc/default/knoppix
+
+[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
+
+system_init()
+{
+	PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin"
+	export PATH
+
+	umask 022
+
+	# ANSI COLORS
+	CRE="
+[K"
+	NORMAL="[0;39m"
+	# RED: Failure or error message
+	RED="[1;31m"
+	# GREEN: Success message
+	GREEN="[1;32m"
+	# YELLOW: Descriptions
+	YELLOW="[1;33m"
+	# BLUE: System messages
+	BLUE="[1;34m"
+	# MAGENTA: Found devices or drivers
+	MAGENTA="[1;35m"
+	# CYAN: Questions
+	CYAN="[1;36m"
+	# BOLD WHITE: Hint
+	WHITE="[1;37m"
+	
+	# mount proc
+	[ -f /proc/cmdline ] || mount -t proc proc /proc 2>/dev/null
+	CMDLINE=$(cat /proc/cmdline)
+	CMDLINE="$CMDLINE $ADD_CMDLINE"
+	# disable dma
+	case $CMDLINE in *nodma*) SYSTEM_DMA="no" ;; esac
+}
+
+enable_dma()
+{
+	[ "$SYSTEM_DMA" = "no" ] && return 1
+
+	# Enable DMA for all IDE drives now if requested (if not already done by linuxrc).
+	# This is already done by linuxrc now.
+	# However, for a harddisk-installed version, we are doing it again here.
+	# Please use hda=dma or similar in the lilo.conf append= line.
+	for d in $(cd /proc/ide 2>/dev/null && echo hd[a-z])
+	do
+		if test -d /proc/ide/$d; then
+		if egrep -q 'using_dma[ \t]+0' /proc/ide/$d/settings 2>/dev/null
+		then
+			MODEL="$(cat /proc/ide/$d/model 2>/dev/null)"
+			test -z "$MODEL" && MODEL="[GENERIC IDE DEVICE]"
+			echo "${BLUE}Enabling DMA acceleration for: ${MAGENTA}$d 	${YELLOW}[${MODEL}]${NORMAL}"
+			echo "using_dma:1" >/proc/ide/$d/settings
+		fi
+		fi
+	done
+}
+
+welcome()
+{
+	# Be verbose
+	echo $"${WHITE}Welcome to ${CYAN}K${MAGENTA}A${YELLOW}N${WHITE}O${RED}T${GREEN}I${BLUE}X${WHITE} (HD-Installation)${NORMAL}"
+	echo ""
+	echo ""
+}
+
+hd_interactive()
+{
+	echo $"${BLUE}Entering interactive setup ...${NORMAL}"
+}
+
+wait_for_key()
+{
+    DELAY=1
+	[ -n "$1" ] && DELAY="$1"
+	read -n1 -t $DELAY -s line >/dev/null 2>/dev/null
+}
+
+wait_for_interactive()
+{
+	[ "$SYSTEM_PROMPT_INTERACTIVE" = "no" ] && return 1
+	
+	echo -n $"${WHITE}Press a key to enter interactive mode.${NORMAL}"
+	wait_for_key 1
+	[ $? -eq 0 ] && HD_INTERACTIVE="yes"
+	echo -n "${CRE}"
+	[ "$HD_INTERACTIVE" = "yes" ] && hd_interactive
+}
+
+check_hwdetection()
+{
+	test -f "/etc/modules-$(uname -r)"
+}
+
+update_hwdetection()
+{
+	echo $"${WHITE}Saving hardware profile to ${MAGENTA}/etc/modules-$(uname -r)${WHITE}.${NORMAL}"
+	TMP=$(tempfile)
+	# create /etc/modules from current loaded modules
+	cat <<EOF >$TMP
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file should contain the names of kernel modules that are
+# to be loaded at boot time, one per line.  Comments begin with
+# a '#', and everything on the line after them are ignored.
+EOF
+
+	BLACKLIST=$(cut -f1 -d' ' /lib/modules/$(uname -r)/modules.usbmap|sort|uniq|perl -pe 's/#\n//;s/\n/|/g')"cloop|snd|radeon|fsam7400|capi|hisax|fcpci|fcdsl|ieee80211|slam|unionfs|dri"
+	cat /proc/modules | tac | grep -v '\[.*\]' | egrep -v "$BLACKLIST" |
+	while read mod x
+	do
+		if [ $mod = apm ] ; then
+			echo "apm power_off=1" >>$TMP
+		elif [ $mod = sbp2 ] ;then
+			echo "sbp2 serialize_io=1" >>$TMP
+		else
+			echo $mod >>$TMP
+		fi
+	done
+
+	WHITELIST="ipw2100|ipw2200"
+	cat /proc/modules | tac | grep -v '\[.*\]' | egrep "$WHITELIST" |
+	while read mod x
+	do
+	  echo $mod >>$TMP
+	done
+
+	cp -f $TMP /etc/modules-$(uname -r)
+
+	rm -f $TMP
+
+	# Also save /etc/sysconfig/
+	mkdir -p /etc/sysconfig/$(uname -r)
+	cp -f /etc/sysconfig/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} /etc/sysconfig/$(uname -r)/ 2>/dev/null
+	cp -f /etc/X11/XF86Config* $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
+		
+}
+
+copy_hwdetection()
+{
+	# disable signals
+	trap "" 2 3 11
+	# disable kernel messages
+	echo "0" > /proc/sys/kernel/printk
+	# Write access needed
+	mount -o remount,rw /
+	echo $"${GREEN}Found hardware profile in ${MAGENTA}/etc/modules-$(uname -r)${GREEN}.${NORMAL}"
+	echo $"${BLUE}Copying hardware profile to ${MAGENTA}/etc/modules${BLUE}.${NORMAL}"
+	cp -f /etc/modules-$(uname -r) /etc/modules
+	
+	cp -f /etc/sysconfig/$(uname -r)/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} /etc/sysconfig/ 2>/dev/null
+	#cp -f /etc/sysconfig/$(uname -r)/XF86Config* /etc/X11/ 2>/dev/null
+	
+	# Ok, get back to ro
+	mount -o remount,ro /
+	# enable kernel messages
+	echo "6" > /proc/sys/kernel/printk
+	# reenable signals
+	trap 2 3 11
+}
+
+# countdown Text Delay
+countdown()
+{
+	TEXT=$1
+	DELAY=$2
+
+	n=0
+	while [ $n -ne $DELAY ]
+	do
+    	c=$[$DELAY-$n]
+    	echo -n ${CRE}${TEXT/0/$c}
+		n=$[n+1]
+		sleep 1
+	done
+    echo ${CRE}${TEXT}
+}
+
+update_desktop_hdicons()
+{
+	# KNOPPIX: Add KDE/GNOME icons for new harddisks
+	for d in $(ls -1d /home/*/Desktop); do
+	if [ -d "$d" ]; then
+		user="${d%/Desktop}"
+		user="${user#/home/}"
+		if [ "$user" != "root" ]; then
+			su "$user" -c "mkdesktophdicons" >/dev/null 2>&1
+		fi
+	fi
+done
+}
+
+system_mode_debian_autoconfig()
+{
+	/etc/init.d/knoppix-autoconfig
+	update_hwdetection
+	# flush buffers
+	read -t1
+	echo $"${BLUE}The computer must be rebooted to let the changes take affect.${NORMAL}"
+	echo -n $"${CYAN}Do you want to reboot now ? ""[Y/n]${NORMAL} "
+	read QREBOOT
+	[ "$QREBOOT" = "y" -o "$QREBOOT" = "Y" -o "$QREBOOT" = "" ] && reboot
+}
+
+system_mode_debian()
+{
+	[ "$SYSTEM_HW_PROFILE" = "no" ] && return 1
+	if ! check_hwdetection
+	then
+		echo $"${RED}No hardware profile found for this kernel ($(uname -r)).${NORMAL}"
+		countdown $"${BLUE}To create one press any key (0 seconds).${NORMAL}" 3 &
+		PID=$!
+		disown $PID # shutup bash :-)
+		wait_for_key 3
+		if [ $? -eq 0 ]
+		then
+			kill $PID >/dev/null 2>/dev/null 
+			echo $"${CRE}${WHITE}Starting knoppix-autoconfig ...${NORMAL}"
+			system_mode_debian_autoconfig
+		else
+			# Wait for our child :-)
+			while [ -d /proc/$PID ]
+			do
+				usleep 10000 # small delay
+			done
+			
+			echo ""
+		fi
+	else
+		copy_hwdetection
+	fi
+}
+
+system_mode_beginner()
+{
+	if [ "$SYSTEM_HW_PROFILE" = "no" ]
+	then
+		/etc/init.d/knoppix-autoconfig
+		return 0
+	fi
+	if ! check_hwdetection
+	then
+		echo $"${BLUE}Creating hardware profile for this kernel ($(uname -r)).${NORMAL}"
+		/etc/init.d/knoppix-autoconfig
+		update_hwdetection
+	else
+		copy_hwdetection
+		# set cmdline
+		CMDLINE=$(cat /proc/cmdline)
+		CMDLINE="$CMDLINE $ADD_CMDLINE"
+		export CMDLINE="$CMDLINE nohwsetup"
+		# disable kernel messages
+		echo "0" > /proc/sys/kernel/printk
+		/etc/init.d/knoppix-autoconfig
+	fi
+}
+
+system_init
+welcome
+enable_dma
+
+if ! wait_for_interactive
+then
+	case "$SYSTEM_TYPE" in
+		debian)
+			system_mode_debian
+		;;
+		beginner)
+			system_mode_beginner
+			update_desktop_hdicons
+		;;
+	esac
+fi

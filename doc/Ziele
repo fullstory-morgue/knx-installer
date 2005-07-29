@@ -1,0 +1,255 @@
+Das Ziel des neuen Installers ist es ein Programm zu erstellen, welches es ermöglicht Knoppix auf benutzerfreudliche Art und Weise auf die Festplatte zu installieren.
+
+Hierbei hat oberste Priorität, dass alles was von CD ging auch von Festplatte geht!
+
+Sofern nötig werden Patches gegen vorhandene Pakete erstellt, die dann in Knoppix einfließen, (ein weiteres Ziel ist die Pakete möglichst bootstrapbar zu machen, d.h. aus dem Debian kann wieder ein Knoppix-Snapshot erzeugt werden. Der Grund ist, dass je leichter debian zu knoppix wird, je leichter wird knoppix wieder zu debian => Dokumentation der Änderungen nötig)
+
+Hierzu ist die Sektion "Bugs - Bisherige Bugs" zu lesen.
+
+Layout & Grobplanung
+--------------------
+
+Der Installer sollte eine Konfiguration des Systems ermöglichen und erst danach die Aktionen auch wirklich ausführen. (Wizard-Prinzip) => 2 Teilung des Installers
+
+Diverse Sachen, wie Partitionierung mit cfdisk oder Verkleinerung bestehender Partitionen müssen hierbei weiterhin on the fly ausgeführt werden. [BUG]
+
+Für diese Fälle müssen weitere skriptbare Utilities gefunden werden.
+
+Weiterhin muss diese Konfiguration speicherbar sein und auch automatische Installation muss ermöglicht werden. Dies sollte verhältnismäßig einfach zu realisieren sein, da für das Wizard-Prinzip eh alle Vorgabe abspeicherbar sein müssen.
+
+Gute Vorgaben, wenn die Konfiguration besteht, keine, wenn es das System des Nutzers gefährdet. (hda als Standardplatte)
+
+Weiterhin sollte der Installer aus vielen Funktionen (evt. Module) bestehen und die Übersetzung der Meldungen sollte eventuell mit gettext erledigt werden.
+
+Diese Funktionen sollten das Wizard-Prinzip einfacher machen, da dann sowohl zurück als auch vor gehen müssen und bereits getätigte Einstellungen wieder so angezeigt werden.
+
+Dazu muss es ein Prozess-Ablauf-Format geben, dass auch jeweils einen "Hilfe-Button" mit mehr Informationen enthält.
+
+Alle unsicheren Optionen werden herausgelassen, es sei denn "Expert-Mode" wird angeschaltet, genauso alle Optionen, die optional sind (Dateisystem, kdm, ..., siehe unten)
+
+Der erste Teil des Installers ist der wichtigste für den Benutzer.
+
+Der zweite Teil des Installers kümmert sich um die Installation basierend auf den Vorgaben, bei einer automatischen Installation werden die Vorgaben per Datei eingelesen und dann durchgeführt.
+
+In einem dritten Teil, werden bestimmte Aktionen nachdem das System auf Festplatte installiert ist durchgeführt. (z.B. evt. bei einem ersten Online-Gehen eine Nachfrage nach Durchführen von apt-get update)
+
+Dieser dritte Teil ist als Ziel vorerst optional.
+
+In jedem Fall durchzuführende Aktionen
+--------------------------------------
+
+- Erstellen der /etc/fstab, erzeugen der Einträge auf dem Desktop
+    => + Programm ins Menü zum Updaten der beiden.
+    * Eventuell das ganze mit /windows/[C-F] Ordnern und Buchstaben.
+      (hm, mehrere Einträge in fstab möglich oder symlinks ?)
+
+- Automounter auf dem Installierten System. 
+
+- Schnellgehende Teile der HW-Erkennung auf dem installierten System beibehalten, ermöglichen diese aus dem Menü jederzeit erneut auszuführen. 
+
+- Einträge in Knoppix-Menü durch kdesu "prefixen".
+
+- [to be continued]
+
+Veränderungen für nicht Expert-Mode im Vergleich zum alten Installer
+--------------------------------------------------------------------
+
+Defaults für:
+
+Dateisystem		ext3 (ext3, reiserfs, ext2, xfs stehen zur Auswahl)
+smail			aus
+ssh			aus
+samba			aus (ksambaplugin kann zur Einrichtung verwendet werden)
+kdm			ein
+cupsd			ein (Einstellungen übernehmen)
+
+- Lilo-Konfiguration (durch genliloconf erzeugt) wird geparsed und entsprechend ausgegeben => Mehr Sicherheit für den einzelnen Nutzer (Oder gleich gap verwenden?)
+
+- Partitionierung in 3 Wahlen: 
+	* Ganze Festplatte
+	* Free Space
+	* Custom (cfdisk)
+
++ eine Art Paketauswahl (Idee von Klaus) [erstmal nicht]
+[ + eventuell Progeny-Installer übernehmen (Idee von Klaus) ] [erstmal nicht]
+
+Programm für Recommend-Pakte installieren ins Menü:
+
+recommend: gqview, quanta, ksambaplugin (?)
+
+- apt-get wrappen um unsichere Aktionen zu verhindern!
+
+Veränderungen an Vanilla-Knoppix:
+---------------------------------
+
+- kdesu sollte durch sudo geprefixed werden.
+
+Bugs - bisherige Bugs
+---------------------
+
++ Es muss eine Möglichkeit geben, die Partitionierung zu übergehen (Kommandozeilen-Parameter)
++ Es muss in der Konfiguration möglich sein, einen Wrapper für eine "vernünftige" Partitionierung anzugeben: 
+
+z.B. "hda6 / hda5 /boot hda1 /home" usw.
+
+Grobablaufplan
+--------------
+
+1. fragestunde mit Menü:
+  - Partitionierung [MUSS ZUERST ERLEDIGT WERDEN, davor wird alles andere ausgeblendet]
+  - Konfig speichern/laden
+  - Konfig erstellen
+2. partitionierung
+3. kopieren
+4. automatische anpassungen
+
+---
+NEU:
+
+- Test ob bereits partitioniert (später auch auf freien Platz überprüfen und nach Verwendung dessen fragen)
+Wenn nein: Menü_Part
+Wenn ja: Menü_Main
+
+Menü-Part:
+
+1. Partitionieren
+2. Ende
+
+Menü_Main:
+
+1. Konfig erstellen	-> 1. Mal-Wizard, danach Menü mit Möglichkeit Wizard aufzurufen [oder immer wizard, hm ? ]
+3. Konfig laden
+4. Konfig speichern
+5. Installation beginnen (nur wenn config schon vorhanden ist einblenden [nur wenn wizard bis zum ende durchgegangen wurde])
+6. Neu-Partionieren
+7. Ende
+
+Konfig erstellen:
+<KaiL> also erstmal die partition zum installieren: hier wird erstmal fstab gebaut und dann alles, was mehr als 2,2GB und 'linux'-FS hat wird aufgelistet
+<Fabianx> yep, das hab ich ja schon :-)
+<KaiL> achso..
+<Fabianx> nein die funktionalität
+<Fabianx> schreibe mla weiter
+<Fabianx> ist gut
+<KaiL> da kommt dann ext3 drauf (so es nicht vorher ein dateisystem hat)
+<KaiL> ohne dass man irgendwas einstellen kann!
+<Fabianx> aso, genau, wie ist das mit formatieren ?
+<Fabianx> immer / nur nach bedarf / 
+<KaiL> dann geht's automatisch weiter zum benutzerfenster
+<Fabianx> swap ?
+<KaiL> swap wird ungefragt (außer noswap) alles genommen, was zu finden ist
+<Fabianx> oki
+<Fabianx> und bei noswap auswahlfenster ?
+<Fabianx> und bei noswap auswahlfenster ? (später)
+<KaiL> genau - später :)
+
+<Fabianx> also lilo/grub kommt in die partition selbst
+<Fabianx> dann wird ein lilo erstellt, der alles mit other bootet.
+<Fabianx> dann wird ein lilo/grub erstellt, der alles mit other bootet.
+<Fabianx> damit einfache diskette mgölich
+
+Ideen zum Konfigurationssystem
+------------------------------
+
+- module_hd + module_hd_check (um eine eventuell veränderte Konfiguration zu überprüfen) [OK]
+
+- Bei Swap ein SWAP_AUTODETECT={yes,no} [OK]
+
+(- Eventuell $RAND verwenden)
+
+- Wenn ein Fehler in der Konfiguration auftritt, den nicht-interaktiven-Installmodus abbrechen. [SICHERHEIT]
+
+Update - Stufe 2 - Planung
+--------------------------
+
+- Dem Benutzer exakt sagen, was gemacht wird. (Default = NO)
+
+- Die Schritte anhand der vorgegebenen Variablen durchführen (eventuell module_hd_do, module_xx_do,... oder eine Funktion für alles, die knoppix-Spezifika möglichst vermeidet ?)
+
+- Das System neubooten.
+
+Zu Beachten:
+
+-> Bootloader in Partition
+-> Check ob alles geklappt hat, im Notfall Möglichkeit der Wiederaufnahme.
+-> Nach der Installation möglichst keine redundanten Fragen mehr. (Bootdiskette - Wann ?)
+-> Neues Menü, Knoppix/HD-Install/ bzw. in Installer die Funktionalität einbauen, Module ?
+	* HW-Konfiguration updaten
+	* XF86-Konfiguration wiederherstellen/neuerstellen
+	* Alten MBR wiederherstellen
+	* Neuen MBR installieren
+	* [...]
+
+<Fabianx> KaiL: ok, nach langem überlegen habe ich mich entschieden :-)
+<Fabianx> KaiL: es wird ein Level = "user|expert|hw" geben
+<KaiL> hw?
+<Fabianx> user = knoppix-start so komfortable wie möglich, wobei die zeitkritischen sachen rausgenommen werden (hwsetup, ...)
+<Fabianx> expert = im prinzip christians install, aber einige sachen verbessert ...
+<Fabianx> hw = knoppix start jedesmal mit voller hardwareerkennung.
+<KaiL> aha
+<Fabianx> also wie als wenn mans auf platte kopiert und nix ändert ...
+<KaiL> nachträgliches ändern möglich?
+<Fabianx> KaiL: ja
+<Fabianx> KaiL: soll möglich sein.
+<Fabianx> KaiL: Es wird Verzeichnis: /etc/rc-expert|rc-user|rc-hw geben.
+<Fabianx> oder /etc7knoppix ist vielleicht besser ?
+<Fabianx> oder /etc/knoppix ist vielleicht besser ?
+<KaiL> is nit egal??
+<Fabianx> na ja, damit es logisch auffindbar ist ...
+<Fabianx> KaiL: dabei wird jeweils das eine runlevel gelöscht und das andere wiederhergestellt, damit sollte es auch mit user-erstellten init.d-einträgen kein problem geben
+
+--- Planungsablauf TO DO 06.05.2003 ----
+
+Was noch zu tun ist:
+
+/etc/group ändern [done]
+
+Immer:
+
+- /etc (ohne Links!) kopieren
+- Keymap.sh richtig setzen [done]
+- Hostname setzen
+- Inittab setzen
+- Profile setzen
+- motd setzen
+- 45xsession nach /root
+- display permissions fixen
+- inetd-services deaktivieren
+- Knoppixmenüs kdesu'n [option]
+- weniger restriktive hosts.allow nutzen
+- real tmp!
+- real mtab
+- mv /home/knoppix /home/$USERNAME # Eventuell von skel kopieren ?
+- Runlevels nach /etc/knoppix/rc-{user,expert,hw}
+  (hw ist wie user, aber mit hwsetup -p und ohne das /etc/modules geladen wird)
+- /etc/modules erstellen
+
+Knx-User-Level:
+
+- /etc/knoppix/rc-user/* nach /etc kopieren
+
+Knx-Expert-Level:
+
+- /etc/knoppix/rc-expert/* nach /etc kopieren
+
+- Personalisierung von KDE beim ersten Start ?
+
+Knx-Hw-Level [OK]
+
+Boot-Loader:
+
+Bootloader für die Partition nach /etc/lilo.conf
+MBR-Lilo.conf nach: /etc/knoppix/lilo.conf 
+
+<Fabianx> und weitere Idee: Es gibt nach der Installation (nach der Kopiererei und allem anderen einen Wizard, der Lilo/(evt. Grub) einrichtet)
+<Fabianx> KaiL: dann ist das independent von dem anderen installationsteil und ist, wenn dann was "schiefgeht" auch später noch aufrufbar, mit der mbr-sichern möglichkeit usw.
+<Fabianx> D.h das einzige, was jetzt noch "im Argen ist" sind die Runlevelsm, dann ist der Installer mit Ausnahme der --help und weiteren commandozeilen option und das bootconfig-module erstellt werden muss "fertig." (Na ja, gut es fehlen noch die Tools im Menü ...)
+
+Noch dazu zu tun:
+-----------------
+
+- Initrd-Tools fixen [OK, hm ?]
+- knoppix-autoconfig -> MODUS: Installed, aber kaum autoerkennung [OK]
+
+
+Fabian Franz, 05.04.2003

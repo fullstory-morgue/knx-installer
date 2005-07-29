@@ -1,0 +1,778 @@
+# translation of de.po to Deutsch
+# Fabian Franz <knx-i18n@fabian-franz.de>, 2003,2004.
+# Kai Lahmann <kl@3dots.de>, 2003.
+msgid ""
+msgstr ""
+"Project-Id-Version: de\n"
+"PO-Revision-Date: 2004-06-07 01:36+0200\n"
+"Last-Translator: Fabian Franz <knx-i18n@fabian-franz.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#: knoppix-installer:62
+msgid "knoppix-installer terminated"
+msgstr "Kanotix-Installer wurde beendet"
+
+#: knoppix-installer:77
+msgid "Save configuration?"
+msgstr "Konfiguration speichern?"
+
+#: knoppix-installer:77
+msgid "Do you want to save your configuration?"
+msgstr "Möchten Sie Ihre Konfiguration speichern?"
+
+#: knoppix-installer:88
+msgid "Kanotix Installation"
+msgstr "Kanotix-Installation"
+
+#: knoppix-installer:89
+msgid "Installation of Kanotix to harddisk (Step 0/$MAX)"
+msgstr "Installation von Kanotix auf der Festplatte (Schritt 0/$MAX)"
+
+#: knoppix-installer:90
+msgid "Initialisation of Kanotix-Installation"
+msgstr "Initialisierung der Kanotix-Installation"
+
+#: knoppix-installer:92
+msgid "Installation failed"
+msgstr "Installation fehlgeschlagen"
+
+#: knoppix-installer:93
+msgid "Installation successfull"
+msgstr "Installation erfolgreich"
+
+#: knoppix-installer:94
+msgid "Fatal dialog error"
+msgstr "Schwerer Dialog Fehler"
+
+#: knoppix-installer:154
+msgid "Choose System Type"
+msgstr "Wählen Sie Ihren Systemtyp"
+
+#: knoppix-installer:167
+msgid "Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Erstellen der Kanotix Konfiguration Schritt (0/$NUM_REAL_MODULES)"
+
+#: knoppix-installer:195 knoppix-installer:197
+msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
+msgstr ""
+"Fehler: Unbekannter Wert $2 für $1\\nZurückgesetzt auf Standardwert "
+"($DEFAULT_TEMP)."
+
+#: knoppix-installer:206 knoppix-installer:208
+msgid ""
+"Error: Check failed for $1 ($2)\\nThe configuration module will now be "
+"started."
+msgstr ""
+"Fehler: Überprüfung ist fehlgeschlagen für $1 ($2)\\nDas Konfigurationsmodul "
+"wird jetzt gestartet."
+
+#: knoppix-installer:223
+msgid "Loading Kanotix configuration"
+msgstr "Lade bestehende Installations-Konfiguration"
+
+#: knoppix-installer:226
+msgid "Here you can input a filename to load an existing configuration"
+msgstr ""
+"Hier können Sie einen Dateinamen zum Laden der Installations-Konfiguration "
+"eingeben"
+
+#: knoppix-installer:226
+msgid "Input the configuration filename to be loaded"
+msgstr "Geben Sie einen Dateinamen zum Laden der Konfiguration ein"
+
+#: knoppix-installer:231
+msgid ""
+"File $CONFIG_USER could not be found. The loading of the configuration will "
+"be aborted."
+msgstr ""
+"Datei $CONFIG_USER konnte nicht gefunden werden. Das Laden der Konfiguration "
+"wurde abgebrochen."
+
+#: knoppix-installer:254
+msgid "Saving Kanotix configuration"
+msgstr "Installations-Konfiguration speichern"
+
+#: knoppix-installer:257
+msgid "Here you can input a filename to save the configuration"
+msgstr ""
+"Hier können Sie einen Dateinamen zum Speichern der Installations-"
+"Konfiguration eingeben"
+
+#: knoppix-installer:257
+msgid "Input a filename for the configuration"
+msgstr "Geben Sie einen Dateinamen für die Konfiguration an"
+
+#: knoppix-installer:263
+msgid ""
+"If you click yes, the file will be overwritten, otherwise this script will "
+"abort"
+msgstr ""
+"Wenn Sie 'Ja' klicken wird die Datei überschrieben; ansonsten wird der "
+"Speichervorgang abgebrochen"
+
+#: knoppix-installer:263
+msgid "Do you really want to overwrite $CONFIG_USER?"
+msgstr "Soll die Datei $CONFIG_USER wirklich überschrieben werden?"
+
+#: knoppix-installer:276
+msgid "Possible are:"
+msgstr "Mögliche Werte sind:"
+
+#: knoppix-installer:278
+msgid "This value will be checked by function"
+msgstr "Dieser Wert wird durch die Funktion überprüft"
+
+#: knoppix-installer:280
+msgid "Default value is:"
+msgstr "Standardwert ist:"
+
+#: knoppix-installer:299
+msgid ""
+"Several of this options can only be changed in the Configurationfile "
+"$CONFIG_FILE."
+msgstr ""
+"Mehrere dieser Optionen können nur in der Konfigurationsdatei $CONFIG_FILE "
+"geändert werden."
+
+#: knoppix-installer:300
+msgid ""
+"The Installation will now be started. The author and knopper.net give no "
+"warranty against any damage caused by this script."
+msgstr ""
+"Die Installation wird jetzt gestartet. Der Autor und Knopper.net geben keine "
+"Garantie für irgendwelche Schäden, die durch dieses Skript eventuell "
+"angerichtet werden könnten."
+
+#: knoppix-installer:302
+msgid "Do you want to proceed with these parameters?"
+msgstr "Möchten Sie mit diesen Einstellungen fortfahren ?"
+
+#: knoppix-installer:304
+msgid "Make sure you agree to all parameters, if so proceed with the installation."
+msgstr ""
+"Schauen Sie, ob Sie allen Parametern zustimmen. Wenn ja, dann fahren sie mit "
+"der Installation fort."
+
+#: knoppix-installer:319
+msgid "Converting Kanotix to Debian..."
+msgstr "Konvertiere Kanotix zu Debian..."
+
+#: knoppix-installer:351 knoppix-installer:361 knoppix-installer:466
+msgid "Starting Kanotix installation"
+msgstr "Starte Kanotix-Installation"
+
+#: knoppix-installer:354
+msgid "Error: No complete Configuration found"
+msgstr "Fehler: Keine komplette Konfiguration gefunden"
+
+#: knoppix-installer:362 knoppix-installer:467
+msgid "Installing"
+msgstr "Installiere"
+
+#: knoppix-installer:378
+msgid "Creating floppy disk"
+msgstr "Erstelle Bootdiskette"
+
+#: knoppix-installer:378
+msgid ""
+"Please insert now an empty floppy disk into your floppydrive. Warning: All "
+"data on it will be lost. If you don't want to create a disk you can choose "
+"No."
+msgstr ""
+"Bitte legen Sie nun eine leere Diskette in Ihr Diskettenlaufwerk ein. "
+"Warnung: Alle Daten auf der Diskette gehen verloren. Wenn Sie keine Diskette "
+"erstellen wollen können Sie \"Nein\" auswählen."
+
+#: knoppix-installer:398 knoppix-installer:399 knoppix-installer:485
+msgid "Kanotix was successfully installed to hd."
+msgstr "Kanotix wurde erfolgreich auf Festplatte installiert."
+
+#: knoppix-installer:405
+msgid "Kanotix Main-Menu"
+msgstr "Installations-Hauptmenü"
+
+#: knoppix-installer:406
+msgid "Thats the main menu\\nChoose the action you want"
+msgstr "Das ist das Hauptmenü\\nWählen Sie eine Aktion aus"
+
+#: knoppix-installer:406 modules/00-hd-tools.bm:174
+msgid "Choose an action"
+msgstr "Gewünschte Aktion wählen"
+
+#: knoppix-installer:407
+msgid "Configure Installation"
+msgstr "Installation konfigurieren"
+
+#: knoppix-installer:407
+msgid "Create a new configuration"
+msgstr "Erstellen einer neuen Konfiguration"
+
+#: knoppix-installer:408
+msgid "Start installation"
+msgstr "Installation starten"
+
+#: knoppix-installer:408
+msgid "Start the installation"
+msgstr "Start der Kanotix-Installation"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition"
+msgstr "Partitionieren"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition the hard disk"
+msgstr "Die Festplatte partitionieren"
+
+#: knoppix-installer:410
+msgid "Load config"
+msgstr "Konfiguration laden"
+
+#: knoppix-installer:410
+msgid "Load an existing configuration"
+msgstr "Laden einer bestehenden Konfiguration"
+
+#: knoppix-installer:411
+msgid "Save config"
+msgstr "Konfiguration speichern"
+
+#: knoppix-installer:411
+msgid "Save the configuration"
+msgstr "Speichern der Konfiguration"
+
+#: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
+msgid "Quit"
+msgstr "Beenden"
+
+#: knoppix-installer:412 modules/00-hd-tools.bm:174
+msgid "Quit the program"
+msgstr "Das Programm beenden"
+
+#: knoppix-installer:417 knoppix-installer:452
+msgid "knoppix-installer started"
+msgstr "Kanotix-Installationsprogramm wurde gestartet"
+
+#: knoppix-installer:418
+msgid ""
+"This script will install Kanotix to harddisk. Note that this version is "
+"still an very early version and under heavy development.\n"
+"The author and knopper.net take no responsibility for data loss or hardware "
+"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \\n"
+"\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal."
+"de> \\nfixes by Joerg Schirottke <master@kanotix.de>"
+msgstr ""
+"Dieses Skript installiert Kanotix auf der Festplatte. Bitte beachten Sie, "
+"dass diese Version noch eine sehr frühe und noch in starker Entwicklung "
+"befindliche Version ist. Der Autor und Knopper.Net übernehmen keine "
+"Verantwortung für Datenverluste oder Hardwareschäden. \\n\\nAutor: Fabian "
+"Franz <knoppix-installer@fabian-franz.de>\\n\\nbasierend auf der sehr guten "
+"Arbeit von Christian Perle <perle@itm.tu-clausthal.de>\\nFixes by Joerg Schirottke <master@kanotix.de>"
+
+#: knoppix-installer:429
+msgid ""
+"The installer detected that the installation requierements are not "
+"fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
+"at least $[ROOT_MIN/(1024*1024)] GB to install knoppix on. Also we need a "
+"swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
+"Memory or more.\\n\\nIn the following menu, you can start some tools to "
+"partition your harddrive.\\nIf you really really know what you are doing "
+"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
+msgstr ""
+"Das Installationprogramm hat festgestellt, dass die "
+"Installationsanforderungen noch nicht erfüllt sind.\\n\\nBitte sorgen Sie "
+"dafür, dass Sie eine freie Partition mit mindestens $[ROOT_MIN/(1024*1024)] "
+"GB haben, um Kanotix zu installieren. Auch wird eine Swap-Partition mit "
+"mindestens $[SWAP_MIN/1024] MB benötigt, wenn Sie nicht 512 MB "
+"Arbeitsspeicher oder mehr haben.\\n\\nIm folgenden Menü können Sie "
+"verschiedene Programme starten, um die Festplatte zu partitionieren.\\nWenn "
+"Sie genau wissen, was sie tun, dann können Sie auch mit: IGNORE_CHECK=1 sudo "
+"knoppix-installer starten, um diese Abfrage zu vermeiden."
+
+#: knoppix-installer:436 knoppix-installer:456
+msgid "Partition check succeeded"
+msgstr "Der Partitionierungscheck war erfolreich"
+
+#: knoppix-installer:460
+msgid ""
+"Config file $CONFIG_FILE could not be found. This is necessary for non-"
+"interactive mode."
+msgstr "Konfigurationsdatei $CONFIG_FILE konnte nicht gefunden werden. Diese Datei ist aber für den nicht-interaktiven Modus absolut notwendig."
+
+#: knoppix-installer:499
+msgid "root permission needed."
+msgstr "Administratorrechte (root) benötigt."
+
+#: modules/booting/boot-tools.bm:661
+msgid "Creating initrd for kernel $BOOT_KERNEL ..."
+msgstr "Erstelle Initrd für Kernel $BOOT_KERNEL ..."
+
+#: modules/booting/boot-tools.bm:686
+msgid "Installing $BOOT_LOADER to $BOOT_WHERE"
+msgstr "Installiere $BOOT_LOADER in $BOOT_WHERE"
+
+#: modules/booting/boot-tools.bm:696
+msgid "Finishing installation"
+msgstr "Beende Installation"
+
+#: modules/01-hd.bm:11
+msgid "Determines if the HD should be formatted. (mkfs.*)"
+msgstr "Entscheidet ob die Festplatte formatiert wird (mkfs.*)"
+
+#: modules/01-hd.bm:12
+msgid "Sets the Filesystem type."
+msgstr "Setzt den Dateisystemtyp."
+
+#: modules/01-hd.bm:13
+msgid "Here the Kanotix-System will be installed"
+msgstr "Hier wird das Kanotix-System installiert werden"
+
+#: modules/01-hd.bm:14
+msgid ""
+"Here you can give additional mappings. (Experimental) You need to have the "
+"partitions formatted yourself and give the correct mappings like: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr ""
+"Hier können Sie zusätzliche Mountpoints festlegen. (Experimentell) Sie "
+"müssen die Partitionen selbst bereits formatiert haben und die korrekten "
+"Zuordnungen wie folgt angeben: \\\"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/"
+"tmp\\\""
+
+#: modules/01-hd.bm:15
+msgid ""
+"If set to yes, the program will NOT check if there is enough space to "
+"install knoppix on the selected partition(s). Use at your own risk! Useful "
+"for example with HD_MAP if you only have a small root partition."
+msgstr ""
+"Wenn auf yes gesetzt, dann überprüft das Programm nicht, ob genug "
+"Speicherplatz auf der gewählten Partition vorhanden ist. Benutzung auf "
+"eigene Gefahr! Nützlich ist dies z.B. im Zusammenhang mit HD_MAP, wenn Sie "
+"nur eine kleine root-Partition haben."
+
+#: modules/01-hd.bm:21
+msgid "Drive-Options:"
+msgstr "Laufwerks-Optionen:"
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
+msgstr ""
+"Das Laufwerk $HD_CHOICE wird mit dem $HD_FSTYPE-Dateisystem formatiert "
+"werden."
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be used for the installation."
+msgstr "Das Laufwerk $HD_CHOICE wird für die Installation verwendet werden."
+
+#: modules/01-hd.bm:52
+msgid "Copying files. This can take a while. Please be patient."
+msgstr ""
+"Kopiere Dateien. Dies kann eine Weile dauern. \\nBitte haben Sie etwas "
+"Geduld."
+
+#: modules/01-hd.bm:64
+msgid "Formatting $HD_CHOICE..."
+msgstr "Formatiere $HD_CHOICE..."
+
+#: modules/01-hd.bm:82
+msgid ""
+"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
+"$ERROR_MESSAGES"
+msgstr ""
+"Formatieren von $HD_CHOICE ist fehlgeschlagen. Einige Meldungen von mkfs."
+"$HD_FSTYPE: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:90
+msgid "Mounting $HD_CHOICE r/w..."
+msgstr "Mounte $HD_CHOICE r/w..."
+
+#: modules/01-hd.bm:96
+msgid "Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+msgstr ""
+"Mounten von $HD_CHOICE ist fehlgeschlagen. Einige Nachrichten von mount: "
+"$ERROR_MESSAGES"
+
+#: modules/01-hd.bm:101
+msgid "Mounting additional partitions r/w..."
+msgstr "Mounte weitere Partitionen r/w..."
+
+#: modules/01-hd.bm:118
+msgid "Here you must choose one of the available partitions\\n for use with Kanotix."
+msgstr ""
+"Hier müssen Sie eine der verfügbaren Partitionen \\n für den Gebrauch mit "
+"Kanotix auswählen."
+
+#: modules/01-hd.bm:118
+msgid "Choose the partition to install Kanotix"
+msgstr "Wählen Sie das Laufwerk, auf dem Kanotix installiert werden soll"
+
+#: modules/01-hd.bm:131
+msgid "Here you must choose one of the available filesystem types."
+msgstr "Hier müssen Sie einen der verfügbaren Dateisystemtypen auswählen."
+
+#: modules/01-hd.bm:131
+msgid "Choose filesystem-type."
+msgstr "Wählen Sie ein Dateisystem aus."
+
+#: modules/01-hd.bm:132
+msgid "Extended 2 filesystem with journal support."
+msgstr "Extended 2 Dateisystem mit Journal Support."
+
+#: modules/01-hd.bm:133
+msgid "ReiserFS 3.6: journaling filesystem developed by Namesys."
+msgstr "ReiserFS 3.6: journalbasiertes Dateisystem, entwickelt von Namesys."
+
+#: modules/03-host.bm:9
+msgid "Your hostname is: $HOST_NAME"
+msgstr "Ihr gewählter Hostname ist: $HOST_NAME"
+
+#: modules/03-host.bm:15
+msgid "box"
+msgstr "Box"
+
+#: modules/03-host.bm:16
+msgid "Here you must input your hostname. This is the name of you box."
+msgstr "Hier müssen Sie Ihren Hostnamen wählen. Das ist der Name ihrer Maschine."
+
+#: modules/03-host.bm:16
+msgid "Input your preferred hostname"
+msgstr "Geben Sie Ihren Rechnernamen ein"
+
+#: modules/00-dialog.bm:18
+msgid "Fatal security error."
+msgstr "Schwerer Sicherheitsfehler."
+
+#: modules/00-dialog.bm:64
+msgid "Previous"
+msgstr "Zurück"
+
+#: modules/00-dialog.bm:64
+msgid "Next"
+msgstr "Weiter"
+
+#: modules/00-dialog.bm:64
+msgid "Help"
+msgstr "Hilfe"
+
+#: modules/00-hd-tools.bm:77
+msgid "model unknown"
+msgstr "Modell unbekannt"
+
+#: modules/00-hd-tools.bm:88
+msgid ""
+"The following swap-partitions are marked as swap, but are not yet formatted. "
+"Check those you want to format. Warning, you'll loose all data on the "
+"partition."
+msgstr ""
+"Die folgenden Swap-Partitionen sind als Swap markiert, aber noch nicht "
+"formatiert. Wählen Sie aus, welche Sie formatieren möchten. Warnung: Alle "
+"Daten auf diesen Partitionen gehen verloren."
+
+#: modules/00-hd-tools.bm:141
+msgid "Partitioning harddisk for Kanotix"
+msgstr "Die Festplatte für Kanotix partitionieren"
+
+#: modules/00-hd-tools.bm:144
+msgid ""
+"Here you must choose one of the available disks \\n and partition it for "
+"Kanotix."
+msgstr ""
+"Hier müssen sie eine der verfügbaren Festplatten auswählen \\n um sie für "
+"den Gebrauch mit Kanotix zu partitionieren."
+
+#: modules/00-hd-tools.bm:144
+msgid "Choose one disk"
+msgstr "Wählen Sie eine Festplatte aus"
+
+#: modules/00-hd-tools.bm:173
+msgid "Kanotix Partition-Menu"
+msgstr "Kanotix-Partitionierungsmenü"
+
+#: modules/00-hd-tools.bm:174
+msgid "Here you can partition your hard disk"
+msgstr "Hier kann die Festplatte partitioniert werden"
+
+#: modules/02-swap.bm:12
+msgid "If set to yes, the swap partitions will be autodetected."
+msgstr "Wenn auf 'yes' gesetzt, werden die Swap-Partitionen automatisch erkannt."
+
+#: modules/02-swap.bm:13
+msgid "The swap partitions to be used by the installed knoppix."
+msgstr "Die Swappartitionen, die vom installierten Kanotix verwendet werden sollen."
+
+#: modules/02-swap.bm:18
+msgid "Swapspace-Options:"
+msgstr "Swap-Partitions-Optionen:"
+
+#: modules/02-swap.bm:21
+msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
+msgstr ""
+"Die automatisch erkannten Swap-Partitionen $SWAP_CHOICES werden benutzt "
+"werden."
+
+#: modules/02-swap.bm:21
+msgid "The choosen swapdrives $SWAP_CHOICES will be used."
+msgstr "Die gewählten Swap-Partitionen $SWAP_CHOICES werden benutzt werden."
+
+#: modules/02-swap.bm:23
+msgid "No swap partitions are needed."
+msgstr "Es werden keine Swap-Partitionen benötigt."
+
+#: modules/02-swap.bm:39
+msgid "Adding swap-devices to /etc/fstab ..."
+msgstr "Füge Swap-Partitionen in /etc/fstab ein ..."
+
+#: modules/00-setuser.bm:5
+msgid "Changing user in Passwd/Shadow..."
+msgstr "Verändere Benutzer in Passwd/Shadow..."
+
+#: modules/00-setuser.bm:23
+msgid "Setting passwords ..."
+msgstr "Setze Passwörter ..."
+
+#: modules/00-setuser.bm:28
+msgid "Updating group ..."
+msgstr "Update Gruppendatei ..."
+
+#: modules/04-user-name-pass.bm:9
+msgid "Name-Options:"
+msgstr "Name-Optionen:"
+
+#: modules/04-user-name-pass.bm:10
+msgid "Your name is: $NAME_NAME"
+msgstr "Ihr gewählter Name ist: $NAME_NAME"
+
+#: modules/04-user-name-pass.bm:15
+msgid "Here you must input your whole name. It is used to create a default user."
+msgstr ""
+"Hier müssen Sie Ihren vollen Namen angeben. Dieser wird für die Erstellung "
+"eines Standardbenutzers verwendet."
+
+#: modules/04-user-name-pass.bm:15
+msgid "Input your whole name (name surname)"
+msgstr "Geben Sie ihren vollen Namen ein (Vorname Nachname)"
+
+#: modules/04-user-name-pass.bm:30
+msgid "Your choosen username is: $USER_NAME"
+msgstr "Ihr gewählter Benutzername ist: $USER_NAME"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Here you must input your preferred username. Suggested: $proposal"
+msgstr ""
+"Hier müssen Sie Ihren bevorzugten Benutzernamen eingeben. Vorschlag: "
+"$proposal"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Input your user name (perhaps you like: $proposal)"
+msgstr "Geben Sie ihren Benutzernamen ein (vielleicht: $proposal)"
+
+#: modules/04-user-name-pass.bm:60
+msgid ""
+"Here you must choose the password for the user $USER_NAME and input it "
+"twice. If you have already chosen one, you can leave the fields blank. But "
+"you cannot recover the password once saved, as it is encrypted."
+msgstr ""
+"Hier müssen Sie ein Kennwort für den Benutzer $USER_NAME wählen und es "
+"zweimal eingeben."
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password"
+msgstr "Geben Sie Ihr Benutzerkennwort ein"
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password again"
+msgstr "Wiederholen Sie Ihr Benutzerkennwort"
+
+#: modules/04-user-name-pass.bm:60 modules/04-user-name-pass.bm:80
+msgid "Passwords do not match or no password was given."
+msgstr "Passwörter stimmen nicht überein oder es wurde kein Passwort angegeben."
+
+#: modules/04-user-name-pass.bm:80
+msgid ""
+"Here you must choose the password for system administration (user root) and "
+"input it twice. If you have already chosen one, you can leave the fields "
+"blank. But you cannot recover the password once saved, as it is encrypted. "
+"Remember that the root-User is the Administrator of the system, so it is a "
+"very important password."
+msgstr ""
+"Hier müssen Sie das Administrations-Passwort (Benutzer \"root\") wählen und "
+"es zweimal eingeben. Erinnern Sie sich daran, dass der \"Root\" der "
+"Administrator des Systems ist, also ist es ein sehr wichtiges Kennwort."
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password"
+msgstr "Geben Sie Ihr Administratorkennwort ein"
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password again"
+msgstr "Wiederholen Sie Ihr Administratorkennwort"
+
+#: modules/05-services.bm:9
+msgid "Services-Options:"
+msgstr "Dienste-Optionen:"
+
+#: modules/05-services.bm:10
+msgid ""
+"The following services will be started, after each system bootup: "
+"$SERVICES_START"
+msgstr "Folgende Dienste werden bei jedem Systemboot gestartet: $SERVICES_START"
+
+#: modules/05-services.bm:15
+msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgstr "Mögliche Dienste können bisher sein: kdm cupsd smail ssh samba"
+
+#: modules/06-boot.bm:9
+msgid "Chooses the Boot-Loader"
+msgstr "Wählt den Bootmanager"
+
+#: modules/06-boot.bm:10
+msgid "If set to 'yes' a boot disk will be created!"
+msgstr "Wenn auf 'yes' gesetzt wird eine Bootdiskette erstellt!"
+
+#: modules/06-boot.bm:11
+msgid "Where the Boot-Loader will be installed"
+msgstr "Hier wird der Boot-Loader installiert werden"
+
+#: modules/06-boot.bm:15
+msgid "Bootloader-Options:"
+msgstr "Bootloader-Options:"
+
+#: modules/06-boot.bm:16
+msgid "A bootdisk will be created."
+msgstr "Eine Bootdiskette wird erstellt werden!"
+
+#: modules/06-boot.bm:16
+msgid "No bootdisk will be created."
+msgstr "Keine Bootdiskette wird erstellt!"
+
+#: modules/06-boot.bm:17
+msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+msgstr "Der Bootloader $BOOT_LOADER wird benutzt und in $BOOT_WHERE installiert."
+
+#: modules/06-boot.bm:29
+msgid ""
+"Here you must choose if you want to install the boot-loader to MBR or to a "
+"partition."
+msgstr ""
+"Hier müssen Sie wählen, ob Sie Kanotix in den MBR oder in eine Partitition "
+"installieren wollen."
+
+#: modules/06-boot.bm:29
+msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
+msgstr "Wählen Sie wohin der Bootloader ($BOOT_LOADER) installiert werden soll"
+
+#: modules/06-boot.bm:29
+msgid "Master Boot Record"
+msgstr "Master-Boot-Sektor"
+
+#: modules/06-boot.bm:29
+msgid "To Root-Partition"
+msgstr "In Root-Partition"
+
+#: modules/07-system.bm:5
+msgid ""
+"Determines if the system is a debian-derivate, a copy from CD or a nice mix "
+"of both"
+msgstr ""
+"Entscheidet ob das System ein Debian-Derivate wird, nur eine Kopie von CD, "
+"oder ein hübscher Mix aus beidem zusammen."
+
+#: modules/07-system.bm:11
+msgid "System-Options:"
+msgstr "System-Optionen:"
+
+#: modules/07-system.bm:12
+msgid "The installed system will be a $SYSTEM_TYPE type system."
+msgstr "Das installierte System wird ein $SYSTEM_TYPE - Typ System sein."
+
+#: modules/07-system.bm:27
+msgid ""
+"Here you must choose the type of your system. A Beginner System will have "
+"hwdetection, but also support multiple users. A Kanotix system will work "
+"exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
+"full featured debian system and works like the 'old installer'."
+msgstr ""
+"Hier müssen Sie den Typ Ihres Systems auswählen. Ein Beginner-System hat "
+"Hardwareerkennung, aber untersützt trotzdem mehrere Benutzer. Ein Kanotix-"
+"System läuft genauso wie von CD, aber Werkzeuge wie apt-get funtionieren. "
+"Ein Debian-System dagegen ist eine normale Debianinstallation und "
+"funktioniert wie der alte Installer."
+
+#: modules/07-system.bm:27
+msgid "Choose your system type"
+msgstr "Wählen Sie Ihren Systemtyp"
+
+#: modules/07-system.bm:28
+msgid "Multi-User System with hw-detection (preferred way)"
+msgstr "Mehrbenutzersystem mit Hardwareerkennung (bevorzugt)"
+
+#: modules/07-system.bm:29
+msgid "Kanotix system like from CD"
+msgstr "Kanotix System wie von CD"
+
+#: modules/07-system.bm:30
+msgid "Debian-like system (old installer way)"
+msgstr "Debian-artiges System (wie mit dem alten Installer)"
+
+#: modules/install/01-fstab.bm:5
+msgid "Updating /etc/fstab..."
+msgstr "Update /etc/fstab..."
+
+#: modules/install/03-system_types.bm:24
+msgid "Converting Kanotix to Multi-User-System..."
+msgstr "Konvertiere Kanotix zu Mehrbenutzersystem..."
+
+#: modules/install/02-install-tools.bm:63
+msgid "Copying custom configuration ..."
+msgstr "Kopiere benutzerdefinierte Konfiguration ..."
+
+#: modules/install/02-install-tools.bm:93
+msgid "Copying home directory ..."
+msgstr "Kopiere Heimverzeichnis ..."
+
+#: modules/install/02-install-tools.bm:230
+msgid ""
+"Warning: Templates could not be found. Not updating: profile, inittab, "
+"sudoers, hosts.allow!"
+msgstr ""
+"Warnung: Templatedateien konnten nicht gefunden werden. Die Dateien profile, "
+"inittab, sudoers und hosts.allow werden nicht aktualisiert."
+
+#: modules/install/02-install-tools.bm:409
+msgid "Welcome to Kanotix"
+msgstr "Willkommen zu Kanotix"
+
+#~ msgid "Creating initrd (if needed)"
+#~ msgstr "Erstelle Initrd (wenn benötigt)"
+
+#~ msgid ""
+#~ "Fatal Error: The required file knx-templates-$SVERSION.tgz is missing or "
+#~ "corrupted. The script will be terminated."
+#~ msgstr ""
+#~ "Fataler Fehler: Die benötigte Datei knx-templates-$SVERSION.tgz fehlt "
+#~ "oder ist korrupt. Das Skript wird beendet."
+
+#~ msgid "Copying files (statusbar is resetted) ..."
+#~ msgstr "Kopiere Dateien (Fortschrittsanzeige wird zurückgesetzt)"
+
+#~ msgid "Really quit?"
+#~ msgstr "Wirklich beenden?"
+
+#~ msgid "Do you really want to quit?"
+#~ msgstr "Möchten Sie wirklich beenden?"
+
+#~ msgid "Choose the root partition"
+#~ msgstr "Wählen Sie Ihre Rootpartition."
+
+#~ msgid "Input your root-password"
+#~ msgstr "Geben Sie Ihr Administratorkennwort (Benutzer \"root\") ein"
+
+#~ msgid "Input your root-password again"
+#~ msgstr "Geben Sie das Administratorkennwort nochmals ein"
+
+#~ msgid "If set to yes, SWAP_CHOICES will be overwritten by autodetection"
+#~ msgstr ""
+#~ "Wenn auf 'yes' gesetzt, wird SWAP_CHOICES durch Autoerkennung "
+#~ "überschrieben"
+
