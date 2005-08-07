@@ -1,11 +1,3 @@
-knx-installer: binary-without-manpage k2hd
-knx-installer: binary-without-manpage kanotix-installer
-knx-installer: binary-without-manpage kanotix-installer-latest-web
-knx-installer: binary-without-manpage knoppix-installer
-knx-installer: binary-without-manpage knoppix-installer-latest-web
-knx-installer: binary-without-manpage knx2hd
-knx-installer: binary-without-manpage ktx2hd
-knx-installer: binary-without-manpage mkext2fs
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/06-boot.bm
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/00-setuser.bm
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/03-host.bm
@@ -26,4 +18,3 @@ knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/insta
 knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/modutils-knoppix
 knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-config
 knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-autoconfig
-knx-installer: unknown-section kanotix

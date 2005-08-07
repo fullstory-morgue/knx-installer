@@ -9,5 +9,5 @@ cd $HOME
 wget http://debian.tu-bs.de/knoppix/installer/$FILE
 tar xzf $FILE
 cd knx-installer-*
-sudo chown -R root.root .
+sudo chown -R root:root .
 sudo ./knoppix-installer

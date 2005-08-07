@@ -1,3 +1,17 @@
+knx-installer (0.3.19.16) unstable; urgency=low
+
+  * implement initial (optional) distro-defaults support.
+    - parse $DEFAULT_USER from passwd.
+  * clean up $HOME for all distros.
+  * make chown usage POSIX compatible.
+  * remove obsolete references to /etc/sysconfig/live.
+  * use perl to configure /etc/kernel-pkg.conf.
+  * use section: admin.
+  * remove non fatal lintian errors from overrides.
+  * minor re- indent in ./knoppix-installer.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  7 Aug 2005 17:52:27 +0200
+
 knx-installer (0.3.19.15) unstable; urgency=low
 
   * adapt for the real X.org packages in sid.
@@ -7,7 +21,7 @@ knx-installer (0.3.19.15) unstable; urgency=low
 knx-installer (0.3.19.14) unstable; urgency=low
 
   * update for official x strike force X.org packages.
-  * blacklist unionfs for hd install (thanks to nikaris/ knoppel).
+  * blacklist unionfs for hd install (thanks to niktaris/ knoppel).
   * blacklist dri for hd install.
 
  -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 23 Jun 2005 23:32:51 +0200
