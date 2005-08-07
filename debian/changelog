@@ -6,11 +6,12 @@ knx-installer (0.3.19.16) unstable; urgency=low
   * make chown usage POSIX compatible.
   * remove obsolete references to /etc/sysconfig/live.
   * use perl to configure /etc/kernel-pkg.conf.
+  * switch to cdbs' auto update feature.
   * use section: admin.
   * remove non fatal lintian errors from overrides.
   * minor re- indent in ./knoppix-installer.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  7 Aug 2005 17:52:27 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  7 Aug 2005 17:55:27 +0200
 
 knx-installer (0.3.19.15) unstable; urgency=low
 
