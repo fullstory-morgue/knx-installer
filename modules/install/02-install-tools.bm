@@ -3,13 +3,13 @@
 # Find changes in (real) files of dir1 ... dir2
 # function taken from saveconfig
 system_findchanged(){
-if [ -d "$1" ]; then
-for i in $( cd "$1"; find . -type f | sed 's,^\./,,g' | grep -v ' ' ); do
-cmp -s "$1/$i" "$2/$i" || echo "$1/$i"
-done
-elif [ -e "$1" ]; then
-cmp -s "$1" "$2" || echo "$1"
-fi
+	if [ -d "$1" ]; then
+		for i in $( cd "$1"; find . -type f | sed 's,^\./,,g' | grep -v ' ' ); do
+			cmp -s "$1/$i" "$2/$i" || echo "$1/$i"
+		done
+	elif [ -e "$1" ]; then
+			cmp -s "$1" "$2" || echo "$1"
+	fi
 }
 
 #
@@ -73,10 +73,10 @@ system_copy_etc()
 
 	# Rename XF86Config-4 to xorg.conf when Xorg is used and activate xorg-common
 	if [ -x /usr/X11R6/bin/Xorg ]; then
-	 mv $TARGET_MNT_POINT/etc/X11/XF86Config-4 $TARGET_MNT_POINT/etc/X11/xorg.conf
-	 [ -x /etc/init.d/xorg-common ] && chroot_it update-rc.d xorg-common start 70 S . >/dev/null
-	 [ -x /etc/init.d/x-common ]    && chroot_it update-rc.d x-common    start 70 S . >/dev/null
-	 [ -x /etc/init.d/x11-common ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
+		mv $TARGET_MNT_POINT/etc/X11/XF86Config-4 $TARGET_MNT_POINT/etc/X11/xorg.conf
+		[ -x /etc/init.d/xorg-common ] && chroot_it update-rc.d xorg-common start 70 S . >/dev/null
+		[ -x /etc/init.d/x-common ]    && chroot_it update-rc.d x-common    start 70 S . >/dev/null
+		[ -x /etc/init.d/x11-common ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
 	fi
 
   	# Save ALSA sound volume
@@ -100,8 +100,8 @@ system_copy_etc()
 	
 	# Add dpi setting from cheatcode to hd install
 
-	[ ! -e /etc/sysconfig/base ] && [ -e /etc/sysconfig/knoppix ] && . /etc/sysconfig/knoppix
-	[ -e /etc/sysconfig/base ] && . /etc/sysconfig/base
+	[ ! -e /etc/sysconfig/base ] && [ -e /etc/sysconfig/knoppix ] && source /etc/sysconfig/knoppix
+	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
 	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
 	if [ "$CUSTOM_DPI" != "auto" -a "$CUSTOM_DPI" ]; then
 		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/Xservers ] && perl -pi -e "s|(/usr/X11R6/bin/X -nolisten tcp).*|\1 -dpi $CUSTOM_DPI -br|" $TARGET_MNT_POINT/etc/kde3/kdm/Xservers
@@ -110,7 +110,6 @@ system_copy_etc()
 		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/Xservers ] && perl -pi -e "s|(/usr/X11R6/bin/X -nolisten tcp).*|\1 -br|"                  $TARGET_MNT_POINT/etc/kde3/kdm/Xservers
 		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|"                   $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
 	fi
-
 }
 
 system_copy_home()
@@ -119,14 +118,13 @@ system_copy_home()
 	
 	#copy home directory from running user
 
-	if [ -d "/home/$DEFAULT_USER/.kde" ]
-	then
-	  rm -rf $TARGET_MNT_POINT/home/$DEFAULT_USER
-	  cp -a /home/$DEFAULT_USER $TARGET_MNT_POINT/home
-	  [ "$USER_NAME" != "$DEFAULT_USER" ] && mv $TARGET_MNT_POINT/home/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME
+	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
+		rm -rf $TARGET_MNT_POINT/home/$DEFAULT_USER
+		cp -a /home/$DEFAULT_USER $TARGET_MNT_POINT/home
+		[ "$USER_NAME" != "$DEFAULT_USER" ] && mv $TARGET_MNT_POINT/home/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME
 	else
-	  cp -a $TARGET_MNT_POINT/etc/skel $TARGET_MNT_POINT/home
-	  mv $TARGET_MNT_POINT/home/skel $TARGET_MNT_POINT/home/$USER_NAME
+		cp -a $TARGET_MNT_POINT/etc/skel $TARGET_MNT_POINT/home
+		mv $TARGET_MNT_POINT/home/skel $TARGET_MNT_POINT/home/$USER_NAME
 	fi
 
 	chroot "$TARGET_MNT_POINT" chown -R $USER_NAME:$USER_NAME /home/$USER_NAME
@@ -167,14 +165,13 @@ system_copy_home()
 
 	# Mozilla Konfigdateien korrigieren
 
-	if [ "$USER_NAME" != "$DEFAULT_USER" ] 
-	then
+	if [ "$USER_NAME" != "$DEFAULT_USER" ];	then
 		rm -f $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/appreg
 		rm -f $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/pluginreg.dat
 		# TODO: Test if symlink works ...
 		if [ -e $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER ]; then
-		 [ -e $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default ] || mv $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default
-		 perl -pi -e 's/.*general.useragent.*\n?//' $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js
+			[ -e $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default ] || mv $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default
+			perl -pi -e 's/.*general.useragent.*\n?//' $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js
 		fi
 
 		# Bei unterschiedlichem OLD/NEWHOME muss man die Pfade anpassen, sonst funktionieren die Anwendungen nicht korrekt
@@ -182,8 +179,7 @@ system_copy_home()
 		OLDHOME="/home/$DEFAULT_USER"
 		NEWHOME="/home/$USER_NAME"
 		PART="$TARGET_MNT_POINT"
-		for f in $(find "$PART$NEWHOME" -exec grep -ls "$OLDHOME" {} \;|grep -v $0)
-		do
+		for f in $(find "$PART$NEWHOME" -exec grep -ls "$OLDHOME" {} \;|grep -v $0); do
 			perl -pi -e "s|$OLDHOME|$NEWHOME|g" "$f"
 		done
 	fi
@@ -221,14 +217,12 @@ system_setup_kdm()
 	
 	# fix display permissions for xdm/kdm (bug in woody?)
 	#sed -e 's,DisplayManager\*authorize:.*true,DisplayManager*authorize: false,g' /etc/X11/xdm/xdm-config >$TARGET_MNT_POINT/etc/X11/xdm/xdm-config
-	#for x in /etc/kde[23]/kdm/kdmrc
-	#do
+	#for x in /etc/kde[23]/kdm/kdmrc; do
 	#	perl -pi -e 's,#Authorize=false,Authorize=false,g' $TARGET_MNT_POINT/$x
 	#done
 
 	# force kde first time configuration
-	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]
-	then
+	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]; then
 		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' $TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc
 
 		# The users kde should be perfect, unless we just copied from template ...
@@ -246,8 +240,7 @@ system_install_templates()
 {
 	TEMPLATE_PATH=""
 	[ -d $SEARCHPATH/templates ] && TEMPLATE_PATH=$SEARCHPATH/templates
-	if [ -n "$TEMPLATE_PATH" ]
-	then 
+	if [ -n "$TEMPLATE_PATH" ]; then 
 		# change prompt (/etc/profile)
 		cp -af $TEMPLATE_PATH/etc/profile $TARGET_MNT_POINT/etc/profile
 
@@ -341,31 +334,21 @@ system_services()
 	rm -f $TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt}
 
 	# start services wanted in config ...
-	for i in $SERVICES_START
-	do
+	for i in $SERVICES_START; do
 		chroot_it update-rc.d $i defaults 2>/dev/null >/dev/null # shut up
 	done
 
-#	if [ -d $TEMPLATE_PATH ]
-#	then
-#		# copy system runlevel
-#		cp -af $TEMPLATE_PATH/etc/rcS.d/ $TARGET_MNT_POINT/etc/
-#		# copy basic shutdown and reboot runlevels
-#		cp -af $TEMPLATE_PATH/etc/rc0.d/ $TARGET_MNT_POINT/etc/
-#		cp -af $TEMPLATE_PATH/etc/rc6.d/ $TARGET_MNT_POINT/etc/
-#	fi
-	
 	# create basic system runlevel
 	chroot_it update-rc.d bootmisc.sh start 55 S . &>/dev/null
 	chroot_it update-rc.d checkfs.sh start 30 S . &>/dev/null
 	chroot_it update-rc.d checkroot.sh start 10 S . &>/dev/null
 	chroot_it update-rc.d console-screen.sh start 48 S . &>/dev/null
 	if [ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ]; then
-	chroot_it update-rc.d mountvirtfs start 35 S . &>/dev/null
+		chroot_it update-rc.d mountvirtfs start 35 S . &>/dev/null
 	elif [ -x $TARGET_MNT_POINT/etc/init.d/mountkernfs ]; then
-	chroot_it update-rc.d mountkernfs start 35 S . &>/dev/null
+		chroot_it update-rc.d mountkernfs start 35 S . &>/dev/null
 	else
-	chroot_it update-rc.d devpts.sh start 35 S . &>/dev/null
+		chroot_it update-rc.d devpts.sh start 35 S . &>/dev/null
 	fi
 	chroot_it update-rc.d dns-clean start 39 S . &>/dev/null
 	chroot_it update-rc.d hostname.sh start 40 S . &>/dev/null
@@ -395,8 +378,7 @@ system_services()
 	chroot_it update-rc.d hotplug start 11 1 2 3 4 5 . start 37 S . stop 89 0 6 . 2>/dev/null >/dev/null
 
 	# Add default scripts to runlevels
-	for i in $SYSTEM_SERVICES_D 
-	do
+	for i in $SYSTEM_SERVICES_D; do
 		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
 		SYSTEM_START=$(echo $i | cut -d: -f2)
 		SYSTEM_STOP=$(echo $i | cut -d: -f3)
@@ -411,8 +393,7 @@ system_services()
 	#	(das gilt aber auch eigentlich nur für nicht-debian Systeme ;-))
 	
 	for DM in kdm xdm gdm; do
-		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]
-		then
+		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]; then
 	 		chroot_it update-rc.d -f $DM remove 2>/dev/null >/dev/null
 	 		chroot_it update-rc.d $DM start 99 5 . stop 1 0 1 2 3 4 6 . >/dev/null
 		fi
@@ -431,7 +412,7 @@ system_services()
 
 system_install_keymap()
 {
-	[ -f /etc/sysconfig/keyboard ] && . /etc/sysconfig/keyboard
+	[ -f /etc/sysconfig/keyboard ] && source /etc/sysconfig/keyboard
 
 	# Add correct keymap (thx to Joerg Schirottke)
 	[ -n "$KEYTABLE" ] && chroot_it install-keymap "$KEYTABLE" 2>/dev/null
@@ -441,12 +422,10 @@ system_install_i18n()
 {
 	# Environment korrekt setzen
 
-	if [ -e "$TARGET_MNT_POINT/etc/sysconfig/i18n" ]
-	then
-		. "$TARGET_MNT_POINT/etc/sysconfig/i18n"
+	if [ -e "$TARGET_MNT_POINT/etc/sysconfig/i18n" ]; then
+		source "$TARGET_MNT_POINT/etc/sysconfig/i18n"
 		echo LANG=$LANG >> "$TARGET_MNT_POINT/etc/environment"
-		if [ "$LANG" == "el_GR" ]
-		then
+		if [ "$LANG" == "el_GR" ]; then
 			echo LANGUAGE=$(echo $LANG|perl -pe '($_)=/(..)/') >> "$TARGET_MNT_POINT/etc/environment"
 	  		echo LC_ALL=$LANG >> "$TARGET_MNT_POINT/etc/environment"
 	 	fi
@@ -485,22 +464,20 @@ EOF
 
 	BLACKLIST=$(cut -f1 -d' ' /lib/modules/$(uname -r)/modules.usbmap|sort|uniq|perl -pe 's/#\n//;s/\n/|/g')"cloop|snd|radeon|fsam7400|capi|hisax|fcpci|fcdsl|ieee80211|slam|unionfs|dri"
 	cat /proc/modules | tac | grep -v '\[.*\]' | egrep -v "$BLACKLIST" |
-	while read mod x
-	do
-	  if [ $mod = apm ] ; then
-	    echo "apm power_off=1" >>$TMP
-	  elif [ $mod = sbp2 ] ;then
-	    echo "sbp2 serialize_io=1" >>$TMP
-	  else
-	    echo $mod >>$TMP
-	  fi
+	while read mod x; do
+		if [ $mod = apm ]; then
+			echo "apm power_off=1" >>$TMP
+		elif [ $mod = sbp2 ]; then
+			echo "sbp2 serialize_io=1" >>$TMP
+		else
+			echo $mod >>$TMP
+		fi
 	done
 
 	WHITELIST="ipw2100|ipw2200"
 	cat /proc/modules | tac | grep -v '\[.*\]' | egrep "$WHITELIST" |
-	while read mod x
-	do
-	  echo $mod >>$TMP
+	while read mod x; do
+		echo $mod >>$TMP
 	done
 
 	# add ALSA modules to circumvent problems with some AC97 codecs (mostly snd-via82xx, snd-intel8x0)
@@ -521,13 +498,12 @@ EOF
 		x=""
 		checkbootparam nodma && x='#'
 		echo "# enable DMA" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-		if [ -f /proc/partitions ] ; then
-			while read x x x p x
-			do
-		    	case "$p" in
-		    		hd?)
-					[ -r "/proc/ide/$p/media" ] && echo "$x /sbin/hdparm -qd1 /dev/$p" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-					;;
+		if [ -f /proc/partitions ]; then
+			while read x x x p x; do
+			    	case "$p" in
+			    		hd?)
+						[ -r "/proc/ide/$p/media" ] && echo "$x /sbin/hdparm -qd1 /dev/$p" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
+						;;
 				esac
 			done < /proc/partitions
 		fi
@@ -545,7 +521,7 @@ system_update_files()
 	# update /etc/motd
 	echo -e $"Welcome to Kanotix" "(Kernel $(uname -r))\n" > $TARGET_MNT_POINT/etc/motd
 
-cat <<EOF >$TARGET_MNT_POINT/etc/hosts
+	cat <<EOF >$TARGET_MNT_POINT/etc/hosts
 127.0.0.1	$HOST_NAME localhost
 
 # The following lines are desirable for IPv6 capable hosts
@@ -586,14 +562,12 @@ system_fix_menus()
 	[ -d $TARGET_MNT_POINT/usr/share/applnk/Kanotix ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/Kanotix kdesu
 	[ -d $TARGET_MNT_POINT/usr/share/applnk/KANOTIX ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/KANOTIX kdesu
 
-	for i in `egrep -l -r -e '(xcdroast|ethereal|kbackup)' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`
-	do
+	for i in `egrep -l -r -e '(xcdroast|ethereal|kbackup)' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; do
         	perl -pi -e 's|Exec=sudo /|Exec=/|g' "$TARGET_MNT_POINT$i"
 	done
 
 	# Replace sudo (does not work from hd) by kdesu (does)
-	for i in `grep -l -r 'Exec=sudo -H ' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`
-	do
+	for i in `grep -l -r 'Exec=sudo -H ' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; 	do
         	perl -pi -e 's|Exec=sudo -H |Exec=kdesu -- |g' "$TARGET_MNT_POINT$i"
 	done
 
@@ -606,3 +580,4 @@ system_fix_menus()
 	#perl -pi -e 's|Exec=sudo -H |Exec=su-to-root -X -c |g' /usr/share/applications/qtparted.desktop
 	#perl -pi -e "s/Exec=/Exec=su -c /g" $TARGET_MNT_POINT/usr/share/applnk/System/Partition_Image.desktop
 }
+

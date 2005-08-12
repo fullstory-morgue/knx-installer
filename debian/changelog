@@ -1,3 +1,10 @@
+knx-installer (0.3.19.17) unstable; urgency=low
+
+  * improve ALSA handling.
+  * partial re- indent
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 12 Aug 2005 19:25:23 +0200
+
 knx-installer (0.3.19.16) unstable; urgency=low
 
   * implement initial (optional) distro-defaults support.
