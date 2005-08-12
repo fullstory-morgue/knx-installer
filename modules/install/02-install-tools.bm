@@ -283,7 +283,13 @@ system_add_services()
 
 	# ALSA aktivieren, wenn möglich
 
-	[ -e /proc/asound/modules -a -x /etc/init.d/alsa ] && chroot_it update-rc.d alsa defaults
+	if [ -e /proc/asound/modules ]; then
+		if [ -x /etc/init.d/alsa-utils ]; then
+			chroot_it update-rc.d alsa-utils defaults
+		elif [ -x /etc/init.d/alsa ]; then
+			chroot_it update-rc.d alsa defaults
+		fi
+	fi
 
 	[ -x /etc/init.d/cupsys ] &&  chroot_it update-rc.d cupsys defaults 2>/dev/null >/dev/null
 	
