@@ -52,6 +52,7 @@ create_initrd()
 		# TODO: :-)
 		[ -z "$(which mkext2fs)" -a -x "tools/mkext2fs" ] && cp -f tools/mkext2fs $TARGET_MNT_POINT/usr/sbin/
 		perl -pi -e "s/mkcramfs/mkext2fs/g" $TARGET_MNT_POINT/etc/mkinitrd/mkinitrd.conf
+		perl -pi -e "s/(^MODULES)=dep/\1=most/g" $TARGET_MNT_POINT/etc/mkinitrd/mkinitrd.conf
 		export INITRD_PARAM_$INITRD_POSTFIX="ramdisk_size=100000 "
 	fi
  

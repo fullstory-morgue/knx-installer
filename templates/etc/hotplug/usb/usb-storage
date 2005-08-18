@@ -2,27 +2,64 @@
 #
 # /etc/hotplug/usb/usb-storage
 #
+# PUT YOUR KNOWN DEVICES AND DEFAULT USER INTO "usb-storage-user.sh" !
+#
 
 [ -z $TYPE ] && exit 0
 
-us_VERSION="20050308-devel"
+us_VERSION="20050718-devel"
+KERNEL="$(uname -r)"
 
-# uncomment the next line to use this user if no XUSER exists (coldplugging)
-#us_DEFAULTUSER=YOUR_USER_NAME
-# uncomment the next line to use this UID if no XUSER exists (coldplugging)
-us_DEFAULTUID=1000 # the user created when installed to hd
+##########
 #
-# $LOGFILE is /var/log/usb-storage/usb-storage.log
-#LOGFILE=$0.log
-# set to 1 if you want debugging output in $LOGFILE
-DEBUG=0
+# set to 1 if you want debugging output in $LOGFILE,
+# set to 2 for Extended Debug (in find_partitions_26, fstype)
+DEBUG=1
 # set to 1 if you want logging appended to $LOGFILE.all
 LOGALL=0
 #
 # Logfiles at /var/log/hotplug
 LOGDIR=/var/log/hotplug
 [ -d $LOGDIR ] || mkdir -p $LOGDIR
-LOGFILE=$LOGDIR/usb-storage.log
+
+# When Debug = 0 -> Log Output to /dev/null
+case $DEBUG in
+    0) LOGFILE=/dev/null ;;
+    *) LOGFILE=$LOGDIR/$(basename $0).log
+       echo -n >$LOGFILE
+       ;;
+esac
+# When LOGALL = 0 -> All Log Output to /dev/null
+case $LOGALL in
+    0) ALLFILE=/dev/null ;;
+    *) ALLFILE=$LOGDIR/$(basename $0).log.all ;;
+esac
+
+function log {
+    local LEVEL=$1; shift
+    [ "$DEBUG" -ge "$LEVEL" ] && echo "$@" >>$LOGFILE
+}
+#
+##########
+
+log 1 "PRODUCT=$PRODUCT"
+log 1 "KERNEL=$KERNEL"
+
+echo "$ACTION $PRODUCT" >> $ALLFILE
+
+# set default icon for storage devices
+us_STORAGEICON=usbpendrive_mount
+#
+# set default values for special devices
+# name is "camera", mountpoint is "/mnt/camera"
+us_SPECIALNAME=camera
+# default icon for camera
+us_SPECIALICON=camera
+#
+# config file for known special devices
+if [ -r "/etc/hotplug/usb/usb-storage-user.sh" ]; then
+    source /etc/hotplug/usb/usb-storage-user.sh "$PRODUCT"
+fi
 #
 
 
@@ -46,12 +83,11 @@ function makeCameraIcon {
 # make an icon (Camera) on Desktop
 cat << EOF > $us_XDESKTOPFILE
 [Desktop Entry]
-Name=Camera
-Name[de]=Kamera
+Name=$us_SPECIALNAME
 Type=Link
-URL=/mnt/camera/
+URL=$us_MOUNTPOINT
 Actions=Sync;Digikam
-Icon=camera
+Icon=$us_SPECIALICON
 Comment=digital camera
 Comment[de]=Digitalkamera
 
@@ -85,7 +121,7 @@ Name[de]=USB [$us_PARTITION]
 Type=Link
 URL=$us_MOUNTPOINT
 Actions=Sync
-Icon=usbpendrive_mount
+Icon=$us_STORAGEICON
 Comment=USB storage device
 Comment[de]=USB Speichergerät
 
@@ -103,26 +139,6 @@ mount | grep -q $us_MOUNTPOINT || rm -f $us_XDESKTOPFILE $us_XREMOVEFILE
 EOF
 }
 
-
-echo "PRODUCT=$PRODUCT" > $LOGFILE
-
-if [ $LOGALL -ne 0 ]; then
-        echo "$ACTION $PRODUCT" >> $LOGFILE.all
-fi
-
-
-us_MOUNTPOINT=" "
-#
-# (known) digicams are mounted at /mnt/camera
-#
-case "$PRODUCT" in
-        3f0/4002/100) # HP photosmart 120 (mass storage mode)
-                us_MOUNTPOINT="/mnt/camera"
-                ;;
-#        xxx/yyy/zzz) # PRODUCT ID of YOUR camera
-#                us_MOUNTPOINT="/mnt/camera"
-#                ;;
-esac
 
 
 ##########
@@ -158,7 +174,7 @@ function find_partitions_1 {
 # doesn't work with kernel 2.6.x
 #
 function find_partitions_2 {
-        local scsi=" "
+        local scsi=
         scsidev -lde 2>/dev/null >/dev/null
         for scsi in $(PRODUCT_to_SCSI $PRODUCT); do
                 ls -l /dev/scsi/sdc${scsi}b0t?u?p*|cut -d/ -f6
@@ -174,7 +190,7 @@ function find_partitions_2 {
 #
 function host_to_partitions {
         local host=$1
-        local dev=" "
+        local dev=
         for dev in $(scsiinfo -l); do
                 local HOST="-1"
                 eval $(scsi_info $dev 2>/dev/null)
@@ -186,7 +202,7 @@ function host_to_partitions {
 #
 #
 function find_partitions_3 {
-        local scsi=" "
+        local scsi=
         for scsi in $(PRODUCT_to_SCSI $PRODUCT); do
                 host_to_partitions $scsi
         done
@@ -197,19 +213,37 @@ function find_partitions_3 {
 
 ##########
 #
-# simple detecting method for kernel 2.6.x
-#
+# (Not more so) simple detecting method for kernel 2.6.x
+# (FJ's Version for hopefully 2.6.9- and 2.6.10+, with expiration timer)
 function find_partitions_26 {
-        sleep 8
-        local devices=" "
-        devices=$(ls -d /sys$DEVPATH/host[0-9]*/target[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block)
-        [ -z "$devices"] && devices=$(ls -d /sys$DEVPATH/host[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block)
-        local link=" "
-        local dev=" "
-        for link in $devices; do
-                dev=$(basename $(readlink $link))
-                ls /sys/block/$dev | grep $dev || echo $dev
+local FUNC=${FUNCNAME[0]}
+local DEVS LOOP=50 LOOPTIME
+
+# Warten, bis Phys. Device(s) erscheinen oder Timeout erreicht wird.
+while [ -z "$DEVS" -a "$LOOP" -gt "0" ]; do
+        DEVS=$(ls -d /sys$DEVPATH/host[0-9]*/target[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block) || \
+        DEVS=$(ls -d /sys$DEVPATH/host[0-9]*/[0-9]*:[0-9]:[0-9]:[0-9]/block)
+        (( LOOP-- ))
+        sleep .5 # Wait 500 msec.
+        log 2 "$FUNC: Date:$(date), DEVS:$DEVS"
+done
+
+# Wenn Device(s) gefunden -> Auswertung
+LOOPTIME=$(( (50 - LOOP) * 500 ))
+if [ -n "$DEVS" ]; then
+        log 1 "$FUNC: Time in Loop: $LOOPTIME ms"
+        local link= dev=
+        for link in $DEVS; do
+            dev=$(basename $(readlink $link))
+            ls /sys/block/$dev | grep $dev || echo $dev
         done
+else
+        log 1 "$FUNC: Device not found in $LOOPTIME ms"
+fi
+log 2 "DEVS:$DEVS"
+log 2 -e "$FUNC: DEBUG (ls -l \$DEVS):\n$(ls -l ${DEVS/block/} $DEVS/)\n"
+log 2 -e "$FUNC: MOUNT:\n$(mount|grep -E "proc|sys|usb")\n"
+log 2 -e "$FUNC: DMESG:\n$(dmesg|tail -25)\n"
 }
 #
 ##########
@@ -217,18 +251,55 @@ function find_partitions_26 {
 
 ##########
 #
+function udev_subtle_sarge_hack {
+# Devices in Eigenregie unter /dev erstellen (/sbin/MAKEDEV wird vorausgesetzt)
+local FUNC=${FUNCNAME[0]}
+if [ ! -b "$1" ]; then
+        local PARTITION=${1/\/dev\/}; local DEV=${PARTITION:0:3}
+        if [ ! -d /dev -o ! -x /sbin/MAKEDEV ]; then
+            log 1 -e "$FUNC: No /dev Directory or /sbin/MAKEDEV is not there or executable. Too bad."
+            exit 0
+        fi
+        log 1 -e "$FUNC: Make the Devicenodes for $PARTITION($DEV) under /dev (udev) manual with MAKEDEV.\n"
+        (cd /dev; export WRITE_ON_UDEV="yes"; MAKEDEV $DEV) >>$LOGFILE 2>&1
+fi
+}
+function udev_wait_for_blockdevice {
+# Warten, bis Device unter 'dev' erscheint oder Timeout erreicht wird.
+local FUNC=${FUNCNAME[0]}
+local LOOP=150
+while [ ! -b "$1" -a "$LOOP" -gt "0" ]; do
+        (( LOOP-- ))
+        sleep 1
+        log 2 "$FUNC: Wait for Block Device $1 to settle, Tries $LOOP."
+done
+}
+function udev_blockdevice {
+case "$UDEV_SUBTLE_SARGE_HACK" in
+        yes)    udev_subtle_sarge_hack $1 ;;
+        *)      udev_wait_for_blockdevice $1 ;;
+esac
+}
+
 function fstype {
+local FUNC=${FUNCNAME[0]}
 local FILE
 dd if="$1" count=1 bs=1k >/dev/null 2>&1
 if [ $? -gt 0 ]; then
+        log 1 "$FUNC: 'dd if=$1 count=1 bs=1k' has failed. exists $1 ?"
+        log 1 -e "DEBUG (ls -l ${1:0:8}*):\n$(ls -l ${1:0:8}*)"
         echo "none"
         return
 fi
-FILE="$(LANG=C LC_ALL=C LC_MESSAGES=C file -Lkbs "$1")"
+FILE="$(LANG=C LC_ALL=C LC_MESSAGES=C; file -Lkbs "$1")"
 if [ $? -gt 0 ]; then
+        log 1 "$FUNC: 'file -Lkbs $1' has failed."
+        log 1 -e "FILE: $FILE\nDEBUG: $(file -Lkbs $1)"
         echo "none"
         return
 fi
+log 2 -e "$FUNC: FILE: $FILE\n"
+log 2 -e "$FUNC: FDISK: $(fdisk -l ${1:0:8})\n"
 if [ "$FILE" = "data" ]; then
         # could still be ReiserFS, since "file" only reads 64k in Debian
         FILE="$(dd if="$1" skip=65536 ibs=1 count=7 2>/dev/null)"
@@ -251,7 +322,7 @@ case "$FILE" in
         *[Nn][Tt][Ff][Ss]*)           echo "ntfs";;
         *[Ff][Aa][Tt]*)               echo "vfat";;
         x86\ boot\ sector*)
-                # check FAT12 / FAT16
+               # check FAT12 / FAT16
                 dd if="$1" ibs=1 skip=54 count=8 2>/dev/null | grep -q FAT && echo "vfat" && return
                 # check FAT32
                 dd if="$1" ibs=1 skip=82 count=8 2>/dev/null | grep -q FAT && echo "vfat" && return
@@ -272,8 +343,8 @@ fi
 
 
 if [ -z "$us_PARTITIONS" ]; then
-        echo "Device not found" >> $LOGFILE
-        debugOutput >> $LOGFILE
+        log 1 "Device not found"
+        log 1 "$(debugOutput)"
         exit 0
 fi
 
@@ -311,28 +382,33 @@ for us_PARTITION in $us_PARTITIONS; do
         us_DEVICE=/dev/$us_PARTITION
 
         # special case for digicam
-        if [ "$us_MOUNTPOINT" != "/mnt/camera" ]; then
-                us_MOUNTPOINT=/mnt/$us_PARTITION
+        if [ "$us_SPECIALDEVICE" ]; then
+            us_MOUNTPOINT=/mnt/$us_SPECIALNAME
+        else
+            us_MOUNTPOINT=/mnt/$us_PARTITION
         fi
 
         # skip if device or mountpoint already in use
         # TODO: umount mounted devices always at remove
         mount | grep "$us_DEVICE \| $us_MOUNTPOINT " >/dev/null
         if [ $? -eq 0 ]; then
-                echo -n "Already mounted: " >> $LOGFILE
-                mount | grep "$us_DEVICE \| $us_MOUNTPOINT" >> $LOGFILE
+                log 1 -n "Already mounted: "
+                log 1 "$(mount | grep "$us_DEVICE\|$us_MOUNTPOINT")"
                 _DEBUG=1
                 continue
         fi
 
+        # Make sure, that the Device was there
+        udev_blockdevice $us_DEVICE
+    
         # check filesystem type
-        if [ "$us_MOUNTPOINT" = "/mnt/camera" ]; then
+        if [ "$us_SPECIALDEVICE" ]; then
                 us_FSTYPE="vfat"
         else
                 us_FSTYPE=$(fstype $us_DEVICE)
         fi
 
-        [ $DEBUG -ne 0 ] && echo $us_DEVICE $us_FSTYPE >> $LOGFILE
+        log 1 "$us_DEVICE $us_FSTYPE"
 
         case "$us_FSTYPE" in
                 ext2|ext3|reiserfs|jfs|xfs|minix)
@@ -343,21 +419,24 @@ for us_PARTITION in $us_PARTITIONS; do
                         us_MOUNTCMD="/bin/mount -t $us_FSTYPE -o $us_OWNER,umask=0222,ro,user $us_DEVICE $us_MOUNTPOINT"
                         ;;
                 vfat|auto)
-                        us_MOUNTCMD="/bin/mount -t vfat -s -o $us_OWNER,shortname=mixed,quiet,sync,umask=0002,user,showexec $us_DEVICE $us_MOUNTPOINT"
+                        # Better implementation, with bash-Syntax (without 'cut')
+                        VFAT_MAINVER=${KERNEL/\-*/}
+                        [ "${VFAT_MAINVER:0:3}" != "2.6" -o "${VFAT_MAINVER:4:3}" -lt "12" ] && VFAT_SYNC=",sync"
+                        us_MOUNTCMD="/bin/mount -t vfat -s -o $us_OWNER,shortname=mixed,quiet${VFAT_SYNC},umask=0002,user,showexec $us_DEVICE $us_MOUNTPOINT"
                         ;;
                 none|extended|swap)
                         continue
                         ;;
                 *)
                         # don't mount
-                        echo $us_DEVICE $us_FSTYPE >> $LOGFILE
+                        log 1 "$us_DEVICE $us_FSTYPE"
                         continue
                         ;;
         esac
 
         # try to mount
         mkdir -p $us_MOUNTPOINT
-        echo $us_MOUNTCMD >> $LOGFILE
+        log 1 "$us_MOUNTCMD"
         $($us_MOUNTCMD 2>> $LOGFILE)
         # continue if no success
         if [ $? -ne 0 ]; then
@@ -367,28 +446,24 @@ for us_PARTITION in $us_PARTITIONS; do
         # $REMOVER is executed when the device is pulled
         echo "/bin/umount -lf $us_DEVICE" >> $REMOVER
         echo "echo \"/bin/umount -lf $us_DEVICE\" >> $LOGFILE" >> $REMOVER
-        if [ $LOGALL -ne 0 ]; then
-                echo "echo \"umount $us_DEVICE\" >> $LOGFILE.all" >> $REMOVER
-        fi
 
-        # logging
-        if [ $LOGALL -ne 0 ]; then
-                echo "mount $us_DEVICE" >> $LOGFILE.all
-        fi
+        # Logging
+        echo "echo \"umount $us_DEVICE\" >> $ALLFILE" >> $REMOVER
+        echo "umount $us_DEVICE" >> $ALLFILE
 
         # Desktop icon for X11
         for home in $(awk -F: '{print $6}' /etc/passwd); do
                 desktop=${home}/Desktop
                 if [ -d "$desktop" ]; then
-                        case "$us_MOUNTPOINT" in
-                                /mnt/camera)
-                                        us_XDESKTOPFILE="$desktop/Camera.desktop"
-                                        us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_Camera"
+                        case "$us_SPECIALDEVICE" in
+                                camera)
+                    us_XDESKTOPFILE="$desktop/${us_SPECIALNAME}.desktop"
+                    us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_${us_SPECIALNAME}"
                                         makeCameraIcon
                                         ;;
                                 *)
-                                        us_XDESKTOPFILE="$desktop/USB_${us_PARTITION}.desktop"
-                                        us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_USB_${us_PARTITION}"
+                    us_XDESKTOPFILE="$desktop/USB_${us_PARTITION}.desktop"
+                    us_XREMOVEFILE="$home/.kde/Autostart/rm_icon_USB_${us_PARTITION}"
                                         makeStorageIcon
                                         ;;
                         esac
@@ -398,13 +473,11 @@ for us_PARTITION in $us_PARTITIONS; do
                         echo "rm -f $us_XREMOVEFILE" >> $REMOVER
                 fi
         done
-        usleep 500000
+
+        sleep 1
 done
 
-
-if [ $DEBUG -ne 0 ]; then
-        debugOutput >> $LOGFILE
-fi
+log 1 "$(debugOutput)"
 
 # hack for "coldplugging" (make $REMOVER newer then /etc/mtab created by mount cmd)
 # older files are removed when /etc/init.d/bootmisc.sh is run

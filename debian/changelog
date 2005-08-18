@@ -1,8 +1,9 @@
-knx-installer (0.3.19.18) UNRELEASED; urgency=low
+knx-installer (0.3.19.18) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * fix initrd creation.
+  * update usb-storage to 20050718-devel.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 12 Aug 2005 19:27:33 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 18 Aug 2005 19:37:53 +0200
 
 knx-installer (0.3.19.17) unstable; urgency=low
 
