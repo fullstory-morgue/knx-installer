@@ -107,9 +107,14 @@ create_initrd()
 		# Make the real initrd
 		#
 
-		# mkinitrd uses TMPDIR in the code... #fixme: yeah, mkinitrd can be stupid 
-		TMPDIR= chroot_it mkinitrd -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL 2>/dev/null
-			
+		# mkinitrd uses TMPDIR in the code... #fixme: yeah, mkinitrd can be stupid
+		if [ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ]; then
+			echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
+			TMPDIR= chroot_it mkinitrd.yaird -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL 2>/dev/null
+		else
+			TMPDIR= chroot_it mkinitrd -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL 2>/dev/null
+		fi
+		
 		# Be verbose ...
 		[ ! -s $TARGET_MNT_POINT/boot/initrd.img-$BOOT_KERNEL ] && return 2
 
