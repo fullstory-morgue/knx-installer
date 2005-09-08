@@ -15,6 +15,3 @@ knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/booti
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/install/01-fstab.bm
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/install/02-install-tools.bm
 knx-installer: script-not-executable ./usr/share/knoppix-installer/modules/install/03-system_types.bm
-knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/modutils-knoppix
-knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-config
-knx-installer: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-autoconfig

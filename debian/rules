@@ -6,29 +6,17 @@ include /usr/share/cdbs/1/rules/buildcore.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 #include /usr/share/cdbs/1/class/makefile.mk
 
-PACKAGE_NAME := knx-installer
 PACKAGE_VER   = "$(shell dpkg-parsechangelog | grep ^Vers | cut -d\  -f2)"
 
-common-install-arch common-install-indep:: common-install-impl
-common-install-impl::
-	install -m 0755 -d  $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin
-	install -m 0755     knoppix-installer $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/
-	cd $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/ && ln -sf knoppix-installer k2hd
-	cd $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/ && ln -sf knoppix-installer knx2hd
-	cd $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/ && ln -sf knoppix-installer ktx2hd
-	cd $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/ && ln -sf knoppix-installer kanotix-installer
-	perl -pi -e "s|VERSION=.*|VERSION=\"$(PACKAGE_VER)\"|" $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin/knoppix-installer
+build/knx-installer::
+	install -m 0755 -d  $(CURDIR)/debian/knx-installer/usr/sbin
+	install -m 0755     knoppix-installer $(CURDIR)/debian/knx-installer/usr/sbin/
+	dh_link	usr/sbin/knoppix-installer usr/sbin/k2hd \
+		usr/sbin/knoppix-installer usr/sbin/knx2hd \
+		usr/sbin/knoppix-installer usr/sbin/ktx2hd \
+		usr/sbin/knoppix-installer usr/sbin/kanotix-installer
 	
-	install -m 0755 $(CURDIR)/tools/mkext2fs $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin
-	install -m 0755 $(CURDIR)/tools/kanotix-installer-latest-web $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin
-	install -m 0755 $(CURDIR)/tools/knoppix-installer-latest-web $(CURDIR)/debian/$(PACKAGE_NAME)/usr/sbin
-	install -m 0755 $(CURDIR)/tools/knoppix-hd-config $(CURDIR)/debian/$(PACKAGE_NAME)/etc/init.d/
-	install -m 0755 $(CURDIR)/tools/knoppix-hd-autoconfig $(CURDIR)/debian/$(PACKAGE_NAME)/etc/init.d/
-	install -m 0755 $(CURDIR)/tools/modutils-knoppix $(CURDIR)/debian/$(PACKAGE_NAME)/etc/init.d/
-	
-	install -m 0755 -d $(CURDIR)/debian/$(PACKAGE_NAME)/usr/share/knoppix-installer/
-	cp -a $(CURDIR)/modules/ $(CURDIR)/debian/$(PACKAGE_NAME)/usr/share/knoppix-installer/
-	cp -a $(CURDIR)/templates/ $(CURDIR)/debian/$(PACKAGE_NAME)/usr/share/knoppix-installer/
+	perl -pi -e "s|VERSION=.*|VERSION=\"$(PACKAGE_VER)\"|" $(CURDIR)/debian/knx-installer/usr/sbin/knoppix-installer
 	
 	# Gettext Internationalisation (i18n)
-	DESTDIR=$(CURDIR)/debian/$(PACKAGE_NAME) po/make_po.sh knoppix-installer.mo
+	DESTDIR=$(CURDIR)/debian/knx-installer po/make_po.sh knoppix-installer.mo

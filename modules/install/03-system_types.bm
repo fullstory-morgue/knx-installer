@@ -18,7 +18,7 @@ system_type_beginner()
 	update_passwd
 	
 	system_copy_home
-	system_add_hd_config
+	[ "$SYSTEM_TYPE" = "beginner" ] && system_add_hd_config
 	system_copy_etc
 	
 	update_status $"Converting Kanotix to Multi-User-System..."

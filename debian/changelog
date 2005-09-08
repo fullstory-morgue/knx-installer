@@ -1,8 +1,11 @@
-knx-installer (0.3.19.20) UNRELEASED; urgency=low
+knx-installer (0.3.19.20) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * split out initscripts-kanotix.
+  * adapt runlevels to be more debian compatible.
+  * fix yaird usage (mount sysfs in chroot).
+  * remove ALSA hack, it's no longer necessary with sysvinit 2.86.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  6 Sep 2005 22:40:44 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Sep 2005 03:49:44 +0200
 
 knx-installer (0.3.19.19) unstable; urgency=low
 

@@ -344,16 +344,17 @@ system_services()
 	chroot_it update-rc.d checkroot.sh start 10 S . &>/dev/null
 	chroot_it update-rc.d console-screen.sh start 48 S . &>/dev/null
 	if [ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ]; then
-		chroot_it update-rc.d mountvirtfs start 35 S . &>/dev/null
+		chroot_it update-rc.d mountvirtfs start 36 S . &>/dev/null
 	elif [ -x $TARGET_MNT_POINT/etc/init.d/mountkernfs ]; then
-		chroot_it update-rc.d mountkernfs start 35 S . &>/dev/null
+		chroot_it update-rc.d mountkernfs start 36 S . &>/dev/null
 	else
-		chroot_it update-rc.d devpts.sh start 35 S . &>/dev/null
+		chroot_it update-rc.d devpts.sh start 36 S . &>/dev/null
 	fi
 	chroot_it update-rc.d dns-clean start 39 S . &>/dev/null
 	chroot_it update-rc.d hostname.sh start 40 S . &>/dev/null
 	chroot_it update-rc.d hwclock.sh start 50 S . stop 25 0 6 . &>/dev/null
-	chroot_it update-rc.d ifupdown start 40 S . &>/dev/null
+	chroot_it update-rc.d ifupdown start 36 0 6 . start 39 S . &>/dev/null
+	chroot_it update-rc.d ifupdown-clean start 18 S . &>/dev/null
 	chroot_it update-rc.d initrd-tools.sh start 05 S . &>/dev/null
 	chroot_it update-rc.d isapnp start 15 S . &>/dev/null
 	chroot_it update-rc.d keymap.sh start 05 S . &>/dev/null
@@ -361,8 +362,10 @@ system_services()
 	chroot_it update-rc.d modutils start 36 S . &>/dev/null
 	chroot_it update-rc.d mountall.sh start 35 S . &>/dev/null
 	chroot_it update-rc.d mountnfs.sh start 45 S . &>/dev/null
-	chroot_it update-rc.d networking start 40 S . stop 35 0 6 . &>/dev/null
+	chroot_it update-rc.d networking start 35 0 6 . start 40 S . &>/dev/null
 	#chroot_it update-rc.d portmap start 41 S . stop 10 0 6 . &>/dev/null
+	chroot_it update-rc.d ppp start 14 2 3 4 5 . stop 86 0 1 6 . &>/dev/null
+	chroot_it update-rc.d pppd-dns start 38 S . &>/dev/null
 	chroot_it update-rc.d procps.sh start 30 S . &>/dev/null
 	chroot_it update-rc.d setserial start 30 S . stop 30 0 6 . &>/dev/null
 	chroot_it update-rc.d urandom start 55 S . stop 30 0 6 . &>/dev/null
@@ -375,7 +378,8 @@ system_services()
 	chroot_it update-rc.d rmnologin start 99 1 2 3 4 5 . 2>/dev/null >/dev/null
 	
 	# Start hotplug
-	chroot_it update-rc.d hotplug start 11 1 2 3 4 5 . start 37 S . stop 89 0 6 . 2>/dev/null >/dev/null
+	chroot_it update-rc.d hotplug start 40 S . 2>/dev/null >/dev/null
+	chroot_it update-rc.d hotplug-net start 41 S . 2>/dev/null >/dev/null
 
 	# Add default scripts to runlevels
 	for i in $SYSTEM_SERVICES_D; do
@@ -480,9 +484,6 @@ EOF
 		echo $mod >>$TMP
 	done
 
-	# add ALSA modules to circumvent problems with some AC97 codecs (mostly snd-via82xx, snd-intel8x0)
-	cat /proc/modules | tac | grep -v '\[.*\]' | grep soundcore | grep snd &> /dev/null && echo "$SOUND_DRIVER" >>$TMP && echo snd-pcm-oss >>$TMP
-	
 	cp -f $TMP $TARGET_MNT_POINT/etc/modules
 	
 	# for the future :-)
