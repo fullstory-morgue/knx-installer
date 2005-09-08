@@ -1,3 +1,9 @@
+knx-installer (0.3.19.22) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Sep 2005 04:41:23 +0200
+
 knx-installer (0.3.19.21) unstable; urgency=low
 
   * make initscripts-kanotix replace knx-installer <<0.3.19.20 and provide it.
