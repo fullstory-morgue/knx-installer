@@ -19,5 +19,7 @@ Package: initscripts-kanotix
 Architecture: all
 Depends: bash (>>2.05), (kudzu-kanotix | kudzu-knoppix | kudzu), whois
 Suggests: fix-cdrom, distro-defaults
+Replaces: knx-installer (<< 0.3.19.20)
+Provides: knx-installer (<< 0.3.19.20)
 Description: KANOTIX initscripts for HD uses
  KANOTIX also uses some initscripts on the harddisk for advanced tasks.
