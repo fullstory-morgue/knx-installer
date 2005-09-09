@@ -1,8 +1,9 @@
-knx-installer (0.3.19.23) UNRELEASED; urgency=low
+knx-installer (0.3.19.23) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * add packages to live removal.
+  * fix (add) postinst/ postrm for initscripts-kanotix.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 22:59:31 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 23:41:50 +0200
 
 knx-installer (0.3.19.22) unstable; urgency=low
 

@@ -318,7 +318,6 @@ system_add_services()
 		chroot_it dpkg --purge knxinstaller		&> /dev/null
 		chroot_it dpkg --purge knx-installer		&> /dev/null
 		chroot_it dpkg --purge saveconfig-kanotix	&> /dev/null
-		#chroot_it dpkg --purge kanotix-setpassword	&> /dev/null	# sambastart-kanotix depends on this
 		chroot_it dpkg --purge firewall-kanotix		&> /dev/null	# think about it...
 
 		if [ "$SYSTEM_TYPE" = "debian" ]; then
@@ -335,6 +334,10 @@ system_add_services()
 			chroot_it dpkg --purge xf86config-kanotix		&> /dev/null
 			#chroot_it dpkg --purge checkmem-kanotix			&> /dev/null	# under evaluation
 			chroot_it dpkg --purge kde-services-kanotix		&> /dev/null
+			chroot_it dpkg --purge sambastart-kanotix		&> /dev/null
+			chroot_it dpkg --purge kanotix-setpassword		&> /dev/null
+			chroot_it dpkg --purge mkdosswapfile-kanotix		&> /dev/null
+			chroot_it dpkg --purge kanotix-remountrw		&> /dev/null
 			
 			#  disable live config
 			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
