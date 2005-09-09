@@ -25,7 +25,7 @@ system_add_hd_autoconfig()
 	[ ! -r /etc/init.d/knoppix-hd-autoconfig -a -x tools/knoppix-hd-autoconfig ] && cp -f tools/knoppix-hd-autoconfig $TARGET_MNT_POINT/etc/init.d/
 
 	chroot_it update-rc.d -f knoppix-autoconfig remove . 2>/dev/null >/dev/null
-	chroot_it update-rc.d knoppix-hd-autoconfig start 00 S . >/dev/null
+	[ "$SYSTEM_TYPE" = "beginner" ] && chroot_it update-rc.d knoppix-hd-autoconfig start 00 S . >/dev/null
 
 	# TODO: Remove the hacks
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g'  $TARGET_MNT_POINT/sbin/hotplug-knoppix
@@ -313,6 +313,32 @@ system_add_services()
 		#[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" ] || ssh-keygen -q -t rsa1 -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" -C '' -N ''
 		[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
 		[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
+
+		# remove live- only packages
+		chroot_it dpkg --purge knxinstaller		&> /dev/null
+		chroot_it dpkg --purge knx-installer		&> /dev/null
+		chroot_it dpkg --purge saveconfig-kanotix	&> /dev/null
+		#chroot_it dpkg --purge kanotix-setpassword	&> /dev/null	# sambastart-kanotix depends on this
+		chroot_it dpkg --purge firewall-kanotix		&> /dev/null	# think about it...
+
+		if [ "$SYSTEM_TYPE" = "debian" ]; then
+			chroot_it dpkg --purge initscripts-kanotix-live		&> /dev/null
+			chroot_it dpkg --purge initscripts-kanotix		&> /dev/null
+			chroot_it dpkg --purge sudoers-kanotix			&> /dev/null
+			chroot_it dpkg --purge kanotix-splash			&> /dev/null
+			chroot_it dpkg --purge kanotix-splash-utils		&> /dev/null
+			chroot_it dpkg --purge mkpersistenthome-kanotix		&> /dev/null
+			chroot_it dpkg --purge startsyslog-kanotix		&> /dev/null
+			chroot_it dpkg --purge restartx-kanotix			&> /dev/null
+			chroot_it dpkg --purge xsession-initscript-kanotix	&> /dev/null
+			chroot_it dpkg --purge xsession-kanotix			&> /dev/null
+			chroot_it dpkg --purge xf86config-kanotix		&> /dev/null
+			#chroot_it dpkg --purge checkmem-kanotix			&> /dev/null	# under evaluation
+			chroot_it dpkg --purge kde-services-kanotix		&> /dev/null
+			
+			#  disable live config
+			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
+		fi
 	fi
 	
 	# remove temporary kde- user files
@@ -321,9 +347,6 @@ system_add_services()
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/socket-*"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
-
-	#  disable live config
-	[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
 }
 
 system_services()
@@ -410,6 +433,10 @@ system_services()
 	# ACPI Anpassung
 
 	[ -d /proc/acpi -a -x /etc/init.d/acpid ] && chroot_it update-rc.d acpid defaults >/dev/null
+
+	# Startuplinks einfrieren
+
+	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d
 
 	# system_add_services # started by the different modes
 }

@@ -1,8 +1,13 @@
-knx-installer (0.3.19.22) UNRELEASED; urgency=low
+knx-installer (0.3.19.22) unstable; urgency=low
 
-  * NOT RELEASED YET
+  [ Joerg Schirottke ]
+  * no knoppix-hd-autoconfig in debian mode.
+  * use freeze-rc.d if possible.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Sep 2005 04:41:23 +0200
+  [ Stefan Lippers-Hollmann ]
+  * remove live- only packages (kanotix only).
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 22:57:36 +0200
 
 knx-installer (0.3.19.21) unstable; urgency=low
 
