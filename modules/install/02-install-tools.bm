@@ -545,6 +545,9 @@ EOF
 		echo "# detect CDROMs" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 		echo "[ -x /usr/sbin/fix-cdrom ] && /usr/sbin/fix-cdrom" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 	fi
+
+	# load snd, if ALSA is present
+	[ -e /proc/asound/modules ] && echo modprobe snd >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 }
 
 system_update_files()

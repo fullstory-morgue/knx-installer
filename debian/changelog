@@ -1,10 +1,10 @@
-knx-installer (0.3.19.24) UNRELEASED; urgency=low
+knx-installer (0.3.19.24) unstable; urgency=low
 
-  * NOT RELEASED YET
   * override lintian/ linda warnings - we do want to purge the initscripts
     without installing them in the postinst.
+  * load snd, if ALSA is present.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 23:46:47 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 11 Sep 2005 02:05:25 +0200
 
 knx-installer (0.3.19.23) unstable; urgency=low
 
