@@ -593,8 +593,6 @@ EOF
 system_fix_menus()
 {
 	[ -d $TARGET_MNT_POINT/usr/share/applnk/Knoppix ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/Knoppix kdesu
-	[ -d $TARGET_MNT_POINT/usr/share/applnk/Kanotix ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/Kanotix kdesu
-	[ -d $TARGET_MNT_POINT/usr/share/applnk/KANOTIX ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/KANOTIX kdesu
 
 	for i in `egrep -l -r -e '(xcdroast|ethereal|kbackup)' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; do
         	perl -pi -e 's|Exec=sudo /|Exec=/|g' "$TARGET_MNT_POINT$i"
