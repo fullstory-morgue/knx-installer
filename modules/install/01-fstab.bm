@@ -9,7 +9,7 @@ function get_usb_devices
 		((UMOUNT++))
 		shopt -q nullglob && S="-s" || S="-u"
 		shopt -s nullglob
-		for I in /sys/bus/usb/devices/*/*/*/block /sys/bus/usb/devices/*/*/*/*/block; do
+		for I in $TARGET_MNT_POINT/sys/bus/usb/devices/*/*/*/block $TARGET_MNT_POINT/sys/bus/usb/devices/*/*/*/*/block; do
 			L=$(readlink "$I")
 			# Usb sticks will have '8:0' in /sys/block/$L/dev and '1' in removable
 			# Usb harddrives will have '8:0' in /sys/block/$L/dev and '0' in 'removable'
@@ -64,7 +64,7 @@ EOF
 
 	cat <<EOF >>$TARGET_MNT_POINT/etc/fstab
 proc  /proc  proc  defaults  0  0
-/dev/fd0  /floppy  vfat  defaults,user,noauto,showexec,umask=022  0  0
+/dev/fd0  /floppy  vfat  defaults,user,noauto,showexec,umask=022,shortname=mixed,quiet  0  0
 usbfs  /proc/bus/usb  usbfs  devmode=0666  0  0
 sysfs  /sys  sysfs  defaults  0  0
 tmpfs  /dev/shm  tmpfs defaults  0  0
@@ -105,5 +105,5 @@ EOF
 
 	# remove uid=, gid= - entries for vfat; instead use that of running process
 
-	perl -pi -e 's/(vfat noauto,users,exec).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
+	perl -pi -e 's/(vfat noauto,users,exec).*/\1,umask=000,shortname=mixed,quiet 0 0/' $TARGET_MNT_POINT/etc/fstab
 }
