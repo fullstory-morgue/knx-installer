@@ -1,3 +1,9 @@
+knx-installer (0.3.19.27) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 03:41:07 +0200
+
 knx-installer (0.3.19.26) unstable; urgency=low
 
   * don't substitute *su in Kanotix- desktop links.
