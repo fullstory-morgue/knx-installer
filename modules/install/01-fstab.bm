@@ -1,7 +1,8 @@
 #!/bin/bash
 function get_usb_devices
 {
-	local DEV RET UMOUNT=0 S I L
+	local DEV UMOUNT=0 S I L
+	# If the user is not root before the mount command, mount will fail with error 1 and nothing will be detected.
 	mount -t sysfs sysfs $TARGET_MNT_POINT/sys 2>/dev/null
 	RET=$?
 	if [ "$RET" == 0 -o "$RET" == 32 ]; then
@@ -10,10 +11,13 @@ function get_usb_devices
 		shopt -s nullglob
 		for I in /sys/bus/usb/devices/*/*/*/block /sys/bus/usb/devices/*/*/*/*/block; do
 			L=$(readlink "$I")
-			L="${L##.*/}"
 			# Usb sticks will have '8:0' in /sys/block/$L/dev and '1' in removable
 			# Usb harddrives will have '8:0' in /sys/block/$L/dev and '0' in 'removable'
-			DEV="${DEV}${DEV+ }$L"
+			L="${L##.*/}"
+
+			# Beware of the difference between ${VAR+string} and ${VAR:+string} !!
+			# The former will use string if $VAR = undef or "", while the latter will only use string if $VAR is not empty!
+			DEV="${DEV}${DEV:+ }$L"
 		done
 		shopt $S nullglob
 		echo "$DEV"
@@ -91,13 +95,13 @@ EOF
 	
 	perl -pi -e 's/(ntfs noauto,users,exec,ro).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
 
-	# mount all partitions on IDE harddisks (only for Kanotix)
-
-	if [ "$INSTALL_KANO" == "yes" ]; then 
-		DEV=$(get_usb_devices)
-		REGEX="${DEV// /|}"
-		perl -pi -e 'if (! m#^/dev/('$REGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
-	fi
+	# Partitionen auf nicht verwechselbare Platten automatisch mounten (Kanotix)
+        if [ "$INSTALL_KANO" == "yes" ]; then
+                USBDEVS=$(get_usb_devices)
+		echo "$USBDEVS"
+                [ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
+                perl -p -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
+        fi
 
 	# remove uid=, gid= - entries for vfat; instead use that of running process
 
