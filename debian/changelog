@@ -1,8 +1,8 @@
-knx-installer (0.3.19.25) UNRELEASED; urgency=low
+knx-installer (0.3.19.25) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * add usb detection routines from locsmif.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 11 Sep 2005 02:08:36 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 01:42:45 +0200
 
 knx-installer (0.3.19.24) unstable; urgency=low
 

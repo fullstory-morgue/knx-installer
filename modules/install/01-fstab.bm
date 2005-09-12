@@ -1,4 +1,25 @@
 #!/bin/bash
+function get_usb_devices
+{
+	local DEV RET UMOUNT=0 S I L
+	mount -t sysfs sysfs $TARGET_MNT_POINT/sys 2>/dev/null
+	RET=$?
+	if [ "$RET" == 0 -o "$RET" == 32 ]; then
+		((UMOUNT++))
+		shopt -q nullglob && S="-s" || S="-u"
+		shopt -s nullglob
+		for I in /sys/bus/usb/devices/*/*/*/block /sys/bus/usb/devices/*/*/*/*/block; do
+			L=$(readlink "$I")
+			L="${L##.*/}"
+			# Usb sticks will have '8:0' in /sys/block/$L/dev and '1' in removable
+			# Usb harddrives will have '8:0' in /sys/block/$L/dev and '0' in 'removable'
+			DEV="${DEV}${DEV+ }$L"
+		done
+		shopt $S nullglob
+		echo "$DEV"
+	fi
+	((UMOUNT)) && umount $TARGET_MNT_POINT/sys
+}
 
 function update_fstab
 {
@@ -70,9 +91,13 @@ EOF
 	
 	perl -pi -e 's/(ntfs noauto,users,exec,ro).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
 
-	# Alle Partitionen auf IDE Platten automatisch mounten (nur in Kano's Knoppix)
+	# mount all partitions on IDE harddisks (only for Kanotix)
 
-	[ "$INSTALL_KANO" == "yes" ] && perl -pi -e 's|^(/dev/hd.*)noauto(.*)|\1auto\2|' $TARGET_MNT_POINT/etc/fstab
+	if [ "$INSTALL_KANO" == "yes" ]; then 
+		DEV=$(get_usb_devices)
+		REGEX="${DEV// /|}"
+		perl -pi -e 'if (! m#^/dev/('$REGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
+	fi
 
 	# remove uid=, gid= - entries for vfat; instead use that of running process
 
