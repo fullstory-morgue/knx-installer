@@ -1,3 +1,9 @@
+knx-installer (0.3.19.30) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Sep 2005 22:46:04 +0200
+
 knx-installer (0.3.19.29) unstable; urgency=low
 
   * fix typo in 01-fstab.bm
