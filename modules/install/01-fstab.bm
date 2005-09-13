@@ -100,7 +100,7 @@ EOF
                 USBDEVS=$(get_usb_devices)
 		echo "$USBDEVS"
                 [ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
-                perl -p -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
+                perl -pi -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
         fi
 
 	# remove uid=, gid= - entries for vfat; instead use that of running process
