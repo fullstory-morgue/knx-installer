@@ -1,3 +1,9 @@
+knx-installer (0.3.19.31) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 19 Sep 2005 03:33:05 +0200
+
 knx-installer (0.3.19.30) unstable; urgency=low
 
   * match initscripts to pure debian sid.
