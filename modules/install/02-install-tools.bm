@@ -361,71 +361,119 @@ system_services()
 
 	# start services wanted in config ...
 	for i in $SERVICES_START; do
-		chroot_it update-rc.d $i defaults 2>/dev/null >/dev/null # shut up
+		chroot_it update-rc.d $i defaults								&>/dev/null
 	done
-
+	
+	### initscripts ###
 	# create basic system runlevel
-	chroot_it update-rc.d bootmisc.sh start 55 S . &>/dev/null
-	chroot_it update-rc.d checkfs.sh start 30 S . &>/dev/null
-	chroot_it update-rc.d checkroot.sh start 10 S . &>/dev/null
-	chroot_it update-rc.d console-screen.sh start 48 S . &>/dev/null
+	#
+	#       Okay, we could do this with update-rc.d, but that would probably
+	#       be pretty slow. This way we win some speed.
+	#       DO NOT FOLLOW THIS EXAMPLE IN OTHER PACKAGES.
+	#
 	if [ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ]; then
-		chroot_it update-rc.d mountvirtfs start 36 S . &>/dev/null
+		chroot_it update-rc.d mountvirtfs	start 2 S . start 36 S .				&>/dev/null
+		for i in devpts.sh mountkernfs
+		do
+		        if [ -f $TARGET_MNT_POINT/etc/init.d/$i ]; then
+				rm -f $TARGET_MNT_POINT/etc/init.d/$i
+				chroot_it update-rc.d $i remove							&>/dev/null
+			fi
+		done
 	elif [ -x $TARGET_MNT_POINT/etc/init.d/mountkernfs ]; then
-		chroot_it update-rc.d mountkernfs start 36 S . &>/dev/null
+		chroot_it update-rc.d mountkernfs	start 36 S .						&>/dev/null
 	else
 		chroot_it update-rc.d devpts.sh start 36 S . &>/dev/null
 	fi
-	chroot_it update-rc.d dns-clean start 39 S . &>/dev/null
-	chroot_it update-rc.d hostname.sh start 40 S . &>/dev/null
-	chroot_it update-rc.d hwclock.sh start 50 S . stop 25 0 6 . &>/dev/null
-	chroot_it update-rc.d ifupdown start 36 0 6 . start 39 S . &>/dev/null
-	chroot_it update-rc.d ifupdown-clean start 18 S . &>/dev/null
-	chroot_it update-rc.d initrd-tools.sh start 05 S . &>/dev/null
-	chroot_it update-rc.d isapnp start 15 S . &>/dev/null
-	chroot_it update-rc.d keymap.sh start 05 S . &>/dev/null
-	chroot_it update-rc.d module-init-tools start 36 S . &>/dev/null
-	chroot_it update-rc.d modutils start 36 S . &>/dev/null
-	chroot_it update-rc.d mountall.sh start 35 S . &>/dev/null
-	chroot_it update-rc.d mountnfs.sh start 45 S . &>/dev/null
-	chroot_it update-rc.d networking start 35 0 6 . start 40 S . &>/dev/null
-	#chroot_it update-rc.d portmap start 41 S . stop 10 0 6 . &>/dev/null
-	chroot_it update-rc.d ppp start 14 2 3 4 5 . stop 86 0 1 6 . &>/dev/null
-	chroot_it update-rc.d pppd-dns start 38 S . &>/dev/null
-	chroot_it update-rc.d procps.sh start 30 S . &>/dev/null
-	chroot_it update-rc.d setserial start 30 S . stop 30 0 6 . &>/dev/null
-	chroot_it update-rc.d urandom start 55 S . stop 30 0 6 . &>/dev/null
-	chroot_it update-rc.d halt start 90 0 . &>/dev/null
-	chroot_it update-rc.d reboot start 90 6 . &>/dev/null
-	chroot_it update-rc.d sendsigs start 20 0 6 . &>/dev/null
-	chroot_it update-rc.d umountfs start 40 0 6 . &>/dev/null
+	chroot_it update-rc.d bootlogd		start 5 S .							&>/dev/null
+	chroot_it update-rc.d checkroot.sh	start 10 S .							&>/dev/null
+	chroot_it update-rc.d modutils		start 20 S .							&>/dev/null
+	chroot_it update-rc.d checkfs.sh	start 30 S .							&>/dev/null
+	chroot_it update-rc.d mountall.sh	start 35 S .							&>/dev/null
+	chroot_it update-rc.d hostname.sh	start 40 S .							&>/dev/null
+	chroot_it update-rc.d network		start 40 S .							&>/dev/null
+	chroot_it update-rc.d mountnfs.sh	start 45 S .							&>/dev/null
+	chroot_it update-rc.d bootmisc.sh	start 55 S .							&>/dev/null
+	chroot_it update-rc.d urandom		start 55 S . start 30 0 6 .					&>/dev/null
+	#
+	#       Links in "normal" runlevels.
+	#
+	chroot_it update-rc.d sendsigs		start 20 0 6 .							&>/dev/null
+	chroot_it update-rc.d umountnfs.sh	start 31 0 6 .							&>/dev/null
+	chroot_it update-rc.d umountfs		start 40 0 6 .							&>/dev/null
+	chroot_it update-rc.d umountroot	start 60 0 6 .							&>/dev/null
+	chroot_it update-rc.d halt		start 90 0 .							&>/dev/null
+	chroot_it update-rc.d reboot		start 90 6 .							&>/dev/null
+	chroot_it update-rc.d rmnologin		start 99 2 3 4 5 .						&>/dev/null
+	chroot_it update-rc.d single		start 20 1 .							&>/dev/null
+	chroot_it update-rc.d stop-bootlogd	start 99 2 3 4 5 .						&>/dev/null
 
-	# Add rmnologin to all runlevels
-	chroot_it update-rc.d rmnologin start 99 1 2 3 4 5 . 2>/dev/null >/dev/null
+	### console-tools ###	
+	chroot_it update-rc.d console-screen.sh start 48 S .							&>/dev/null
+
+	### pppconfig ###
+	chroot_it update-rc.d dns-clean		start 39 S .							&>/dev/null
+
+	### util-linux ###
+	chroot_it update-rc.d hwclock.sh	start 50 S . stop 25 0 6 .					&>/dev/null
+	chroot_it update-rc.d hwclockfirst.sh	start 22 S .							&>/dev/null
 	
+	### ifupdown ###
+	chroot_it update-rc.d ifupdown		start 39 S . start 36 0 6 .					&>/dev/null
+	chroot_it update-rc.d ifupdown-clean	start 18 S .							&>/dev/null
+	
+	### initrd-tools ###	
+	chroot_it update-rc.d initrd-tools.sh	start 05 S .							&>/dev/null
+
+	### isapnptools ###
+	chroot_it update-rc.d isapnp		start 15 S .							&>/dev/null
+
+	### console-common ###
+	chroot_it update-rc.d keymap.sh		start 05 S .							&>/dev/null
+
+	### module-init-tools ###
+	chroot_it update-rc.d module-init-tools	start 20 S .							&>/dev/null
+
+	### netbase ###
+	chroot_it update-rc.d networking	start 40 S . start 35 0 6 .					&>/dev/null
+	
+	### portmap ###
+	#chroot_it update-rc.d portmap		start 43 S . start 32 0 6 . start 18 2 3 4 5 . stop 81 1 .	&>/dev/null
+
+	### ppp ###
+	chroot_it update-rc.d ppp		start 14 2 3 4 5 . stop 86 0 1 6 .				&>/dev/null
+	chroot_it update-rc.d pppd-dns		start 38 S .							&>/dev/null
+
+	### procps ###
+	chroot_it update-rc.d procps.sh		start 30 S .							&>/dev/null
+
+	### setserial ###
+	chroot_it update-rc.d etc-setserial	start 30 S . stop 30 0 6 .					&>/dev/null
+	chroot_it update-rc.d setserial		start 46 S . stop 19 0 6 .					&>/dev/null
+
 	# Start hotplug
-	chroot_it update-rc.d hotplug start 40 S . 2>/dev/null >/dev/null
-	chroot_it update-rc.d hotplug-net start 41 S . 2>/dev/null >/dev/null
+	chroot_it update-rc.d hotplug		start 40 S .							&>/dev/null
+	chroot_it update-rc.d hotplug-net	start 41 S . stop 89 0 6 .					&>/dev/null
 
 	# Add default scripts to runlevels
 	for i in $SYSTEM_SERVICES_D; do
 		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
 		SYSTEM_START=$(echo $i | cut -d: -f2)
 		SYSTEM_STOP=$(echo $i | cut -d: -f3)
-		chroot_it update-rc.d $SYSTEM_SERVICE defaults $SYSTEM_START $SYSTEM_STOP 2>/dev/null >/dev/null
+		chroot_it update-rc.d $SYSTEM_SERVICE defaults $SYSTEM_START $SYSTEM_STOP			&>/dev/null
 	done
 
 	# start automounter
-	chroot_it update-rc.d -f autofs remove >/dev/null 2>/dev/null
-	chroot_it update-rc.d autofs defaults >/dev/null
+	chroot_it update-rc.d -f autofs remove									&>/dev/null
+	chroot_it update-rc.d autofs defaults									&>/dev/null
 
 	# Display Manager "korrekt" starten - also nur im Runlevel 5
 	#	(das gilt aber auch eigentlich nur für nicht-debian Systeme ;-))
 	
 	for DM in kdm xdm gdm; do
 		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]; then
-	 		chroot_it update-rc.d -f $DM remove 2>/dev/null >/dev/null
-	 		chroot_it update-rc.d $DM start 99 5 . stop 1 0 1 2 3 4 6 . >/dev/null
+	 		chroot_it update-rc.d -f $DM	remove							&>/dev/null
+	 		chroot_it update-rc.d $DM	start 99 5 . stop 1 0 1 2 3 4 6 .			>/dev/null
 		fi
 	done
 

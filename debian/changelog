@@ -1,8 +1,9 @@
-knx-installer (0.3.19.30) UNRELEASED; urgency=low
+knx-installer (0.3.19.30) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * match initscripts to pure debian sid.
+  * remove desktop links for removable media (patch contributed by locsmif).
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Sep 2005 22:46:04 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 19 Sep 2005 03:29:18 +0200
 
 knx-installer (0.3.19.29) unstable; urgency=low
 

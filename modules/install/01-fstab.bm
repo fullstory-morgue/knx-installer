@@ -106,4 +106,13 @@ EOF
 	# remove uid=, gid= - entries for vfat; instead use that of running process
 
 	perl -pi -e 's/(vfat noauto,users,exec).*/\1,umask=000,shortname=mixed,quiet 0 0/' $TARGET_MNT_POINT/etc/fstab
+	
+	# Remove not needed device links
+	for I in $HD_MAP; do
+	  if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
+	    I=(${I//:/ })
+	    rmdir "$TARGET_MNT_POINT/mnt/${I[1]}"
+	    rm -f "$TARGET_MNT_POINT/home/$USER_NAME/desktop/${I[1]}"
+	  fi
+	done  
 }
