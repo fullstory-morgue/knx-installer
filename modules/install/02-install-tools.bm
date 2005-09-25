@@ -118,6 +118,12 @@ system_copy_home()
 	
 	#copy home directory from running user
 
+	#check if already data is there then stop
+	if [ -d $TARGET_MNT_POINT/home/$USER_NAME ]; then
+		chroot "$TARGET_MNT_POINT" chown -R $USER_NAME:$USER_NAME /home/$USER_NAME
+		return 0
+	fi
+
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf $TARGET_MNT_POINT/home/$DEFAULT_USER
 		cp -a /home/$DEFAULT_USER $TARGET_MNT_POINT/home
