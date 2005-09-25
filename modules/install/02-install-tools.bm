@@ -482,6 +482,13 @@ system_services()
 	chroot_it update-rc.d hotplug		start 40 S .							&>/dev/null
 	chroot_it update-rc.d hotplug-net	start 41 S . stop 89 0 6 .					&>/dev/null
 
+	# udev
+	chroot_it update-rc.d udev		start 04 S .							&>/dev/null
+	chroot_it update-rc.d udev-mtab		start 36 S .							&>/dev/null
+
+	# dbus-1
+	chroot_it update-rc.d dbus-1		defaults							&>/dev/null
+
 	# Add default scripts to runlevels
 	for i in $SYSTEM_SERVICES_D; do
 		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
