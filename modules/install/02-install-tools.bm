@@ -348,6 +348,27 @@ system_add_services()
 			#  disable live config
 			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
 		fi
+
+		# enable udev, if installed
+		if [  -x /etc/init.d/udev ]; then
+			chroot_it dpkg --purge automount-kanotix		&> /dev/null
+			chroot_it dpkg --purge autofs				&> /dev/null
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/[s|h]d*"
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/Floppy*"
+			rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/Floppy*"
+			
+			if ! grep -iq \\[Media\\] "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"; then
+				mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config"
+				cat << EOF >> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+[Media]
+enabled=true
+exclude=media/hdd_unmounted
+EOF
+				mkdir -p "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
+				cp "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
+					"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+			fi
+		fi
 	fi
 	
 	# remove temporary kde- user files

@@ -1,8 +1,8 @@
-knx-installer (0.3.19.32) UNRELEASED; urgency=low
+knx-installer (0.3.19.32) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * add initial udev support
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 25 Sep 2005 02:04:19 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 26 Sep 2005 01:07:38 +0200
 
 knx-installer (0.3.19.31) unstable; urgency=low
 

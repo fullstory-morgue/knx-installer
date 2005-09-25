@@ -339,7 +339,7 @@ function old_installer
 
 	update_status $"Converting Kanotix to Debian..."
 
-	[ "$INSTALL_KANO" == "yes" ] && cp -af $TEMPLATE_PATH/etc/hotplug/usb/usb-storage $TARGET_MNT_POINT/etc/hotplug/usb/
+	[ "$INSTALL_KANO" == "yes" ] && [ ! -e /etc/init.d/udev ] && cp -af $TEMPLATE_PATH/etc/hotplug/usb/usb-storage $TARGET_MNT_POINT/etc/hotplug/usb/
 
 	system_services
 
