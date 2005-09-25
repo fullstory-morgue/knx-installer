@@ -1,3 +1,9 @@
+knx-installer (0.3.19.32) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 25 Sep 2005 02:04:19 +0200
+
 knx-installer (0.3.19.31) unstable; urgency=low
 
   * Don't copy home when already data is there 
