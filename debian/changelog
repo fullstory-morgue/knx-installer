@@ -1,3 +1,9 @@
+knx-installer (0.3.19.38) unstable; urgency=low
+
+  * fix kanotix-installer-latest-web.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 00:41:08 +0200
+
 knx-installer (0.3.19.37) unstable; urgency=low
 
   * fix ownership for the whole $HOME/.kde.
