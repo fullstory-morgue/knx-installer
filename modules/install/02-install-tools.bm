@@ -301,6 +301,9 @@ system_add_services()
 		echo "libqt3-mt-dev hold" | chroot_it dpkg --set-selections
 		echo "libxft2-dev hold"   | chroot_it dpkg --set-selections
 	else
+		# XXX: well, we only need the old version for live purposes
+		echo "eject install"      | chroot_it dpkg --set-selections
+		
 		# disable portmap
 		chroot_it update-rc.d -f portmap remove &>/dev/null
 
@@ -379,8 +382,8 @@ EOF
 				> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
 
 			# fix ownership
-			chown "$USER_NAME":"$USER_NAME" \
-				"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+			chown -R "$USER_NAME":"$USER_NAME" \
+				"$TARGET_MNT_POINT/home/$USER_NAME/.kde"
 		fi
 	fi
 	

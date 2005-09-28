@@ -1,8 +1,10 @@
 knx-installer (0.3.19.37) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * fix ownership for the whole $HOME/.kde.
+  * release hold status for eject after install.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 03:10:46 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 23:46:03 +0200
 
 knx-installer (0.3.19.36) unstable; urgency=low
 
