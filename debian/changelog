@@ -1,8 +1,14 @@
-knx-installer (0.3.19.34) UNRELEASED; urgency=low
+knx-installer (0.3.19.35) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * make auto icons- parsing for kde more robust.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 26 Sep 2005 01:26:53 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 02:53:04 +0200
+
+knx-installer (0.3.19.34) unstable; urgency=low
+
+  * udev + capiutils changes
+
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 27 Sep 2005 19:58:54 +0200
 
 knx-installer (0.3.19.33) unstable; urgency=low
 

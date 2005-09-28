@@ -279,6 +279,7 @@ system_add_services()
 	# FCDSL Anpassung
 
 	[ -e /etc/rc0.d/K15isdnactivecards ] && chroot_it update-rc.d isdnactivecards defaults 13 15 >/dev/null
+	[ -e /etc/rc0.d/K21capiutils ] && chroot_it capiutils defaults 13 21 >/dev/null
 
 	# ALSA aktivieren, wenn möglich
 
@@ -346,28 +347,36 @@ system_add_services()
 			chroot_it dpkg --purge kanotix-remountrw		&> /dev/null
 			
 			#  disable live config
-			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
+			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
+				perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
 		fi
 
 		# enable udev, if installed
-		if [  -x /etc/init.d/udev ]; then
+		if [ -x /etc/init.d/udev ]; then
 			chroot_it dpkg --purge automount-kanotix		&> /dev/null
 			chroot_it dpkg --purge autofs				&> /dev/null
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/[s|h]d*"
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/Floppy*"
-			rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/Floppy*"
+			chroot_it dpkg --purge hotplug-kanotix			&> /dev/null	
+			chroot_it dpkg --purge mkdesktophdicons-kanotix		&> /dev/null
+			chroot_it dpkg --purge fix-cdrom			&> /dev/null
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom[1-9]\]
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/Floppy
+			rm -f "$TARGET_MNT_POINT/etc/skel/Desktop"/Floppy
 			
-			if ! grep -iq \\[Media\\] "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"; then
-				mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config"
-				cat << EOF >> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+			mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config" \
+				 "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
+			touch "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+			awk '/^\[Media\]/ { f = 1; next } /^\[.+\]/ { f = 0 } ! f' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
+				> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+			cat << EOF >> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 [Media]
 enabled=true
 exclude=media/hdd_unmounted
 EOF
-				mkdir -p "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
-				cp "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
-					"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-			fi
+			cp -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
+				"$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
 		fi
 	fi
 	
@@ -400,8 +409,9 @@ system_services()
 	#
 	if [ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ]; then
 		chroot_it update-rc.d mountvirtfs	start 2 S . start 36 S .				&>/dev/null
-		for i in devpts.sh mountkernfs
-		do
+		# XXX: workaround for broken update-rc.d
+		chroot_it ln -sf ../init.d/mountvirtfs /etc/rcS.d/S02mountvirtfs
+		for i in devpts.sh mountkernfs; do
 		        if [ -f $TARGET_MNT_POINT/etc/init.d/$i ]; then
 				rm -f $TARGET_MNT_POINT/etc/init.d/$i
 				chroot_it update-rc.d $i remove							&>/dev/null
@@ -629,7 +639,7 @@ EOF
 	fi
 
 	# load snd, if ALSA is present
-	[ -e /proc/asound/modules ] && echo modprobe snd >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
+	[ -e /proc/asound/modules ] && echo modprobe snd-card-0 >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 }
 
 system_update_files()
