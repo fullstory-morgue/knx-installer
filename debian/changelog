@@ -1,3 +1,9 @@
+knx-installer (0.3.19.36) unstable; urgency=low
+
+  * ensure correct ownership of kdestoprc.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 03:08:40 +0200
+
 knx-installer (0.3.19.35) unstable; urgency=low
 
   * make auto icons- parsing for kde more robust.

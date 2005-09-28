@@ -375,8 +375,12 @@ system_add_services()
 enabled=true
 exclude=media/hdd_unmounted
 EOF
-			cp -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
-				"$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+			cat "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
+				> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+
+			# fix ownership
+			chown "$USER_NAME":"$USER_NAME" \
+				"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 		fi
 	fi
 	
