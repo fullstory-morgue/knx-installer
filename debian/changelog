@@ -1,8 +1,10 @@
 knx-installer (0.3.19.39) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * make kanotix-installer-latest-web more robust for directory layout
+    changes.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 00:45:18 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 03:27:30 +0200
 
 knx-installer (0.3.19.38) unstable; urgency=low
 

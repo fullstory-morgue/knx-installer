@@ -7,7 +7,7 @@ FILE=$(wget http://kanotix.com/files/debian/pool/main/k/knx-installer/latest -O 
 echo "Downloading $FILE ..."
 cd $HOME
 wget "http://kanotix.com/files/debian/pool/main/k/knx-installer/$FILE"
-tar xzf "$FILE"
+tar xzf $(basename "$FILE")
 cd knx-installer-*
 sudo chown -R root:root .
 sudo ./knoppix-installer
