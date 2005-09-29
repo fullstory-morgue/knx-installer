@@ -109,11 +109,11 @@ EOF
 	
 	# Remove not needed device links
 	for I in $HD_MAP; do
-	  if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
-	    I=(${I//:/ })
-	    rmdir "$TARGET_MNT_POINT/mnt/${I[1]}"
-	    rm -f "$TARGET_MNT_POINT/home/$USER_NAME/desktop/${I[1]}"
-	  fi
-	done  
+		if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
+			I=(${I//:/ })
+			rmdir "$TARGET_MNT_POINT/mnt/${I[1]}"
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/${I[1]}"
+		fi
+	done
 }
 
