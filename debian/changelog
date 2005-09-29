@@ -1,10 +1,13 @@
-knx-installer (0.3.19.39) UNRELEASED; urgency=low
+knx-installer (0.3.19.39) unstable; urgency=low
 
-  * NOT RELEASED YET
   * make kanotix-installer-latest-web more robust for directory layout
     changes.
+  * chown in chroot.
+  * FIXME: modules/install/01-fstab.bm: "Remove not needed device links" tries
+    to delete /mnt/hdinstall//boot (HD_MAP="/dev/hda2:/boot") while it is
+    still mounted.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 03:27:30 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 03:40:36 +0200
 
 knx-installer (0.3.19.38) unstable; urgency=low
 
