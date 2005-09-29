@@ -1,8 +1,9 @@
 knx-installer (0.3.19.40) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * fix capi installation.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 03:45:27 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 21:23:48 +0200
 
 knx-installer (0.3.19.39) unstable; urgency=low
 

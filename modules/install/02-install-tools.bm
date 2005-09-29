@@ -273,16 +273,13 @@ system_install_templates()
 }
 
 # These are additional services that can be used with _all_ modes.
-
 system_add_services()
 {
 	# FCDSL Anpassung
-
-	[ -e /etc/rc0.d/K15isdnactivecards ] && chroot_it update-rc.d isdnactivecards defaults 13 15 >/dev/null
-	[ -e /etc/rc0.d/K21capiutils ] && chroot_it capiutils defaults 13 21 >/dev/null
+	[ -e /etc/rc0.d/K15isdnactivecards ] &&	chroot_it update-rc.d isdnactivecards defaults 13 15 >/dev/null
+	[ -e /etc/rc0.d/K21capiutils ] &&	chroot_it update-rc.d capiutils defaults 13 21 >/dev/null
 
 	# ALSA aktivieren, wenn möglich
-
 	if [ -e /proc/asound/modules ]; then
 		if [ -x /etc/init.d/alsa-utils ]; then
 			chroot_it update-rc.d alsa-utils defaults
