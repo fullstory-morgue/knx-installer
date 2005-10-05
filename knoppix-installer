@@ -17,7 +17,7 @@
 # Constants
 #
 
-VERSION="0.3-19"
+VERSION="0.4"
 CONFIG_FILE="$HOME/.knofig"
 LOG="$HOME/.knofig_log"
 

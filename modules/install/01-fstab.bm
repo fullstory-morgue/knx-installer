@@ -111,8 +111,9 @@ EOF
 	for I in $HD_MAP; do
 		if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
 			I=(${I//:/ })
-			rmdir "$TARGET_MNT_POINT/mnt/${I[1]}"
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/${I[1]}"
+			I="${I[0]##*/}"
+			rmdir "$TARGET_MNT_POINT/mnt/$I"
+			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/$I"
 		fi
 	done
 }
