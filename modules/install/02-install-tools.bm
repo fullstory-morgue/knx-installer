@@ -642,7 +642,7 @@ EOF
 	fi
 
 	# load snd, if ALSA is present
-	[ -e /proc/asound/modules ] && echo modprobe snd-card-0 >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
+	[ -e /proc/asound/modules ] && echo snd-card-0 >>$TARGET_MNT_POINT/etc/modules-$(uname -r)
 }
 
 system_update_files()
