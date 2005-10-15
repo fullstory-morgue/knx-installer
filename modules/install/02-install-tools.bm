@@ -288,9 +288,15 @@ system_add_services()
 		fi
 	fi
 
-	[ -x /etc/init.d/cupsys ] &&  chroot_it update-rc.d cupsys defaults 2>/dev/null >/dev/null
+	[ -x /etc/init.d/cupsys ] && chroot_it update-rc.d cupsys defaults &>/dev/null
 	
-	[ -x /etc/init.d/mountall.sh ] &&  chroot_it update-rc.d mountall.sh start 35 S . 2>/dev/null >/dev/null
+	[ -x /etc/init.d/mountall.sh ] &&  chroot_it update-rc.d mountall.sh start 35 S . &>/dev/null
+
+	# activate 855resolution if needed
+	if [ -r /etc/default/855resolution ]; then
+		source /etc/default/855resolution
+		[ "$MODE" ] && chroot_it update-rc.d 855resolution defaults &>/dev/null
+	fi
 
 	if [ "$INSTALL_KANO" = "no" ]; then
 		# Set packages to hold/ prevent KDE update (Knoppix only):
