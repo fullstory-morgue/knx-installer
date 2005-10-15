@@ -1,3 +1,11 @@
+knx-installer (0.4.0.3) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+  * add ifrename to dependencies.
+  * add kanotix-udev-config to dependencies.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 15 Oct 2005 13:38:53 +0200
+
 knx-installer (0.4.0.2) unstable; urgency=low
 
   * removed ALSA hack
