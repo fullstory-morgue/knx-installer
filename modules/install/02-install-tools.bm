@@ -502,6 +502,9 @@ system_services()
 	# dbus-1
 	chroot_it update-rc.d dbus-1		defaults							&>/dev/null
 
+	# ifrename
+	chroot_it update-rc.d ifrename		start 40 S .							&>/dev/null
+
 	# Add default scripts to runlevels
 	for i in $SYSTEM_SERVICES_D; do
 		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
@@ -612,7 +615,56 @@ EOF
 	cp -f $TMP $TARGET_MNT_POINT/etc/modules
 	
 	# for the future :-)
-	cp -f $TMP $TARGET_MNT_POINT/etc/modules-$(uname -r) 
+	cp -f $TMP $TARGET_MNT_POINT/etc/modules-$(uname -r)
+
+	# use optimized udev /etc/modules and write /etc/default/acpid
+
+	if [ -x $TARGET_MNT_POINT//etc/init.d/udev ]; then
+		LOADED=$(lsmod|awk '{print $1}'|sed 's/_/-/g'|sort|uniq)
+		ACPI=$(ls /lib/modules/$(uname -r)/kernel/drivers/acpi/|sed 's/\.ko//'|sed 's/_/-/g')
+		CPUFREQ=$(ls /lib/modules/$(uname -r)/kernel/arch/*/kernel/cpu/cpufreq/|sed 's/\.ko//'|sed 's/_/-/g')
+		EXTRA="capability fuse pcspkr ppdev tun ndiswrapper"
+		LOADED_ACPI=$(echo $LOADED $ACPI|tr ' ' '\n'|sort|uniq -d)
+		LOADED_CPUFREQ=$(echo $LOADED $CPUFREQ|tr ' ' '\n'|sort|uniq -d)
+		ADED_CPUFREQ=$(echo $LOADED $CPUFREQ|tr ' ' '\n'|sort|uniq -d)
+		LOADED_EXTRA=$(echo $LOADED $EXTRA|tr ' ' '\n'|sort|uniq -d)
+		mkdir -p $TARGET_MNT_POINT/etc/default
+		[ "$LOADED_ACPI" ] && cat > $TARGET_MNT_POINT/etc/default/acpid <<EOF
+# Specify options for acpid startup, Debian default is to enable the
+# use of sockets at a non-default position
+OPTIONS="-s /var/run/acpid.socket"
+
+# Specify modules to load on acpid's startup
+# MODULES may be uncommented to load "none", contain the string "all"
+# to load all acpi related modules or simply a space seperated list
+# of modules to be probed.
+MODULES="$(echo $LOADED_ACPI)"
+EOF
+		rm -f $TARGET_MNT_POINT/etc/modules $TARGET_MNT_POINT/etc/modules-*
+		[ "$LOADED_CPUFREQ" ] && cat > $TARGET_MNT_POINT/etc/modules <<EOF
+$LOADED_CPUFREQ
+EOF
+		[ "$LOADED_EXTRA" ] && cat >> $TARGET_MNT_POINT/etc/modules <<EOF
+$LOADED_EXTRA
+EOF
+	fi
+
+	# udev lan fix
+
+	if [ -x $TARGET_MNT_POINT/etc/init.d/udev -a -x $TARGET_MNT_POINT/etc/init.d/ifrename ]; then
+		change=change$RANDOM
+		count=0
+		LANG= ifconfig -a|grep Ethernet|awk '/HWaddr/{print $1" "$5}'|grep -v 00:00:00:00:00:00|while read dev mac; do
+			if ! [ "$(ethtool -i $dev 2>/dev/null|awk '/^driver:/{print $2}')" == "hostap" ]; then
+				devnew=lan$count
+				echo $devnew mac $mac
+				count=$(($count + 1))
+				perl -pi -e "s|$dev|$change|g" $TARGET_MNT_POINT/etc/network/interfaces
+				perl -pi -e "s|$devnew|$dev|g" $TARGET_MNT_POINT/etc/network/interfaces
+				perl -pi -e "s|$change|$devnew|g" $TARGET_MNT_POINT/etc/network/interfaces
+			fi
+		done > $TARGET_MNT_POINT/etc/iftab
+	fi
 	
 	# Also save /etc/sysconfig/
 	mkdir -p $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)
@@ -640,9 +692,6 @@ EOF
 		echo "# detect CDROMs" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 		echo "[ -x /usr/sbin/fix-cdrom ] && /usr/sbin/fix-cdrom" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
 	fi
-
-	# load snd, if ALSA is present
-	[ -e /proc/asound/modules ] && echo snd-card-0 >>$TARGET_MNT_POINT/etc/modules-$(uname -r)
 }
 
 system_update_files()
