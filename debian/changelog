@@ -1,3 +1,9 @@
+knx-installer (0.4.0.5) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 17 Oct 2005 02:33:35 +0200
+
 knx-installer (0.4.0.4) unstable; urgency=low
 
   * enhance udev/ ifrename procedures.
