@@ -656,7 +656,6 @@ EOF
 	fi
 
 	# udev lan fix
-
 	if [ -x $TARGET_MNT_POINT/etc/init.d/udev -a -x $TARGET_MNT_POINT/etc/init.d/ifrename ]; then
 		change=change$RANDOM
 		count=0
@@ -668,6 +667,9 @@ EOF
 				perl -pi -e "s|$dev|$change|g" $TARGET_MNT_POINT/etc/network/interfaces
 				perl -pi -e "s|$devnew|$dev|g" $TARGET_MNT_POINT/etc/network/interfaces
 				perl -pi -e "s|$change|$devnew|g" $TARGET_MNT_POINT/etc/network/interfaces
+				mv -f $TARGET_MNT_POINT/etc/network/wep.$dev	$TARGET_MNT_POINT/etc/network/wep.$change	2>/dev/null
+				mv -f $TARGET_MNT_POINT/etc/network/wep.$devnew	$TARGET_MNT_POINT/etc/network/wep.$dev		2>/dev/null
+				mv -f $TARGET_MNT_POINT/etc/network/wep.$change	$TARGET_MNT_POINT/etc/network/wep.$devnew	2>/dev/null
 			fi
 		done > $TARGET_MNT_POINT/etc/iftab
 	fi
