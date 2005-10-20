@@ -385,7 +385,7 @@ EOF
 				> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
 
 			# fix ownership
-			chroot_it chown -R "$USER_NAME":"$USER_NAME" "$TARGET_MNT_POINT/home/$USER_NAME/.kde"
+			chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME/.kde"
 		fi
 	fi
 	
