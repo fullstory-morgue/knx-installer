@@ -112,7 +112,7 @@ EOF
 		if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
 			I=(${I//:/ })
 			I="${I[0]##*/}"
-			rmdir "$TARGET_MNT_POINT/mnt/$I"
+			rmdir "$TARGET_MNT_POINT/mnt/$I" &>/dev/null
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/$I"
 		fi
 	done

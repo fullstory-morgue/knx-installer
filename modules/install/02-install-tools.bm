@@ -119,25 +119,25 @@ system_copy_home()
 	#copy home directory from running user
 
 	#check if already data is there then stop
-	if [ -d $TARGET_MNT_POINT/home/$USER_NAME ]; then
-		chroot "$TARGET_MNT_POINT" chown -R $USER_NAME:$USER_NAME /home/$USER_NAME
+	if [ -d "$TARGET_MNT_POINT/home/$USER_NAME" ]; then
+		chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 		return 0
 	fi
 
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
-		rm -rf $TARGET_MNT_POINT/home/$DEFAULT_USER
-		cp -a /home/$DEFAULT_USER $TARGET_MNT_POINT/home
-		[ "$USER_NAME" != "$DEFAULT_USER" ] && mv $TARGET_MNT_POINT/home/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME
+		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
+		cp -a "/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home"
+		[ "$USER_NAME" != "$DEFAULT_USER" ] && mv "$TARGET_MNT_POINT/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home/$USER_NAME"
 	else
-		cp -a $TARGET_MNT_POINT/etc/skel $TARGET_MNT_POINT/home
-		mv $TARGET_MNT_POINT/home/skel $TARGET_MNT_POINT/home/$USER_NAME
+		cp -a "$TARGET_MNT_POINT/etc/skel" "$TARGET_MNT_POINT/home"
+		mv "$TARGET_MNT_POINT/home/skel" "$TARGET_MNT_POINT/home/$USER_NAME"
 	fi
 
-	chroot "$TARGET_MNT_POINT" chown -R $USER_NAME:$USER_NAME /home/$USER_NAME
+	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 
-	mount --bind /proc $TARGET_MNT_POINT/proc
-	chroot "$TARGET_MNT_POINT" su $USER_NAME -c mkdesktophdicons
-	umount $TARGET_MNT_POINT/proc
+	mount --bind /proc "$TARGET_MNT_POINT/proc"
+	chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
+	umount "$TARGET_MNT_POINT/proc"
 
 	# --- Added by Joerg Schirottke (modified by Fabian Franz)
 
@@ -145,39 +145,39 @@ system_copy_home()
 
 	# Remove autostart scripts
 
-	rm -f $TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop
-	rm -f $TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/sorticons.desktop
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop"
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/sorticons.desktop"
 
 	# Fix background
 
 	if [ "$INSTALL_KANO" = "no" ]; then
-		[ -e $DEFAULT_DIR/usr/local/lib/knoppix.jpg ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/knoppix.jpg|" $TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc
-		[ -e $DEFAULT_DIR/usr/local/lib/knoppix.png ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/knoppix.png|" $TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc
+		[ -e "$DEFAULT_DIR/usr/local/lib/knoppix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/knoppix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+		[ -e "$DEFAULT_DIR/usr/local/lib/knoppix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/knoppix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 	else
-		[ -e $DEFAULT_DIR/usr/local/lib/kanotix.jpg ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/kanotix.jpg|" $TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc
-		[ -e $DEFAULT_DIR/usr/local/lib/kanotix.png ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/kanotix.png|" $TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc
+		[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/kanotix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+		[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/kanotix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 	fi
 
 	# Remove Netscape Directories
 	
-	rm -rf $TARGET_MNT_POINT/home/$USER_NAME/.netscape*
+	rm -rf "$TARGET_MNT_POINT/home/$USER_NAME/.netscape*"
 
 	# Remove KNOPPIX/KANOTIX Firewall
 
-	rm -f $TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-knoppix.desktop
-	rm -f $TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-kanotix.desktop
-	rm -f $TARGET_MNT_POINT/etc/skel/Desktop/firewall-kanotix.desktop
-	rm -f $TARGET_MNT_POINT/etc/skel/Desktop/firewall-knoppix.desktop
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-knoppix.desktop"
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-kanotix.desktop"
+	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-kanotix.desktop"
+	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-knoppix.desktop"
 
 	# Mozilla Konfigdateien korrigieren
 
 	if [ "$USER_NAME" != "$DEFAULT_USER" ];	then
-		rm -f $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/appreg
-		rm -f $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/pluginreg.dat
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/appreg"
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/pluginreg.dat"
 		# TODO: Test if symlink works ...
-		if [ -e $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER ]; then
-			[ -e $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default ] || mv $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default
-			perl -pi -e 's/.*general.useragent.*\n?//' $TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js
+		if [ -e "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER" ]; then
+			[ -e "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default" ] || mv "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER" "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default"
+			perl -pi -e 's/.*general.useragent.*\n?//' "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js"
 		fi
 
 		# Bei unterschiedlichem OLD/NEWHOME muss man die Pfade anpassen, sonst funktionieren die Anwendungen nicht korrekt
@@ -192,7 +192,7 @@ system_copy_home()
 
 	# Neue Symbole für KANOTIX und KNOPPIX auf dem Desktop
 
-	[ -e $TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop ] && cat >$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop <<EOF
+	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" <<EOF
 [Desktop Entry]
 Name=KANOTIX
 # Exec=kfmclient openProfile webbrowsing http://kanotix.com/
@@ -202,7 +202,7 @@ Icon=html
 Terminal=0
 EOF
 
-	[ -e $TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop ] && cat >$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop <<EOF
+	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop" <<EOF
 [Desktop Entry]
 Name=KNOPPIX
 # Exec=kfmclient openProfile webbrowsing http://knoppix.com/
@@ -217,7 +217,7 @@ EOF
 system_setup_kdm()
 {
 	# backup Knoppix specific Xsession file
-	mv $TARGET_MNT_POINT/etc/X11/Xsession.d/45xsession $TARGET_MNT_POINT/root/xsession.knx-hdinstall.backup
+	mv "$TARGET_MNT_POINT/etc/X11/Xsession.d/45xsession" "$TARGET_MNT_POINT/root/xsession.knx-hdinstall.backup"
 
 	# Make the system insecure ? Never! (FF)
 	
@@ -229,14 +229,14 @@ system_setup_kdm()
 
 	# force kde first time configuration
 	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]; then
-		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' $TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc
+		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc"
 
 		# The users kde should be perfect, unless we just copied from template ...
-		[ ! -d "/home/$DEFAULT_USER/.kde" ] && perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' $TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kpersonalizerrc
+		[ ! -d "/home/$DEFAULT_USER/.kde" ] && perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kpersonalizerrc"
 	fi
 
 	# Add kde3 to .wmrc
-	[ ! -r $TARGET_MNT_POINT/home/$USER_NAME/.wmrc ] && echo "kde3" > $TARGET_MNT_POINT/home/$USER_NAME/.wmrc
+	[ ! -r "$TARGET_MNT_POINT/home/$USER_NAME/.wmrc" ] && echo "kde3" > "$TARGET_MNT_POINT/home/$USER_NAME/.wmrc"
 
 	# Start kdm in runlevel 5
 	chroot_it update-rc.d kdm start 99 5 . >/dev/null  
@@ -245,25 +245,25 @@ system_setup_kdm()
 system_install_templates()
 {
 	TEMPLATE_PATH=""
-	[ -d $SEARCHPATH/templates ] && TEMPLATE_PATH=$SEARCHPATH/templates
+	[ -d "$SEARCHPATH/templates" ] && TEMPLATE_PATH="$SEARCHPATH/templates"
 	if [ -n "$TEMPLATE_PATH" ]; then 
 		# change prompt (/etc/profile)
-		cp -af $TEMPLATE_PATH/etc/profile $TARGET_MNT_POINT/etc/profile
+		cp -af "$TEMPLATE_PATH/etc/profile" "$TARGET_MNT_POINT/etc/profile"
 
 		# "normalize" /etc/inittab
-		cp -af $TEMPLATE_PATH/etc/inittab $TARGET_MNT_POINT/etc/inittab
+		cp -af "$TEMPLATE_PATH/etc/inittab" "$TARGET_MNT_POINT/etc/inittab"
 	
 		# change /etc/inputrc to 8-bit clean input
 		# why ?
 		#cp -af $TEMPLATE_PATH/etc/inputrc $TARGET_MNT_POINT/etc/inputrc
 	
 		# remove Knoppix entry from /etc/sudoers
-		cp -af $TEMPLATE_PATH/etc/sudoers $TARGET_MNT_POINT/etc/sudoers
-		chown root:root $TARGET_MNT_POINT/etc/sudoers
-		chmod 0440 $TARGET_MNT_POINT/etc/sudoers
+		cp -af "$TEMPLATE_PATH/etc/sudoers" "$TARGET_MNT_POINT/etc/sudoers"
+		chown root:root "$TARGET_MNT_POINT/etc/sudoers"
+		chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
 
 		# use less restrictive /etc/hosts.allow
-		cp -af $TEMPLATE_PATH/etc/hosts.allow $TARGET_MNT_POINT/etc/hosts.allow
+		cp -af "$TEMPLATE_PATH/etc/hosts.allow" "$TARGET_MNT_POINT/etc/hosts.allow"
 	else
 		echo $"Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 1>&2
 	fi
@@ -385,7 +385,7 @@ EOF
 				> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
 
 			# fix ownership
-			chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME/.kde"
+			chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 		fi
 	fi
 	
@@ -402,7 +402,7 @@ system_services()
 	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:90 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:89 cron:89:11"
 	# delete knoppix specific programs from runlevel directories
 	# delete also knoppix-hd-config
-	rm -f $TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt}
+	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt}"
 
 	# start services wanted in config ...
 	for i in $SERVICES_START; do
@@ -416,17 +416,17 @@ system_services()
 	#       be pretty slow. This way we win some speed.
 	#       DO NOT FOLLOW THIS EXAMPLE IN OTHER PACKAGES.
 	#
-	if [ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ]; then
+	if [ -x "$TARGET_MNT_POINT/etc/init.d/mountvirtfs" ]; then
 		chroot_it update-rc.d mountvirtfs	start 2 S . start 36 S .				&>/dev/null
 		# XXX: workaround for broken update-rc.d
 		chroot_it ln -sf ../init.d/mountvirtfs /etc/rcS.d/S02mountvirtfs
 		for i in devpts.sh mountkernfs; do
-		        if [ -f $TARGET_MNT_POINT/etc/init.d/$i ]; then
-				rm -f $TARGET_MNT_POINT/etc/init.d/$i
-				chroot_it update-rc.d $i remove							&>/dev/null
+		        if [ -f "$TARGET_MNT_POINT/etc/init.d/$i" ]; then
+				rm -f "$TARGET_MNT_POINT/etc/init.d/$i"
+				chroot_it update-rc.d "$i" remove						&>/dev/null
 			fi
 		done
-	elif [ -x $TARGET_MNT_POINT/etc/init.d/mountkernfs ]; then
+	elif [ -x "$TARGET_MNT_POINT/etc/init.d/mountkernfs" ]; then
 		chroot_it update-rc.d mountkernfs	start 36 S .						&>/dev/null
 	else
 		chroot_it update-rc.d devpts.sh start 36 S . &>/dev/null
@@ -516,7 +516,7 @@ system_services()
 		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
 		SYSTEM_START=$(echo $i | cut -d: -f2)
 		SYSTEM_STOP=$(echo $i | cut -d: -f3)
-		chroot_it update-rc.d $SYSTEM_SERVICE defaults $SYSTEM_START $SYSTEM_STOP			&>/dev/null
+		chroot_it update-rc.d "$SYSTEM_SERVICE" defaults "$SYSTEM_START" "$SYSTEM_STOP"			&>/dev/null
 	done
 
 	# start automounter
@@ -528,21 +528,18 @@ system_services()
 	
 	for DM in kdm xdm gdm; do
 		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]; then
-	 		chroot_it update-rc.d -f $DM	remove							&>/dev/null
-	 		chroot_it update-rc.d $DM	start 99 5 . stop 1 0 1 2 3 4 6 .			>/dev/null
+	 		chroot_it update-rc.d -f "$DM"	remove							&>/dev/null
+	 		chroot_it update-rc.d "$DM"	start 99 5 . stop 1 0 1 2 3 4 6 .			>/dev/null
 		fi
 	done
 
 	# PCMCIA ausschalten, wenn nicht nötig
-
 	grep -q pcmcia /proc/devices || chroot_it update-rc.d -f pcmcia remove >/dev/null 2>/dev/null
 	
 	# ACPI Anpassung
-
 	[ -d /proc/acpi -a -x /etc/init.d/acpid ] && chroot_it update-rc.d acpid defaults >/dev/null
 
 	# Startuplinks einfrieren
-
 	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d
 
 	# system_add_services # started by the different modes
@@ -570,7 +567,7 @@ system_install_i18n()
 
 		# Add localisation for kde3
 		
-		 cat << EOF >> $TARGET_MNT_POINT/etc/kde3/system.kdeglobals
+		 cat << EOF >> "$TARGET_MNT_POINT/etc/kde3/system.kdeglobals"
 [Locale]
 Charset=$CHARSET
 Country=$COUNTRY
@@ -579,8 +576,8 @@ EOF
 
 		# Add localisation for kdm
 		# (Language could be commented out)
-		perl -pi -e "s/#Language=.*/Language=$LANGUAGE/g" $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
-		perl -pi -e "s/Language=.*/Language=$LANGUAGE/g" $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+		perl -pi -e "s/#Language=.*/Language=$LANGUAGE/g" "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		perl -pi -e "s/Language=.*/Language=$LANGUAGE/g" "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 	fi
 }
 
@@ -589,7 +586,7 @@ EOF
 system_create_modules()
 {
 	# create device symlink /dev/mouse ( normally done by hwsetup )
-	cp -a /dev/mouse $TARGET_MNT_POINT/dev/
+	cp -a /dev/mouse "$TARGET_MNT_POINT/dev/"
 
 	# create /etc/modules from current loaded modules
 	cat <<EOF >$TMP
@@ -603,29 +600,29 @@ EOF
 	BLACKLIST=$(cut -f1 -d' ' /lib/modules/$(uname -r)/modules.usbmap|sort|uniq|perl -pe 's/#\n//;s/\n/|/g')"cloop|snd|radeon|fsam7400|capi|hisax|fcpci|fcdsl|ieee80211|slam|unionfs|dri"
 	cat /proc/modules | tac | grep -v '\[.*\]' | egrep -v "$BLACKLIST" |
 	while read mod x; do
-		if [ $mod = apm ]; then
+		if [ "$mod" = apm ]; then
 			echo "apm power_off=1" >>$TMP
-		elif [ $mod = sbp2 ]; then
+		elif [ "$mod" = sbp2 ]; then
 			echo "sbp2 serialize_io=1" >>$TMP
 		else
-			echo $mod >>$TMP
+			echo "$mod" >>$TMP
 		fi
 	done
 
 	WHITELIST="ipw2100|ipw2200"
 	cat /proc/modules | tac | grep -v '\[.*\]' | egrep "$WHITELIST" |
 	while read mod x; do
-		echo $mod >>$TMP
+		echo "$mod" >>$TMP
 	done
 
-	cp -f $TMP $TARGET_MNT_POINT/etc/modules
+	cp -f $TMP "$TARGET_MNT_POINT/etc/modules"
 	
 	# for the future :-)
-	cp -f $TMP $TARGET_MNT_POINT/etc/modules-$(uname -r)
+	cp -f $TMP "$TARGET_MNT_POINT/etc/modules-$(uname -r)"
 
 	# use optimized udev /etc/modules and write /etc/default/acpid
 
-	if [ -x $TARGET_MNT_POINT//etc/init.d/udev ]; then
+	if [ -x "$TARGET_MNT_POINT//etc/init.d/udev" ]; then
 		LOADED=$(lsmod|awk '{print $1}'|sed 's/_/-/g'|sort|uniq)
 		ACPI=$(ls /lib/modules/$(uname -r)/kernel/drivers/acpi/|sed 's/\.ko//'|sed 's/_/-/g')
 		CPUFREQ=$(ls /lib/modules/$(uname -r)/kernel/arch/*/kernel/cpu/cpufreq/|sed 's/\.ko//'|sed 's/_/-/g')
