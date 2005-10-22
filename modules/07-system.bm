@@ -61,7 +61,7 @@ module_system_get_cmdlines()
 			echo $(cat /proc/cmdline | sed 's/vga=[^ ]* //g; s/initrd=[^ ]* //g; s/BOOT_IMAGE=[^ ]* //g')
 		;;
 		debian)
-			SYSTEM_RESCUE_CMDS="acpi|noapic|nosmp|pci|pnpbios|noapm|nohlt|nolapic|i8042|=scsi"
+			SYSTEM_RESCUE_CMDS="acpi|noapic|nosmp|pci|pnpbios|noapm|nohlt|nolapic|irqpoll|i8042|=scsi"
 			SYSTEM_RESCUE_CMDLINE=$(cat /proc/cmdline | tr ' ' '\n' | egrep "$SYSTEM_RESCUE_CMDS" |  tr '\n' ' ')
 			[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
 			[ -n "$LANGUAGE" ] || LANGUAGE="de"
