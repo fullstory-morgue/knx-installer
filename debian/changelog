@@ -1,8 +1,8 @@
-knx-installer (0.4.0.8) UNRELEASED; urgency=low
+knx-installer (0.4.0.8) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * remove pcmcia-cs when udev is installed.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 22 Oct 2005 02:26:52 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 23 Oct 2005 00:05:20 +0200
 
 knx-installer (0.4.0.7) unstable; urgency=low
 
