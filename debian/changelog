@@ -1,8 +1,8 @@
-knx-installer (0.4.0.9) UNRELEASED; urgency=low
+knx-installer (0.4.0.9) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * don't install modutils-knoppix.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 23 Oct 2005 00:07:07 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 24 Oct 2005 02:08:24 +0200
 
 knx-installer (0.4.0.8) unstable; urgency=low
 

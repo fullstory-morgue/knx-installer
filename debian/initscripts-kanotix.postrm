@@ -22,7 +22,7 @@ case "$1" in
 	purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
 		update-rc.d -f knoppix-hd-config	remove
 		update-rc.d -f knoppix-hd-autoconfig	remove
-		update-rc.d -f modutils-knoppix		remove
+		[ -e /etc/init.d/modutils-knoppix ] && update-rc.d -f modutils-knoppix remove || true
 		;;
 
     *)

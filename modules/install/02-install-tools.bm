@@ -87,16 +87,18 @@ system_copy_etc()
 
 	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state $TARGET_MNT_POINT/var/lib/alsa
 
-	# TODO: Remove hack from here
-	perl -pi -e "s/insmod/modprobe/g" $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-	[ -e $TARGET_MNT_POINT/etc/default/kde-services-knoppix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-knoppix
-	[ -e $TARGET_MNT_POINT/etc/default/kde-services-kanotix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-kanotix
-	# TODO: Send hacks to Klaus ...
-	perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-	perl -pi -e 's/modutils/modutils-knoppix/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-	perl -pi -e 's/if grep -q /if egrep -q/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-	# TODO: :-)
-	[ ! -r /etc/init.d/modutils-knoppix -a -x tools/modutils-knoppix ] && cp -f tools/modutils-knoppix $TARGET_MNT_POINT/etc/init.d/
+	if [ ! "$SYSTEM_TYPE" = "debian" ]; then
+		# TODO: Remove hack from here
+		perl -pi -e "s/insmod/modprobe/g" $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+		[ -e $TARGET_MNT_POINT/etc/default/kde-services-knoppix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-knoppix
+		[ -e $TARGET_MNT_POINT/etc/default/kde-services-kanotix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-kanotix
+		# TODO: Send hacks to Klaus ...
+		perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+		[ "$INSTALL_KANO" = "no" ] && perl -pi -e 's/modutils/modutils-knoppix/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+		perl -pi -e 's/if grep -q /if egrep -q/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+		# TODO: :-)
+		[ "$INSTALL_KANO" = "no" ] && [ ! -r /etc/init.d/modutils-knoppix -a -x tools/modutils-knoppix ] && cp -f tools/modutils-knoppix $TARGET_MNT_POINT/etc/init.d/
+	fi
 	
 	# Add dpi setting from cheatcode to hd install
 
