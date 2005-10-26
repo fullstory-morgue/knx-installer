@@ -1,8 +1,14 @@
-knx-installer (0.4.0.10) UNRELEASED; urgency=low
+knx-installer (0.4.0.11) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * fix mkdesktopicons and automount.sh usage.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 24 Oct 2005 02:13:55 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 26 Oct 2005 22:46:36 +0200
+
+knx-installer (0.4.0.10) unstable; urgency=low
+
+  * cciss auto setting in /etc/fstab.
+
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 25 Oct 2005 02:04:18 +0200
 
 knx-installer (0.4.0.9) unstable; urgency=low
 

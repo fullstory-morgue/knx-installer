@@ -32,12 +32,14 @@ system_add_hd_autoconfig()
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g'  $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
 
 	# TODO: Really _fix_ it:
-	perl -pi -e 's/ReadOnly=1/ReadOnly=0/g'  $TARGET_MNT_POINT/usr/bin/mkdesktophdicons
-	perl -pi -e 's/uid=knoppix,gid=knoppix,//g' $TARGET_MNT_POINT/etc/automount.sh
+	perl -pi -e 's/ReadOnly=1/ReadOnly=0/g' "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons"	&>/dev/null
+	perl -pi -e 's/uid=knoppix,gid=knoppix,//g' "$TARGET_MNT_POINT/etc/automount.sh"	&>/dev/null
 
-	mount --bind /proc $TARGET_MNT_POINT/proc
-	chroot "$TARGET_MNT_POINT" su $USER_NAME -c mkdesktophdicons
-	umount $TARGET_MNT_POINT/proc
+	if [ -x "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons" ]; then
+		mount --bind /proc "$TARGET_MNT_POINT/proc"
+		chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
+		umount "$TARGET_MNT_POINT/proc"
+	fi
 }
 
 system_add_hd_config()
@@ -137,9 +139,11 @@ system_copy_home()
 
 	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 
-	mount --bind /proc "$TARGET_MNT_POINT/proc"
-	chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
-	umount "$TARGET_MNT_POINT/proc"
+	if [ -x "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons" ]; then
+		mount --bind /proc "$TARGET_MNT_POINT/proc"
+		chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
+		umount "$TARGET_MNT_POINT/proc"
+	fi
 
 	# --- Added by Joerg Schirottke (modified by Fabian Franz)
 

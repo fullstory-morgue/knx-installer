@@ -199,7 +199,7 @@ update_desktop_hdicons()
 	if [ -d "$d" ]; then
 		user="${d%/Desktop}"
 		user="${user#/home/}"
-		if [ "$user" != "root" ]; then
+		if [ "$user" != "root" -a -x "/usr/bin/mkdesktophdicons" ]; then
 			su "$user" -c "mkdesktophdicons" >/dev/null 2>&1
 		fi
 	fi
