@@ -21,7 +21,7 @@ VERSION="0.4"
 CONFIG_FILE="$HOME/.knofig"
 LOG="$HOME/.knofig_log"
 
-TARGET_MNT_POINT="/mnt/hdinstall" # TR1 in old installer
+TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
 TARGET_MNT_NAME="hdinstall" # TR1 in old installer
 
 # make use of distro-defaults

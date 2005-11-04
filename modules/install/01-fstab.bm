@@ -28,25 +28,33 @@ function get_usb_devices
 function update_fstab
 {
 	update_status $"Updating /etc/fstab..."
-  
+
 	cp $TARGET_MNT_POINT/etc/fstab $TMPDIR/
-	
+
 	cat <<EOF >$TARGET_MNT_POINT/etc/fstab
-# /etc/fstab: filesystem table.
+# /etc/fstab: static file system information.
 #
-# filesystem  mountpoint  type  options  dump  pass
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+usbfs           /proc/bus/usb   usbfs   devmode=0666    0       0
+EOF
+
+	[ -x $TARGET_MNT_POINT/etc/init.d/mountvirtfs ] || cat <<EOF >>$TARGET_MNT_POINT/etc/fstab
+sysfs           /sys            sysfs   defaults        0       0
+tmpfs           /dev/shm        tmpfs   defaults        0       0
 EOF
 
 	case $HD_FSTYPE in
 		reiser*|xfs|jfs)
-			echo "$HD_CHOICE  /  $HD_FSTYPE  defaults  0  1" >>$TARGET_MNT_POINT/etc/fstab
+			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$HD_CHOICE" "/" "$HD_FSTYPE" "defaults" "0" "1" >>$TARGET_MNT_POINT/etc/fstab
 		;;
 		*)
-		echo "$HD_CHOICE  /  $HD_FSTYPE  defaults,errors=remount-ro  0  1" >>$TARGET_MNT_POINT/etc/fstab
+			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$HD_CHOICE" "/" "$HD_FSTYPE" "defaults,errors=remount-ro" "0" "1" >>$TARGET_MNT_POINT/etc/fstab
 		;;
 	esac
 
 	# Add other HD-mappings
+
 	for i in $HD_MAP
 	do
 		part=$(echo $i | cut -d":" -f1)
@@ -56,65 +64,62 @@ EOF
 		else
 			hd_map_fstype="auto"
 		fi
-		echo "$part  $point  $hd_map_fstype  defaults,auto  0  2" >>$TARGET_MNT_POINT/etc/fstab
+		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >>$TARGET_MNT_POINT/etc/fstab
 	done
 
-	# Add swap devices
-	cat $TMPDIR/fstab >> $TARGET_MNT_POINT/etc/fstab
+	# Let Kanotix detect all other partitions
 
-	cat <<EOF >>$TARGET_MNT_POINT/etc/fstab
-proc  /proc  proc  defaults  0  0
-/dev/fd0  /floppy  vfat  defaults,user,noauto,showexec,umask=022,shortname=mixed,quiet  0  0
-usbfs  /proc/bus/usb  usbfs  devmode=0666  0  0
-sysfs  /sys  sysfs  defaults  0  0
-tmpfs  /dev/shm  tmpfs defaults  0  0
-EOF
-
-	# Add CD-Roms/DVD/...
-	
-	for i in /dev/cdrom* /dev/dvd
-	do
-		[ -L $i ] || continue
-		echo "$i /${i/\/dev\//}  iso9660  defaults,ro,users,noexec,noauto  0  0" >> $TARGET_MNT_POINT/etc/fstab
-		mkdir -p $TARGET_MNT_POINT/${i/\/dev\//}
-		readlink $i | grep -q "$DEFAULT_DIR" || cp -a $i $TARGET_MNT_POINT/dev/
-	done
-
-	# copy automounter links
-	for i in /mnt/*
-	do
-		[ -L $i ] && cp -a $i $TARGET_MNT_POINT/mnt/
-	done
-
-	# Let Knoppix detect all other partitions
 	mount --bind /proc $TARGET_MNT_POINT/proc
 	chroot "$TARGET_MNT_POINT" rebuildfstab -r
 	umount $TARGET_MNT_POINT/proc
 
-	# NTFS Partition(en) mit umask=000 Option ausstatten (by Joerg Schirottke)
-	
-	perl -pi -e 's/(ntfs noauto,users,exec,ro).*/\1,umask=000 0 0/' $TARGET_MNT_POINT/etc/fstab
-
 	# Partitionen auf nicht verwechselbare Platten automatisch mounten (Kanotix)
-        if [ "$INSTALL_KANO" == "yes" ]; then
-                USBDEVS=$(get_usb_devices)
-		echo "$USBDEVS"
-                [ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
+
+	if [ "$INSTALL_KANO" == "yes" ]; then
+		USBDEVS=$(get_usb_devices)
+		[ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
 		perl -pi -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^/dev/(cciss/c[0-7].*|[sh]d.*)noauto(.*)$#/dev/${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
         fi
 
-	# remove uid=, gid= - entries for vfat; instead use that of running process
+	# Add swap devices
 
-	perl -pi -e 's/(vfat noauto,users,exec).*/\1,umask=000,shortname=mixed,quiet 0 0/' $TARGET_MNT_POINT/etc/fstab
+	grep -v ^$ $TMPDIR/fstab >> $TARGET_MNT_POINT/etc/fstab
+
+	# Add CD-Roms
 	
+	for i in $(ls -d /dev/cdrom* 2>/dev/null); do
+		m=${i#/dev}
+		[ "$m" == "/cdrom" ] && m="/cdrom0"
+		mkdir -p $TARGET_MNT_POINT/media$m
+		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$i" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
+	done
+
+	# Add Floppy
+
+	for i in $(ls -d /sys/block/fd* 2>/dev/null); do
+		mkdir -p $TARGET_MNT_POINT/media/floppy${i#/sys/block/fd}
+		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${i#/sys/block}" "/media/floppy${i#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
+	done
+
 	# Remove not needed device links
+
 	for I in $HD_MAP; do
-		if [[ $I != /dev/*:/mnt/* && -n $TARGET_MNT_POINT ]]; then
+		if [[ $I != /dev/*:/media/* && -n $TARGET_MNT_POINT ]]; then
 			I=(${I//:/ })
 			I="${I[0]##*/}"
-			rmdir "$TARGET_MNT_POINT/mnt/$I" &>/dev/null
+			rmdir "$TARGET_MNT_POINT/media/$I" &>/dev/null
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/$I"
 		fi
 	done
-}
 
+	# Change /etc/fstab to defaults and remove uid/gid
+
+	perl -pi -e 's|([^n][^o])auto,users,exec,|\1|;s|([^n][^o])auto,users,exec|\1defaults|;s|(defaults),auto|\1|;s|^# Added by.*\n||;s|(,uid=\w*)||;s|(,gid=\w*)||' $TARGET_MNT_POINT/etc/fstab
+
+	# Reformat /etc/fstab
+
+	rm -f $TARGET_MNT_POINT/etc/fstab.new
+	awk '{if (/^[ \t]*#/) print; else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
+	mv -f $TARGET_MNT_POINT/etc/fstab.new $TARGET_MNT_POINT/etc/fstab
+
+}

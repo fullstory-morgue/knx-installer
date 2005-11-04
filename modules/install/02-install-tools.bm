@@ -28,8 +28,8 @@ system_add_hd_autoconfig()
 	[ "$SYSTEM_TYPE" = "beginner" ] && chroot_it update-rc.d knoppix-hd-autoconfig start 00 S . >/dev/null
 
 	# TODO: Remove the hacks
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g'  $TARGET_MNT_POINT/sbin/hotplug-knoppix
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g'  $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g'  $TARGET_MNT_POINT/sbin/hotplug-knoppix &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g'  $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig &>/dev/null
 
 	# TODO: Really _fix_ it:
 	perl -pi -e 's/ReadOnly=1/ReadOnly=0/g' "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons"	&>/dev/null
@@ -436,7 +436,7 @@ system_services()
 	elif [ -x "$TARGET_MNT_POINT/etc/init.d/mountkernfs" ]; then
 		chroot_it update-rc.d mountkernfs	start 36 S .						&>/dev/null
 	else
-		chroot_it update-rc.d devpts.sh start 36 S . &>/dev/null
+		chroot_it update-rc.d devpts.sh		start 36 S . 						&>/dev/null
 	fi
 	chroot_it update-rc.d bootlogd		start 5 S .							&>/dev/null
 	chroot_it update-rc.d checkroot.sh	start 10 S .							&>/dev/null
@@ -627,55 +627,20 @@ EOF
 	# for the future :-)
 	cp -f $TMP "$TARGET_MNT_POINT/etc/modules-$(uname -r)"
 
-	# use optimized udev /etc/modules and write /etc/default/acpid
-
-	if [ -x "$TARGET_MNT_POINT//etc/init.d/udev" ]; then
-		LOADED=$(lsmod|awk '{print $1}'|sed 's/_/-/g'|sort|uniq)
-		ACPI=$(ls /lib/modules/$(uname -r)/kernel/drivers/acpi/|sed 's/\.ko//'|sed 's/_/-/g')
-		CPUFREQ=$(ls /lib/modules/$(uname -r)/kernel/arch/*/kernel/cpu/cpufreq/|sed 's/\.ko//'|sed 's/_/-/g')
-		EXTRA="capability fuse pcspkr ppdev tun ndiswrapper"
-		LOADED_ACPI=$(echo $LOADED $ACPI|tr ' ' '\n'|sort|uniq -d)
-		LOADED_CPUFREQ=$(echo $LOADED $CPUFREQ|tr ' ' '\n'|sort|uniq -d)
-		ADED_CPUFREQ=$(echo $LOADED $CPUFREQ|tr ' ' '\n'|sort|uniq -d)
-		LOADED_EXTRA=$(echo $LOADED $EXTRA|tr ' ' '\n'|sort|uniq -d)
-		mkdir -p $TARGET_MNT_POINT/etc/default
-		[ "$LOADED_ACPI" ] && cat > $TARGET_MNT_POINT/etc/default/acpid <<EOF
-# Specify options for acpid startup, Debian default is to enable the
-# use of sockets at a non-default position
-OPTIONS="-s /var/run/acpid.socket"
-
-# Specify modules to load on acpid's startup
-# MODULES may be uncommented to load "none", contain the string "all"
-# to load all acpi related modules or simply a space seperated list
-# of modules to be probed.
-MODULES="$(echo $LOADED_ACPI)"
-EOF
-		rm -f $TARGET_MNT_POINT/etc/modules $TARGET_MNT_POINT/etc/modules-*
-		[ "$LOADED_CPUFREQ" ] && cat > $TARGET_MNT_POINT/etc/modules <<EOF
-$LOADED_CPUFREQ
-EOF
-		[ "$LOADED_EXTRA" ] && cat >> $TARGET_MNT_POINT/etc/modules <<EOF
-$LOADED_EXTRA
-EOF
+	# udev modules fix
+	if [ -x "$TARGET_MNT_POINT/etc/init.d/udev" ]; then
+		mount --bind /proc "$TARGET_MNT_POINT/proc"
+		chroot_it fix-udev-modules &>/dev/null
+		chroot_it unfreeze-rc.d &>/dev/null
+		umount "$TARGET_MNT_POINT/proc"
 	fi
 
 	# udev lan fix
 	if [ -x $TARGET_MNT_POINT/etc/init.d/udev -a -x $TARGET_MNT_POINT/etc/init.d/ifrename ]; then
-		change=change$RANDOM
-		count=0
-		LANG= ifconfig -a|grep Ethernet|awk '/HWaddr/{print $1" "$5}'|grep -v 00:00:00:00:00:00|while read dev mac; do
-			if ! [ "$(ethtool -i $dev 2>/dev/null|awk '/^driver:/{print $2}')" == "hostap" ]; then
-				devnew=lan$count
-				echo $devnew mac $mac
-				count=$(($count + 1))
-				perl -pi -e "s|$dev|$change|g" $TARGET_MNT_POINT/etc/network/interfaces
-				perl -pi -e "s|$devnew|$dev|g" $TARGET_MNT_POINT/etc/network/interfaces
-				perl -pi -e "s|$change|$devnew|g" $TARGET_MNT_POINT/etc/network/interfaces
-				mv -f $TARGET_MNT_POINT/etc/network/wep.$dev	$TARGET_MNT_POINT/etc/network/wep.$change	2>/dev/null
-				mv -f $TARGET_MNT_POINT/etc/network/wep.$devnew	$TARGET_MNT_POINT/etc/network/wep.$dev		2>/dev/null
-				mv -f $TARGET_MNT_POINT/etc/network/wep.$change	$TARGET_MNT_POINT/etc/network/wep.$devnew	2>/dev/null
-			fi
-		done > $TARGET_MNT_POINT/etc/iftab
+		mount --bind /proc "$TARGET_MNT_POINT/proc"
+		chroot_it fix-udev-lan &>/dev/null
+		chroot_it unfreeze-rc.d &>/dev/null
+		umount "$TARGET_MNT_POINT/proc"
 	fi
 	
 	# Also save /etc/sysconfig/

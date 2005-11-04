@@ -1,8 +1,10 @@
-knx-installer (0.4.0.12) UNRELEASED; urgency=low
+knx-installer (0.4.0.12) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * improved fstab.
+  * using /media instead of /mnt.
+  * some bug fixes.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 26 Oct 2005 22:48:38 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Thu,  3 Nov 2005 14:57:39 +0100
 
 knx-installer (0.4.0.11) unstable; urgency=low
 

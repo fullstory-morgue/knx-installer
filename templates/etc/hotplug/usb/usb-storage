@@ -51,7 +51,7 @@ echo "$ACTION $PRODUCT" >> $ALLFILE
 us_STORAGEICON=usbpendrive_mount
 #
 # set default values for special devices
-# name is "camera", mountpoint is "/mnt/camera"
+# name is "camera", mountpoint is "/media/camera"
 us_SPECIALNAME=camera
 # default icon for camera
 us_SPECIALICON=camera
@@ -383,9 +383,9 @@ for us_PARTITION in $us_PARTITIONS; do
 
         # special case for digicam
         if [ "$us_SPECIALDEVICE" ]; then
-            us_MOUNTPOINT=/mnt/$us_SPECIALNAME
+            us_MOUNTPOINT=/media/$us_SPECIALNAME
         else
-            us_MOUNTPOINT=/mnt/$us_PARTITION
+            us_MOUNTPOINT=/media/$us_PARTITION
         fi
 
         # skip if device or mountpoint already in use
