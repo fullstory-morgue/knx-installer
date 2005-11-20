@@ -365,12 +365,12 @@ system_add_services()
 
 		# enable udev, if installed
 		if [ -x /etc/init.d/udev ]; then
-			chroot_it dpkg --purge automount-kanotix		&> /dev/null
-			chroot_it dpkg --purge autofs				&> /dev/null
-			chroot_it dpkg --purge hotplug-kanotix			&> /dev/null	
-			chroot_it dpkg --purge mkdesktophdicons-kanotix		&> /dev/null
-			chroot_it dpkg --purge fix-cdrom			&> /dev/null
-			chroot_it dpkg --purge pcmcia-cs			&> /dev/null
+			chroot_it dpkg --purge automount-kanotix			&> /dev/null
+			chroot_it dpkg --purge autofs					&> /dev/null
+			chroot_it dpkg --purge hotplug-kanotix				&> /dev/null	
+			chroot_it dpkg --purge mkdesktophdicons-kanotix			&> /dev/null
+			chroot_it dpkg --purge fix-cdrom				&> /dev/null
+			pidof cardmgr >/dev/null||chroot_it dpkg --purge pcmcia-cs	&> /dev/null
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]

@@ -1,8 +1,8 @@
-knx-installer (0.4.0.13) UNRELEASED; urgency=low
+knx-installer (0.4.0.13) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * do not remove pcmcia-cs when used.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  4 Nov 2005 18:12:31 +0100
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 19 Nov 2005 22:23:02 +0100
 
 knx-installer (0.4.0.12) unstable; urgency=low
 
