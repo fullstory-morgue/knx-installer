@@ -1,4 +1,5 @@
 debian/overrides/knx-installer		/usr/share/lintian/overrides
+k*x-installer				usr/sbin/
 tools/mkext2fs				usr/sbin/
 tools/kanotix-installer-latest-web	usr/sbin/
 tools/knoppix-installer-latest-web	usr/sbin/

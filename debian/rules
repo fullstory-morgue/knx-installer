@@ -4,18 +4,10 @@ DEB_AUTO_UPDATE_DEBIAN_CONTROL := yes
 
 include /usr/share/cdbs/1/rules/buildcore.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
-#include /usr/share/cdbs/1/class/makefile.mk
 
 PACKAGE_VER   = "$(shell dpkg-parsechangelog | grep ^Vers | cut -d\  -f2)"
 
 build/knx-installer::
-	install -m 0755 -d  $(CURDIR)/debian/knx-installer/usr/sbin
-	install -m 0755     knoppix-installer $(CURDIR)/debian/knx-installer/usr/sbin/
-	dh_link	usr/sbin/knoppix-installer usr/sbin/k2hd \
-		usr/sbin/knoppix-installer usr/sbin/knx2hd \
-		usr/sbin/knoppix-installer usr/sbin/ktx2hd \
-		usr/sbin/knoppix-installer usr/sbin/kanotix-installer
-	
 	perl -pi -e "s|VERSION=.*|VERSION=\"$(PACKAGE_VER)\"|" $(CURDIR)/debian/knx-installer/usr/sbin/knoppix-installer
 	
 	# Gettext Internationalisation (i18n)

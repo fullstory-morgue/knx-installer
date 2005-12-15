@@ -1,0 +1,5 @@
+#!/bin/sh
+
+test -x /usr/sbin/knxinstaller && exec /usr/sbin/knxinstaller
+exec /usr/sbin/knoppix-installer
+

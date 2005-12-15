@@ -1,8 +1,10 @@
-knx-installer (0.4.0.14) UNRELEASED; urgency=low
+knx-installer (0.4.0.14) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * use the new knxinstaller if possible.
+  * remove virtual knoppix packages.
+  * bump compat level to 5.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 20 Nov 2005 02:23:49 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 15 Dec 2005 12:33:47 +0100
 
 knx-installer (0.4.0.13) unstable; urgency=low
 
