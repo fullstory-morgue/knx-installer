@@ -1,8 +1,9 @@
-knx-installer (0.4.0.15) UNRELEASED; urgency=low
+knx-installer (0.4.0.15) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * don't purge pcmcia-cs, just deactivate the daemon.
+  * pass through parameters to knxinstaller.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 15 Dec 2005 12:46:41 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 17 Dec 2005 15:51:00 +0100
 
 knx-installer (0.4.0.14) unstable; urgency=low
 
