@@ -1,4 +1,7 @@
 #!/bin/sh
-test -x /usr/sbin/knxinstaller && exec /usr/sbin/knxinstaller "$@"
-exec /usr/sbin/knoppix-installer "$@"
+if test $# -eq 0 -a -n "$DISPLAY" -a -x /usr/bin/knxinstaller; then
+	exec /usr/bin/knxinstaller
+else
+	exec /usr/sbin/knoppix-installer "$@"
+fi
 

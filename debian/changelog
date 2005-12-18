@@ -1,8 +1,8 @@
-knx-installer (0.4.0.16) UNRELEASED; urgency=low
+knx-installer (0.4.0.16) unstable; urgency=high
 
-  * NOT RELEASED YET
+  * adapt kanotix-installer to suit knxinstaller's needs.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 17 Dec 2005 15:53:42 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 18 Dec 2005 19:13:49 +0100
 
 knx-installer (0.4.0.15) unstable; urgency=low
 
