@@ -370,7 +370,7 @@ system_add_services()
 			chroot_it dpkg --purge hotplug-kanotix				&> /dev/null	
 			chroot_it dpkg --purge mkdesktophdicons-kanotix			&> /dev/null
 			chroot_it dpkg --purge fix-cdrom				&> /dev/null
-			pidof cardmgr >/dev/null||update-rc.d -f pcmcia remove		&> /dev/null
+			pidof cardmgr >/dev/null || chroot_it dpkg --purge pcmcia-cs	&> /dev/null
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]
@@ -541,7 +541,7 @@ system_services()
 	done
 
 	# PCMCIA ausschalten, wenn nicht nötig
-	grep -q pcmcia /proc/devices || chroot_it update-rc.d -f pcmcia remove >/dev/null 2>/dev/null
+	pidof cardmgr >/dev/null || chroot_it update-rc.d -f pcmcia remove >/dev/null 2>/dev/null
 	
 	# ACPI Anpassung
 	[ -d /proc/acpi -a -x /etc/init.d/acpid ] && chroot_it update-rc.d acpid defaults >/dev/null
