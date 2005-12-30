@@ -1,3 +1,9 @@
+knx-installer (0.4.0.19) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 30 Dec 2005 14:16:48 +0100
+
 knx-installer (0.4.0.18) unstable; urgency=low
 
   * prepare for new dbus.
