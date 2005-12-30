@@ -512,8 +512,12 @@ system_services()
 	chroot_it update-rc.d udev		start 04 S .							&>/dev/null
 	chroot_it update-rc.d udev-mtab		start 36 S .							&>/dev/null
 
-	# dbus-1
-	chroot_it update-rc.d dbus-1		defaults							&>/dev/null
+	# dbus
+	if [ -x /etc/init.d/dbus-1 ]; then
+		chroot_it update-rc.d dbus-1	defaults							&>/dev/null
+	elif [ -x /etc/init.d/dbus ]; then
+		chroot_it update-rc.d dbus	defaults							&>/dev/null
+	fi
 
 	# ifrename
 	chroot_it update-rc.d ifrename		start 40 S .							&>/dev/null
