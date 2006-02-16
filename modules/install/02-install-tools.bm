@@ -76,9 +76,9 @@ system_copy_etc()
 	# Rename XF86Config-4 to xorg.conf when Xorg is used and activate xorg-common
 	if [ -x /usr/X11R6/bin/Xorg ]; then
 		mv $TARGET_MNT_POINT/etc/X11/XF86Config-4 $TARGET_MNT_POINT/etc/X11/xorg.conf
-		[ -x /etc/init.d/xorg-common ] && chroot_it update-rc.d xorg-common start 70 S . >/dev/null
-		[ -x /etc/init.d/x-common ]    && chroot_it update-rc.d x-common    start 70 S . >/dev/null
-		[ -x /etc/init.d/x11-common ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
+		[ -x $TARGET_MNT_POINT/etc/init.d/xorg-common ] && chroot_it update-rc.d xorg-common start 70 S . >/dev/null
+		[ -x $TARGET_MNT_POINT/etc/init.d/x-common ]    && chroot_it update-rc.d x-common    start 70 S . >/dev/null
+		[ -x $TARGET_MNT_POINT/etc/init.d/x11-common ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
 	fi
 
   	# Save ALSA sound volume
@@ -304,6 +304,12 @@ system_add_services()
 		[ "$MODE" ] && chroot_it update-rc.d 855resolution defaults &>/dev/null
 	fi
 
+	# activate 915resolution if needed
+	if [ -r /etc/default/915resolution ]; then
+		source /etc/default/915resolution
+		[ "$MODE" ] && chroot_it update-rc.d 915resolution defaults &>/dev/null
+	fi
+	
 	if [ "$INSTALL_KANO" = "no" ]; then
 		# Set packages to hold/ prevent KDE update (Knoppix only):
 		echo "kdelibs4-dev hold"  | chroot_it dpkg --set-selections

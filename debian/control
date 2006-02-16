@@ -3,12 +3,12 @@ Section: admin
 Priority: optional
 Maintainer: Joerg Schirottke <master@kanotix.com>
 Uploaders: Stefan Lippers-Hollmann <s.l-h@gmx.de>
-Build-Depends-Indep: cdbs (>= 0.4.23-1.1), build-essential, debhelper (>= 4.1.0)
+Build-Depends-Indep: cdbs (>= 0.4.23-1.1), debhelper (>= 5.0.0)
 Standards-Version: 3.6.2
 
 Package: knx-installer
 Architecture: all
-Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, (grub-gfxboot (>>0.95-4) | grub (>>0.95)), (kudzu-kanotix | kudzu), whois, yaird, initscripts-kanotix, ifrename, kanotix-udev-config
+Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, kudzu-kanotix | kudzu, whois, yaird, initscripts-kanotix, ifrename, kanotix-udev-config
 Suggests: qtparted, xdialog, fix-cdrom, distro-defaults, 855resolution
 Description: installs kanotix to hd
  kanotix-installer is an fully functional installation program
@@ -17,7 +17,7 @@ Description: installs kanotix to hd
 
 Package: initscripts-kanotix
 Architecture: all
-Depends: bash (>>2.05), (kudzu-kanotix | kudzu), whois
+Depends: bash (>>2.05), kudzu-kanotix | kudzu, whois
 Suggests: fix-cdrom, distro-defaults
 Replaces: knx-installer (<< 0.3.19.20)
 Provides: knx-installer

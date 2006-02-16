@@ -1,8 +1,14 @@
-knx-installer (0.4.0.19) UNRELEASED; urgency=low
+knx-installer (0.4.0.19) unstable; urgency=low
 
-  * NOT RELEASED YET
+  [ Joerg Schirottke ]
+  * check for 915resolution or 855resolution.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 30 Dec 2005 14:16:48 +0100
+  [ Stefan Lippers-Hollmann ]
+  * remove cdbs auto-update feature.
+  * bump compat level to 5.
+  * fix dependency syntax.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 16 Feb 2006 01:36:52 +0100
 
 knx-installer (0.4.0.18) unstable; urgency=low
 
