@@ -22,14 +22,15 @@ system_add_hd_autoconfig()
 	echo "SYSTEM_HW_PROFILE=yes" >> $TARGET_MNT_POINT/etc/default/knoppix
 	
 	# TODO: :-)
-	[ ! -r /etc/init.d/knoppix-hd-autoconfig -a -x tools/knoppix-hd-autoconfig ] && cp -f tools/knoppix-hd-autoconfig $TARGET_MNT_POINT/etc/init.d/
+	[ ! -r /etc/init.d/knoppix-hd-autoconfig -a -x tools/knoppix-hd-autoconfig ] && cp -f tools/knoppix-hd-autoconfig "$TARGET_MNT_POINT/etc/init.d/"
 
-	chroot_it update-rc.d -f knoppix-autoconfig remove . 2>/dev/null >/dev/null
+	chroot_it update-rc.d -f knoppix-autoconfig remove . &>/dev/null
+	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
 	[ "$SYSTEM_TYPE" = "beginner" ] && chroot_it update-rc.d knoppix-hd-autoconfig start 00 S . >/dev/null
 
 	# TODO: Remove the hacks
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g'  $TARGET_MNT_POINT/sbin/hotplug-knoppix &>/dev/null
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g'  $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 
 	# TODO: Really _fix_ it:
 	perl -pi -e 's/ReadOnly=1/ReadOnly=0/g' "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons"	&>/dev/null
@@ -45,7 +46,7 @@ system_add_hd_autoconfig()
 system_add_hd_config()
 {
 	# TODO: :-)
-	[ ! -r /etc/init.d/knoppix-hd-config -a -x tools/knoppix-hd-config ] && cp -f tools/knoppix-hd-config $TARGET_MNT_POINT/etc/init.d/
+	[ ! -r /etc/init.d/knoppix-hd-config -a -x tools/knoppix-hd-config ] && cp -f tools/knoppix-hd-config "$TARGET_MNT_POINT/etc/init.d/"
 
 	DEFAULT_CONFIG_DIR=$TARGET_MNT_POINT/etc/knoppix
 
@@ -91,15 +92,15 @@ system_copy_etc()
 
 	if [ ! "$SYSTEM_TYPE" = "debian" ]; then
 		# TODO: Remove hack from here
-		perl -pi -e "s/insmod/modprobe/g" $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-		[ -e $TARGET_MNT_POINT/etc/default/kde-services-knoppix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-knoppix
+		perl -pi -e "s/insmod/modprobe/g" "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
+		[ -e "$TARGET_MNT_POINT/etc/default/kde-services-knoppix" ] && perl -pi -e 's/^#//g' "$TARGET_MNT_POINT/etc/default/kde-services-knoppix"
 		[ -e $TARGET_MNT_POINT/etc/default/kde-services-kanotix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-kanotix
 		# TODO: Send hacks to Klaus ...
-		perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-		[ "$INSTALL_KANO" = "no" ] && perl -pi -e 's/modutils/modutils-knoppix/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
-		perl -pi -e 's/if grep -q /if egrep -q/g' $TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig
+		perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
+		[ "$INSTALL_KANO" = "no" ] && perl -pi -e 's/modutils/modutils-knoppix/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
+		perl -pi -e 's/if grep -q /if egrep -q/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 		# TODO: :-)
-		[ "$INSTALL_KANO" = "no" ] && [ ! -r /etc/init.d/modutils-knoppix -a -x tools/modutils-knoppix ] && cp -f tools/modutils-knoppix $TARGET_MNT_POINT/etc/init.d/
+		[ "$INSTALL_KANO" = "no" ] && [ ! -r /etc/init.d/modutils-knoppix -a -x tools/modutils-knoppix ] && cp -f tools/modutils-knoppix "$TARGET_MNT_POINT/etc/init.d/"
 	fi
 	
 	# Add dpi setting from cheatcode to hd install
@@ -415,7 +416,7 @@ system_services()
 	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:90 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:89 cron:89:11"
 	# delete knoppix specific programs from runlevel directories
 	# delete also knoppix-hd-config
-	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt}"
+	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt,live-autoconfig,live-halt,live-reboot}"
 
 	# start services wanted in config ...
 	for i in $SERVICES_START; do

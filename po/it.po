@@ -720,7 +720,7 @@ msgid "${BLUE}To create one press any key (0 seconds).${NORMAL}"
 msgstr "${BLUE}Per crearne uno premere un tasto (0 secondi).${NORMAL}"
 
 #: tools/knoppix-hd-autoconfig:222
-msgid "${CRE}${WHITE}Starting knoppix-autoconfig ...${NORMAL}"
+msgid "${CRE}${WHITE}Starting live-autoconfig ...${NORMAL}"
 msgstr "${CRE}${WHITE}Partenza dell'autoconfigurazione di $FLL_DISTRO_NAME...${NORMAL}"
 
 #: tools/knoppix-hd-autoconfig:247

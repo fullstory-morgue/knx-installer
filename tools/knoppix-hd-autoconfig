@@ -208,7 +208,11 @@ done
 
 system_mode_debian_autoconfig()
 {
-	/etc/init.d/knoppix-autoconfig
+	if [ -x /etc/init.d/live-autoconfig ]; then
+		/etc/init.d/live-autoconfig
+	else
+		/etc/init.d/knoppix-autoconfig
+	fi
 	update_hwdetection
 	# flush buffers
 	read -t1
@@ -231,7 +235,7 @@ system_mode_debian()
 		if [ $? -eq 0 ]
 		then
 			kill $PID >/dev/null 2>/dev/null 
-			echo $"${CRE}${WHITE}Starting knoppix-autoconfig ...${NORMAL}"
+			echo $"${CRE}${WHITE}Starting $(echo live-autoconfig ...${NORMAL}"
 			system_mode_debian_autoconfig
 		else
 			# Wait for our child :-)
@@ -251,13 +255,21 @@ system_mode_beginner()
 {
 	if [ "$SYSTEM_HW_PROFILE" = "no" ]
 	then
-		/etc/init.d/knoppix-autoconfig
+		if [ -x /etc/init.d/live-autoconfig ]; then
+			/etc/init.d/live-autoconfig
+		else
+			/etc/init.d/knoppix-autoconfig
+		fi
 		return 0
 	fi
 	if ! check_hwdetection
 	then
 		echo $"${BLUE}Creating hardware profile for this kernel ($(uname -r)).${NORMAL}"
-		/etc/init.d/knoppix-autoconfig
+		if [ -x /etc/init.d/live-autoconfig ]; then
+			/etc/init.d/live-autoconfig
+		else
+			/etc/init.d/knoppix-autoconfig
+		fi
 		update_hwdetection
 	else
 		copy_hwdetection
@@ -267,7 +279,11 @@ system_mode_beginner()
 		export CMDLINE="$CMDLINE nohwsetup"
 		# disable kernel messages
 		echo "0" > /proc/sys/kernel/printk
-		/etc/init.d/knoppix-autoconfig
+		if [ -x /etc/init.d/live-autoconfig ]; then
+			/etc/init.d/live-autoconfig
+		else
+			/etc/init.d/knoppix-autoconfig
+		fi
 	fi
 }
 
