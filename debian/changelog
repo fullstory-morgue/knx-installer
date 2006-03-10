@@ -1,8 +1,9 @@
 knx-installer (0.4.0.20) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * knoppix --> kanotix transtion part 1, thanks to RoEn.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 16 Feb 2006 11:05:26 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 10 Mar 2006 01:41:45 +0100
 
 knx-installer (0.4.0.19) unstable; urgency=low
 

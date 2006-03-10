@@ -359,8 +359,8 @@ if [ $us_XUSER ]; then # user logged in at X11
         XUID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f3)
         XGID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f4)
         us_OWNER="uid=$XUID,gid=$XGID"
-elif [ -d /KNOPPIX/Desktop ]; then # we're running from live CD
-        us_XUSER=knoppix
+elif [ -d {FLL_MOUNTPOINT}/Desktop ]; then # we're running from live CD
+        us_XUSER=${FLL_LIVE_USER}
         XUID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f3)
         XGID=$(grep "^$us_XUSER:" /etc/passwd | cut -d: -f4)
         us_OWNER="uid=$XUID,gid=$XGID"
