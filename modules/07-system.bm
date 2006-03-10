@@ -25,10 +25,10 @@ module_system()
 	[ "$SYSTEM_TYPE" = "knoppix" ] && KNX_CB="on"
 	[ "$SYSTEM_TYPE" = "debian" ] && DEB_CB="on"
   
-	radiolist $"Here you must choose the type of your system. A Beginner System will have hwdetection, but also support multiple users. A Kanotix system will work exactly as from CD, but tools like apt-get do work. Debian-Type however is a full featured debian system and works like the 'old installer'." $"Choose your system type" \
+	radiolist $"Here you must choose the type of your system. A Beginner System will have hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work exactly as from CD, but tools like apt-get do work. Debian-Type however is a full featured debian system and works like the 'old installer'." $"Choose your system type" \
   "debian" $"Debian-like system (recommended)" "$DEB_CB" \
   "beginner" $"Multi-User System with hw-detection" "$BEG_CB" \
-  "knoppix" $"Kanotix system like from CD" "$KNX_CB"
+  "knoppix" $"$FLL_DISTRO_NAME system like from CD" "$KNX_CB"
 	[ $? -eq 1 ] && return 1
   
 	SYSTEM_TYPE=$(cat $TMP)

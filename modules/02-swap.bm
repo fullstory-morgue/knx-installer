@@ -10,7 +10,7 @@
 function module_swap_defaults
 {
   register_var "SWAP_AUTODETECT" $"If set to yes, the swap partitions will be autodetected." "yes|no" "" "yes"
-  register_var "SWAP_CHOICES" $"The swap partitions to be used by the installed knoppix." "" "module_swap_check" ""
+  register_var "SWAP_CHOICES" $"The swap partitions to be used by the installed $FLL_DISTRO_NAME." "" "module_swap_check" ""
 }
 
 function module_swap_showinfo

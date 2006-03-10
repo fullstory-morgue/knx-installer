@@ -17,8 +17,8 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 
 #: knoppix-installer:62
-msgid "knoppix-installer terminated"
-msgstr "Kanotix kurulum uygulaması sonlandırıldı"
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "$FLL_DISTRO_NAME kurulum uygulaması sonlandırıldı"
 
 #: knoppix-installer:77
 msgid "Save configuration?"
@@ -29,16 +29,16 @@ msgid "Do you want to save your configuration?"
 msgstr "Ayarlarınızı kaydetmek istiyor musunuz ?"
 
 #: knoppix-installer:88
-msgid "Kanotix Installation"
-msgstr "Kanotix kurulumu"
+msgid "$FLL_DISTRO_NAME Installation"
+msgstr "$FLL_DISTRO_NAME kurulumu"
 
 #: knoppix-installer:89
-msgid "Installation of Kanotix to harddisk (Step 0/$MAX)"
-msgstr "Sabit diske Kanotix kurulumu(Step 0/$MAX)"
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+msgstr "Sabit diske $FLL_DISTRO_NAME kurulumu(Step 0/$MAX)"
 
 #: knoppix-installer:90
-msgid "Initialisation of Kanotix-Installation"
-msgstr "Kanotix kurulumu başlıyor"
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
+msgstr "$FLL_DISTRO_NAME kurulumu başlıyor"
 
 #: knoppix-installer:92
 msgid "Installation failed"
@@ -57,8 +57,8 @@ msgid "Choose System Type"
 msgstr "Sistem tipini seçin"
 
 #: knoppix-installer:167
-msgid "Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
-msgstr "Kanotix Yapılandırma adımı oluşturuluyor (0/$NUM_REAL_MODULES)"
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "$FLL_DISTRO_NAME Yapılandırma adımı oluşturuluyor (0/$NUM_REAL_MODULES)"
 
 #: knoppix-installer:195 knoppix-installer:197
 msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
@@ -71,8 +71,8 @@ msgid ""
 msgstr "Hata: $1($2) için denetim başarısız\\n Yapılandırma modülü şimdi başlatılacak"
 
 #: knoppix-installer:223
-msgid "Loading Kanotix configuration"
-msgstr "Kanotix yapılandırması yükleniyor"
+msgid "Loading $FLL_DISTRO_NAME configuration"
+msgstr "$FLL_DISTRO_NAME yapılandırması yükleniyor"
 
 #: knoppix-installer:226
 msgid "Here you can input a filename to load an existing configuration"
@@ -89,8 +89,8 @@ msgid ""
 msgstr "$CONFIG_USER dosyası bulunamıyor.Yapılandırma dosyasının yüklenmesi iptal ediliyor"
 
 #: knoppix-installer:254
-msgid "Saving Kanotix configuration"
-msgstr "Kanotix yapılandırması kaydediliyor"
+msgid "Saving $FLL_DISTRO_NAME configuration"
+msgstr "$FLL_DISTRO_NAME yapılandırması kaydediliyor"
 
 #: knoppix-installer:257
 msgid "Here you can input a filename to save the configuration"
@@ -143,12 +143,12 @@ msgid "Make sure you agree to all parameters, if so proceed with the installatio
 msgstr "Tüm parametreleri kabul ettiğinize emin olun, eğer öyle ise kuruluma devam edin"
 
 #: knoppix-installer:319
-msgid "Converting Kanotix to Debian..."
-msgstr "Kanotix, Debian'a dönüştürülüyor"
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
+msgstr "$FLL_DISTRO_NAME, Debian'a dönüştürülüyor"
 
 #: knoppix-installer:351 knoppix-installer:361
-msgid "Starting Kanotix installation"
-msgstr "Kanotix kurulumu başlatılıyor"
+msgid "Starting $FLL_DISTRO_NAME installation"
+msgstr "$FLL_DISTRO_NAME kurulumu başlatılıyor"
 
 #: knoppix-installer:354
 msgid "Error: No complete Configuration found"
@@ -170,12 +170,12 @@ msgid ""
 msgstr "Lütfen disket sürücünüze bir floppy disk yerleştirin. Uyarı : Disket üzerindeki tüm veriler silinecektir, eğer bir disket oluşturmak istemiyorsanız Hayır'ı seçin."
 
 #: knoppix-installer:398 knoppix-installer:399
-msgid "Kanotix was successfully installed to hd."
-msgstr "Kanotix sabit diske başarıyla kuruldu"
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
+msgstr "$FLL_DISTRO_NAME sabit diske başarıyla kuruldu"
 
 #: knoppix-installer:405
-msgid "Kanotix Main-Menu"
-msgstr "Kanotix Ana Menü"
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "$FLL_DISTRO_NAME Ana Menü"
 
 #: knoppix-installer:406
 msgid "Thats the main menu\\nChoose the action you want"
@@ -235,28 +235,28 @@ msgid "Quit the program"
 msgstr "Programdan çık"
 
 #: knoppix-installer:417
-msgid "knoppix-installer started"
-msgstr "Kanotix Kurulum uygulaması başlatıldı"
+msgid "$FLL_DISTRO_NAME-installer started"
+msgstr "$FLL_DISTRO_NAME Kurulum uygulaması başlatıldı"
 
 #: knoppix-installer:418
 msgid ""
-"This script will install Kanotix to harddisk. Note that this version is "
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
 "damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
-msgstr "Bu betik Kanotix'i sabit diske kuracaktır. Bu sürümün çok yeni ve hala geliştirme aşamasında olduğunu unutmayın.\n Yazar ve knopper.net, oluşacak veri kayıpları veya donanım hasarlarında sorumluluk kabul etmez.\\n\\nYazar: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\n Cristian Perle'ün <perle@itm.tu-clausthal.de> bir çalışması üzerine geliştirilmiştir"
+msgstr "Bu betik $FLL_DISTRO_NAME'i sabit diske kuracaktır. Bu sürümün çok yeni ve hala geliştirme aşamasında olduğunu unutmayın.\n Yazar ve knopper.net, oluşacak veri kayıpları veya donanım hasarlarında sorumluluk kabul etmez.\\n\\nYazar: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\n Cristian Perle'ün <perle@itm.tu-clausthal.de> bir çalışması üzerine geliştirilmiştir"
 
 #: knoppix-installer:427
 msgid ""
 "The installer detected that the installation requierements are not "
 "fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
-"at least $[ROOT_MIN/(1024*1024)] GB to install knoppix on. Also we need a "
+"at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. Also we need a "
 "swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
 "start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
-msgstr "Kurulum uygulaması, kurulum için gerekli şartların sağlanmadığını tespit etti \\n\\nLütfen Kanotix kurmak için gerekli olan $[ROOT_MIN/(1024*1024)] GB boyutlarında boş bir bölüme sahip olduğunuzdan emin olun. Bunun haricinde bir de (eğer 512 MB veya daha fazla hafızaya sahip değilseniz) en az $[SWAP_MIN/1024] MB boyurlarında bir takas alanına ihtiyacınız var.\\n\\nGelecek olan menüde sabit diskiniz bölümlemek için kullanabileceğiniz bir kaç aracı seçebileceksiniz\\n Eğer ne yaptığınızı biliyorsanız, menüyü görmemek için IGNORE_CHECK=1 sudo knoppix-installer komutuyla başlatın"
+msgstr "Kurulum uygulaması, kurulum için gerekli şartların sağlanmadığını tespit etti \\n\\nLütfen $FLL_DISTRO_NAME kurmak için gerekli olan $[ROOT_MIN/(1024*1024)] GB boyutlarında boş bir bölüme sahip olduğunuzdan emin olun. Bunun haricinde bir de (eğer 512 MB veya daha fazla hafızaya sahip değilseniz) en az $[SWAP_MIN/1024] MB boyurlarında bir takas alanına ihtiyacınız var.\\n\\nGelecek olan menüde sabit diskiniz bölümlemek için kullanabileceğiniz bir kaç aracı seçebileceksiniz\\n Eğer ne yaptığınızı biliyorsanız, menüyü görmemek için IGNORE_CHECK=1 sudo knoppix-installer komutuyla başlatın"
 
 #: knoppix-installer:434
 msgid "Partition check succeeded"
@@ -287,8 +287,8 @@ msgid "Sets the Filesystem type."
 msgstr "Dosya sistemi tipini ayarlar"
 
 #: modules/01-hd.bm:13
-msgid "Here the Kanotix-System will be installed"
-msgstr "Kanotix Sistemi kurulacak"
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
+msgstr "$FLL_DISTRO_NAME Sistemi kurulacak"
 
 #: modules/01-hd.bm:14
 msgid ""
@@ -302,9 +302,9 @@ msgstr ""
 #: modules/01-hd.bm:15
 msgid ""
 "If set to yes, the program will NOT check if there is enough space to "
-"install knoppix on the selected partition(s). Use at your own risk! Useful "
+"install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful "
 "for example with HD_MAP if you only have a small root partition."
-msgstr "Eğer \"evet\" olarak ayarlarsanız, program, seçili bölüm veya bölümlerde knoppix kurulumu için yeterli yer olup olmadığına BAKMAYACAKTIR. Bunu dikkatli kullanın. Örneğin; eğer küçük bir kök dizininiz varsa HD_MAP ile kullanın."
+msgstr "Eğer \"evet\" olarak ayarlarsanız, program, seçili bölüm veya bölümlerde $FLL_DISTRO_NAME kurulumu için yeterli yer olup olmadığına BAKMAYACAKTIR. Bunu dikkatli kullanın. Örneğin; eğer küçük bir kök dizininiz varsa HD_MAP ile kullanın."
 
 #: modules/01-hd.bm:21
 msgid "Drive-Options:"
@@ -345,12 +345,12 @@ msgid "Mounting additional partitions r/w..."
 msgstr "Ek bölümler oku/yaz olarak bağlanıyor ..."
 
 #: modules/01-hd.bm:118
-msgid "Here you must choose one of the available partitions\\n for use with Kanotix."
-msgstr "Mevcut bölümlerden birisiniKanotix kullanmak\\n için seçmelisiniz."
+msgid "Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
+msgstr "Mevcut bölümlerden birisini$FLL_DISTRO_NAME kullanmak\\n için seçmelisiniz."
 
 #: modules/01-hd.bm:118
-msgid "Choose the partition to install Kanotix"
-msgstr "Kanotix kurulacak bölümü seçin"
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
+msgstr "$FLL_DISTRO_NAME kurulacak bölümü seçin"
 
 #: modules/01-hd.bm:131
 msgid "Here you must choose one of the available filesystem types."
@@ -412,22 +412,22 @@ msgid ""
 msgstr "Bunlar takas olarak işaretlenen,ancak henüz biçimlendirilmemiş takas alanları.Bİçimlendirmek istediğinizi seçin. Uyarı : Bölümdeki tüm bilgileri kaybedeceksiniz."
 
 #: modules/00-hd-tools.bm:141
-msgid "Partitioning harddisk for Kanotix"
-msgstr "Sabit disk Kanotix için bölümleniyor"
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
+msgstr "Sabit disk $FLL_DISTRO_NAME için bölümleniyor"
 
 #: modules/00-hd-tools.bm:144
 msgid ""
 "Here you must choose one of the available disks \\n and partition it for "
-"Kanotix."
-msgstr "Mevcut disklerden birisini seçip Kanotix \\n için biçimlendirmelisiniz."
+"$FLL_DISTRO_NAME."
+msgstr "Mevcut disklerden birisini seçip $FLL_DISTRO_NAME \\n için biçimlendirmelisiniz."
 
 #: modules/00-hd-tools.bm:144
 msgid "Choose one disk"
 msgstr "Bir disk seçin"
 
 #: modules/00-hd-tools.bm:173
-msgid "Kanotix Partition-Menu"
-msgstr "Kanotix bölümleme menüsü"
+msgid "$FLL_DISTRO_NAME Partition-Menu"
+msgstr "$FLL_DISTRO_NAME bölümleme menüsü"
 
 #: modules/00-hd-tools.bm:174
 msgid "Here you can partition your hard disk"
@@ -438,8 +438,8 @@ msgid "If set to yes, the swap partitions will be autodetected."
 msgstr "Eğer \"evet\" olarak ayarlarsanız bölümler otomatik tespit edilecektir"
 
 #: modules/02-swap.bm:13
-msgid "The swap partitions to be used by the installed knoppix."
-msgstr "Kurulacak Kanotix tarafından kullanılacak takas alanları"
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
+msgstr "Kurulacak $FLL_DISTRO_NAME tarafından kullanılacak takas alanları"
 
 #: modules/02-swap.bm:18
 msgid "Swapspace-Options:"
@@ -614,10 +614,10 @@ msgstr "Kurulacak sistem tipi : $SYSTEM_TYPE"
 #: modules/07-system.bm:27
 msgid ""
 "Here you must choose the type of your system. A Beginner System will have "
-"hwdetection, but also support multiple users. A Kanotix system will work "
+"hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work "
 "exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
 "full featured debian system and works like the 'old installer'."
-msgstr "Burada kuracağınız sistemin tipini belirleyeceksiniz. Yeni kullanıcılar için Donanım tarama seçeneği ile çok kullanıcılı sistem; CD'den çalışıyormuş gibi sabit diskte çalışırtıran Kanotix tipi ve Debian gibi sabit diskte çalışmasını sağlayan Debian tipi."
+msgstr "Burada kuracağınız sistemin tipini belirleyeceksiniz. Yeni kullanıcılar için Donanım tarama seçeneği ile çok kullanıcılı sistem; CD'den çalışıyormuş gibi sabit diskte çalışırtıran $FLL_DISTRO_NAME tipi ve Debian gibi sabit diskte çalışmasını sağlayan Debian tipi."
 
 #: modules/07-system.bm:27
 msgid "Choose your system type"
@@ -628,8 +628,8 @@ msgid "Multi-User System with hw-detection (preferred way)"
 msgstr "Donanım tarama seçeneği ile çok kullanıcılı sistem (Tercih edilen yol)"
 
 #: modules/07-system.bm:29
-msgid "Kanotix system like from CD"
-msgstr "CD'den çalışıyormuş gibi, Kanotix tipi"
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "CD'den çalışıyormuş gibi, $FLL_DISTRO_NAME tipi"
 
 #: modules/07-system.bm:30
 msgid "Debian-like system (old installer way)"
@@ -640,8 +640,8 @@ msgid "Updating /etc/fstab..."
 msgstr "/etc/fstab güncelleniyor ..."
 
 #: modules/install/03-system_types.bm:24
-msgid "Converting Kanotix to Multi-User-System..."
-msgstr "Kanotix çok kullanıcılı sisteme çevriliyor."
+msgid "Converting $FLL_DISTRO_NAME to Multi-User-System..."
+msgstr "$FLL_DISTRO_NAME çok kullanıcılı sisteme çevriliyor."
 
 #: modules/install/02-install-tools.bm:51
 msgid "Copying custom configuration ..."
@@ -660,6 +660,6 @@ msgstr ""
 "sudoers, hosts.allow!"
 
 #: modules/install/02-install-tools.bm:354
-msgid "Welcome to Kanotix"
-msgstr "Kanotix'e Hoş Geldiniz"
+msgid "Welcome to $FLL_DISTRO_NAME"
+msgstr "$FLL_DISTRO_NAME'e Hoş Geldiniz"
 

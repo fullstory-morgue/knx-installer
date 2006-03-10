@@ -10,9 +10,9 @@ function module_hd_defaults
 {
   register_var "HD_FORMAT" $"Determines if the HD should be formatted. (mkfs.*)" "yes|no" "" "yes"
   register_var "HD_FSTYPE" $"Sets the Filesystem type." "ext3|ext2|reiserfs|xfs|jfs" "" "reiserfs"
-  register_var "HD_CHOICE" $"Here the Kanotix-System will be installed" "" "module_hd_check" ""
+  register_var "HD_CHOICE" $"Here the $FLL_DISTRO_NAME-System will be installed" "" "module_hd_check" ""
   register_var "HD_MAP" $"Here you can give additional mappings. (Experimental) You need to have the partitions formatted yourself and give the correct mappings like: \"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\"" "" "" ""
-  register_var "HD_IGNORECHECK" $"If set to yes, the program will NOT check if there is enough space to install knoppix on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition." "yes|no" "" "no"
+  register_var "HD_IGNORECHECK" $"If set to yes, the program will NOT check if there is enough space to install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition." "yes|no" "" "no"
   
 }
 
@@ -118,7 +118,7 @@ function module_hd
   
   ROOT_PARTS=$(find_root_partitions $HD_CHOICE)
   
-  radiolist $"Here you must choose one of the available partitions\n for use with Kanotix." $"Choose the partition to install Kanotix" $ROOT_PARTS
+  radiolist $"Here you must choose one of the available partitions\n for use with $FLL_DISTRO_NAME." $"Choose the partition to install $FLL_DISTRO_NAME" $ROOT_PARTS
   [ $? -eq 1 ] && return 1
   
   HD_CHOICE="$(cat $TMP)"

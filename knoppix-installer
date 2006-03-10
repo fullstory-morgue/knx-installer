@@ -24,6 +24,8 @@ LOG="$HOME/.knofig_log"
 TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
 TARGET_MNT_NAME="hdinstall" # TR1 in old installer
 
+FLL_DISTRO_NAME="Kanotix"
+
 # make use of distro-defaults
 if [ -f /etc/defaults/distro ]; then
 	source /etc/defaults/distro
@@ -97,7 +99,7 @@ done
 
 clean_exit(){
 	[ -n "$TMPDIR" ] && rm -rf "$TMPDIR"
-	logit $"knoppix-installer terminated"
+	logit $"$FLL_DISTRO_NAME-installer terminated"
 	logit
 }
 
@@ -123,9 +125,9 @@ function setup_dialog_messages()
 {
 	MAX=5 # number of steps
 
-	BT=$"Kanotix Installation"" (v$VERSION)"
-	DT=$"Installation of Kanotix to harddisk (Step 0/$MAX)"
-	INIT_T=$"Initialisation of Kanotix-Installation"
+	BT=$"$FLL_DISTRO_NAME Installation"" (v$VERSION)"
+	DT=$"Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+	INIT_T=$"Initialisation of $FLL_DISTRO_NAME-Installation"
 	T1=$INIT_T
 	ET=$"Installation failed"
 	ST=$"Installation successfull"
@@ -200,7 +202,7 @@ function create_config
 	fi
   
 	NUM_REAL_MODULES=$[$NUM_MODULES-$MODULES_NUMAUTO]
-	T1=$"Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
+	T1=$"Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
 	N=1
 	I=0
 	DIR=0
@@ -250,7 +252,7 @@ function check_param
 
 function load_config
 {
-	T1=$"Loading Kanotix configuration"
+	T1=$"Loading $FLL_DISTRO_NAME configuration"
 	if [ -z "$1" ]; then
 		wizard $"Here you can input a filename to load an existing configuration" --inputbox $"Input the configuration filename to be loaded" 10 60 "$CONFIG_USER"
 		[ $? -ne 0 ] && return 1
@@ -277,7 +279,7 @@ function load_config
 
 function save_config
 {
-	T1=$"Saving Kanotix configuration"
+	T1=$"Saving $FLL_DISTRO_NAME configuration"
 	if [ -z "$1" ]; then
 		wizard $"Here you can input a filename to save the configuration" --inputbox $"Input a filename for the configuration" 10 60 "$CONFIG_USER"
 		[ $? -ne 0 ] && return 1
@@ -337,7 +339,7 @@ function old_installer
 	
 	[ "$SYSTEM_TYPE" = "beginner" ] && return 0
 
-	update_status $"Converting Kanotix to Debian..."
+	update_status $"Converting $FLL_DISTRO_NAME to Debian..."
 
 	[ "$INSTALL_KANO" == "yes" ] && [ ! -e /etc/init.d/udev ] && cp -af $TEMPLATE_PATH/etc/hotplug/usb/usb-storage $TARGET_MNT_POINT/etc/hotplug/usb/
 
@@ -367,7 +369,7 @@ function start_install
 		create_config
 		[ $? -ne 0 ] && return 1
 	fi
-	T1=$"Starting Kanotix installation"
+	T1=$"Starting $FLL_DISTRO_NAME installation"
 	if [ -z "$INSTALL_READY" ]; then
 		msgbox $"Error: No complete Configuration found" 10 60
 		return 1
@@ -376,7 +378,7 @@ function start_install
 	[ $? -ne 0 ] && return 1
 	touch $TMPDIR/errors
 	save_config $CONFIG_FILE
-	T1=$"Starting Kanotix installation"
+	T1=$"Starting $FLL_DISTRO_NAME installation"
 	do_install | $DIALOG --backtitle "$BT" --title "$T1" --gauge $"Installing" 10 60
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
@@ -412,14 +414,14 @@ function start_install
 	#T1=$"Success!"
 	T1=$ST
  
-	msgbox $"Kanotix was successfully installed to hd." 15 60
-	logit $"Kanotix was successfully installed to hd."
+	msgbox $"$FLL_DISTRO_NAME was successfully installed to hd." 15 60
+	logit $"$FLL_DISTRO_NAME was successfully installed to hd."
 	exit 0
 }
 
 function menu_main
 {
-  T1=$"Kanotix Main-Menu"
+  T1=$"$FLL_DISTRO_NAME Main-Menu"
   do_menu $"Thats the main menu\nChoose the action you want" $"Choose an action" \
   "create_config" $"Configure Installation" $"Create a new configuration" \
   "start_install" $"Start installation" $"Start the installation" \
@@ -431,8 +433,8 @@ function menu_main
 
 function main()
 {
-logit $"knoppix-installer started"
-msgbox $"This script will install Kanotix to harddisk. \
+logit $"$FLL_DISTRO_NAME-installer started"
+msgbox $"This script will install $FLL_DISTRO_NAME to harddisk. \
 Note that this version is still an very early version \
 and under heavy development.
 The author and knopper.net take no responsibility \
@@ -444,7 +446,7 @@ rebuildfstab -r
 while ! check_partition_ok;
 do
   msgbox $"The installer detected that the installation requierements are not fullfilled yet.\
-\n\nPlease make sure that you have an free partition with at least $[ROOT_MIN/(1024*1024)] GB to install knoppix on. \
+\n\nPlease make sure that you have an free partition with at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. \
 Also we need a swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB Memory or more.\
 \n\nIn the following menu, you can start some tools to partition your harddrive.\
 \nIf you really really know what you are doing start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu." 21 60
@@ -465,7 +467,7 @@ done
 
 function ni-main
 {
-	logit $"knoppix-installer started"
+	logit $"$FLL_DISTRO_NAME-installer started"
   
 	rebuildfstab -r
 	logit $"Partition check succeeded"
@@ -477,7 +479,7 @@ function ni-main
 	load_config $CONFIG_FILE # auto load of configuration
  
 	touch $TMPDIR/errors
-	T1=$"Starting Kanotix installation"
+	T1=$"Starting $FLL_DISTRO_NAME installation"
 	do_install | $DIALOG --backtitle "$BT" --title "$T1" --gauge $"Installing" 10 60
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
@@ -496,7 +498,7 @@ function ni-main
 	#umount $TARGET_MNT_POINT/proc
 	umount $TARGET_MNT_POINT
 	# Success Message and end installer
-	logit $"Kanotix was successfully installed to hd."
+	logit $"$FLL_DISTRO_NAME was successfully installed to hd."
 	exit 0
 }
 

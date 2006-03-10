@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 &&n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: knoppix-installer:58
-msgid "knoppix-installer terminated"
+msgid "$FLL_DISTRO_NAME-installer terminated"
 msgstr "Instalace byla přerušena."
 
 #: knoppix-installer:76
@@ -37,15 +37,15 @@ msgid "Do you want to save your configuration?"
 msgstr "Přejete si uložit vaši konfiguraci?"
 
 #: knoppix-installer:87
-msgid "Kanotix Installation"
+msgid "$FLL_DISTRO_NAME Installation"
 msgstr "Instalace"
 
 #: knoppix-installer:88
-msgid "Installation of Kanotix to harddisk (Step 0/$MAX)"
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
 msgstr "Instalace na pevný disk (Krok 0/$MAX)"
 
 #: knoppix-installer:89
-msgid "Initialisation of Kanotix-Installation"
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
 msgstr "Inicializace instalace"
 
 #: knoppix-installer:91
@@ -72,13 +72,13 @@ msgid ""
 msgstr "Následující oddíly swap jsou označeny jako swap, ale doposud nebyly zformátovány. Označte ty, které si přejete zformátovat. Varování: ztratíte všechny data na těchto oddílech."
 
 #: knoppix-installer:244
-msgid "Partitioning harddisk for Kanotix"
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
 msgstr "Probíhá vytváření oddílů"
 
 #: knoppix-installer:247
 msgid ""
 "Here you must choose one of the available disks \\n and partition it for "
-"Kanotix."
+"$FLL_DISTRO_NAME."
 msgstr "Zde si musíte zvolit jeden z dostupných disků \\n a rozdělit ho"
 
 #: knoppix-installer:247
@@ -86,7 +86,7 @@ msgid "Choose one disk"
 msgstr "Vyberte jeden disk"
 
 #: knoppix-installer:276
-msgid "Kanotix Partition-Menu"
+msgid "$FLL_DISTRO_NAME Partition-Menu"
 msgstr "Menu Rozdělení disku na diskové oddíly"
 
 #: knoppix-installer:278
@@ -123,7 +123,7 @@ msgid "Sets the Filesystem type."
 msgstr "Nastaví systém souborů."
 
 #: knoppix-installer:324
-msgid "Here the Kanotix-System will be installed"
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
 msgstr "Systém bude nainstalován na toto místo"
 
 #: knoppix-installer:325
@@ -183,7 +183,7 @@ msgid "Here you must choose one of the available partitions\\n for use with Kano
 msgstr "Zde musíte zvolit jeden z dostupných oddílů\\ pro instalaci"
 
 #: knoppix-installer:429
-msgid "Choose the partition to install Kanotix"
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
 msgstr "Vyberte si diskový oddíl pro instalaci"
 
 #: knoppix-installer:447
@@ -191,7 +191,7 @@ msgid "If set to yes, the swap partitions will be autodetected."
 msgstr "Pokud je volba nastavena na ano, swap oddíly budou nalezeny automaticky."
 
 #: knoppix-installer:448
-msgid "The swap partitions to be used by the installed knoppix."
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
 msgstr "Oddíly swap, které budou použity"
 
 #: knoppix-installer:453
@@ -370,10 +370,10 @@ msgstr "Instalovaný systém bude systém typu $SYSTEM_TYPE"
 
 #: knoppix-installer:694
 msgid ""
-"Here you must choose the type of your system. A Kanotix system will work "
+"Here you must choose the type of your system. A $FLL_DISTRO_NAME system will work "
 "exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
 "full featured debian system and works like the 'old instaler'."
-msgstr "Zde musíte zvolit typ vašeho systému. Kanotix systém bude fungovat přesně tak jako z CD, ale nástroje jako apt-get budou fungovat.  Typ Debian je plně funkční systém, spravovatelný dále stejně jako Debian."
+msgstr "Zde musíte zvolit typ vašeho systému. $FLL_DISTRO_NAME systém bude fungovat přesně tak jako z CD, ale nástroje jako apt-get budou fungovat.  Typ Debian je plně funkční systém, spravovatelný dále stejně jako Debian."
 
 #: knoppix-installer:694
 msgid "Choose your system type"
@@ -384,11 +384,11 @@ msgid "Debian-like system (old installer way)"
 msgstr "Jako Debian (způsob starého instalátoru)"
 
 #: knoppix-installer:694
-msgid "Kanotix system like from CD"
-msgstr "Kanotix systém jako z CD (nevyžaduje hesla)"
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "$FLL_DISTRO_NAME systém jako z CD (nevyžaduje hesla)"
 
 #: knoppix-installer:718
-msgid "Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
 msgstr "Vytváření nastavení (Krok 0/$NUM_REAL_MODULES)"
 
 #: knoppix-installer:747 knoppix-installer:749
@@ -402,7 +402,7 @@ msgid ""
 msgstr "Chyba: Selhání kontroly pro $1 ($2)\\nBude spuštěn konfigurační modul."
 
 #: knoppix-installer:775
-msgid "Loading Kanotix configuration"
+msgid "Loading $FLL_DISTRO_NAME configuration"
 msgstr "Nahrávání konfigurace"
 
 #: knoppix-installer:778
@@ -420,7 +420,7 @@ msgid ""
 msgstr "Soubor $CONFIG_USER nebyl nalezen. Nahrávání konfigurace bude zrušeno."
 
 #: knoppix-installer:806
-msgid "Saving Kanotix configuration"
+msgid "Saving $FLL_DISTRO_NAME configuration"
 msgstr "Ukládání konfigurace"
 
 #: knoppix-installer:809
@@ -484,15 +484,15 @@ msgid "Copying custom configuration ..."
 msgstr "Kopírování uživatelské konfigurace ..."
 
 #: knoppix-installer:941
-msgid "Converting Kanotix to Debian..."
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
 msgstr "Konvertování na Debian..."
 
 #: knoppix-installer:997
-msgid "Welcome to Kanotix"
+msgid "Welcome to $FLL_DISTRO_NAME"
 msgstr "Vítejte v Linuxu"
 
 #: knoppix-installer:1199
-msgid "Starting Kanotix installation"
+msgid "Starting $FLL_DISTRO_NAME installation"
 msgstr "Startuje instalace"
 
 #: knoppix-installer:1202
@@ -515,12 +515,12 @@ msgid ""
 msgstr "Prosím vložte nyní prázdnou disketu do mechaniky. Varování: Všechna data budou z diskety smazána. Pokud si nepřejete vytvořit spouštěcí disketu, můžete zvolit Ne."
 
 #: knoppix-installer:1242 knoppix-installer:1243
-msgid "Kanotix was successfully installed to hd."
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
 msgstr "Systém byl úspěšně nainstalovaný na pevný disk."
 
 #: knoppix-installer:1249
-msgid "Kanotix Main-Menu"
-msgstr "Kanotix Hlavní-Menu"
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "$FLL_DISTRO_NAME Hlavní-Menu"
 
 #: knoppix-installer:1250
 msgid "Thats the main menu\\nChoose the action you want"
@@ -565,12 +565,12 @@ msgid ""
 msgstr "Fatální chyba: Požadovaný soubor knx-templates-$SVERSION.tgz chybí nebo je poškozený. Skript bude ukončen."
 
 #: knoppix-installer:1280
-msgid "knoppix-installer started"
+msgid "$FLL_DISTRO_NAME-installer started"
 msgstr "instalátor spuštěn"
 
 #: knoppix-installer:1281
 msgid ""
-"This script will install Kanotix to harddisk. Note that this version is "
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
 "damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"

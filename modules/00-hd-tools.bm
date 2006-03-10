@@ -138,10 +138,10 @@ function check_partition_ok
 
 function action-part-cfdisk
 {
-  T1=$"Partitioning harddisk for Kanotix"
+  T1=$"Partitioning harddisk for $FLL_DISTRO_NAME"
   DISKS=$(find_disks)
   IFS='|'
-  radiolist $"Here you must choose one of the available disks \n and partition it for Kanotix." $"Choose one disk" $DISKS
+  radiolist $"Here you must choose one of the available disks \n and partition it for $FLL_DISTRO_NAME." $"Choose one disk" $DISKS
   RC=$?
   unset IFS
   [ $RC -eq 1 ] && return 1
@@ -170,6 +170,6 @@ function action-part-later
 
 function menu_part
 {
- T1=$"Kanotix Partition-Menu"
+ T1=$"$FLL_DISTRO_NAME Partition-Menu"
   do_menu $"Here you can partition your hard disk" $"Choose an action" "action-part" $"Partition" $"Partition the hard disk" "exit_proc" $"Quit" $"Quit the program"
 }

@@ -17,8 +17,8 @@ msgstr ""
 "X-Generator: KBabel 1.0.2\n"
 
 #: knoppix-installer:62
-msgid "knoppix-installer terminated"
-msgstr "knoppix-installer terminado"
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "$FLL_DISTRO_NAME-installer terminado"
 
 #: knoppix-installer:77
 msgid "Save configuration?"
@@ -29,16 +29,16 @@ msgid "Do you want to save your configuration?"
 msgstr "¿Quiere grabar su configuración?"
 
 #: knoppix-installer:88
-msgid "Kanotix Installation"
-msgstr "Instalación de Kanotix"
+msgid "$FLL_DISTRO_NAME Installation"
+msgstr "Instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:89
-msgid "Installation of Kanotix to harddisk (Step 0/$MAX)"
-msgstr "Instalación de Kanotix en el disco duro (Paso 0/$MAX)"
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+msgstr "Instalación de $FLL_DISTRO_NAME en el disco duro (Paso 0/$MAX)"
 
 #: knoppix-installer:90
-msgid "Initialisation of Kanotix-Installation"
-msgstr "Inicialización de la instalación de Kanotix"
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
+msgstr "Inicialización de la instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:92
 msgid "Installation failed"
@@ -57,8 +57,8 @@ msgid "Choose System Type"
 msgstr "Elija el tipo de sistema"
 
 #: knoppix-installer:167
-msgid "Creating Kanotix Configuration Step (0/$NUM_REAL_MODULES)"
-msgstr "Creando configuración de Kanotix Paso (0/$NUM_REAL_MODULES)"
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Creando configuración de $FLL_DISTRO_NAME Paso (0/$NUM_REAL_MODULES)"
 
 #: knoppix-installer:195 knoppix-installer:197
 msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
@@ -71,8 +71,8 @@ msgid ""
 msgstr "Error: Comprobación falló para $1 ($2)\\nEl módulo de configuración será iniciado ahora."
 
 #: knoppix-installer:223
-msgid "Loading Kanotix configuration"
-msgstr "Cargando configuración de Kanotix"
+msgid "Loading $FLL_DISTRO_NAME configuration"
+msgstr "Cargando configuración de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:226
 msgid "Here you can input a filename to load an existing configuration"
@@ -89,8 +89,8 @@ msgid ""
 msgstr "El archivo $CONFIG_USER no se encontró. La carga de la configuración será cancelada."
 
 #: knoppix-installer:254
-msgid "Saving Kanotix configuration"
-msgstr "Guardando configuración de Kanotix"
+msgid "Saving $FLL_DISTRO_NAME configuration"
+msgstr "Guardando configuración de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:257
 msgid "Here you can input a filename to save the configuration"
@@ -143,12 +143,12 @@ msgid "Make sure you agree to all parameters, if so proceed with the installatio
 msgstr "Asegúrese de que está de acuerdo con todos los parámetros. En ese caso, prosiga con la instalación."
 
 #: knoppix-installer:319
-msgid "Converting Kanotix to Debian..."
-msgstr "Convirtiendo Kanotix a Debian..."
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
+msgstr "Convirtiendo $FLL_DISTRO_NAME a Debian..."
 
 #: knoppix-installer:351 knoppix-installer:361
-msgid "Starting Kanotix installation"
-msgstr "Comenzando instalación de Kanotix"
+msgid "Starting $FLL_DISTRO_NAME installation"
+msgstr "Comenzando instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:354
 msgid "Error: No complete Configuration found"
@@ -170,12 +170,12 @@ msgid ""
 msgstr "Por favor, inserte ahora un disquete vacío en la disquetera. Atención: Todos los datos en él se perderán. Si no quiere crear un disquete puede seleccionar No."
 
 #: knoppix-installer:398 knoppix-installer:399
-msgid "Kanotix was successfully installed to hd."
-msgstr "Kanotix se instaló correctamente en el disco duro."
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
+msgstr "$FLL_DISTRO_NAME se instaló correctamente en el disco duro."
 
 #: knoppix-installer:405
-msgid "Kanotix Main-Menu"
-msgstr "Kanotix Menú-Principal"
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "$FLL_DISTRO_NAME Menú-Principal"
 
 #: knoppix-installer:406
 msgid "Thats the main menu\\nChoose the action you want"
@@ -235,28 +235,28 @@ msgid "Quit the program"
 msgstr "Salir del programa"
 
 #: knoppix-installer:417
-msgid "knoppix-installer started"
-msgstr "knoppix-installer comenzado"
+msgid "$FLL_DISTRO_NAME-installer started"
+msgstr "$FLL_DISTRO_NAME-installer comenzado"
 
 #: knoppix-installer:418
 msgid ""
-"This script will install Kanotix to harddisk. Note that this version is "
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
 "damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
-msgstr "Este script instalará Kanotix en el disco duro. Nótese que esta versión es todavía una versión muy temprana y bajo gran desarrollo.\nEl autor y knopper.net no toman responsabilidad ninguna por posible pérdida de datos o daño del hardware.\\n\\nAutor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nbasado en el excelente trabajo de Christian Perle <perle@itm.tu-clausthal.de>"
+msgstr "Este script instalará $FLL_DISTRO_NAME en el disco duro. Nótese que esta versión es todavía una versión muy temprana y bajo gran desarrollo.\nEl autor y knopper.net no toman responsabilidad ninguna por posible pérdida de datos o daño del hardware.\\n\\nAutor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nbasado en el excelente trabajo de Christian Perle <perle@itm.tu-clausthal.de>"
 
 #: knoppix-installer:427
 msgid ""
 "The installer detected that the installation requierements are not "
 "fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
-"at least $[ROOT_MIN/(1024*1024)] GB to install knoppix on. Also we need a "
+"at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. Also we need a "
 "swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
 "start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
-msgstr "El instalador detectó que todavía no se satisfacen los requerimientos.\\n\\nPor favor, asegúrese de que tiene una partición libre con al menos $[ROOT_MIN/(1024*1024)] GB para instalar knoppix en ella. También necesita una partición de intercambio con al menos $[SWAP_MIN/1024] MB si no tiene 512 MB de memoria o más.\\n\\nEn el siguiente menú, puede ejecutar algunas herramientas para particionar su disco duro.\\nSi realmente sabe lo que está haciendo, ejecute con: IGNORE_CHECK=1 sudo knoppix-installer para evitar el menú."
+msgstr "El instalador detectó que todavía no se satisfacen los requerimientos.\\n\\nPor favor, asegúrese de que tiene una partición libre con al menos $[ROOT_MIN/(1024*1024)] GB para instalar $FLL_DISTRO_NAME en ella. También necesita una partición de intercambio con al menos $[SWAP_MIN/1024] MB si no tiene 512 MB de memoria o más.\\n\\nEn el siguiente menú, puede ejecutar algunas herramientas para particionar su disco duro.\\nSi realmente sabe lo que está haciendo, ejecute con: IGNORE_CHECK=1 sudo knoppix-installer para evitar el menú."
 
 #: knoppix-installer:434
 msgid "Partition check succeeded"
@@ -287,8 +287,8 @@ msgid "Sets the Filesystem type."
 msgstr "Asigna el tipo de sistema de archivos."
 
 #: modules/01-hd.bm:13
-msgid "Here the Kanotix-System will be installed"
-msgstr "El Sistema-Kanotix será instalado aquí"
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
+msgstr "El Sistema-$FLL_DISTRO_NAME será instalado aquí"
 
 #: modules/01-hd.bm:14
 msgid ""
@@ -300,9 +300,9 @@ msgstr "Aquí puede utilizar mapeados adicionales. (Experimental) Necesita haber
 #: modules/01-hd.bm:15
 msgid ""
 "If set to yes, the program will NOT check if there is enough space to "
-"install knoppix on the selected partition(s). Use at your own risk! Useful "
+"install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful "
 "for example with HD_MAP if you only have a small root partition."
-msgstr "Si está puesto a Si, el programa NO comprobará si existe espacio suficiente para instalar knoppix en la(s) partición(es) seleccionada(s). ¡Utilícelo bajo su propia responsabilidad! Útil por ejemplo con HD_MAP si sólo tiene una pequeña partición raíz."
+msgstr "Si está puesto a Si, el programa NO comprobará si existe espacio suficiente para instalar $FLL_DISTRO_NAME en la(s) partición(es) seleccionada(s). ¡Utilícelo bajo su propia responsabilidad! Útil por ejemplo con HD_MAP si sólo tiene una pequeña partición raíz."
 
 #: modules/01-hd.bm:21
 msgid "Drive-Options:"
@@ -343,12 +343,12 @@ msgid "Mounting additional partitions r/w..."
 msgstr "Montando particiones adicionales r/w..."
 
 #: modules/01-hd.bm:118
-msgid "Here you must choose one of the available partitions\\n for use with Kanotix."
-msgstr "Aquí debe elegir alguna de las particiones disponibles\\n para utilizar con Kanotix."
+msgid "Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
+msgstr "Aquí debe elegir alguna de las particiones disponibles\\n para utilizar con $FLL_DISTRO_NAME."
 
 #: modules/01-hd.bm:118
-msgid "Choose the partition to install Kanotix"
-msgstr "Elija la partición en la que instalar Kanotix"
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
+msgstr "Elija la partición en la que instalar $FLL_DISTRO_NAME"
 
 #: modules/01-hd.bm:131
 msgid "Here you must choose one of the available filesystem types."
@@ -410,22 +410,22 @@ msgid ""
 msgstr "Las siguiente particiones de intercambio están marcada como de intercambio, pero no están todavía formateadas. Seleccione aquellas que quiera formatear. Atención. Perderá todos los datos en la partición."
 
 #: modules/00-hd-tools.bm:141
-msgid "Partitioning harddisk for Kanotix"
-msgstr "Particionando el disco duro para Kanotix"
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
+msgstr "Particionando el disco duro para $FLL_DISTRO_NAME"
 
 #: modules/00-hd-tools.bm:144
 msgid ""
 "Here you must choose one of the available disks \\n and partition it for "
-"Kanotix."
-msgstr "Aquí debe seleccionar alguno de los discos disponibles \\n y particionarlo para Kanotix."
+"$FLL_DISTRO_NAME."
+msgstr "Aquí debe seleccionar alguno de los discos disponibles \\n y particionarlo para $FLL_DISTRO_NAME."
 
 #: modules/00-hd-tools.bm:144
 msgid "Choose one disk"
 msgstr "Elija un disco"
 
 #: modules/00-hd-tools.bm:173
-msgid "Kanotix Partition-Menu"
-msgstr "Menú-Partición de Kanotix"
+msgid "$FLL_DISTRO_NAME Partition-Menu"
+msgstr "Menú-Partición de $FLL_DISTRO_NAME"
 
 #: modules/00-hd-tools.bm:174
 msgid "Here you can partition your hard disk"
@@ -436,8 +436,8 @@ msgid "If set to yes, the swap partitions will be autodetected."
 msgstr "Si está puesto a sí, las particiones de intercambio se detectarán automáticamente."
 
 #: modules/02-swap.bm:13
-msgid "The swap partitions to be used by the installed knoppix."
-msgstr "Las particiones de intercambio que serán usadas por la knoppix instalada."
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
+msgstr "Las particiones de intercambio que serán usadas por la $FLL_DISTRO_NAME instalada."
 
 #: modules/02-swap.bm:18
 msgid "Swapspace-Options:"
@@ -612,10 +612,10 @@ msgstr "El sistema instalado será un sistema de tipo $SYSTEM_TYPE."
 #: modules/07-system.bm:27
 msgid ""
 "Here you must choose the type of your system. A Beginner System will have "
-"hwdetection, but also support multiple users. A Kanotix system will work "
+"hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work "
 "exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
 "full featured debian system and works like the 'old installer'."
-msgstr "Aquí debe seleccionar el tipo de su sistema. Un sistema de principiante tendrá detección de hardware, but también soporta múltiples usuarios. Un sistema Kanotix no funcionará exactamente como desde el CD, pero herramientas como apt-get funcionan. Un sistema tipo Debian es un sistema debian con todas las características y funciona como el 'antiguo instalador'."
+msgstr "Aquí debe seleccionar el tipo de su sistema. Un sistema de principiante tendrá detección de hardware, but también soporta múltiples usuarios. Un sistema $FLL_DISTRO_NAME no funcionará exactamente como desde el CD, pero herramientas como apt-get funcionan. Un sistema tipo Debian es un sistema debian con todas las características y funciona como el 'antiguo instalador'."
 
 #: modules/07-system.bm:27
 msgid "Choose your system type"
@@ -626,8 +626,8 @@ msgid "Multi-User System with hw-detection (preferred way)"
 msgstr "Sistema multi usuario con detección de hardware (sistema preferido)"
 
 #: modules/07-system.bm:29
-msgid "Kanotix system like from CD"
-msgstr "Sistema Kanotix como desde CD"
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "Sistema $FLL_DISTRO_NAME como desde CD"
 
 #: modules/07-system.bm:30
 msgid "Debian-like system (old installer way)"
@@ -638,8 +638,8 @@ msgid "Updating /etc/fstab..."
 msgstr "Actualizando /etc/fstab..."
 
 #: modules/install/03-system_types.bm:24
-msgid "Converting Kanotix to Multi-User-System..."
-msgstr "Convirtiendo Kanotix a un sistema Multi usuario..."
+msgid "Converting $FLL_DISTRO_NAME to Multi-User-System..."
+msgstr "Convirtiendo $FLL_DISTRO_NAME a un sistema Multi usuario..."
 
 #: modules/install/02-install-tools.bm:51
 msgid "Copying custom configuration ..."
@@ -656,6 +656,6 @@ msgid ""
 msgstr "Atención: No se encontraron las plantillas. ¡No se actualiza: profile, inittab, sudoers, hosts.allow !"
 
 #: modules/install/02-install-tools.bm:354
-msgid "Welcome to Kanotix"
-msgstr "Bienvenido a Kanotix"
+msgid "Welcome to $FLL_DISTRO_NAME"
+msgstr "Bienvenido a $FLL_DISTRO_NAME"
 
