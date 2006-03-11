@@ -1,3 +1,2 @@
-debian/overrides/initscripts-kanotix	/usr/share/lintian/overrides
 tools/knoppix-hd-config			etc/init.d/
 tools/knoppix-hd-autoconfig		etc/init.d/

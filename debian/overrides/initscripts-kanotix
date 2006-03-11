@@ -1,6 +1,0 @@
-initscripts-kanotix: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/modutils-knoppix
-initscripts-kanotix: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-config
-initscripts-kanotix: script-in-etc-init.d-not-registered-via-update-rc.d /etc/init.d/knoppix-hd-autoconfig
-initscripts-kanotix: postrm-contains-additional-updaterc.d-calls /etc/init.d/knoppix-hd-config
-initscripts-kanotix: postrm-contains-additional-updaterc.d-calls /etc/init.d/knoppix-hd-autoconfig
-initscripts-kanotix: postrm-contains-additional-updaterc.d-calls /etc/init.d/modutils-knoppix
