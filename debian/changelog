@@ -1,12 +1,12 @@
-knx-installer (0.4.0.20) UNRELEASED; urgency=low
+knx-installer (0.4.0.20) unstable; urgency=low
 
-  * NOT RELEASED YET
   * knoppix --> kanotix transtion part 1, thanks to RoEn.
   * knoppix --> kanotix transtion part 2, thanks to x-un-i.
   * transition knoppix-{autoconfig,halt,reboot} to
     live-{{autoconfig,halt,reboot}
+  * don't depend directly on kudzu, use initscripts-kanotix-live instead.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 10 Mar 2006 14:33:07 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 13 Mar 2006 11:01:49 +0100
 
 knx-installer (0.4.0.19) unstable; urgency=low
 
