@@ -235,7 +235,7 @@ system_mode_debian()
 		if [ $? -eq 0 ]
 		then
 			kill $PID >/dev/null 2>/dev/null 
-			echo $"${CRE}${WHITE}Starting $(echo live-autoconfig ...${NORMAL}"
+			echo "${CRE}${WHITE}Starting KANOTIX ...${NORMAL}"
 			system_mode_debian_autoconfig
 		else
 			# Wait for our child :-)

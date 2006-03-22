@@ -5,8 +5,9 @@ knx-installer (0.4.0.20) experimental; urgency=low
   * transition knoppix-{autoconfig,halt,reboot} to
     live-{{autoconfig,halt,reboot}
   * don't depend directly on kudzu, use initscripts-kanotix-live instead.
+  * quick'n'dirty hotfix for knoppix-hd-autoconfig.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 22 Mar 2006 01:06:05 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 22 Mar 2006 01:13:46 +0100
 
 knx-installer (0.4.0.19) unstable; urgency=low
 
