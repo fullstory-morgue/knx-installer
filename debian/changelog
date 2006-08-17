@@ -1,4 +1,11 @@
-knx-installer (0.4.0.20) experimental; urgency=low
+knx-installer (0.4.0.21) unstable; urgency=low
+
+  * don't depend directly on kudzu-kanotix, we're using native debian tools
+    these days.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 17 Aug 2006 02:12:54 +0200
+
+knx-installer (0.4.0.20) unstable; urgency=low
 
   * knoppix --> kanotix transtion part 1, thanks to RoEn.
   * knoppix --> kanotix transtion part 2, thanks to x-un-i.
@@ -7,7 +14,7 @@ knx-installer (0.4.0.20) experimental; urgency=low
   * don't depend directly on kudzu, use initscripts-kanotix-live instead.
   * quick'n'dirty hotfix for knoppix-hd-autoconfig.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 22 Mar 2006 01:13:46 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 17 Aug 2006 02:12:48 +0200
 
 knx-installer (0.4.0.19) unstable; urgency=low
 
