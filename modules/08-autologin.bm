@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#
+# asks the user for the prefered hostname
+# 
+
+function module_autologin
+{
+  AUTOLOGIN_MODULE="configured"
+  [ -z "$AUTOLOGIN" ] && AUTOLOGIN="no"
+  register_var "AUTOLOGIN" $"If set to yes, you'll be logged in automatically without entering a password." "yes|no" "" "no"
+  register_vars "AUTOLOGIN_MODULE AUTOLOGIN"
+  return 0
+}
+
