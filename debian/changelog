@@ -1,3 +1,9 @@
+knx-installer (0.4.0.24) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 13 Sep 2006 02:16:44 +0200
+
 knx-installer (0.4.0.23) experimental; urgency=low
 
   * changed qtparted to gparted.
