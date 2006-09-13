@@ -115,6 +115,12 @@ system_copy_etc()
 		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/Xservers ] && perl -pi -e "s|(/usr/X11R6/bin/X -nolisten tcp).*|\1 -br|"                  $TARGET_MNT_POINT/etc/kde3/kdm/Xservers
 		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|"                   $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
 	fi
+
+	# Auto login
+	if [ "$AUTOLOGIN" = "yes" -a -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]; then
+		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+	fi
 }
 
 system_copy_home()
@@ -289,7 +295,8 @@ system_add_services()
 	# ALSA aktivieren, wenn möglich
 	if [ -e /proc/asound/modules ]; then
 		if [ -x /etc/init.d/alsa-utils ]; then
-			chroot_it update-rc.d alsa-utils defaults
+			# chroot_it update-rc.d alsa-utils defaults
+			chroot_it update-rc.d alsa-utils start 50 S . stop 50 0 6 .
 		elif [ -x /etc/init.d/alsa ]; then
 			chroot_it update-rc.d alsa defaults
 		fi
@@ -325,6 +332,9 @@ system_add_services()
 
 		# start powernowd
 		pidof powernowd &> /dev/null && chroot_it update-rc.d powernowd defaults &>/dev/null
+
+		# start powersaved
+		pidof powersaved &> /dev/null && chroot_it update-rc.d powersaved defaults &>/dev/null
 		
 		# start sl-modem-daemon
 		pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
@@ -401,6 +411,12 @@ EOF
 			# fix ownership
 			chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 		fi
+
+		# enable splashy, if installed
+		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+
+		# enable acpi-support, if installed
+		[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
 	fi
 	
 	# remove temporary kde- user files
@@ -465,7 +481,7 @@ system_services()
 	chroot_it update-rc.d halt		start 90 0 .							&>/dev/null
 	chroot_it update-rc.d reboot		start 90 6 .							&>/dev/null
 	chroot_it update-rc.d rmnologin		start 99 2 3 4 5 .						&>/dev/null
-	chroot_it update-rc.d single		start 20 1 .							&>/dev/null
+	chroot_it update-rc.d single		start 90 1 .							&>/dev/null
 	chroot_it update-rc.d stop-bootlogd	start 99 2 3 4 5 .						&>/dev/null
 
 	### console-tools ###	
@@ -475,8 +491,8 @@ system_services()
 	chroot_it update-rc.d dns-clean		start 39 S .							&>/dev/null
 
 	### util-linux ###
-	chroot_it update-rc.d hwclock.sh	start 50 S . stop 25 0 6 .					&>/dev/null
-	chroot_it update-rc.d hwclockfirst.sh	start 22 S .							&>/dev/null
+	chroot_it update-rc.d hwclock.sh	start 22 S . stop 25 0 6 .					&>/dev/null
+	chroot_it update-rc.d hwclockfirst.sh	start 18 S .							&>/dev/null
 	
 	### ifupdown ###
 	chroot_it update-rc.d ifupdown		start 39 S . start 36 0 6 .					&>/dev/null
@@ -516,7 +532,7 @@ system_services()
 	chroot_it update-rc.d hotplug-net	start 41 S . stop 89 0 6 .					&>/dev/null
 
 	# udev
-	chroot_it update-rc.d udev		start 04 S .							&>/dev/null
+	chroot_it update-rc.d udev		start 03 S .							&>/dev/null
 	chroot_it update-rc.d udev-mtab		start 36 S .							&>/dev/null
 
 	# dbus
@@ -688,7 +704,8 @@ system_update_files()
 	echo -e $"Welcome to Kanotix" "(Kernel $(uname -r))\n" > $TARGET_MNT_POINT/etc/motd
 
 	cat <<EOF >$TARGET_MNT_POINT/etc/hosts
-127.0.0.1	$HOST_NAME localhost
+127.0.0.1	localhost
+127.0.0.1	$HOST_NAME
 
 # The following lines are desirable for IPv6 capable hosts
 # (added automatically by netbase upgrade)

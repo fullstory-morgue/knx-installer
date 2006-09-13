@@ -156,7 +156,7 @@ function action-part
   then
     action-part-cfdisk
   else
-    [ -x "/sbin/qtparted" -o -x "/usr/sbin/qtparted" ] && qtparted || action-part-cfdisk
+    [ -x "/usr/bin/gparted" ] && gparted || action-part-cfdisk
   fi
   rebuildfstab -r
 }

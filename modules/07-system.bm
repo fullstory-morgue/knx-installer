@@ -49,7 +49,7 @@ module_system_set_modules()
 			MODULES=(hd swap services boot)
 		;;
 		debian|beginner|woody)
-			MODULES=(hd swap name user userpass rootpass host services boot)
+			MODULES=(hd swap name user userpass rootpass host services boot autologin)
 	esac
 	NUM_MODULES=${#MODULES[@]}
 }
@@ -65,7 +65,8 @@ module_system_get_cmdlines()
 			SYSTEM_RESCUE_CMDLINE=$(cat /proc/cmdline | tr ' ' '\n' | egrep "$SYSTEM_RESCUE_CMDS" |  tr '\n' ' ')
 			[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
 			[ -n "$LANGUAGE" ] || LANGUAGE="de"
-			echo "ramdisk_size=100000 lang=$LANGUAGE apm=power-off nomce $SYSTEM_RESCUE_CMDLINE"
+			# echo "ramdisk_size=100000 lang=$LANGUAGE apm=power-off nomce $SYSTEM_RESCUE_CMDLINE"
+			echo "$SYSTEM_RESCUE_CMDLINE quiet"
 		;;
 	esac
 }

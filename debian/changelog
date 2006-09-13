@@ -1,17 +1,30 @@
-knx-installer (0.4.0.22) UNRELEASED; urgency=low
+knx-installer (0.4.0.23) experimental; urgency=low
 
-  * NOT RELEASED YET
+  * changed qtparted to gparted.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 17 Aug 2006 02:15:31 +0200
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Sat,  9 Sep 2006 22:12:09 +0200
 
-knx-installer (0.4.0.21) unstable; urgency=low
+knx-installer (0.4.0.22) experimental; urgency=low
 
-  * don't depend directly on kudzu-kanotix, we're using native debian tools
-    these days.
+  * fixed --non-interactive and --installer option.
+  * added "&>/dev/null" to update-rc.d-commands (splashy, acpi-support).
+  * changed some update-rc.d-commands (alsa-utils, udev, single, hwclock.sh,
+    hwclockfirst.sh).
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 17 Aug 2006 02:12:54 +0200
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Sun,  6 Aug 2006 22:29:11 +0200
 
-knx-installer (0.4.0.20) unstable; urgency=low
+knx-installer (0.4.0.21) experimental; urgency=low
+
+  * added --installer option (similar to --non-interactive, but with
+    bootdisk-creation enabled)
+  * added KDM-AutoLogin as a new installer module
+  * updated kopt-line.
+  * activation of powersaved, splashy, acpi-support after hd-install.
+  * updated /etc/host template.
+
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Fri,  4 Aug 2006 22:20:04 +0200
+
+knx-installer (0.4.0.20) experimental; urgency=low
 
   * knoppix --> kanotix transtion part 1, thanks to RoEn.
   * knoppix --> kanotix transtion part 2, thanks to x-un-i.
@@ -20,7 +33,7 @@ knx-installer (0.4.0.20) unstable; urgency=low
   * don't depend directly on kudzu, use initscripts-kanotix-live instead.
   * quick'n'dirty hotfix for knoppix-hd-autoconfig.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 17 Aug 2006 02:12:48 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 22 Mar 2006 01:13:46 +0100
 
 knx-installer (0.4.0.19) unstable; urgency=low
 

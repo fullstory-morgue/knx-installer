@@ -182,7 +182,7 @@ function update_status
 
 # Beware: The real modules are set by module_system_set_modules
 
-MODULES=(hd swap name user userpass rootpass host services boot system)
+MODULES=(hd swap name user userpass rootpass host services boot system autologin)
 NUM_MODULES=${#MODULES[@]}
 MODULES_AUTO="swap services"
 MODULES_NUMAUTO=$(echo $MODULES_AUTO | wc -w | tr -d ' ')
@@ -483,7 +483,14 @@ function ni-main
 	do_install | $DIALOG --backtitle "$BT" --title "$T1" --gauge $"Installing" 10 60
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
-  
+ 
+        if [ "$BOOT_DISK" = "yes" -a "$INSTALL_MODE" = "installer" ]; then
+                $DIALOG --backtitle "$BT" --title $"Creating floppy disk" --defaultno --yesno $"Please insert now an empty floppy disk into your floppydrive. Warning: All data on it will be lost. If you don't want to create a disk you can choose No." 0 0
+                if [ $? -eq 0 ]; then
+                        make_floppy
+		fi
+	fi
+
 	if [ -n "$MODULE_ERROR" ]; then
 		msgbox "Error: $MODULE_ERROR" 10 60
 		return 1
@@ -503,8 +510,11 @@ function ni-main
 }
 
 if [ "$1" = "--non-interactive" ]; then
-	ni-main
-exit 1 # something did go wrong
+	INSTALL_MODE=non-interactive ni-main
+	exit 1 # something did go wrong
+elif [ "$1" = "--installer" ]; then
+	INSTALL_MODE=installer ni-main
+	exit 1 # something did go wrong
 fi
 
 if [ $UID -eq 0 ]; then
