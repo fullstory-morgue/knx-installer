@@ -1,8 +1,17 @@
-knx-installer (0.4.0.24) UNRELEASED; urgency=low
+knx-installer (0.4.0.24) experimental; urgency=low
 
-  * NOT RELEASED YET
+  [ Andreas Loibl ]
+  * New method to add cdrom/ floppy devices to fstab (from
+    initscripts-kanotix-live).
+  * Make sure that /proc exists on root-partition.
+  * Don't backup Knoppix specific Xsession file (45xsession) anymore.
+  * changed some update-rc.d-commands.
+  * minor bugfixes.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 13 Sep 2006 02:16:44 +0200
+  [ Joerg Schirottke ]
+  * Added rest of etch's update-rc.d-commands.
+
+ -- Joerg Schirottke <master@kanotix.com>  Fri, 15 Sep 2006 03:27:23 +0200
 
 knx-installer (0.4.0.23) experimental; urgency=low
 

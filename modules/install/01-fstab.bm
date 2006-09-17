@@ -1,4 +1,11 @@
 #!/bin/bash
+
+function stringinfile()
+{
+        case "$(cat $2)" in *$1*) return 0;; esac
+        return 1
+}
+
 function get_usb_devices
 {
 	local DEV UMOUNT=0 S I L
@@ -69,6 +76,7 @@ EOF
 
 	# Let Kanotix detect all other partitions
 
+	mkdir -p $TARGET_MNT_POINT/proc
 	mount --bind /proc $TARGET_MNT_POINT/proc
 	chroot "$TARGET_MNT_POINT" rebuildfstab -r
 	umount $TARGET_MNT_POINT/proc
@@ -85,20 +93,20 @@ EOF
 
 	grep -v ^$ $TMPDIR/fstab >> $TARGET_MNT_POINT/etc/fstab
 
-	# Add CD-Roms
-	
-	for i in $(ls -d /dev/cdrom* 2>/dev/null); do
-		m=${i#/dev}
+	# Add cdrom devices to /etc/fstab
+
+	for c in $(ls -d /dev/cdrom* 2>/dev/null); do
+		m=${c#/dev}
 		[ "$m" == "/cdrom" ] && m="/cdrom0"
-		mkdir -p $TARGET_MNT_POINT/media$m
-		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$i" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
-	done
+		[ -d $TARGET_MNT_POINT/media$m ] || mkdir -p $TARGET_MNT_POINT/media$m
+		stringinfile "/dev/$(readlink $c)" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
+	done	
 
-	# Add Floppy
+	# Add floppy devices to /etc/fstab
 
-	for i in $(ls -d /sys/block/fd* 2>/dev/null); do
-		mkdir -p $TARGET_MNT_POINT/media/floppy${i#/sys/block/fd}
-		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${i#/sys/block}" "/media/floppy${i#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
+	for f in $(ls -d /sys/block/fd* 2>/dev/null); do
+		[ -d $TARGET_MNT_POINT/media/floppy${f#/sys/block/fd} ] || mkdir -p $TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}
+		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> $TARGET_MNT_POINT/etc/fstab
 	done
 
 	# Remove not needed device links

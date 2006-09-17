@@ -690,12 +690,13 @@ EOF
 	done < /etc/fstab >> $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# update menu.lst
+	rm -f $TARGET_MNT_POINT/boot/vmlinuz $TARGET_MNT_POINT/boot/System.map $TARGET_MNT_POINT/boot/initrd.img
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# hook update-grub -y into the kernel installing chain
 cat << EOF >$TARGET_MNT_POINT/etc/kernel-img.conf
-postinst_hook = /sbin/update-grub
-postrm_hook = /sbin/update-grub
+postinst_hook = update-grub
+postrm_hook = update-grub
 do_bootloader = no
 do_symlinks = Yes
 relative_links = Yes
@@ -761,15 +762,12 @@ add_bootmanager()
 		BOOT_RUNNING_KERNEL="$1"
 	fi
 
-	# Create default links
+	# Remove default links
 
 	rm -f $TARGET_MNT_POINT/vmlinuz
 	rm -f $TARGET_MNT_POINT/boot/vmlinuz
 	rm -f $TARGET_MNT_POINT/boot/initrd.img
-
-	ln -sf vmlinuz-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/vmlinuz
-	ln -sf /boot/vmlinuz $TARGET_MNT_POINT/vmlinuz
-	[ -e $TARGET_MNT_POINT/boot/initrd.img-$BOOT_RUNNING_KERNEL ] && ln -sf initrd.img-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/initrd.img
+	rm -f $TARGET_MNT_POINT/boot/System.map
 
 	# TODO: Add error handler
 
@@ -779,6 +777,10 @@ add_bootmanager()
 	then
 		install_grub
 	else
+		ln -sf vmlinuz-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/vmlinuz
+		ln -sf /boot/vmlinuz $TARGET_MNT_POINT/vmlinuz
+		[ -e $TARGET_MNT_POINT/boot/initrd.img-$BOOT_RUNNING_KERNEL ] && ln -sf initrd.img-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/initrd.img
+		[ -e $TARGET_MNT_POINT/boot/System.map-$BOOT_RUNNING_KERNEL ] && ln -sf System.map-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/System.map
 		install_lilo
 	fi
 	# TODO: Add error handler

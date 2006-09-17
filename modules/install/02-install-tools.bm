@@ -230,7 +230,7 @@ EOF
 system_setup_kdm()
 {
 	# backup Knoppix specific Xsession file
-	mv "$TARGET_MNT_POINT/etc/X11/Xsession.d/45xsession" "$TARGET_MNT_POINT/root/xsession.knx-hdinstall.backup"
+	# mv "$TARGET_MNT_POINT/etc/X11/Xsession.d/45xsession" "$TARGET_MNT_POINT/root/xsession.knx-hdinstall.backup"
 
 	# Make the system insecure ? Never! (FF)
 	
@@ -413,7 +413,7 @@ EOF
 		fi
 
 		# enable splashy, if installed
-		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 03 S . stop 01 0 6 . &>/dev/null
 
 		# enable acpi-support, if installed
 		[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
@@ -429,7 +429,7 @@ EOF
 
 system_services()
 {
-	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:90 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:89 cron:89:11"
+	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:89 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:11 cron:89:11"
 	# delete knoppix specific programs from runlevel directories
 	# delete also knoppix-hd-config
 	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt,live-autoconfig,live-halt,live-reboot}"
@@ -441,26 +441,9 @@ system_services()
 	
 	### initscripts ###
 	# create basic system runlevel
-	#
-	#       Okay, we could do this with update-rc.d, but that would probably
-	#       be pretty slow. This way we win some speed.
-	#       DO NOT FOLLOW THIS EXAMPLE IN OTHER PACKAGES.
-	#
-	if [ -x "$TARGET_MNT_POINT/etc/init.d/mountvirtfs" ]; then
-		chroot_it update-rc.d mountvirtfs	start 2 S . start 36 S .				&>/dev/null
-		# XXX: workaround for broken update-rc.d
-		chroot_it ln -sf ../init.d/mountvirtfs /etc/rcS.d/S02mountvirtfs
-		for i in devpts.sh mountkernfs; do
-		        if [ -f "$TARGET_MNT_POINT/etc/init.d/$i" ]; then
-				rm -f "$TARGET_MNT_POINT/etc/init.d/$i"
-				chroot_it update-rc.d "$i" remove						&>/dev/null
-			fi
-		done
-	elif [ -x "$TARGET_MNT_POINT/etc/init.d/mountkernfs" ]; then
-		chroot_it update-rc.d mountkernfs	start 36 S .						&>/dev/null
-	else
-		chroot_it update-rc.d devpts.sh		start 36 S . 						&>/dev/null
-	fi
+	chroot_it update-rc.d mountvirtfs       start 2 S . start 36 S .					&>/dev/null
+	chroot_it update-rc.d mountkernfs.sh	start 2 S .							&>/dev/null
+	chroot_it update-rc.d mountdevsubfs.sh	start 4 S .							&>/dev/null
 	chroot_it update-rc.d bootlogd		start 5 S .							&>/dev/null
 	chroot_it update-rc.d checkroot.sh	start 10 S .							&>/dev/null
 	chroot_it update-rc.d modutils		start 20 S .							&>/dev/null
@@ -483,6 +466,7 @@ system_services()
 	chroot_it update-rc.d rmnologin		start 99 2 3 4 5 .						&>/dev/null
 	chroot_it update-rc.d single		start 90 1 .							&>/dev/null
 	chroot_it update-rc.d stop-bootlogd	start 99 2 3 4 5 .						&>/dev/null
+	chroot_it update-rc.d stop-bootlogd-single	start 99 S .						&>/dev/null
 
 	### console-tools ###	
 	chroot_it update-rc.d console-screen.sh start 48 S .							&>/dev/null
@@ -515,6 +499,7 @@ system_services()
 	
 	### portmap ###
 	#chroot_it update-rc.d portmap		start 43 S . start 32 0 6 . start 18 2 3 4 5 . stop 81 1 .	&>/dev/null
+	chroot_it update-rc.d portmap		start 32 0 6 . start 43 S . stop 81 1 .				&>/dev/null
 
 	### ppp ###
 	chroot_it update-rc.d ppp		start 14 2 3 4 5 . stop 86 0 1 6 .				&>/dev/null
@@ -544,6 +529,26 @@ system_services()
 
 	# ifrename
 	chroot_it update-rc.d ifrename		start 40 S .							&>/dev/null
+	
+	# additional startups found in etch (not all tools are installed, but does not matter)
+
+	# discover is more or less useless, so keeps disabled.
+        #chroot_it update-rc.d discover		start 36 S .							&>/dev/null
+        chroot_it update-rc.d exim4 		defaults							&>/dev/null
+        chroot_it update-rc.d glibc.sh 		start 01 S .							&>/dev/null
+        chroot_it update-rc.d hotkey-setup 	defaults							&>/dev/null
+	# installation-report should stay disabled (!)
+        #chroot_it update-rc.d installation-report start 80 S .							&>/dev/null
+        chroot_it update-rc.d killprocs		start 30 1 .							&>/dev/null
+        chroot_it update-rc.d libdevmapper1.02	start 25 S .							&>/dev/null
+        chroot_it update-rc.d lpd		defaults							&>/dev/null
+        chroot_it update-rc.d mountall-bootclean.sh start 36 S .						&>/dev/null
+        chroot_it update-rc.d mountnfs-bootclean.sh start 46 S .						&>/dev/null
+        chroot_it update-rc.d mtab.sh 		start 36 S .							&>/dev/null
+        chroot_it update-rc.d nfs-common	start 21 2 3 4 5 . stop 79 0 1 6 .				&>/dev/null
+	# openbsd-inetd is usally not needed, stays disabled
+        #chroot_it update-rc.d openbsd-inetd defaults								&>/dev/null
+        chroot_it update-rc.d sudo		start 75 S .							&>/dev/null
 
 	# Add default scripts to runlevels
 	for i in $SYSTEM_SERVICES_D; do
