@@ -135,6 +135,9 @@ system_copy_home()
 		return 0
 	fi
 
+	# save current session
+	dcop ksmserver ksmserver saveCurrentSession
+
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
 		cp -a "/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home"
@@ -413,7 +416,7 @@ EOF
 		fi
 
 		# enable splashy, if installed
-		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 03 S . stop 01 0 6 . &>/dev/null
+		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
 
 		# enable acpi-support, if installed
 		[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
@@ -527,8 +530,17 @@ system_services()
 		chroot_it update-rc.d dbus	defaults							&>/dev/null
 	fi
 
+	# bluetooth
+	chroot_it update-rc.d bluetooth		start 25 2 3 4 5 . stop 74 0 1 6 .				&>/dev/null
+
+	# hplip
+	chroot_it update-rc.d hplip 		defaults 19							&>/dev/null
+	
 	# ifrename
 	chroot_it update-rc.d ifrename		start 40 S .							&>/dev/null
+
+	# ipw3945d
+	chroot_it update-rc.d ipw3945d 		start 38 S . stop 34 0 6 .					&>/dev/null
 	
 	# additional startups found in etch (not all tools are installed, but does not matter)
 
