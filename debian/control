@@ -1,0 +1,14 @@
+Source: knxinstaller
+Section: admin
+Priority: optional
+Maintainer: Stefan Lippers-Hollmann <s.l-h@gmx.de>
+Build-Depends: cdbs (>= 0.4.23-1.1), debhelper (>= 5.0.0), autotools-dev, libxinerama-dev, libqt3-mt-dev (>= 3.1.1), kdelibs4-dev (>= 4:3.2), kdebase-dev (>= 4:3.2), gawk, grep, autoconf
+Standards-Version: 3.7.2
+
+Package: knxinstaller
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, knx-installer, sudo, kanotix-su, gparted, e2fsprogs (>= 1.2), jfsutils (>= 1.1.1), ntfsprogs (>= 1.7.1), xfsprogs (>= 2.4.12)
+Replaces: knx-installer (<< 0.3.19.15)
+Description: KANOTIX installer Frontend
+ QT/ KDE based installer frontend for creating the .knofig configuration
+ settings used by knx-installer.

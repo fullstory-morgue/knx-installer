@@ -44,6 +44,7 @@ INCLUDE_LIST="/etc/init.d
 /etc/modules*
 /etc/modutils
 /etc/network/options
+/etc/X11/xkb
 /var/log
 /var/tmp
 /var/lib/alsa/asound.state
@@ -324,7 +325,7 @@ if [ ! "$FLL_DISTRO_MODE" == "live" ]; then
 fi
 
 #################### Remount Root-Partition r/w ####################
-if ! ( mount | egrep "^$ROOT_DEV" 2>/dev/null >/dev/null ); then
+if ! grep -q "^$ROOT_DEV" /proc/mounts; then
 mount "$ROOT_DEV" 2>/dev/null
 MOUNTED_BY_SCRIPT=1
 fi
@@ -774,6 +775,15 @@ if [ -x /etc/init.d/udev ]; then
                 "$HOME_DIR/.kde/share/config/ksplashrc"
             chown $USER_ID:$USER_ID "$HOME_DIR/.kde/share/config/ksplashrc"
         fi
+
+	# Patch kdeglobals for AA
+	if [ -e "$HOME_DIR/.kde/share/config/kdeglobals" ]; then
+	    awk '/^\[General\]/ { f = 1; print; next } /^\[.+\]/ { f = 0; } f { if(/^$/){print "#XFT_PLACEHOLDER#"}; if(!/^Xft/){print}; } ! f' \
+	        "$HOME_DIR/.kde/share/config/kdeglobals" > "$HOME_DIR/.kde/share/config/kdeglobals.kanotix-update"
+	    perl -p -e 's~#XFT_PLACEHOLDER#~XftAntialias=true\nXftHintStyle=hintmedium\nXftSubPixel=none~' \
+		"$HOME_DIR/.kde/share/config/kdeglobals.kanotix-update" > "$HOME_DIR/.kde/share/config/kdeglobals"
+	    rm -f "$HOME_DIR/.kde/share/config/kdeglobals.kanotix-update"
+	fi
     done
     
     # Patch automount of USB-devices

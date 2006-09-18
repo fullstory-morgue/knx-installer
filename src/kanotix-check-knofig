@@ -118,7 +118,7 @@ for i in $HD_MAP
 do
     PART=$(echo $i | cut -d":" -f1)
     POINT=$(echo $i | cut -d":" -f2)
-    if checkFilesystem $PART; then
+    if ! checkFilesystem $PART; then
         echo "TAB: 1"
         echo "ERROR: Partition $PART (Mointpoint $POINT) is not formatted!"
         exit 1
