@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kanotix-Installer
+Exec=knxinstaller
+Icon=knxinstaller
+Type=Application
+Comment=Kanotix-Installer

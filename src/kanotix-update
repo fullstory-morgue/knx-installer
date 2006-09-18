@@ -1,0 +1,846 @@
+#!/bin/bash
+##################################################################################
+# Kanotix-Update-Script by Andreas Loibl <andreas@andreas-loibl.de>
+##################################################################################
+
+#################### Default Settings ####################
+
+# EXCLUDE_LIST sind die Pfade, die vom Update ausgenommen werden (also nicht gelöscht/
+# ersetzt werden)
+EXCLUDE_LIST="/etc/fstab
+/etc/group
+/etc/passwd
+/etc/shadow
+/etc/gshadow
+/etc/hostname
+/etc/mailname
+/etc/exports
+/etc/ndiswrapper
+/etc/hosts
+/etc/ssh
+/etc/iftab
+/etc/resolv.conf
+/etc/dhcpc/resolv.conf
+/etc/ppp
+/etc/chatscripts
+/etc/samba
+/etc/gpm.conf
+/etc/network/interfaces
+/etc/network/wep.*
+/etc/wpa_supplicant.conf
+/usr/src/fglrx*
+/usr/src/NVIDIA*
+/usr/src/linux-*tar.bz2
+/home
+/root
+/srv
+/var"
+
+# INCLUDE_LIST sind die Pfade, die unbedingt gelöscht/ersetzt werden müssen, da ansonsten
+# Konflikte mit der neuen Installation auftreten würden
+INCLUDE_LIST="/etc/init.d
+/etc/rc?.d
+/etc/modprobe.d
+/etc/modules*
+/etc/modutils
+/etc/network/options
+/var/log
+/var/tmp
+/var/lib/alsa/asound.state
+/var/lib
+/var/run
+/var/lock
+/var/spool
+/var/cache/apt/*.bin
+/var/cache/apt-show-versions
+/var/cache/apt-build
+/var/cache/man
+/var/cache/debconf
+/var/cache/samba
+/var/cache/apache
+/var/cache/chrootkit
+/var/cache/locate
+/home/*/.kde/share/config/kmixctrlrc
+/home/*/.kde/share/config/kmixrc
+/root/.kde/share/config/kmixctrlrc
+/root/.kde/share/config/kmixrc"
+
+# MOUNTPOINTS_TO_OVERWRITE sind die Mountpoints, die während des Upgrades gemounted werden.
+# Wenn z.B. /dev/hda3 auf /usr gemounted wird und /usr in MOUNTPOINTS_TO_OVERWRITE steht,
+# dann werden alle Dateien/Ordner auf hda3 gelöscht, außer in der EXCLUDE_LIST steht /usr
+# oder ein Unterverzeichnis von /usr (das würde dann übrig bleiben).
+MOUNTPOINTS_TO_OVERWRITE="/bin
+/dev
+/etc
+/lib
+/sbin
+/usr
+/boot
+/root
+/home
+/var"
+
+# PACKAGES_TO_REMOVE ist eine Liste von Paketen, die nicht in der "old-packages"-Liste auftauchen sollen
+PACKAGES_TO_REMOVE_REGEXP="xorg|xfree|xprint|xprt|^sun-|^lib|knoppix|kanotix|^blackdown|firmware|openoffice|css|lame|mplayer|realplayer|w32codecs"
+PACKAGES_TO_REMOVE="alsa-headers
+aspell-bin
+autofs
+battfink
+bloksi
+bootsplash
+capplets
+cedega
+cpp-3.2
+dbus-qt-1
+dd-rescue
+dedit
+diasce2
+drgenius
+encompass
+evolution-data-server1.2
+flashkard
+flink
+ftape-util
+gasql
+gcc-3.2-base
+gda-mysql
+gda-odbc
+gda-postgres
+genliloconf
+gnofin
+gnome-commander
+gnome-db
+gnome-vfs-extras
+gnucash-hbci
+goats
+gstreamer-a52dec
+gstreamer-aa
+gstreamer-alsa
+gstreamer-arts
+gstreamer-artsd
+gstreamer-audiofile
+gstreamer-cdparanoia
+gstreamer-colorspace
+gstreamer-dv
+gstreamer-dvd
+gstreamer-esd
+gstreamer-festival
+gstreamer-flac
+gstreamer-gconf
+gstreamer-gnomevfs
+gstreamer-gsm
+gstreamer-http
+gstreamer-jack
+gstreamer-jpeg
+gstreamer-mad
+gstreamer-mikmod
+gstreamer-misc
+gstreamer-mpeg2dec
+gstreamer-oss
+gstreamer-player
+gstreamer-player-nautilus
+gstreamer-plugin-apps
+gstreamer-plugin-libs
+gstreamer-plugins
+gstreamer-sdl
+gstreamer-sid
+gstreamer-swfdec
+gstreamer-tools
+gstreamer-vorbis
+gstreamer-x
+gtkhtml3.0
+gwget2
+hwsetup
+j2se-package
+k3b-defaults
+kadslwatch+adslstat
+kaxtv
+kbdconfig
+kcd
+kcdlabel
+kdevelop
+kdevelop-data
+kmerlin
+knx
+knxinstaller
+knx-installer
+konq-speaker
+kontact-plugins
+kpaint
+kpkgmanager
+ksambaplugin
+kurush
+kvim
+mms-qt
+mono-assemblies-arch
+mouseconfig
+mrproject
+nautilus-media
+normalize
+ntfsprogs-dev
+nxserver
+openoffice.org-hyphenation-de
+openoffice.org-hyphenation-en-gb
+openoffice.org-hyphenation-en-us
+openoffice-snapshot
+opera
+pdf-printerconfig
+pharmacy
+plib1.8.3
+race
+race-data
+raidtools2
+rot13
+rt2400-utility
+sawfish-gnome
+t1lib1
+trm
+uim-helper-server
+visualos
+xfce4-cpugraph-plugin
+xfce4-fsguard-plugin
+xfce4-genmon-plugin
+xfce4-mixer-lib-alsa
+xfce4-panel-menu-plugin
+xfce4-taskbar-plugin
+xfce4-windowlist-plugin
+xfce4-xkb-plugin
+xfld-desktop
+xfmedia
+xfonts-x3270-misc
+ximian-setup-tools
+xlibmesa-glu
+xlibmesa-glu-dev
+xmms-normalize
+xnview
+xsitecopy
+xterminal"
+
+# override tool behaviour through distro-defaults
+[ -r /etc/default/distro ] && source /etc/default/distro
+[ "$FLL_MOUNTPOINT" ] || FLL_MOUNTPOINT="/KNOPPIX"
+[ "$FLL_LIVE_USER" ] || FLL_LIVE_USER="knoppix"
+
+MEDIA_DIR="/media"
+
+#################### Command Line Arguments####################
+while [ "$1" ]
+do
+    case $1 in
+    -l|--exclude-list)
+        shift
+        if [ -e "$1" ]; then
+            EXCLUDE_LIST="$(cat "$1")"
+        else
+            echo "ERROR: '$1': File not found"
+            exit 1
+        fi
+        ;;
+    -s|--show-exclude-list)
+        echo "$EXCLUDE_LIST"
+        exit 0
+        ;;
+    -bl|--boot-loader)
+        shift
+        case $1 in
+            grub|lilo)
+                BOOT_LOADER="$1"
+                ;;
+            *)
+                echo "Invalid Bootloader: $1"
+                exit 1
+                ;;
+        esac
+        ;;
+    -bw|--boot-where)
+        shift
+        case $1 in
+            mbr|partition)
+                BOOT_WHERE="$1"
+                ;;
+            *)
+                echo "Invalid Bootloader-Target: $1"
+                exit 1
+                ;;
+        esac
+        ;;
+    -f|--force|--non-interactive)
+        NO_ASK=1
+        ;;
+    /dev/*)
+        ROOT_DEV="$1"
+        ROOT_MP="$MEDIA_DIR/$(basename "$1")"
+        ;;
+    $MEDIA_DIR/*|/mnt/*)
+        ROOT_MP="$1"
+        ROOT_DEV="/dev/$(basename "$1")"
+        ;;
+    hd*|sd*|ide*)
+        ROOT_MP="$MEDIA_DIR/$1"
+        ROOT_DEV="/dev/$1"
+        ;;
+    esac
+    shift
+done
+
+if [ -z "$ROOT_DEV" -o -z "$ROOT_MP" -o ! -e "$ROOT_DEV" -o ! -e "$ROOT_MP" ]; then
+echo "Usage: $0 [Options] [Root-Partition]
+
+[Options]
+    -l filename, --exclude-list filename
+                Use the exclude-list from the specified file.
+                File format: One Path per Line, no comments (#)
+    -s, --show-exclude-list
+                Prints default exclude-list
+    -bl (grub|lilo), --boot-loader (grub|lilo)
+                Sets the Bootloader. Default: GRUB
+    -bw (mbr|partition), --boot-where (mbr|partition)
+                Sets the Bootloader-Target. Default: MBR
+    -f, --force, --non-interactive
+                The Update-Script doesn't ask you anything
+
+[Root-Partition] can be in one of these formats:
+    /dev/hda2
+    /dev/sda1
+    $MEDIA_DIR/hda2
+    $MEDIA_DIR/sda1
+    hda2
+    sda1
+"
+exit 1
+fi
+
+
+#################### Check for root ####################
+if [ $(id -u) -ne 0 ]; then
+    echo "ERROR: You must be root to run this script!"
+    exit 1
+fi
+
+#################### Check for Live-CD ####################
+if [ ! "$FLL_DISTRO_MODE" == "live" ]; then
+    echo "ERROR: $0 has to be executed from Live-CD"
+    exit 1
+fi
+
+#################### Remount Root-Partition r/w ####################
+if ! ( mount | egrep "^$ROOT_DEV" 2>/dev/null >/dev/null ); then
+mount "$ROOT_DEV" 2>/dev/null
+MOUNTED_BY_SCRIPT=1
+fi
+mount -o remount,rw "$ROOT_DEV" 2>/dev/null >/dev/null
+BACKDIR="$(pwd)"
+cd "$ROOT_MP"
+
+#################### Check for Kanotix ####################
+if [ ! -e "./etc/kanotix-version" ]; then
+    echo "Error: No KANOTIX-Installation found on $ROOT_MP ($ROOT_DEV)"
+    cd "$BACKDIR"
+    [ $MOUNTED_BY_SCRIPT ] && umount "$ROOT_DEV"
+    exit 1
+else
+    [ ! $NO_ASK ] && echo "Updating $(cat "./etc/kanotix-version") to $(cat "/etc/kanotix-version")..."
+fi
+
+#################### First check if all MP's are unmounted ####################
+MP_LIST="$(cat "./etc/fstab" | egrep -v "^([\s]*[^/].*|)$" | awk '{print $1 ":" $2}' | egrep -v "^(/|[^/].*)$")"
+for i in $MP_LIST
+do
+    part=$(echo $i | cut -d":" -f1)
+    point=$(echo $i | cut -d":" -f2)
+    if grep -q "$(basename "$part")" /proc/partitions; then
+       if ( echo "$MOUNTPOINTS_TO_OVERWRITE" | egrep "^$point$" 2>/dev/null >/dev/null); then
+           if grep -q ^$part /proc/mounts; then
+                echo "Error: Partition $part ($point) is already mounted!"
+                cd "$BACKDIR"
+                [ $MOUNTED_BY_SCRIPT ] && umount "$ROOT_DEV"
+                exit 1
+           fi
+       fi
+    fi
+done
+
+#################### Add Mountpoints to rescue list ####################
+MP_LIST="$(cat "./etc/fstab" | egrep -v "^([\s]*[^/].*|)$" | awk '{print $1 ":" $2}' | egrep -v "^(/|[^/].*)$")"
+for i in $MP_LIST
+do
+    part=$(echo $i | cut -d":" -f1)
+    point=$(echo $i | cut -d":" -f2)
+    if grep -q "$(basename "$part")" /proc/partitions; then
+       if ( echo "$MOUNTPOINTS_TO_OVERWRITE" | egrep "^$point$" 2>/dev/null >/dev/null); then
+           mkdir -p ".$point"
+           mount "$part" ".$point" 2> /dev/null
+           [ ! $NO_ASK ] && echo "Mounted $part to $ROOT_MP$point, content will be deleted (if path not in exclude list)"
+       else
+           EXCLUDE_LIST="$EXCLUDE_LIST
+$point"
+       fi
+       CONFIG_HDMAP="$CONFIG_HDMAP
+$part:$point"
+    fi
+done
+
+#################### Create a .knofig-File for the installer ####################
+ROOT_FSTYPE="$(egrep -v "^([\s]*[^/].*|)$" ./etc/fstab | awk '{if($2=="/"){print $3}}')"
+if ! grep -q "x:1000:1000:" ./etc/passwd; then
+    echo "Could not detect default user with id 1000. Update not possible!"
+    exit 1
+fi
+CONFIG_NAME="$(egrep "x:1000:1000:" ./etc/passwd | cut -d: -f5)"
+CONFIG_USER="$(egrep "x:1000:1000:" ./etc/passwd | cut -d: -f1)"
+CONFIG_HOST="$(cat ./etc/hostname)"
+CONFIG_HDMAP="$(echo "$CONFIG_HDMAP" | egrep  "^/dev/[hs]d..:/." | egrep -v "/dev/[hs]d..:$MEDIA_DIR/[hs]d..")"
+[ "$BOOT_LOADER" ] && CONFIG_BOOT_LOADER="$BOOT_LOADER" || CONFIG_BOOT_LOADER="grub"
+[ "$BOOT_WHERE" ] && CONFIG_BOOT_WHERE="$BOOT_WHERE" || CONFIG_BOOT_WHERE="mbr"
+
+cat <<END >$HOME/.knofig
+REGISTERED=' SYSTEM_MODULE SYSTEM_TYPE HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK SWAP_MODULE SWAP_AUTODETECT NAME_MODULE NAME_NAME USER_MODULE USER_NAME USERPASS_MODULE USERPASS_CRYPT ROOTPASS_MODULE ROOTPASS_CRYPT HOST_MODULE HOST_NAME SERVICES_MODULE SERVICES_START BOOT_MODULE BOOT_LOADER BOOT_DISK BOOT_WHERE INSTALL_READY'
+
+SYSTEM_MODULE='configured'
+# Determines if the system is a debian-derivate, a copy from CD or a nice mix of both
+# Possible are: knoppix|debian
+# Default value is: debian
+SYSTEM_TYPE='debian'
+
+HD_MODULE='configured'
+# Determines if the HD should be formatted. (mkfs.*)
+# Possible are: yes|no
+HD_FORMAT='no'
+# Sets the Filesystem type.
+# Possible are: ext3|ext2|reiserfs|reiser4|xfs|jfs
+HD_FSTYPE='$ROOT_FSTYPE'
+# Here the Kanotix-System will be installed
+# This value will be checked by function module_hd_check
+HD_CHOICE='$ROOT_DEV'
+# Here you can give additional mappings. (Experimental) You need to have the partitions formatted yourself and give the correct mappings like: "/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp"
+HD_MAP='$CONFIG_HDMAP'
+# If set to yes, the program will NOT check if there is enough space to install knoppix on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition.
+# Possible are: yes|no
+HD_IGNORECHECK='yes'
+
+SWAP_MODULE='configured'
+# If set to yes, the swap partitions will be autodetected.
+# Possible are: yes|no
+# Default value is: yes
+SWAP_AUTODETECT='yes'
+
+NAME_MODULE='configured'
+NAME_NAME='$CONFIG_NAME'
+
+USER_MODULE='configured'
+USER_NAME='$CONFIG_USER'
+
+USERPASS_MODULE='configured'
+USERPASS_CRYPT='------------'
+
+ROOTPASS_MODULE='configured'
+ROOTPASS_CRYPT='------------'
+
+HOST_MODULE='configured'
+HOST_NAME='$CONFIG_HOST'
+
+SERVICES_MODULE='configured'
+# Possible services are for now: kdm cupsys smail ssh samba
+# Default value is: kdm cupsys
+SERVICES_START='kdm cupsys'
+
+BOOT_MODULE='configured'
+# Chooses the Boot-Loader
+# Possible are: lilo|grub
+# Default value is: grub
+BOOT_LOADER='$CONFIG_BOOT_LOADER'
+# If set to 'yes' a boot disk will be created!
+# Possible are: yes|no
+BOOT_DISK='no'
+# Where the Boot-Loader will be installed
+# Possible are: mbr|partition
+# Default value is: mbr
+BOOT_WHERE='$CONFIG_BOOT_WHERE'
+INSTALL_READY='yes'
+END
+
+if [ ! $NO_ASK ]; then
+echo -e "
+The bootloader ($CONFIG_BOOT_LOADER) will be installed to the $CONFIG_BOOT_WHERE.
+
+The Installer-Configuration has been written to $HOME/.knofig.
+
+The next step in the Updating-Process is to delete everything on the Root-Partition ($ROOT_MP),
+exept some files (list them with $0 -s). These files will be backed-up during the
+Update and put back after the Installation of the new KANOTIX-Version.
+
+\033\13301;31m!!!!ATTENTION!!!!\033\1330m    !!!!ATTENTION!!!!    \033\13301;31m!!!!ATTENTION!!!!\033\1330m    !!!!ATTENTION!!!!    \033\13301;31m!!!!ATTENTION!!!!\033\1330m
+We are going to delete a lot of files on your Root-Partition. If anything goes
+wrong here your data can be lost forever... You should really save your data now...
+
+IF YOU REALLY WANT TO CONTINUE ENTER 'Yes' now.
+
+Do you want to continue?
+"
+read WIRKLICH
+if [ "$WIRKLICH" != "Yes" ]; then
+    echo "You didn't enter 'Yes' (case-sensitive), so we exit here."
+    exit 1
+else
+    echo "OK, now there's no way back ;-)"
+fi
+fi
+
+#################### Check knofig ####################
+if which kanotix-check-knofig >/dev/null; then
+    kanotix-check-knofig $HOME/.knofig
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "ERROR: kanotix-check-knofig returned $ERROR as error code!"
+        echo "Do you want to force the update? (y/N)"
+        read YESNO
+        case "$YESNO" in
+            [yY]|[yY][eE][sS])
+            echo "Update will be forced..."
+            ;;
+            *)
+            echo "Update aborted."
+            exit 1
+            ;;
+        esac
+    fi
+fi
+
+#################### Starting Timer ####################
+function format_timediff()
+{
+	SEK_DIFF=$1
+	OUTPUT="$[SEK_DIFF%60]s"
+	if [ $SEK_DIFF -gt 60 ]; then
+		MINUTES=$[SEK_DIFF/60]
+		OUTPUT="$[MINUTES%60]m$OUTPUT"
+		if [ $MINUTES -gt 60 ]; then
+			HOURS=$[MINUTES/60]
+			OUTPUT="${HOURS}h$OUTPUT"
+		fi
+	fi
+	echo $OUTPUT
+}
+
+function get_time()
+{
+	LAST_TIME=$(<$TMP_TIME)
+	NOW_TIME=$(date +%s)
+	ALL_DIFF=$[NOW_TIME-START_TIME]
+	LAST_DIFF=$[NOW_TIME-LAST_TIME]
+	LAST_TIME=$NOW_TIME
+	echo $LAST_TIME > "$TMP_TIME"
+	echo -n "(+$(format_timediff $LAST_DIFF)/($(format_timediff $ALL_DIFF)):"
+}
+
+START_TIME=$(date +%s)
+TMP_TIME="$(mktemp -t timediff.XXXXXX)"
+echo $START_TIME > "$TMP_TIME"
+echo "$(get_time) Timer started"
+
+#################### Save old Package-List to ./root/old-packages-*.txt ####################
+OLD_PACKAGES=$(chroot . dpkg -l|awk '/^ii/{print $2}'|grep -v -E "$PACKAGES_TO_REMOVE_REGEXP" 2>/dev/null)
+cd ./boot
+for v in vmlinuz-*; do
+    KERNEL=$(echo $v|sed s/vmlinuz-//)
+    OLD_PACKAGES=$(echo $OLD_PACKAGES|tr ' ' '\n'|grep -v $KERNEL)
+done
+for PACKAGE in $PACKAGES_TO_REMOVE
+do
+    OLD_PACKAGES=$(echo $OLD_PACKAGES|tr ' ' '\n'|grep -v -e "^$PACKAGE$")
+done
+cd ..
+echo $OLD_PACKAGES|tr ' ' '\n' > ./root/old-packages-$(date +%Y%m%d-%H%M).txt
+echo "$(get_time) Saved old Package-List in /root/old-packages-$(date +%Y%m%d-%H%M).txt"
+
+#################### Update Groups and Users in ./etc/groups, ./etc/passwd and ./etc/shadow ####################
+
+DIFF_GROUPS="$( ( cut -d: -f1 ./etc/group; cut -d: -f1 /etc/group ) | sort | uniq -u | grep -v -e $FLL_LIVE_USER -e $CONFIG_USER)"
+
+for GROUP in $DIFF_GROUPS
+do
+	GROUP_LINE="$(false)";
+	if GROUP_LINE="$(egrep "^$GROUP:" /etc/group)"; then
+		echo "Adding group '$GROUP' to /etc/group..."
+		echo "$GROUP_LINE" >> ./etc/group
+	fi
+done
+
+DIFF_USERS="$( ( cut -d: -f1 ./etc/passwd; cut -d: -f1 /etc/passwd) | sort | uniq -u | grep -v -e $FLL_LIVE_USER -e $CONFIG_USER)"
+
+for USER in $DIFF_USERS
+do
+	USER_LINE="$(false)";
+	if USER_LINE="$(egrep "^$USER:" /etc/passwd)"; then
+		echo "Adding user '$USER' to /etc/passwd..."
+		echo "$USER_LINE" >> ./etc/passwd
+		if ! egrep -q "^$USER:" ./etc/shadow; then
+		  SHADOW_LINE="$(egrep "^$USER:" /etc/shadow)"
+		  if [ "$SHADOW_LINE" ]; then
+                    echo "Adding user '$USER' to /etc/shadow..."
+                    echo "$SHADOW_LINE" >> ./etc/shadow
+		  fi
+		fi
+	fi
+done
+
+DIFF_GROUPMEMBERS="$( ( grep $FLL_LIVE_USER /etc/group | cut -d: -f1; grep $CONFIG_USER ./etc/group | cut -d: -f1 ) | sort | uniq -u | grep -v -e $FLL_LIVE_USER -e $CONFIG_USER )"
+
+for GROUP in $DIFF_GROUPMEMBERS
+do
+	IS_MEMBER="$(false)";
+	if IS_MEMBER="$(egrep "^$GROUP:" ./etc/group | grep -v $CONFIG_USER)"; then
+		echo "Adding '$CONFIG_USER' to group '$GROUP'..."
+		if egrep -q "^$GROUP.*:$" ./etc/group; then
+		  sed -i "s/^$GROUP.*$/\0$CONFIG_USER/g" ./etc/group
+		else
+		  sed -i "s/^$GROUP.*$/\0,$CONFIG_USER/g" ./etc/group
+		fi
+	fi
+done
+
+USERS=$(cut -d: -f4 /etc/group | tr ',' '\n' | sort | uniq | sed '/^$/d' | grep -v -e $FLL_LIVE_USER -e $CONFIG_USER)
+for USER in $USERS
+do
+    DIFF_GROUPMEMBERS="$( ( grep $USER /etc/group | cut -d: -f1; grep $USER ./etc/group | cut -d: -f1 ) | sort | uniq -u )"
+    
+    for GROUP in $DIFF_GROUPMEMBERS
+    do
+            IS_MEMBER="$(false)";
+            if IS_MEMBER="$(egrep "^$GROUP:" ./etc/group | grep -v $USER)"; then
+                    echo "Adding '$USER' to group '$GROUP'..."
+                    if egrep -q "^$GROUP.*:$" ./etc/group; then
+                        sed -i "s/^$GROUP.*$/\0$USER/g" ./etc/group
+                    else
+                        sed -i "s/^$GROUP.*$/\0,$USER/g" ./etc/group
+                    fi
+            fi
+    done
+done
+
+echo "$(get_time) Updated Groups and Users"
+echo "Please wait a bit, the files are being deleted now..."
+
+#################### Delete the things that have to be deleted ####################
+
+for WITH in $INCLUDE_LIST
+do
+    rm -r ".$WITH" 2>/dev/null
+done
+
+#################### Search for the files to move ####################
+
+# Move the things to save into "$MOUNTPOINT/kanotix-update"
+DIRS="$(grep $PWD /proc/mounts | awk '{print $2}' | sort -r)"
+for DIR in $DIRS
+do
+	MOUNTPOINT="${DIR/*$PWD}"
+	if [ "$MOUNTPOINT" ]; then
+		[ "$DIRS_ALREADY_SAVED" ] && DIRS_ALREADY_SAVED="$DIRS_ALREADY_SAVED|^$MOUNTPOINT" || DIRS_ALREADY_SAVED="^$MOUNTPOINT"
+		for THING in $(echo "$EXCLUDE_LIST" | grep ^$MOUNTPOINT)
+		do
+			[ -e "${DIR}/kanotix-update" ] || mkdir -p "${DIR}/kanotix-update"
+			THING=".$THING"
+			for THING_P in $THING
+			do
+				mp=${THING_P:1}
+				if [ -d "${PWD}${mp}" ]; then
+					mv ${PWD}${mp}/.* ${PWD}${mp}/* ${DIR}/kanotix-update 2>/dev/null
+				elif [ -e "${PWD}${mp}" ] || ls "${PWD}${mp}" 2>/dev/null; then
+					SUBDIR="$(dirname "${mp}")"
+					[ -d "${DIR}/kanotix-update${SUBDIR/*$MOUNTPOINT}" ] || mkdir -p ${DIR}/kanotix-update${SUBDIR/*$MOUNTPOINT}
+					mv ${PWD}${mp} ${DIR}/kanotix-update${SUBDIR/*$MOUNTPOINT} 2>/dev/null
+				fi
+			done
+		done
+	fi
+done
+
+# Move the things to save into "/kanotix-update"
+[ "$DIRS_ALREADY_SAVED" ] && THINGS_TO_SAVE=$(echo "$EXCLUDE_LIST" | grep -v -E $DIRS_ALREADY_SAVED) || THINGS_TO_SAVE="$EXCLUDE_LIST"
+for THING in $THINGS_TO_SAVE
+do
+	[ -e "kanotix-update" ] || mkdir "kanotix-update"
+	THING=".$THING"
+	for THING_P in $THING
+	do
+		if [ -e $THING_P ] || ls "$THING_P" 2>/dev/null; then
+			[ -d "$(dirname "./kanotix-update${THING_P:1}")" ] || mkdir -p "$(dirname "./kanotix-update${THING_P:1}")"
+			mv $THING_P ./kanotix-update${THING_P:1} 2>/dev/null
+		fi
+	done
+done
+
+# Delete everything exept "kanotix-update"-Folders
+DIRS="$(grep $PWD /proc/mounts | awk '{print $2}' | sort -r)"
+for DIR in $DIRS
+do
+	for FOLDER in $DIR/*
+	do
+		if [ "$(basename $FOLDER)" != "kanotix-update" ]; then
+			if ! grep $PWD /proc/mounts | awk '{print $2}' | grep -q "$FOLDER"; then
+				rm -rf $FOLDER
+			fi
+		fi
+	done
+done
+
+#################### Everything is deleted now. ####################
+[ ! $NO_ASK ] && echo "$(get_time) Everything is deleted, now starting the Kanotix-Installer..."
+
+#################### Start the installer ####################
+INSTALLATION_TIME=$({ TIMEFORMAT=$'%0lR' &&  time { IGNORE_CHECK=1 knoppix-installer --installer 2>&1; }; } 2>&1 >/dev/null )
+if [ $? -ne 0 ]; then
+    if [ ! $NO_ASK ]; then
+        echo -ne "\a"
+        echo -e "\033\13301;31mKanotix-Installer failed :-(\033\1330m"
+        echo "Your data should be saved at $ROOT_MP/kanotix-update. If it isn't there... "
+        echo "$0 exits now."
+    fi
+    exit 1
+fi
+[ ! $NO_ASK ] && echo "$(get_time) The installation took $INSTALLATION_TIME."
+
+#################### Put the backup back ####################
+if ! ( mount | egrep "^$ROOT_DEV" 2>/dev/null >/dev/null ); then
+    mount "$ROOT_DEV" 2>/dev/null
+    MOUNTED_BY_SCRIPT=1
+fi
+mount -o remount,rw "$ROOT_DEV" 2>/dev/null >/dev/null
+cd "$ROOT_MP"
+DIRS="$(grep $PWD /proc/mounts | awk '{print $2}' | sort -r)"
+ROOTDIR="$PWD"
+for DIR in $DIRS
+do
+	MOUNTPOINT="${DIR/*$PWD}"
+	if [ -d "$DIR/kanotix-update" ]; then
+	cd $DIR/kanotix-update
+	find . -type d -exec sh -c 'mv "{}" ".$(dirname "{}")"' \; 2>/dev/null
+	find . ! -type d -exec mv '{}' '.{}' \; 2>/dev/null
+	cd $ROOTDIR
+	rm -rf $DIR/kanotix-update
+	fi
+done
+
+#################### Patch some things ####################
+if [ -x /etc/init.d/udev ]; then
+    rm -f "./etc/skel/Desktop"/Floppy
+
+    for HOME_DIR in ./home/*
+    do
+        rm -f "$HOME_DIR/Desktop"/[sh]d[a-z][1-9]
+        rm -f "$HOME_DIR/Desktop"/[sh]d[a-z][1-9][0-9]
+        rm -f "$HOME_DIR/Desktop"/CD-ROM\ \[cdrom\]
+        rm -f "$HOME_DIR/Desktop"/CD-ROM\ \[cdrom[1-9]\]
+        rm -f "$HOME_DIR/Desktop"/Floppy
+        rm -rf "$HOME_DIR/Desktop"/Trash
+
+        mkdir -p "$HOME_DIR"/.kde/share/config
+        USER_ID="$(egrep "^$(basename "$HOME_DIR"):" ./etc/passwd | cut -d: -f3)"
+
+        # Patch kdesktoprc if in /etc/skel
+        if [ -e "./etc/skel/.kde/share/config/kdesktoprc" ]; then
+            rm -f "$HOME_DIR"/.kde/share/config/kdesktoprc
+            cp "./etc/skel/.kde/share/config/kdesktoprc" \
+                "$HOME_DIR/.kde/share/config/kdesktoprc"
+            chown $USER_ID:$USER_ID "$HOME_DIR/.kde/share/config/kdesktoprc"
+        fi
+
+# Patch each user's kdesktoprc individually:
+#         if [ -e "$HOME_DIR/.kde/share/config/kdesktoprc" ]; then
+#             PATCHFILE="$(mktemp -t kdesktoprc.XXXXXX)"
+#             awk '/^\[Media\]/ { f = 1; next } /^\[.+\]/ { f = 0 } ! f' "$HOME_DIR/.kde/share/config/kdesktoprc" > "$PATCHFILE"
+#             cat << EOF >> "$PATCHFILE"
+# [Media]
+# enabled=true
+# exclude=media/hdd_unmounted
+# EOF
+#             mv "$PATCHFILE" "$HOME_DIR/.kde/share/config/kdesktoprc"
+#             chown $USER_ID:$USER_ID "$HOME_DIR/.kde/share/config/kdesktoprc"
+#         fi
+
+        # Patch knemorc if in /etc/skel
+        if [ -e "./etc/skel/.kde/share/config/knemorc" ]; then
+            rm -f "$HOME_DIR"/.kde/share/config/knemorc
+            cp "./etc/skel/.kde/share/config/knemorc" \
+                "$HOME_DIR/.kde/share/config/knemorc"
+            chown $USER_ID:$USER_ID "$HOME_DIR/.kde/share/config/knemorc"
+        fi
+	
+	# Patch ksplashrc if in /etc/skel
+        if [ -e "./etc/skel/.kde/share/config/ksplashrc" ]; then
+            rm -f "$HOME_DIR"/.kde/share/config/ksplashrc
+            cp "./etc/skel/.kde/share/config/ksplashrc" \
+                "$HOME_DIR/.kde/share/config/ksplashrc"
+            chown $USER_ID:$USER_ID "$HOME_DIR/.kde/share/config/ksplashrc"
+        fi
+    done
+    
+    # Patch automount of USB-devices
+    TARGET_MNT_POINT="."
+    export TARGET_MNT_POINT
+    . /usr/share/knoppix-installer/modules/install/01-fstab.bm
+    USBDEVS=$(get_usb_devices)
+    [ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
+    perl -pi -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^(/dev/[sh]d.*)noauto(.*)$#${1}auto${2}# }' $TARGET_MNT_POINT/etc/fstab
+    
+    FSTAB=./etc/fstab
+    F=$(grep -v -e ^$ -e ^'#' -e proc -e usbfs -e sysfs -e tmpfs -e ^/mnt/app -e cdrom -e dvd -e floppy $FSTAB)
+    {
+    echo "# /etc/fstab: static file system information."
+    echo "#"
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "# <file system>" "<mount point>" "<type>" "<options>" "<dump>" "<pass>"
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "proc" "/proc" "proc" "defaults" "0" "0"
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "usbfs" "/proc/bus/usb" "usbfs" "devmode=0666" "0" "0"
+    while read a b c d e f; do
+    if [[ $b == /mnt/* && $b != /mnt/app/* ]] ; then
+    b=${b/mnt/media}
+    [ -d .$b ] || mkdir -p .$b
+    fi
+    [[ $c == swap ]] && d=sw
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" $a $b $c $d $e $f
+    done <<<"$F" 
+    for c in $(ls -d /dev/cdrom* 2>/dev/null); do
+    m=${c#/dev}
+    [ "$m" == "/cdrom" ] && m="/cdrom0"
+    [ -d ./media$m ] || mkdir -p ./media$m
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0"
+    done
+    for f in $(ls -d /sys/block/fd* 2>/dev/null); do
+    [ -d ./media/floppy${f#/sys/block/fd} ] || mkdir -p ./media/floppy${f#/sys/block/fd}
+    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0"
+    done
+    } > ./etc/fstab.new
+    mv ./etc/fstab ./etc/fstab.old
+    mv ./etc/fstab.new ./etc/fstab
+fi
+
+# Patching /mnt to /media
+FILES_TO_PATCH_MNT_MEDIA="./etc/exports
+./etc/samba/smb.conf"
+for FILE_TO_PATCH in $FILES_TO_PATCH_MNT_MEDIA
+do
+   if [ -e "$FILE_TO_PATCH" ]; then
+      perl -pi -e 's|/mnt|/media|g' "$FILE_TO_PATCH"
+   fi
+done
+
+# copy .zAppRun from CD to HD
+if [ -x "/usr/share/$FLL_LIVE_USER/profile/.zAppRun" ]; then
+    cp -a "/usr/share/$FLL_LIVE_USER/profile/.zAppRun" \
+          "./usr/share/$FLL_LIVE_USER/profile/.zAppRun"
+fi
+
+cd "$BACKDIR"
+[ $MOUNTED_BY_SCRIPT ] && umount "$ROOT_DEV" 2>/dev/null
+
+#################### Finished ;-) ####################
+if [ ! $NO_ASK ]; then
+    echo -e "\033\13301;32m$(get_time) Kanotix is now updated. Please reboot now.\033\1330m"
+    echo -ne "\a"
+    sleep 0.2
+    echo -ne "\a"
+fi
+
+rm -f "$TMP_TIME"
+exit 0

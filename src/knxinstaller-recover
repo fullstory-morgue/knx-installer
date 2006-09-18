@@ -1,0 +1,198 @@
+#!/bin/bash
+##################################################################################
+# Knxinstaller-Recover-Script by Andreas Loibl <andreas@andreas-loibl.de>
+# Main part by Joerg Schirottke <master@kanotix.com>
+##################################################################################
+
+# Filesystems supporting a bootloader
+BOOT_FILESYSTEMS="ext2 ext3 reiserfs reiser4"
+
+while [ "$1" ]
+do
+    case "$1" in
+    --bootloader)
+        shift
+        BOOTLOADER=$1
+        ;;
+    --root)
+        shift
+        ROOT=$1
+        ;;
+    --type)
+        shift
+        TYPE=$1
+        ;;
+    --device)
+        shift
+        DEVICE=$1
+        ;;
+    *)
+        echo "ERROR: Invalid Syntax!"
+        exit 1
+    esac
+    shift
+done
+
+if [ "$BOOTLOADER" -a "$ROOT" -a "$TYPE" ]; then
+    if [ "$TYPE" = "mbr" -a -z "$DEVICE" ]; then
+        echo "ERROR: No Device selected!"
+        exit 1
+    fi
+else
+    echo "ERROR: More arguments needed!"
+    exit 1
+fi
+
+# Check if root Partition is already mounted
+if grep -q ^$ROOT /proc/mounts; then
+    echo "ERROR: root Partion already mounted!"
+    exit 1
+fi
+
+unset BOOT
+
+function cleanup {
+for UMOUNT_DEV in $(grep $ROOT_PART/ /proc/mounts|cut -d\  -f1)
+do
+    umount $UMOUNT_DEV
+done
+# # [ "$BOOT_PART" ] && umount $BOOT_PART
+umount $ROOT_PART
+rmdir $ROOT_PART
+}
+
+# Check root filesystem
+# # ROOT_FS="$(grep -v ^# $FSTAB|awk '{if($2=="/"){print $3}}')"
+ROOT_FS="$(grep -v ^# /etc/fstab|awk "{if(\$1==\"$ROOT\"){print \$3}}")"
+[ -z "$ROOT_FS" ] && ROOT_FS=auto
+
+# Mount root Partition
+ROOT_PART=/tmp/root-$RANDOM
+mkdir -p $ROOT_PART
+if ! mount -t $ROOT_FS $ROOT $ROOT_PART >/dev/null; then
+    echo "ERROR: Could not mount $ROOT!"
+    rmdir $ROOT_PART
+    exit 1
+fi
+
+# Check for fstab
+FSTAB=$ROOT_PART/etc/fstab
+if ! [ -r $FSTAB ]; then
+    cleanup
+    echo "ERROR: Could not find /etc/fstab in $ROOT!"
+    exit 1
+fi
+
+# Check for boot partition
+# # BOOT="$(grep -v ^# $FSTAB|awk '{if($2=="/boot"){print $1}}')"
+# # if [ "$BOOT" ]; then
+# #     BOOT_FS="$(grep -v ^# $FSTAB|awk '{if($2=="/boot"){print $3}}')"
+# #     BOOT_PART=$ROOT_PART/boot
+# #     # Mount boot Partition
+# #     if ! mount -t $BOOT_FS $BOOT $BOOT_PART >/dev/null; then
+# #         echo "ERROR: Could not mount /boot partition within $ROOT!"
+# # 	unset BOOT_PART
+# # 	cleanup
+# # 	exit 1
+# #     fi
+# # fi
+# Mount other mountpoints
+MOUNTPOINTS="$(grep -v ^# $FSTAB|egrep "^/dev/[hs]d.."|awk '{if($2~/\/./){print $1 " " $2 " " $3}}')"
+if [ "$MOUNTPOINTS" ]; then
+IFS="
+"
+for MOUNTLINE in $MOUNTPOINTS
+do
+    MOUNT_DEV="$(echo $MOUNTLINE|cut -d\  -f1)"
+    MOUNT_PART="${ROOT_PART}$(echo $MOUNTLINE|cut -d\  -f2)"
+    MOUNT_FS="$(echo $MOUNTLINE|cut -d\  -f3)"
+    if [ "$(echo $MOUNTLINE|cut -d\  -f2)" = "/boot" ]; then
+        BOOT=$MOUNT_DEV
+        BOOT_FS=$MOUNT_FS
+    elif echo $MOUNTLINE|cut -d\  -f2|egrep -q "^/media|^/mnt"; then
+        echo "Not mounting $MOUNT_PART"
+    elif ! mount -t $MOUNT_FS $MOUNT_DEV $MOUNT_PART >/dev/null; then
+        echo "ERROR: Could not mount $MOUNT_PART partition within $ROOT!"
+        cleanup
+        exit 1
+    fi
+done
+fi
+
+if [ "$TYPE" = "partition" ]; then
+    # Select boot-device (root-partition or separate /boot)
+    if [ "$BOOT" ]; then
+        DEVICE=$BOOT
+    else
+        DEVICE=$ROOT
+    fi
+    # Check filesystem on boot-device
+    DEVICE_FS="$(awk "{if(\$1==\"$DEVICE\"){print \$3;}}" /proc/mounts)"
+    if ! ( echo "$BOOT_FILESYSTEMS" | egrep -q "(^| )${DEVICE_FS}($| )" ); then
+        cleanup
+        echo "ERROR: $DEVICE ($DEVICE_FS) has the wrong format (allowed: $BOOT_FILESYSTEMS)!"
+        exit 1
+    fi
+fi
+# Find Path of grub-install
+if [ "$BOOTLOADER" = "grub" ]; then
+    [ -x $ROOT_PART/sbin/grub-install ] && GRUB_INSTALL="/sbin/grub-install"
+    [ -x $ROOT_PART/usr/sbin/grub-install ] && GRUB_INSTALL="/usr/sbin/grub-install"
+    if [ -z "$GRUB_INSTALL" ]; then
+        cleanup
+        echo "ERROR: grub-install missing on $ROOT!"
+        exit 1
+    fi
+fi
+# Install bootloader
+case $BOOTLOADER in
+   grub) if [ -x $ROOT_PART$GRUB_INSTALL -a -d $ROOT_PART/boot/grub ]; then
+             if [ "$BOOT" ]; then
+                 umount $BOOT # umount /boot here, will be mounted in chroot again...
+                 chroot $ROOT_PART mount -t $BOOT_FS $BOOT /boot
+             fi
+
+             chroot $ROOT_PART $GRUB_INSTALL --no-floppy --recheck $DEVICE >/dev/null
+             chroot $ROOT_PART $GRUB_INSTALL --no-floppy --recheck $DEVICE >/dev/null
+             ERROR=$?
+
+             [ "$BOOT" ] && chroot $ROOT_PART umount /boot
+             if [ $ERROR -eq 126 ]; then
+                /sbin/grub-install --no-floppy --recheck --root-directory=$ROOT_PART $DEVICE >/dev/null
+                /sbin/grub-install --no-floppy --recheck --root-directory=$ROOT_PART $DEVICE >/dev/null
+             fi
+	     if [ $ERROR != 0 ]; then
+                 cleanup
+		 echo "ERROR: grub-install returned $ERROR as error code!"
+		 exit 1
+	     fi
+	 else
+	     cleanup
+	     echo "ERROR: $GRUB_INSTALL missing and/or old GRUB install or not found!"
+	     exit 1
+	 fi
+         ;;
+   lilo) if [ -x $ROOT_PART/sbin/lilo -a -r $ROOT_PART/etc/lilo.conf ]; then
+             chroot $ROOT_PART /sbin/lilo -b $DEVICE >/dev/null
+	     ERROR=$?
+	     if [ $ERROR -eq 126 ]; then
+	         /sbin/lilo -r $ROOT_PART -b $DEVICE >/dev/null
+	     fi
+             if [ $ERROR != 0 ]; then
+                 cleanup
+                 echo "ERROR: lilo returned $ERROR as error code!"
+                 exit 1
+             fi
+	 else
+	     cleanup
+	     echo "ERROR: /sbin/lilo not found and/or /etc/lilo.conf missing!"
+	     exit 1
+	 fi
+         ;;
+esac
+
+# Cleanup
+cleanup
+
+echo "SUCCESS"
+exit 0

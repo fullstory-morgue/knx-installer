@@ -1,0 +1,128 @@
+---------------------------------------------------------------------------
+                      ChangeLog for KNXinstaller
+
+                      <http://www.kanotix.com/>
+
+                     Copyright (C)  Andreas Loibl
+                      <andreas@andreas-loibl.de>
+
+---------------------------------------------------------------------------
+2005/10/17	(0.3.5)
+
+* Some minor bugfixes and updates for kanotix-update and -check-knofig
+
+---------------------------------------------------------------------------
+2005/10/15	(0.3.4)
+
+* Fixed UID-1000-problem in kanotix-update
+* Added /etc/iftab to rescue-list in kanotix-update
+* Some other minor bugfixes and updates
+
+---------------------------------------------------------------------------
+2005/10/11	(0.3.3)
+
+* Fixed Chown-Bug in kanotix-update
+* Fixed Typo ("passwort" instead of "password")
+
+---------------------------------------------------------------------------
+2005/10/04	(0.3.2)
+
+* Added "Force Installation"-Checkbox
+* Removed "Install Bootloader"-Checkbox
+
+---------------------------------------------------------------------------
+2005/09/28	(0.3.1)
+
+* Changed kanotix-update, now with better user/group-update
+* Added time-statistics to kanotix-update
+* fixdevlist-Patch included
+
+---------------------------------------------------------------------------
+2005/09/25	(0.3.0)
+
+* Added Bootloader-Recovery
+* Main-Window is hidden now when Partition-Manager is active
+
+---------------------------------------------------------------------------
+2005/09/22	(0.2.9)
+
+* Added Recovery-Tools
+
+---------------------------------------------------------------------------
+2005/09/16	(0.2.8)
+
+* Check, if Root-Partition is selected
+* Ask the user to do "rebuildfstab" after changing the Partition-Table
+
+---------------------------------------------------------------------------
+2005/09/13	(0.2.7)
+
+* Some changes on kanotix-update-Script
+
+---------------------------------------------------------------------------
+2005/09/11	(0.2.6)
+
+* Now saving old Package-List in /root/ (update-installation)
+* Some bugfixes
+
+---------------------------------------------------------------------------
+2005/09/09	(0.2.5)
+
+* Improved German i18n
+* Added some Warnings (e.g. for Partition-Resizing)
+* Some bugfixes in kanotix-update
+* Added knxinstaller-script, a wrapper for kanotix-installer's ni-mode
+
+---------------------------------------------------------------------------
+2005/09/07	(0.2.4)
+
+* Some Bugfixes
+
+---------------------------------------------------------------------------
+2005/09/06	(0.2.3)
+
+* Added Update-Mode
+
+---------------------------------------------------------------------------
+2005/09/04	(0.2.2)
+
+* Changed QTParted-Wrapper (using ExitCode of Processes now)
+* Added ReiserFS-Wrapper
+
+---------------------------------------------------------------------------
+2005/08/20	(0.2.1)
+
+* Fixed bug with escaping $ to \$ in encrypted Passwords
+* Changed text "/root/.knofig" to "~/.knofig"
+* Added parsing of an existing .knofig
+* Update of QTParted-Sources to 0.4.5
+
+---------------------------------------------------------------------------
+2005/08/05	(0.2)
+
+* Added an own Partition-Manager (based on QTParted 0.4.4)
+
+---------------------------------------------------------------------------
+2005/08/02	(0.1.2)
+
+* "--non-interactive"-Mode will be started REALLY!
+
+  ####################################
+  ##### BE CAREFUL WHILE TESTING! ####
+  ####################################
+
+---------------------------------------------------------------------------
+2005/08/02	(0.1.1)
+
+* "Network"-Tab for setting Hostname
+* Creating .knofig in /tmp and move it to /root later by sudo mv ...
+
+
+---------------------------------------------------------------------------
+2005/08/01	(0.1)
+
+* First release
+* Check if partition is swap now case-insensitive
+
+---------------------------------------------------------------------------
+Andreas Loibl <andreas@andreas-loibl.de>

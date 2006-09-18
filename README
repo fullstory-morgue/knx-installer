@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+                     README for Kanotix-Installer
+
+                      <http://www.kanotix.com/>
+
+                     Copyright (C)  Andreas Loibl
+                      <andreas@andreas-loibl.de>
+
+---------------------------------------------------------------------------
+USING/COPYING
+
+  KNXinstaller is distributed under the GNU General Public License
+  (GPL). The rules for using and copying KNXinstaller are explained
+  in the file COPYING.
+
+---------------------------------------------------------------------------
+SUMMARY
+
+  KNXinstaller is a GUI for installing KANOTIX (http://www.kanotix.com).
+  It's made in C++ with KDevelop3 and it uses Qt and the Kanotix-
+  Installer-Shellscript by Kano.
+
+---------------------------------------------------------------------------
+FILE CONTENTS
+
+  COPYING         GNU General Public License
+  INSTALL         Instructions on how to install
+  README          The file you are reading
+  src/            The source files needed to compile KNXinstaller
+  doc/            Documentation for KNXinstaller
+
+---------------------------------------------------------------------------
+INSTALLATION
+
+  Read the file INSTALL, or load doc/install.html into your favorite
+  web client, for instructions on how to install KNXinstaller.
+
+---------------------------------------------------------------------------
+DOCUMENTATION
+
+  Documentation for KNXinstaller is located in the doc/ directory.
+
+---------------------------------------------------------------------------
+BUGS/COMMENTS/SUGGESTIONS?
+
+  If you have any comments and suggestions about KNXinstaller, you may send
+  mail to the author of KNXinstaller, Andreas Loibl
+  <mailto:andreas@andreas-loibl.de>
+
+---------------------------------------------------------------------------
+Andreas Loibl <andreas@andreas-loibl.de>

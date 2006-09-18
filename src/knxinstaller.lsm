@@ -1,0 +1,14 @@
+Begin3
+Title:          knxinstaller -- Kanotix-Installer-GUI
+Version:        0.3.5
+Entered-date:   
+Description:    This is a QT-GUI for the kanotix-installer-script
+Keywords:       KDE Qt
+Author:         Andreas Loibl <andreas@andreas-loibl.de>
+Maintained-by:  Andreas Loibl <andreas@andreas-loibl.de>
+Home-page:      http:://www.andreas-loibl.de
+Alternate-site: 
+Primary-site:   http:://www.andreas-loibl.de
+Platform:       Linux. Needs KDE
+Copying-policy: Custom
+End

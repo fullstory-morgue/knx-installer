@@ -1,0 +1,166 @@
+#!/bin/bash
+############################################################
+#                   kanotix-check-knofig                   #
+#     Autor: Andreas Loibl <andreas@andreas-loibl.de>      #
+############################################################
+#                                                          #
+# Check if knofig-file ($1) is valid or return error       #
+#                                                          #
+# Usage (e.g.): kanotix-check-knofig /tmp/.knofig          #
+#                                                          #
+############################################################
+
+# Default Settings #########################################
+
+# Mountpoints that have to be Linux-Partitions
+MOUNTPOINTS_WITH_LINUX="/bin
+/boot
+/etc
+/home
+/lib
+/opt
+/root
+/sbin
+/tmp
+/usr
+/var"
+
+
+
+############################################################
+############################################################
+
+# Load knofig
+if [ -f "$1" ]; then
+    source "$1"
+else
+    echo "ERROR: unable to load knofig"
+    exit 1
+fi
+
+# override tool behaviour through distro-defaults
+FLL_LIVE_USER="knoppix"
+FLL_IMAGE_DIR="KNOPPIX"
+[ -r /etc/default/distro ] && source /etc/default/distro
+
+# Environment
+DEFAULT_USER="$FLL_LIVE_USER"
+DEFAULT_NAME="$(getent passwd "$FLL_LIVE_USER" | cut -d\: -f5)"
+DEFAULT_DIR="$FLL_IMAGE_DIR"
+
+# Localisation 
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=knoppix-installer
+
+# Load KNOPPIX-Installer-Modules
+SEARCHPATH="/usr/share/knoppix-installer"
+[ -f ./modules/00-knoppix-utils.bm ] && SEARCHPATH="."
+
+# workaround for buggy knoppix-installer-latest-web and self-made installations
+[ "$SEARCHPATH" = "." ] && chown -R root.root .
+
+for i in $(find $SEARCHPATH -name "*.bm")
+do
+  . $i
+done
+
+setup_dialog
+
+# Check if Hostname is correct
+echo "$HOST_NAME" | egrep '^[a-zA-Z][a-zA-Z0-9_-\.]*$' >/dev/null
+if [ $? != 0 ]; then
+    echo "TAB: 4"
+    echo "ERROR: Your Hostname is not allowed!";
+    exit 1
+fi
+
+# Check if root-partition is big enough
+if [ "$HD_IGNORECHECK" != "yes" ]; then
+    if grep -q unionfs /proc/mounts; then
+    ROOT_MIN_RAW=$(du -sm "/$DEFAULT_DIR" | awk '{print $1}')
+    else
+    ROOT_MIN_RAW=$(df -m "/$DEFAULT_DIR" | tail -1 | awk '{print $3}')
+    grep -q squashfs /proc/mounts && ROOT_MIN_RAW=$(($ROOT_MIN_RAW*270/100)) #fix status bar for squashfs
+    fi
+    ROOT_MIN_CORR=$[ROOT_MIN_RAW*115/100] # + 15% Filesystem overhead
+    ROOT_MIN=$(($ROOT_MIN_CORR*1024))
+    ROOT_SIZE=$(sudo fdisk -l | grep -e "^$HD_CHOICE" | awk '{sub("+",""); sub("*",""); print $4}')
+    if [ "$ROOT_SIZE" -lt "$ROOT_MIN" ]; then
+        echo "TAB: 1"
+        echo "ERROR: Your root-partition is too small. It has to be $ROOT_MIN_CORR MB at least."
+        exit 1
+    fi
+fi
+
+
+# Check if partitions of HD_MAP are formatted
+function checkFilesystem
+{
+	PARTITION="$1"
+	TMPMP="/tmp/kanotix-update.$$.$RANDOM"
+	mkdir -p "$TMPMP"
+	mount $PARTITION "$TMPMP"
+	RC=$?
+	umount -f $PARTITION
+	rm -rf "$TMPMP"
+	return $RC
+}
+
+function getFilesystemType
+{
+	PARTITION="$1"
+	
+	FSTYPE=$(sudo fdisk -l | egrep "^$PARTITION" | sed 's/[\*]/ /g' | awk '{print $6}')
+	echo "$FSTYPE"
+}
+
+for i in $HD_MAP
+do
+    PART=$(echo $i | cut -d":" -f1)
+    POINT=$(echo $i | cut -d":" -f2)
+    if checkFilesystem $PART; then
+        echo "TAB: 1"
+        echo "ERROR: Partition $PART (Mointpoint $POINT) is not formatted!"
+        exit 1
+    fi
+    if [ "$(echo "$MOUNTPOINTS_WITH_LINUX" | egrep "^$POINT" 2>/dev/null)" ]; then
+        if [ "$(getFilesystemType "$PART")" != "Linux" ]; then
+            echo "TAB: 1"
+            echo "ERROR: Partition $PART has to be a Linux-Partition if you want to mount it on $POINT"
+            exit 1
+        fi
+    fi
+done
+
+MEMTOTAL="$(awk '/MemTotal/{print $2}' /proc/meminfo)"
+# echo "MEMTOTAL: $MEMTOTAL"
+MEM_SWAP_NEEDED=$((512*1000)) # need some lower so that people that have 512 MB can use this option
+# echo "MEM_SWAP_NEEDED: $MEM_SWAP_NEEDED"
+SWAP_MIN=$((128*1024))
+if [ "$MEMTOTAL" -lt "$MEM_SWAP_NEEDED" ];
+then
+    # Rebuild the fstab to be sure that all swap-partitions are in it
+    rebuildfstab
+    # Are swap parts availabe ?
+    SWAPPARTS=$(find_swap_partitions)
+    RC=$?
+    SWAPPARTS2=$(find_swap_partitions2)
+    [ $RC -eq 1 ] && return 1 # no, we must partition
+    if [ $RC -ne 2 ] 
+    then
+    swapon -a # Activate all swap-partitions in fstab
+    if [ "$SWAPPARTS" != "$SWAPPARTS2" ]
+    then
+        update_swap_parts
+    fi
+    fi
+    SWAPMEMTOTAL="$(awk 'BEGIN{m=0};/partition/{m+=$3};END{print m}' /proc/swaps)"
+    echo "SWAPMEMTOTAL: $SWAPMEMTOTAL"
+    if [ "$SWAPMEMTOTAL" -lt "$SWAP_MIN" ]; then
+        echo "TAB: 1"
+        echo "ERROR: You need more Swap! Minimum: $(($SWAP_MIN/1024)) MB"
+        exit 1
+    fi
+fi
+
+exit 0

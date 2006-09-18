@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE KDevPrjSession>
+<KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/aloibl/Entwicklung/Projekte/knxinstaller/knxinstaller-0.3.6/src/kanotix-update" >
+   <View0 line="551" Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/aloibl/Entwicklung/Projekte/knxinstaller/knxinstaller-0.3.6/src/knxinstaller-script" >
+   <View0 line="45" Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/aloibl/Entwicklung/Projekte/knxinstaller/knxinstaller-0.3.6/src/knxinstallerwidget.cpp" >
+   <View0 line="357" Type="Source" />
+  </Doc2>
+ </DocsAndViews>
+ <pluginList>
+  <kdevdebugger>
+   <breakpointList/>
+  </kdevdebugger>
+  <kdevbookmarks>
+   <bookmarks>
+    <bookmark url="/home/aloibl/Entwicklung/QT/knxinstaller-0.1.2/src/knxinstallerwidget.cpp" >
+     <mark line="273" />
+     <mark line="78" />
+     <mark line="438" />
+    </bookmark>
+    <bookmark url="/home/aloibl/Entwicklung/QT/test/knxinstaller-0.2.1/src/qp_fswrap.cpp" >
+     <mark line="440" />
+     <mark line="1053" />
+    </bookmark>
+    <bookmark url="/home/aloibl/Entwicklung/QT/knxinstaller-0.1.2/src/partmanwidget.cpp" >
+     <mark line="151" />
+    </bookmark>
+    <bookmark url="/home/aloibl/Entwicklung/QT/knxinstaller-0.1.2/src/qp_fswrap.cpp" >
+     <mark line="248" />
+    </bookmark>
+   </bookmarks>
+  </kdevbookmarks>
+  <kdevrbdebugger>
+   <breakpointList/>
+   <watchExpressions/>
+  </kdevrbdebugger>
+  <kdevvalgrind>
+   <executable path="" params="" />
+   <valgrind path="" params="" />
+   <calltree path="" params="" />
+   <kcachegrind path="" />
+  </kdevvalgrind>
+ </pluginList>
+</KDevPrjSession>

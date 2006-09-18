@@ -1,0 +1,63 @@
+#!/bin/bash
+##################################################################################
+# Kanotix-Install-Script v0.1.3 by Andreas Loibl <andreas@andreas-loibl.de>
+##################################################################################
+
+# Load functions etc. from knoppix-installer
+TMP_SCRIPT="$(mktemp -t knxinstaller-script.XXXXXX)" || exit 2
+sed s/\$UID/1/g < "$(which knoppix-installer)" > "$TMP_SCRIPT"
+source "$TMP_SCRIPT" 2>/dev/null >/dev/null
+rm "$TMP_SCRIPT"
+
+# # Load configuration
+# # [ -f "$CONFIG_FILE" ] && load_config $CONFIG_FILE
+
+# Load configuration FAST - we don't need to check it here...
+. $CONFIG_FILE
+
+# Autodetect swap-devices if SWAP_AUTODETECT is 'yes'
+module_swap 0
+
+# Show Information
+echo > $TMP
+I=0
+# System needs an extra sausage (german limerick ;-) )
+module_system_showinfo >> $TMP
+
+while [ "$I" -lt "$NUM_MODULES" ]
+do
+    "module_${MODULES[$I]}_showinfo"
+    I=$[I+1]
+done >> $TMP
+echo "" >> $TMP
+echo $"Several of this options can only be changed in the Configurationfile $CONFIG_FILE." >> $TMP
+echo $"The Installation will now be started. The author and knopper.net give no warranty against any damage caused by this script." >> $TMP
+echo "" >> $TMP
+echo $"Do you want to proceed with these parameters?" >> $TMP
+DISP_TEXT="$(sed 's/$/\\n/g' < $TMP)"
+T1=$"Starting Kanotix installation"
+$DIALOG --backtitle "$BT" --title "$T1" --yesno "$DISP_TEXT" 40 60 2>&1 >/dev/null
+
+if [ $? -ne 0 ]; then
+    knxinstaller
+    exit 1
+fi
+
+INSTALLATION_TIME=$({ TIMEFORMAT=$'%0lR' &&  time { IGNORE_CHECK=1 knoppix-installer --installer 2>&1; }; } 2>&1 >/dev/null )
+
+T1=$ST
+MESSAGE=$"Kanotix was successfully installed to hd."
+
+# Time-Statistics for Kano ;)
+logit "$MESSAGE"
+logit "The Installation took $INSTALLATION_TIME."
+
+if [ "$LANGUAGE" = "de" ]; then
+    MESSAGE="$MESSAGE\n\nDie Installation dauerte $INSTALLATION_TIME."
+else
+    MESSAGE="$MESSAGE\n\nThe installation took $INSTALLATION_TIME."
+fi
+
+msgbox "$MESSAGE" 15 60 2>&1 >/dev/null
+
+exit 0
