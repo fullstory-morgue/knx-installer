@@ -416,7 +416,10 @@ EOF
 		fi
 
 		# enable splashy, if installed
-		[ -x /etc/init.d/splashy-init ] && chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+		if [ -x /etc/init.d/splashy-init ]; then
+			chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
+			chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+		fi
 
 		# enable acpi-support, if installed
 		[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
