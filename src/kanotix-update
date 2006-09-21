@@ -393,6 +393,7 @@ CONFIG_HOST="$(cat ./etc/hostname)"
 CONFIG_HDMAP="$(echo "$CONFIG_HDMAP" | egrep  "^/dev/[hs]d..:/." | egrep -v "/dev/[hs]d..:$MEDIA_DIR/[hs]d..")"
 [ "$BOOT_LOADER" ] && CONFIG_BOOT_LOADER="$BOOT_LOADER" || CONFIG_BOOT_LOADER="grub"
 [ "$BOOT_WHERE" ] && CONFIG_BOOT_WHERE="$BOOT_WHERE" || CONFIG_BOOT_WHERE="mbr"
+grep -q "^[ \t]*AutoLoginEnable=true" ./etc/kde3/kdm/kdmrc && CONFIG_AUTOLOGIN="yes" || CONFIG_AUTOLOGIN="no"
 
 cat <<END >$HOME/.knofig
 REGISTERED=' SYSTEM_MODULE SYSTEM_TYPE HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK SWAP_MODULE SWAP_AUTODETECT NAME_MODULE NAME_NAME USER_MODULE USER_NAME USERPASS_MODULE USERPASS_CRYPT ROOTPASS_MODULE ROOTPASS_CRYPT HOST_MODULE HOST_NAME SERVICES_MODULE SERVICES_START BOOT_MODULE BOOT_LOADER BOOT_DISK BOOT_WHERE INSTALL_READY'
@@ -457,6 +458,11 @@ BOOT_DISK='no'
 # Possible are: mbr|partition
 # Default value is: mbr
 BOOT_WHERE='$CONFIG_BOOT_WHERE'
+# If set to yes, you'll be logged in automatically without entering a password.
+# Possible are: yes|no
+# Default value is: no
+AUTOLOGIN='$CONFIG_AUTOLOGIN'
+
 INSTALL_READY='yes'
 END
 

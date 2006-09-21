@@ -92,11 +92,21 @@ if [ "$HD_IGNORECHECK" != "yes" ]; then
     fi
 fi
 
+# Check if root-partition is at /isosrc
+if grep -q "^$HD_CHOICE /isosrc" /proc/mounts; then
+	echo "TAB: 1"
+	echo "ERROR: Partition $HD_CHOICE is already mounted to /isosrc!"
+	exit 1
+fi
 
 # Check if partitions of HD_MAP are formatted
 function checkFilesystem
 {
 	PARTITION="$1"
+	if grep -q "^$PARTITION " /proc/mounts; then
+		# partition is already mounted
+		return 0
+	fi
 	TMPMP="/tmp/kanotix-update.$$.$RANDOM"
 	mkdir -p "$TMPMP"
 	mount $PARTITION "$TMPMP"

@@ -1,3 +1,11 @@
+knxinstaller (0.4.4-4) unstable; urgency=low
+
+  * added handling of autoinstall to kanotix-update.
+  * added check if / ($HD_COICE) is mounted to /isosrc in installer
+    (this should not happen because the running iso could get deleted then)
+
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 19 Sep 2006 22:28:20 +0200
+
 knxinstaller (0.4.4-3) unstable; urgency=low
 
   * fixed checkFilesystem-bug in kanotix-check-knofig.
