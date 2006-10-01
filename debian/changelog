@@ -1,8 +1,9 @@
 knx-installer (0.4.0.28) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * don't suggest fix-cdrom anymore, we don't provide it any longer.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:14:04 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:34:50 +0200
 
 knx-installer (0.4.0.27) unstable; urgency=low
 
