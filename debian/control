@@ -8,8 +8,9 @@ Standards-Version: 3.6.2
 
 Package: knx-installer
 Architecture: all
-Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, whois, yaird, initscripts-kanotix, ifrename, kanotix-udev-config, initscripts-kanotix-live
+Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, whois, yaird, kanotix-udev-config
 Suggests: gparted, xdialog, distro-defaults, 855resolution
+Conflicts: ifrename
 Description: installs kanotix to hd
  kanotix-installer is an fully functional installation program
  to easily install kanotix to hd. It has support for config-files, 

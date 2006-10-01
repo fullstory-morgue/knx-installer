@@ -369,7 +369,7 @@ system_add_services()
 						sudoers-kanotix \
 						xsession-initscript-kanotix \
 						xsession-kanotix \
-						xf86config-kanotix			2>&1 > /dev/null
+						xf86config-kanotix			&> /dev/null
 			#chroot_it dpkg --purge checkmem-kanotix			&> /dev/null	# under evaluation
 			
 			#  disable live config
@@ -381,7 +381,7 @@ system_add_services()
 		chroot_it dpkg --purge	firewall-kanotix \
 					knxinstaller \
 					knx-installer \
-					saveconfig-kanotix				2>&1 > /dev/null
+					saveconfig-kanotix				&> /dev/null
 
 		# enable udev, if installed
 		if [ -x /etc/init.d/udev ]; then
@@ -389,7 +389,7 @@ system_add_services()
 						automount-kanotix \
 						fix-cdrom \
 						hotplug-kanotix \
-						mkdesktophdicons-kanotix		2>&1 > /dev/null
+						mkdesktophdicons-kanotix		&> /dev/null
 			pidof cardmgr >/dev/null || chroot_it dpkg --purge pcmcia-cs	&> /dev/null
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
 			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
@@ -539,9 +539,6 @@ system_services()
 	# hplip
 	chroot_it update-rc.d hplip 		defaults 19							&>/dev/null
 	
-	# ifrename
-	chroot_it update-rc.d ifrename		start 40 S .							&>/dev/null
-
 	# ipw3945d
 	chroot_it update-rc.d ipw3945d 		start 38 S . stop 34 0 6 .					&>/dev/null
 	
@@ -674,21 +671,13 @@ EOF
 	# for the future :-)
 	cp -f $TMP "$TARGET_MNT_POINT/etc/modules-$(uname -r)"
 
-	# udev modules fix
-	if [ -x "$TARGET_MNT_POINT/etc/init.d/udev" ]; then
-		mount --bind /proc "$TARGET_MNT_POINT/proc"
-		chroot_it fix-udev-modules &>/dev/null
-		chroot_it unfreeze-rc.d &>/dev/null
-		umount "$TARGET_MNT_POINT/proc"
-	fi
-
-	# udev lan fix
-	if [ -x $TARGET_MNT_POINT/etc/init.d/udev -a -x $TARGET_MNT_POINT/etc/init.d/ifrename ]; then
-		mount --bind /proc "$TARGET_MNT_POINT/proc"
-		chroot_it fix-udev-lan &>/dev/null
-		chroot_it unfreeze-rc.d &>/dev/null
-		umount "$TARGET_MNT_POINT/proc"
-	fi
+	# udev fixes
+	mount --bind /proc "$TARGET_MNT_POINT/proc"
+	mount --bind /sys "$TARGET_MNT_POINT/sys"
+	chroot_it fix-udev-modules	&>/dev/null
+	chroot_it fix-udev-lan		&>/dev/null
+	umount "$TARGET_MNT_POINT/sys"
+	umount "$TARGET_MNT_POINT/proc"
 	
 	# Also save /etc/sysconfig/
 	mkdir -p $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)

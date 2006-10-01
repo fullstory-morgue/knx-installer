@@ -1,9 +1,12 @@
-knx-installer (0.4.0.28) UNRELEASED; urgency=low
+knx-installer (0.4.0.28) unstable; urgency=low
 
-  * NOT RELEASED YET
   * don't suggest fix-cdrom anymore, we don't provide it any longer.
+  * ifrename is obsolete, conflict with it.
+  * we must not depend on initscripts-kanotix-live and initscripts-kanotix,
+    otherwise we can't purge them.
+  * adapt interface stabilization to current needs based on udev.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:34:50 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:47:45 +0200
 
 knx-installer (0.4.0.27) unstable; urgency=low
 
