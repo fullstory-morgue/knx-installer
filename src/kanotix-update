@@ -29,6 +29,7 @@ EXCLUDE_LIST="/etc/fstab
 /etc/network/wep.*
 /etc/wpa_supplicant.conf
 /usr/src/fglrx*
+/usr/src/ati-driver-installer*
 /usr/src/NVIDIA*
 /usr/src/linux-*tar.bz2
 /home
@@ -814,6 +815,21 @@ if [ -x /etc/init.d/udev ]; then
     [ -d .$b ] || mkdir -p .$b
     fi
     [[ $c == swap ]] && d=sw
+    if [ "$(locale charmap)" = "UTF-8" ]; then
+        d="$(echo -n "$d" | tr ',' '\n' | grep -v -e ^iocharset -e ^nls | tr '\n' ',')"
+        d="${d%,}"
+        case "$c" in
+        vfat)
+            d="${d:-noauto,users,exec,umask=000,shortname=mixed,quiet},iocharset=utf8"
+            ;;
+        msdos)
+            d="${d:-noauto,users,exec,umask=000,quiet},iocharset=utf8"
+            ;;
+        ntfs)
+            d="${d:-noauto,users,exec,ro,umask=000},nls=utf8"
+            ;;
+        esac
+    fi
     printf "%-15s %-15s %-7s %-15s %-7s %s\n" $a $b $c $d $e $f
     done <<<"$F" 
     for c in $(ls -d /dev/cdrom* 2>/dev/null); do
