@@ -1,8 +1,8 @@
-knx-installer (0.4.0.31) UNRELEASED; urgency=low
+knx-installer (0.4.0.31) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * don't add /usr/X11R6/bin/ to search path.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 13:38:45 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 23:33:57 +0100
 
 knx-installer (0.4.0.30) unstable; urgency=low
 
