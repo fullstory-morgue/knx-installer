@@ -206,7 +206,7 @@ system_copy_home()
 		done
 	fi
 
-	# Neue Symbole für KANOTIX und KNOPPIX auf dem Desktop
+	# Neue Symbole fÃ¼r KANOTIX und KNOPPIX auf dem Desktop
 
 	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" <<EOF
 [Desktop Entry]
@@ -295,7 +295,7 @@ system_add_services()
 	[ -e /etc/rc0.d/K15isdnactivecards ] &&	chroot_it update-rc.d isdnactivecards defaults 13 15 >/dev/null
 	[ -e /etc/rc0.d/K21capiutils ] &&	chroot_it update-rc.d capiutils defaults 13 21 >/dev/null
 
-	# ALSA aktivieren, wenn möglich
+	# ALSA aktivieren, wenn mÃ¶glich
 	if [ -e /proc/asound/modules ]; then
 		if [ -x /etc/init.d/alsa-utils ]; then
 			# chroot_it update-rc.d alsa-utils defaults
@@ -575,7 +575,7 @@ system_services()
 	chroot_it update-rc.d autofs defaults									&>/dev/null
 
 	# Display Manager "korrekt" starten - also nur im Runlevel 5
-	#	(das gilt aber auch eigentlich nur für nicht-debian Systeme ;-))
+	#	(das gilt aber auch eigentlich nur fÃ¼r nicht-debian Systeme ;-))
 	
 	for DM in kdm xdm gdm; do
 		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]; then
@@ -584,7 +584,7 @@ system_services()
 		fi
 	done
 
-	# PCMCIA ausschalten, wenn nicht nötig
+	# PCMCIA ausschalten, wenn nicht nÃ¶tig
 	pidof cardmgr >/dev/null || chroot_it update-rc.d -f pcmcia remove >/dev/null 2>/dev/null
 	
 	# ACPI Anpassung

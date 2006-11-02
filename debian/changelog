@@ -1,390 +1,1015 @@
-knxinstaller (0.4.4-5) unstable; urgency=low
+knx-installer (0.4.0.30) unstable; urgency=low
 
-  * added /usr/src/ati-driver-installer* to kanotix-update exclude-list.
-  * added utf8 options to fstab-patch-routine of kanotix-update.
+  * move to utf-8.
+  * fix lintian errors.
+  * remove obsolete non-udev usb-storage support.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun,  1 Oct 2006 22:09:00 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 13:27:51 +0100
 
-knxinstaller (0.4.4-4) unstable; urgency=low
+knx-installer (0.4.0.29) unstable; urgency=low
 
-  * added handling of autoinstall to kanotix-update.
-  * added check if / ($HD_COICE) is mounted to /isosrc in installer
-    (this should not happen because the running iso could get deleted then)
+  * create /proc directly after cp.
+  * changed usleep to sleep.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 19 Sep 2006 22:28:20 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Mon,  2 Oct 2006 05:50:22 +0200
 
-knxinstaller (0.4.4-3) unstable; urgency=low
+knx-installer (0.4.0.28) unstable; urgency=low
 
-  * fixed checkFilesystem-bug in kanotix-check-knofig.
-  * fixed mount-bug in kanotix-update.
+  * don't suggest fix-cdrom anymore, we don't provide it any longer.
+  * ifrename is obsolete, conflict with it.
+  * we must not depend on initscripts-kanotix-live and initscripts-kanotix,
+    otherwise we can't purge them.
+  * adapt interface stabilization to current needs based on udev.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Mon, 18 Sep 2006 23:19:27 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:47:45 +0200
 
-knxinstaller (0.4.4-2) unstable; urgency=low
+knx-installer (0.4.0.27) unstable; urgency=low
 
-  * added /etc/X11/xkb to kanotix-update remove-list
-  * added patching of kdeglobals for AA.
+  * really purge initscripts-kanotix-live, make dependency handling a bit more
+    robust.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Mon, 18 Sep 2006 19:07:46 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  2 Oct 2006 01:07:38 +0200
 
-knxinstaller (0.4.4-1) unstable; urgency=low
+knx-installer (0.4.0.26) experimental; urgency=low
 
-  * fixed fstab-patching in kanotix-update (for cdrom-entries).
-  * fixed checkFilesystem() in kanotix-check-knofig.
+  * Create /etc/splashy/splashy.fifo. 
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 17 Sep 2006 22:26:52 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Mon, 18 Sep 2006 14:32:38 +0200
 
-knxinstaller (0.4.3-3) unstable; urgency=low
+knx-installer (0.4.0.25) experimental; urgency=low
 
+  * Activate bluetooth, hplip and ipw3945d.
+  * Save current session before copying. 
+
+ -- Joerg Schirottke <master@kanotix.com>  Sun, 17 Sep 2006 23:57:04 +0200
+
+knx-installer (0.4.0.24) experimental; urgency=low
+
+  [ Andreas Loibl ]
+  * New method to add cdrom/ floppy devices to fstab (from
+    initscripts-kanotix-live).
+  * Make sure that /proc exists on root-partition.
+  * Don't backup Knoppix specific Xsession file (45xsession) anymore.
+  * changed some update-rc.d-commands.
+  * minor bugfixes.
+
+  [ Joerg Schirottke ]
+  * Added rest of etch's update-rc.d-commands.
+
+ -- Joerg Schirottke <master@kanotix.com>  Fri, 15 Sep 2006 03:27:23 +0200
+
+knx-installer (0.4.0.23) experimental; urgency=low
+
+  * changed qtparted to gparted.
+
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Sat,  9 Sep 2006 22:12:09 +0200
+
+knx-installer (0.4.0.22) experimental; urgency=low
+
+  * fixed --non-interactive and --installer option.
+  * added "&>/dev/null" to update-rc.d-commands (splashy, acpi-support).
+  * changed some update-rc.d-commands (alsa-utils, udev, single, hwclock.sh,
+    hwclockfirst.sh).
+
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Sun,  6 Aug 2006 22:29:11 +0200
+
+knx-installer (0.4.0.21) experimental; urgency=low
+
+  * added --installer option (similar to --non-interactive, but with
+    bootdisk-creation enabled)
+  * added KDM-AutoLogin as a new installer module
+  * updated kopt-line.
+  * activation of powersaved, splashy, acpi-support after hd-install.
+  * updated /etc/host template.
+
+ -- Andreas Loibl <andreas@andreas-loibl.de>  Fri,  4 Aug 2006 22:20:04 +0200
+
+knx-installer (0.4.0.20) experimental; urgency=low
+
+  * knoppix --> kanotix transtion part 1, thanks to RoEn.
+  * knoppix --> kanotix transtion part 2, thanks to x-un-i.
+  * transition knoppix-{autoconfig,halt,reboot} to
+    live-{{autoconfig,halt,reboot}
+  * don't depend directly on kudzu, use initscripts-kanotix-live instead.
+  * quick'n'dirty hotfix for knoppix-hd-autoconfig.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 22 Mar 2006 01:13:46 +0100
+
+knx-installer (0.4.0.19) unstable; urgency=low
+
+  [ Joerg Schirottke ]
+  * check for 915resolution or 855resolution.
+
+  [ Stefan Lippers-Hollmann ]
   * remove cdbs auto-update feature.
   * bump compat level to 5.
-  * bump standards version to 3.7.2.
+  * fix dependency syntax.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 13 Sep 2006 02:01:18 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 16 Feb 2006 01:36:52 +0100
 
-knxinstaller (0.4.3-2) unstable; urgency=low
+knx-installer (0.4.0.18) unstable; urgency=low
 
-  * fix dependencies.
+  * prepare for new dbus.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 13 Sep 2006 01:59:03 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 30 Dec 2005 14:13:14 +0100
 
-knxinstaller (0.4.3-1) unstable; urgency=low
+knx-installer (0.4.0.17) unstable; urgency=low
 
-  * removed qtparted-stuff.
-  * changed "startParted" to call "gparted" now.
+  * purge pcmcia-cs to avoid update errors when not needed.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat,  9 Sep 2006 21:52:18 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 24 Dec 2005 00:00:26 +0100
 
-knxinstaller (0.4.2-2) unstable; urgency=low
+knx-installer (0.4.0.16) unstable; urgency=high
 
-  * fixed knxinstaller-window geometry.
+  * adapt kanotix-installer to suit knxinstaller's needs.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun,  6 Aug 2006 23:13:18 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 18 Dec 2005 19:13:49 +0100
 
-knxinstaller (0.4.2-1) unstable; urgency=low
+knx-installer (0.4.0.15) unstable; urgency=low
 
-  * fixed knxinstaller.pot error.
-  * added Italian locale (it.po).
-  * updated "admin/" for new autoconf.
-  * added AutoLogin.
+  * don't purge pcmcia-cs, just deactivate the daemon.
+  * pass through parameters to knxinstaller.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Fri,  4 Aug 2006 22:54:52 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 17 Dec 2005 15:51:00 +0100
 
-knxinstaller (0.4.1-3) unstable; urgency=low
+knx-installer (0.4.0.14) unstable; urgency=low
 
-  * kanotix-update: copy .zAppRun from CD to HD
-  * kanotix-update: hiding errors of dpkg -l (old-packages.list)
-    (dpkg doesn't work in 32bit chroot if 64bit is installed)
+  * use the new knxinstaller if possible.
+  * remove virtual knoppix packages.
+  * bump compat level to 5.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Wed, 28 Dec 2005 11:37:31 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 15 Dec 2005 12:33:47 +0100
 
-knxinstaller (0.4.1-2) unstable; urgency=low
+knx-installer (0.4.0.13) unstable; urgency=low
 
-  * added patching of ksplashrc into kanotix-update
+  * do not remove pcmcia-cs when used.
 
- -- Andreas Loibl <aloibl@KanotixBox>  Tue, 27 Dec 2005 10:38:13 +0100
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 19 Nov 2005 22:23:02 +0100
 
-knxinstaller (0.4.1-1) unstable; urgency=low
+knx-installer (0.4.0.12) unstable; urgency=low
 
-  * changed command of the installer from kanotix-installer to knoppix-installer
-  * changed name of old-package-list from old-packages-YYYYMMDD.txt to old-packages-YYYYMMDD-HHMM.txt
+  * improved fstab.
+  * using /media instead of /mnt.
+  * some bug fixes.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 25 Dec 2005 23:06:37 +0100
+ -- Joerg Schirottke <master@kanotix.com>  Thu,  3 Nov 2005 14:57:39 +0100
 
-knxinstaller (0.3.6-6) unstable; urgency=low
+knx-installer (0.4.0.11) unstable; urgency=low
 
-  * fixed kanotix-update bug (problem with paths including a dot)
-  * added /etc/gpm.conf to kanotix-update exclude-list
+  * fix mkdesktopicons and automount.sh usage.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 20 Dec 2005 18:29:29 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 26 Oct 2005 22:46:36 +0200
 
-knxinstaller (0.3.6-5) unstable; urgency=low
+knx-installer (0.4.0.10) unstable; urgency=low
 
-  * patched knxinstaller-script to use knoppix-installer instead of kanotix-instaler
-  * fixed french locale (encoding-bug)
+  * cciss auto setting in /etc/fstab.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 18 Dec 2005 19:09:13 +0100
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 25 Oct 2005 02:04:18 +0200
 
-knxinstaller (0.3.6-4) unstable; urgency=low
+knx-installer (0.4.0.9) unstable; urgency=low
 
-  * updated french locale (version: fr-2005-12-18.po)
+  * don't install modutils-knoppix.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat, 17 Dec 2005 23:43:42 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 24 Oct 2005 02:08:24 +0200
 
-knxinstaller (0.3.6-3) unstable; urgency=low
+knx-installer (0.4.0.8) unstable; urgency=low
 
-  * fixed some typos (kanotix-update, de.po)
-  * added patching of /etc/exports and /etc/samba/smb.conf in kanotix-update
-    (/mnt to /media)
-  * removed 'beginner'-mode from knofig-templates
+  * remove pcmcia-cs when udev is installed.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat, 17 Dec 2005 19:50:12 +0000
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 23 Oct 2005 00:05:20 +0200
 
-knxinstaller (0.3.6-2) unstable; urgency=low
+knx-installer (0.4.0.7) unstable; urgency=low
 
-  * updated french locale (version: fr-2005-12-16.po)
+  * hide rmdir.
+  * fix $HOME chown.
+  * enhance properly escaped parts.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat, 17 Dec 2005 09:37:22 +0000
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 22 Oct 2005 02:23:30 +0200
 
-knxinstaller (0.3.6-1) unstable; urgency=low
+knx-installer (0.4.0.6) unstable; urgency=low
 
-  * added russian locale by RoEn <roen@pctvsat.com>
+  * add irqpoll to persistent cmdline options.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Fri, 16 Dec 2005 18:39:34 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 22 Oct 2005 01:58:31 +0200
 
-knxinstaller (0.3.5-9) unstable; urgency=low
+knx-installer (0.4.0.5) unstable; urgency=low
 
-  * added french locale by Phil <clampin@free.fr>
+  * fix ownership of $HOME/.kde/.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 13 Dec 2005 21:59:08 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 21 Oct 2005 01:15:37 +0200
 
-knxinstaller (0.3.5-8) unstable; urgency=low
+knx-installer (0.4.0.4) unstable; urgency=low
 
-  * added wpa_supplicant to the exclude-list of kanotix-update
-  * excluded /media and /mnt from being mounted in kanotix-recover
+  * enhance udev/ ifrename procedures.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Wed,  7 Dec 2005 22:51:13 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 17 Oct 2005 02:31:25 +0200
 
-knxinstaller (0.3.5-7.1) unstable; urgency=low
+knx-installer (0.4.0.3) unstable; urgency=low
 
-  * recompile against kdelibs4c2a.
+  * add ifrename to dependencies.
+  * add kanotix-udev-config to dependencies.
+  * activate 855resolution if needed.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  2 Dec 2005 11:52:34 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 15 Oct 2005 23:12:40 +0200
 
-knxinstaller (0.3.5-7) unstable; urgency=low
+knx-installer (0.4.0.2) unstable; urgency=low
 
-  * add usbfs to fstab.
-  * actually create required mountpoints under /media/.
+  * removed ALSA hack
+  * added optimized /etc/modules and /etc/iftab
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  4 Nov 2005 21:10:57 +0100
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 15 Oct 2005 13:24:32 +0200
 
-knxinstaller (0.3.5-6) unstable; urgency=low
+knx-installer (0.4.0.1) unstable; urgency=low
 
-  [ Andreas Loibl ]
-  * patch for kanotix-update
+  * adapt ALSA hack to new sysvinit.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 10 Oct 2005 23:02:07 +0200
+
+knx-installer (0.4.0.0) unstable; urgency=low
+
+  * fix capi installation.
+  * the partition desktop icons are in $HOME/Desktop/.
+  * fix removal of unneeded device links.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed,  5 Oct 2005 11:59:51 +0200
+
+knx-installer (0.3.19.39) unstable; urgency=low
+
+  * make kanotix-installer-latest-web more robust for directory layout
+    changes.
+  * chown in chroot.
+  * FIXME: modules/install/01-fstab.bm: "Remove not needed device links" tries
+    to delete /mnt/hdinstall//boot (HD_MAP="/dev/hda2:/boot") while it is
+    still mounted.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 03:40:36 +0200
+
+knx-installer (0.3.19.38) unstable; urgency=low
+
+  * fix kanotix-installer-latest-web.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 00:41:08 +0200
+
+knx-installer (0.3.19.37) unstable; urgency=low
+
+  * fix ownership for the whole $HOME/.kde.
+  * release hold status for eject after install.
+  * change pool layout to main/
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 29 Sep 2005 00:35:02 +0200
+
+knx-installer (0.3.19.36) unstable; urgency=low
+
+  * ensure correct ownership of kdestoprc.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 03:08:40 +0200
+
+knx-installer (0.3.19.35) unstable; urgency=low
+
+  * make auto icons- parsing for kde more robust.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Sep 2005 02:53:04 +0200
+
+knx-installer (0.3.19.34) unstable; urgency=low
+
+  * udev + capiutils changes
+
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 27 Sep 2005 19:58:54 +0200
+
+knx-installer (0.3.19.33) unstable; urgency=low
+
+  * start initscripts for udev.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 26 Sep 2005 01:24:04 +0200
+
+knx-installer (0.3.19.32) unstable; urgency=low
+
+  * add initial udev support
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 26 Sep 2005 01:07:38 +0200
+
+knx-installer (0.3.19.31) unstable; urgency=low
+
+  * Don't copy home when already data is there 
+
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 24 Sep 2005 18:27:44 +0200
+
+knx-installer (0.3.19.30) unstable; urgency=low
+
+  * match initscripts to pure debian sid.
+  * remove desktop links for removable media (patch contributed by locsmif).
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 19 Sep 2005 03:29:18 +0200
+
+knx-installer (0.3.19.29) unstable; urgency=low
+
+  * fix typo in 01-fstab.bm
+  * remove reiser4 support from modules/01-hd.bm.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Sep 2005 22:44:47 +0200
+
+knx-installer (0.3.19.28) unstable; urgency=low
+
+  * activate mixed mode.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 23:24:33 +0200
+
+knx-installer (0.3.19.27) unstable; urgency=low
+
+  * (hopefully) fix usb media detection functions.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 20:32:53 +0200
+
+knx-installer (0.3.19.26) unstable; urgency=low
+
+  * don't substitute *su in Kanotix- desktop links.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 03:34:49 +0200
+
+knx-installer (0.3.19.25) unstable; urgency=low
+
+  * add usb detection routines from locsmif.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Sep 2005 01:42:45 +0200
+
+knx-installer (0.3.19.24) unstable; urgency=low
+
+  * override lintian/ linda warnings - we do want to purge the initscripts
+    without installing them in the postinst.
+  * load snd, if ALSA is present.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 11 Sep 2005 02:05:25 +0200
+
+knx-installer (0.3.19.23) unstable; urgency=low
+
+  * add packages to live removal.
+  * fix (add) postinst/ postrm for initscripts-kanotix.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 23:41:50 +0200
+
+knx-installer (0.3.19.22) unstable; urgency=low
+
+  [ Joerg Schirottke ]
+  * no knoppix-hd-autoconfig in debian mode.
+  * use freeze-rc.d if possible.
 
   [ Stefan Lippers-Hollmann ]
-  * sponsor upload.
+  * remove live- only packages (kanotix only).
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  4 Nov 2005 17:58:59 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  9 Sep 2005 22:57:36 +0200
 
-knxinstaller (0.3.5-5) unstable; urgency=low
+knx-installer (0.3.19.21) unstable; urgency=low
 
-  * bugfix for kanotix-update
+  * make initscripts-kanotix replace knx-installer <<0.3.19.20 and provide it.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Wed, 26 Oct 2005 19:21:35 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Sep 2005 04:37:15 +0200
 
-knxinstaller (0.3.5-4) unstable; urgency=low
+knx-installer (0.3.19.20) unstable; urgency=low
 
-  * some patches for kanotix-update
+  * split out initscripts-kanotix.
+  * adapt runlevels to be more debian compatible.
+  * fix yaird usage (mount sysfs in chroot).
+  * remove ALSA hack, it's no longer necessary with sysvinit 2.86.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 25 Oct 2005 22:07:58 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Sep 2005 03:49:44 +0200
 
-knxinstaller (0.3.5-3) unstable; urgency=low
+knx-installer (0.3.19.19) unstable; urgency=low
 
-  * patch for knxinstaller: now writing the .knofig-file into $HOME
-    (/home/knoppix is not hardcoded any more)
+  * FIXME: add experimental yaird support for initrd generation.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 23 Oct 2005 22:05:25 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  6 Sep 2005 22:36:31 +0200
 
-knxinstaller (0.3.5-2) unstable; urgency=low
+knx-installer (0.3.19.18) unstable; urgency=low
 
-  * patch for kanotix-update: the backup/remove-process is faster now
+  * fix initrd creation.
+  * update usb-storage to 20050718-devel.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 23 Oct 2005 22:01:32 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 18 Aug 2005 19:37:53 +0200
 
-knxinstaller (0.3.5-1) unstable; urgency=low
+knx-installer (0.3.19.17) unstable; urgency=low
 
-  * Some minor bugfixes and updates for kanotix-update and -check-knofig
+  * improve ALSA handling.
+  * partial re- indent
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Mon, 17 Oct 2005 22:13:17 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 12 Aug 2005 19:25:23 +0200
 
-knxinstaller (0.3.4-2) unstable; urgency=low
+knx-installer (0.3.19.16) unstable; urgency=low
 
-  * patches for kanotix-update:
-    - only parse partitions from fstab that are in /proc/partitions
-    - copy knemorc from /etc/skel to users home-dir
+  * implement initial (optional) distro-defaults support.
+    - parse $DEFAULT_USER from passwd.
+  * clean up $HOME for all distros.
+  * make chown usage POSIX compatible.
+  * remove obsolete references to /etc/sysconfig/live.
+  * use perl to configure /etc/kernel-pkg.conf.
+  * switch to cdbs' auto update feature.
+  * use section: admin.
+  * remove non fatal lintian errors from overrides.
+  * minor re- indent in ./knoppix-installer.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 16 Oct 2005 21:35:52 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  7 Aug 2005 17:55:27 +0200
 
-knxinstaller (0.3.4-1) unstable; urgency=low
+knx-installer (0.3.19.15) unstable; urgency=low
 
-  * new upstream release:
-    - fixed UID-1000-problem in kanotix-update
-    - added /etc/iftab to rescue-list in kanotix-update
-    - some other minor bugfixes and updates
+  * adapt for the real X.org packages in sid.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 16 Oct 2005 00:02:49 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 14 Jul 2005 02:14:49 +0200
 
-knxinstaller (0.3.3-3) unstable; urgency=low
+knx-installer (0.3.19.14) unstable; urgency=low
 
-  * added patch for uid-1000-Problem
+  * update for official x strike force X.org packages.
+  * blacklist unionfs for hd install (thanks to niktaris/ knoppel).
+  * blacklist dri for hd install.
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat, 15 Oct 2005 01:24:11 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 23 Jun 2005 23:32:51 +0200
 
-knxinstaller (0.3.3-2) unstable; urgency=low
+knx-installer (0.3.19.13) unstable; urgency=low
 
-  * added chown-patch for kanotix-update
+  * added Xorg support.
+  * hide df errors (needed for fromiso).
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Fri, 14 Oct 2005 22:38:23 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Mon, 20 Jun 2005 20:23:21 +0200
 
-knxinstaller (0.3.3-1) unstable; urgency=low
+knx-installer (0.3.19.12) unstable; urgency=low
 
-  * new upstream release:
-    - fixed chown-bug in kanotix-update
-    - fixed typo ("passwort" instead of "password")
+  * fix CUSTOM_DPI regression. 
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 11 Oct 2005 21:28:12 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 30 May 2005 17:10:10 +0200
 
-knxinstaller (0.3.2-1) unstable; urgency=low
+knx-installer (0.3.19.11) unstable; urgency=low
 
-  * new upstream release:
-    - added "Force Installation"-Checkbox
-    - removed "Install Bootloader"-Checkbox
+  * fix removal of /etc/default/kde-services-{kanotix,knoppix}. 
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue,  4 Oct 2005 15:52:08 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 25 Apr 2005 17:00:52 +0200
 
-knxinstaller (0.3.1-3) unstable; urgency=low
+knx-installer (0.3.19.10) unstable; urgency=low
 
-  * changed PACKAGES_TO_REMOVE list in kanotix-update
+  * enable KDE sounds. 
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sat,  1 Oct 2005 00:56:32 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 21 Apr 2005 01:22:17 +0200
 
-knxinstaller (0.3.1-2) unstable; urgency=low
+knx-installer (0.3.19.9) unstable; urgency=low
 
-  * changed PACKAGES_TO_REMOVE list in kanotix-update
+  * change size calculation for unionfs mode
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Thu, 29 Sep 2005 22:12:45 +0200
+ -- Joerg Schirottke <master@kanotix.com>  Sun, 10 Apr 2005 10:58:42 +0200
 
-knxinstaller (0.3.1-1) unstable; urgency=low
+knx-installer (0.3.19.8) unstable; urgency=low
 
-  [ Andreas Loibl ]
-  * new upstream release:
-    - changed kanotix-update, now with better user/group-update
-    - added time-statistics to kanotix-update
-    - fixdevlist-Patch included
+  * update for kde 3.4 compatibilty.
+  * set Xserver options to -br.
 
-  [ Stefan Lippers-Hollmann ]
-  * sponsor upload.
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  8 Apr 2005 14:13:44 +0200
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Thu, 29 Sep 2005 22:12:32 +0200
+knx-installer (0.3.19.7) unstable; urgency=low
 
-knxinstaller (0.3.0-1) unstable; urgency=low
+  * remove /dev/cdaudio. 
 
-  * new upstream release:
-    - added Bootloader-Recovery
-    - Main-Window is hidden now when Partition-Manager is active
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  3 Apr 2005 16:58:17 +0200
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 25 Sep 2005 19:01:03 +0200
+knx-installer (0.3.19.6) unstable; urgency=low
 
-knxinstaller (0.2.9-1) unstable; urgency=low
+  * improve packaging.
+  * remove legacy Makefiles.
+  * remove Beginner- and Knoppix- Type GUI options.
 
-  * new upstream release:
-    - added Recovery-Tools
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 31 Mar 2005 20:07:47 +0200
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Thu, 22 Sep 2005 21:29:58 +0200
+knx-installer (0.3.19.5) unstable; urgency=low
 
-knxinstaller (0.2.8-1) unstable; urgency=low
+  * update usb-storage (20050308-devel).
+  * remove temporary kde- user files.
 
-  * new upstream release:
-    - checking if a root-partition is selected
-    - does "rebuildfstab" after changing the partition-table
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 23 Mar 2005 22:07:54 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Fri, 16 Sep 2005 19:22:41 +0200
+knx-installer (0.3.19.4) unstable; urgency=low
 
-knxinstaller (0.2.7-2) unstable; urgency=low
+  * prepare for /etc/sysconfig/live.
+  * prepare for /etc/sysconfig/base.
+  * rework ALSA sound hack.
 
-  * added some paths to save/ delete for the upgrade-installation
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 22 Mar 2005 16:00:38 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Thu, 15 Sep 2005 17:50:00 +0200
+knx-installer (0.3-19.3) unstable; urgency=low
 
-knxinstaller (0.2.7-1) unstable; urgency=low
+  * remove savedefault from template menu.lst. 
 
-  * some fixes on kanotix-update-script
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed,  2 Mar 2005 18:02:53 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Tue, 13 Sep 2005 20:16:23 +0200
+knx-installer (0.3-19.2) unstable; urgency=low
 
-knxinstaller (0.2.6-2) unstable; urgency=low
+  * updated usb-storage script
 
-  * changed packaging-format (now with orig.tar.gz etc.)
+ -- Joerg Schirottke <master@kanotix.com>  Wed,  9 Feb 2005 12:58:20 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 11 Sep 2005 21:36:59 +0200
+knx-installer (0.3-19.1) unstable; urgency=low
 
-knxinstaller (0.2.6-1) unstable; urgency=low
+  * updated usb-storage script
 
-  * new upstream release with some bugfixes.
+ -- Joerg Schirottke <master@kanotix.com>  Tue,  8 Feb 2005 20:35:19 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Sun, 11 Sep 2005 15:15:52 +0200
+knx-installer (0.3-19) unstable; urgency=low
 
-knxinstaller (0.2.5-1) unstable; urgency=low
+  * new whitelist for ipw2100 and ipw2200
+  * changed remaining Knoppix to Kanotix 
 
-  * new upstream release:
-    - Improved German i18n
-    - Added some Warnings (e.g. for Partition-Resizing)
-    - Some bugfixes in kanotix-update
-    - Added knxinstaller-script, a wrapper for kanotix-installer's ni-mode
+ -- Joerg Schirottke <master@kanotix.com>  Fri,  4 Feb 2005 23:58:48 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Fri,  9 Sep 2005 13:36:10 +0200
+knx-installer (0.3-18.11) unstable; urgency=low
 
-knxinstaller (0.2.4-1) unstable; urgency=low
+  * updated usb-storage script 
 
-  * new upstream version with some bugfixes.
+ -- Joerg Schirottke <master@kanotix.com>  Sun, 30 Jan 2005 13:45:10 +0100
 
- -- Andreas Loibl <andreas@andreas-loibl.de>  Wed,  7 Sep 2005 15:41:59 +0200
+knx-installer (0.3-18.10) unstable; urgency=low
 
-knxinstaller (0.2.3-1) unstable; urgency=low
+  * reverted knoppix-hd-autoconfig
+  * run fix-cdrom at boot
 
-  * new upstream version.
+ -- Joerg Schirottke <master@kanotix.com>  Sat, 29 Jan 2005 17:38:03 +0100
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  6 Sep 2005 18:10:47 +0200
+knx-installer (0.3-18.9) unstable; urgency=low
 
-knxinstaller (0.2.2-1) unstable; urgency=low
+  * rw mode was needed for knoppix-hd-autoconfig 
 
-  * new upstream version:
-    - really fixes bug with escaping $ to \$ in encrypted passwords.
+ -- Joerg Schirottke <master@kanotix.com>  Mon, 17 Jan 2005 01:58:19 +0100
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  4 Sep 2005 16:40:03 +0200
+knx-installer (0.3-18.8) unstable; urgency=low
 
-knxinstaller (0.2.1-1) unstable; urgency=low
+  * Added cdrom_detect to knoppix-hd-autoconfig
+  * Only add scsi emulation when used for booting
+  
+ -- Joerg Schirottke <master@kanotix.com>  Fri, 14 Jan 2005 15:03:53 +0100
 
-  * new upstream version:
-    - Fixed bug with escaping $ to \$ in encrypted Passwords
-    - Changed text "/root/.knofig" to "~/.knofig"
-    - Added parsing of an existing .knofig
-    - Update of QTParted-Sources to 0.4.5
+knx-installer (0.3-18.7) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 20 Aug 2005 23:00:08 +0000
+  * Show no mkinitrd warnings
 
-knxinstaller (0.2-2) unstable; urgency=low
+ -- Joerg Schirottke <master@kanotix.com>  Wed, 12 Jan 2005 18:34:01 +0100
 
-  * bump patchlevel, to prevent upgrade problems with concurrent snapshot.
-  * fix typo in debian/control.in.
+knx-installer (0.3-18.6) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 15 Aug 2005 22:39:52 +0000
+  * Updated usb-storage script (minimal fix)
+  * If possible use mountvirtfs instead of devpts.sh
+  * Use 72 dpi as default
+  * New blacklist (all usb modules by default) 
 
-knxinstaller (0.2-1) unstable; urgency=low
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 11 Jan 2005 19:08:07 +0100
 
-  * new upstream version, includes qtparted fork.
+knx-installer (0.3-18.5) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 15 Aug 2005 17:48:17 +0000
+  * Using usbfs with devmode=0666
+  * Updated usb-storage script for kernel 2.6.10
 
-knxinstaller (0.1.1-2) unstable; urgency=low
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 28 Dec 2004 11:58:43 +0000
 
-  * update to new upstream version.
+knx-installer (0.3-18.4) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat,  6 Aug 2005 22:14:27 +0200
+  * Fix new location of Kanotix menu
+  * /var/tmp workaround added
 
-knxinstaller (0.1.1-1) unstable; urgency=low
+ -- Joerg Schirottke <master@kanotix.com>  Wed, 22 Dec 2004 21:11:20 +0100
 
-  * new upstream release:
-    - initial i18n support.
-  * add sudo as dependency.
+knx-installer (0.3-18.3) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  2 Aug 2005 01:05:22 +0200
+  * update dependencies. 
 
-knxinstaller (0.1-1) unstable; urgency=low
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  6 Dec 2004 21:28:41 +0100
 
-  * Initial release.
+knx-installer (0.3-18.2) unstable; urgency=low
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon,  1 Aug 2005 12:32:04 +0200
+  * added horo's usb-storage script for debian mode
+  * added i8042 to system rescue commands 
+
+ -- Joerg Schirottke <master@kanotix.com>  Wed,  1 Dec 2004 15:23:34 +0100
+
+knx-installer (0.3-18.1) unstable; urgency=low
+
+  * fix fat grub boot entry
+  * use custom dpi setting hd install
+  * change /etc/automount.sh in install partition
+
+ -- Joerg Schirottke <master@kanotix.com>  Mon, 29 Nov 2004 23:34:27 +0100
+
+knx-installer (0.3-18) unstable; urgency=low
+
+  * use MD5 passwords
+  * use '' in configfile
+
+ -- Joerg Schirottke <master@kanotix.com>  Wed, 24 Nov 2004 10:41:54 +0100
+
+knx-installer (0.3-17.20) unstable; urgency=low
+
+  * mkinitrd always executed now
+  * backlist ieee80211,slamr,slusb
+  * change squashfs correction to 2.7
+  * use mount --bind for proc
+  * remove firewall icon
+  * no mozilla correction if not there
+
+ -- Joerg Schirottke <master@kanotix.com>  Tue, 23 Nov 2004 20:00:03 +0100
+
+knx-installer (0.3-17.19) unstable; urgency=low
+
+  * improve support for kernel packages. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 21 Nov 2004 01:51:50 +0100
+
+knx-installer (0.3-17.18) unstable; urgency=low
+
+  * adapt for new k*x-graphics. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 20 Nov 2004 01:12:13 +0100
+
+knx-installer (0.3-17.17) unstable; urgency=low
+
+  * allow all users to umount CD-ROM drives.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 15 Nov 2004 11:22:28 +0100
+
+knx-installer (0.3-17.16) unstable; urgency=low
+
+  * removed makeactive from grub config for ntfs.
+
+ -- Joerg Schirottke <master@kanotix.com>  Sun, 14 Nov 2004 11:50:48 +0100
+
+knx-installer (0.3-17.15) unstable; urgency=low
+
+  * fix mkinitrd.
+  * fix grub-install(partition).
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 13 Nov 2004 18:35:27 +0100
+
+knx-installer (0.3-17.14) unstable; urgency=low
+
+  * fix shared memory. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 11 Nov 2004 22:08:20 +0100
+
+knx-installer (0.3-17.13) unstable; urgency=low
+
+  * change language settings.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 25 Oct 2004 02:11:36 +0200
+
+knx-installer (0.3-17.12) unstable; urgency=low
+
+  * fix language settings.
+  * fix ipw2?00/ prism54 loading.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 24 Oct 2004 17:27:50 +0200
+
+knx-installer (0.3-17.11) unstable; urgency=low
+
+  * autostart sl-modem-daemon after installing (thanks kelmo for the
+    reminder).
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 16 Oct 2004 14:49:49 +0200
+
+knx-installer (0.3-17.10) unstable; urgency=low
+
+  * remove dangling links. 
+  * fix sysv init services. 
+  * disable portmap (again).
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 16 Oct 2004 00:11:36 +0200
+
+knx-installer (0.3-17.9) unstable; urgency=low
+
+  * minor fixes. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 15 Oct 2004 16:42:23 +0200
+
+knx-installer (0.3-17.8) unstable; urgency=low
+
+  * add temporary ALSA hack.
+  * remove bogus DMA activation for Kanotix.
+  * add module parameters for sbp2.
+  * fix sudo/ su XDG menu substitution. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 15 Oct 2004 01:52:14 +0200
+
+knx-installer (0.3-17.7) unstable; urgency=low
+
+  * remove portmap after installing.
+  * improve speedstep detection.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 14 Oct 2004 23:55:48 +0200
+
+knx-installer (0.3-17.6) unstable; urgency=low
+
+  * blacklist prism54.
+  * add kanotix-installer-latest-web.
+  * create ssh keys after the installation. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 14 Oct 2004 01:20:52 +0200
+
+knx-installer (0.3-17.5) unstable; urgency=low
+
+  * changed URL for the latest web installer. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat,  9 Oct 2004 13:51:14 +0200
+
+knx-installer (0.3-17.4) unstable; urgency=low
+
+  * fix /etc/kernel-pkg.conf.
+  * fix status bar.
+  * blacklisting for fc*, fx* modules.
+  * minor bugfixes/ changes.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  8 Oct 2004 00:38:03 +0200
+
+knx-installer (0.3-17.3) unstable; urgency=low
+
+  * remove special reiser4 hacks, as reiser4 is now natively supported.
+  * remove capi* and hisax* from /etc/modules-2.6.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 27 Sep 2004 23:37:11 +0200
+
+knx-installer (0.3-17.2) unstable; urgency=low
+
+  * fix initrd issues.
+  * remove ipw* and fsam7400 from /etc/modules-2.6.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 24 Sep 2004 16:44:24 +0200
+
+knx-installer (0.3-17.1) unstable; urgency=low
+
+  * remove reiser4/ xfs gui options. 
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 16 Sep 2004 15:52:57 +0000
+
+knx-installer (0.3-17) unstable; urgency=low
+
+  * updated for grub-gfxboot
+  * include reiser4, xfs, jfs support
+  * fixed handling passwords with blanks
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  7 Sep 2004 01:19:20 +0200
+
+knx-installer (0.3-16) unstable; urgency=low
+
+  * gfxmenu floppy fixed
+  * lilo fixed
+  * defaults changed for Kanotix
+
+ -- Joerg Schirottke <master@kanotix.com>  Fri, 23 Jul 2004 03:31:40 +0200
+
+knx-installer (0.3-15) unstable; urgency=low
+
+  * Changed for Kanotix
+  * gfxmenu really added
+  * GRUB as default
+  * hotplug disabled
+
+ -- Joerg Schirottke <master@kanotix.com>  Wed, 30 Jun 2004 13:52:25 +0200
+
+knx-installer (0.3-14) unstable; urgency=low
+
+  * Fixed bug in boot-tools.bm. Thx to "Ancor Gonzalez Sosa"
+    <ancorgs@softhome.net>
+  * Fixed problems with knoppix-installer-latest-web.
+    (User owned certain system files; Thx to Franco Saliola
+    <saliola@math.cornell.edu>)
+
+ -- Fabian Franz <knx-installer@fabian-franz.de>  Tue, 29 Jun 2004 23:51:41 +0200
+
+knx-installer (0.3-13) unstable; urgency=low
+
+  * Wolfram release: CMDLINE-Addon Patch for knoppix-autoconfig 
+
+ -- Fabian Franz <knx-installer@fabian-franz.de>  Tue, 29 Jun 2004 23:15:34 +0200
+
+knx-installer (0.3-12) unstable; urgency=low
+
+  * Fixed mkext2fs for debian kernels.
+  * Hotfix for knoppix-hd-config. Thx to Wolfram Gloger
+    <wmglo@dent.med.uni-muenchen.de>
+  * Typos in german translation.
+  * Added italian translation. Thx to Marco Ciampa, sent in by Roberto
+    Marchioro <rm@linux.it>.
+  * Create Floppy disk = No by default.
+
+ -- Fabian Franz <debian@fabian-franz.de>  Mon,  7 Jun 2004 01:28:19 +0200
+
+knx-installer (0.3-11) unstable; urgency=low
+
+  * Added automatic download script for the latest installer version. 
+
+ -- Fabian Franz <debian@fabian-franz.de>  Sun, 16 May 2004 05:27:55 +0200
+
+knx-installer (0.3-10) unstable; urgency=low
+
+  * Beginner:
+    * Fixed problem with cups.
+    * Fixed problem with multiple partitions.
+
+  * Fixed copy_etc (fixes invalid passwords after installation)
+  * Disabled startup of services for now on HD ...
+  * Fixed changed menu-entries (reverse of postupgrade)
+  * Removed change to ftp.us.debian.org for now, as it broke things
+
+  ! Added easier user-interface
+  ! $[] is obsolete! (let needed)
+  ! Fixed services start (kdm is problematic)
+  ! Added XF86Config-4 to hw-profile.
+
+ -- Fabian Franz <debian@fabian-franz.de>  Sun,  9 May 2004 19:31:07 +0200
+
+knx-installer (0.3-9) unstable; urgency=low
+
+  * Added german keymap for german language to grub.
+  * Fixed a problem with ppp.
+  * Added some more modules to "blacklist" to exclude from /etc/modules and
+    /etc/modules-$(uname -r)
+  * Added default saved.
+  * Added gfxmenu.
+  * Updated templates/etc/profile for Kanotix.
+
+ -- Fabian Franz <debian@fabian-franz.de>  Fri, 23 Apr 2004 01:17:12 +0200
+
+knx-installer (0.3-8) unstable; urgency=low
+
+  * Sync with Kanotix. 
+
+ -- Fabian Franz <debian@fabian-franz.de>  Sun,  9 May 2004 18:33:55 +0200
+
+knx-installer (0.3-7) unstable; urgency=low
+
+  * Fixed a problem with grub.
+  * Silenced some messages.
+  * Fixed a problem in non-interactive mode.
+  
+ -- Fabian Franz <debian@fabian-franz.de>  Tue, 20 Apr 2004 19:20:25 +0200
+
+knx-installer (0.3-6) unstable; urgency=low
+
+  * Added kdm and apache-utils to dependancies. *ouch*
+  * Added experimental grub support.
+  * Added symlinks for shorter name k2hd and knx2hd for plasticdoc.
+  * Add important parameters to lilo.conf / menu.lst (debian-mode)
+  * Allow installation after nvidia-live-installation
+  * Added even more compatibility to debian. (Set default kernel, set
+    default links, initrd.gz -> initrd.img)
+  * Fixed a problem for the future. (Used /lib/modules of running
+    system)
+  * Added compatibility for after hd-install usage.
+  * Added non-interactive-patch
+  * Fixed mozilla language and other issues.
+  * Hotplug support
+  * Fixed lilo to also use grub for mbr detection.
+  * Removed ReadOnly=1 from mkdesktophdicons.
+  * Added mkdesktophdicons to knoppix-hd-autoconfig for beginner mode.
+  * Sync from Kanotix
+  * Added update-grub to kernel-img.conf
+  * Fixed a typo in module_system (thx to Niall Walsh (bfree from irc))
+  * Fixed users in automount.sh
+  * Set certain packages on hold (those that should be removed on dist-upgrade)
+  * Add vga=... to CMDLINE for grub.
+  * Fixed the annoying proposed username bug.
+  * Added grub boot floppy support. (must still be tested)
+
+ -- Fabian Franz <knoppix-installer@fabian-franz.de>  Tue,  6 Apr 2004 02:48:28 +0200
+
+knx-installer (0.3-5) unstable; urgency=low
+
+  * Changed version number.
+  * Added cs / sk to translations.
+
+ -- Knoppix User <knx-installer@fabian-franz.de>  Sun, 28 Mar 2004 21:51:13 +0200
+
+knx-installer (0.3-4) unstable; urgency=low
+
+  * Hotfix for problems with NTFS-Partitions. 
+    (lilo label too long)
+
+ -- Fabian Franz <knoppix-installer@fabian-franz.de>  Fri, 26 Mar 2004 16:42:54 +0100
+
+knx-installer (0.3-3) unstable; urgency=low
+
+  * Fixed bug with permissions of /etc/sudoers/.
+  * Fixed problem with too long translation in copying dialog.
+  * Shutup update-rc.d.
+  * Fixed problems with on-the-fly patches to knoppix-autoconfig
+
+ -- Fabian Franz <knx-installer@fabian-franz.de>  Sun, 22 Feb 2004 17:11:13 +0100
+
+knx-installer (0.3-2) unstable; urgency=low
+
+  * Added version number
+  * Removed forgotten debug output
+  * Fixed a bug in suknxmenus for partition image.
+  * Added spanish translation (Luis Llorente Campo
+    <luis.llorente@hispalinux.es>)
+  * Added ukrainian translation (Ivan Petrouchtchak <iip@telus.net>)
+
+ -- Knoppix User <knx-installer@fabian-franz.de>  Thu, 19 Feb 2004 16:15:13 +0100
+
+knx-installer (0.3-1) unstable; urgency=low
+
+  * Merges from Kano
+  	* Name changes back to Knoppix ;-)
+  	* Deactivated the automatic mounting of partitions again
+  	  but added a variable to check for Kano's Knoppix
+
+  * Cleanup
+  	* Removed mepis-installer, nobody used it
+  	* Improved i18n handling (added scripts)
+  	* Cleaned up the directory mess.
+  	* Added some missing dependencies
+  	* Used again much more modular approach
+  	* Cleaned up the mess wiht old_installer
+
+  * Booting
+  	* Removed own mkinitrd and used debian ones
+  	* Fixed an already fixed but forgotten issue with mbr. :-/
+  	* Removed genliloconf and wrote make_lilo_conf
+  	* Support for multiple kernels / initrds
+  	* Added use of graphical boot
+
+  * Installation
+  	* Knoppix-Mode
+  		* Added knoppix-hd-config
+  		* Added /etc/knoppix directory
+  		* Copied home directory
+  		* Copied changed files in /etc/
+
+  	* The mode now defines the questions asked
+  	* Added new mode (beginner) for half-usage of knoppix-autoconfig
+  	* Added possibility to choose reiserfs
+  	* Fixed suknoppixmenus, some didn't need to get kdesu
+  	! Added file to pin the kde-versions to unstable (?)
+  	* Added "hack" to knoppix-autoconfig for kernel 2.6
+
+  * I18n
+  	* Updated i18n translations
+
+  * Removed knx-templates
+  * Added directory templates
+  * Updated template files
+
+  * Services
+  	* New services concept
+  	* Fixed bugs for Kernel 2.6
+  	  (module-init-tools must also be used in runlevels)
+  	* New: modutils-knoppix (starts modutils & module-init-tools)
+
+  * Added possibility to give an CMDLINE to knoppix-autoconfig
+  * Added knoppix-hd-autoconfig
+  	* Added possiblitity to create a hardware profile for a kernel
+  	* Added automatic creation in beginner mode
+  	* Added question coundown for creation in debian mode
+  	* Added config file in /etc/default/knoppix
+
+ -- Knoppix User <knx-installer@fabian-franz.de>  Thu, 19 Feb 2004 06:04:38 -0500
+
+knx-installer (0.2-4) unstable; urgency=low
+
+  * Name changes from Knoppix to Kanotix
+  * Reactivated the fstab fix
+  * Added PCMCIA check
+
+ -- Joerg Schirottke <master@kanotix.de>  Thu, 29 Jan 2004 22:27:20 +0100
+
+knx-installer (0.2-3) unstable; urgency=low
+
+  * Fixed one bug for installation on multiple partitions.
+  * Merged changes from Kano. (see below)
+  * Fixed one problem with swap-files.
+  * Added an error-dialog before the partition menu. (translation?)
+
+ -- Fabian Franz <knx-installer@fabian-franz.de>  Mon,  5 Jan 2004 23:00:54 +0100
+
+knx-installer (0.2-2) unstable; urgency=low
+
+  * Name changes from Knoppix to Kanotix
+  * Fixed some bugs
+  * Hotfix for Kanotix in boot.bm
+
+ -- Joerg Schirottke <master@kanotix.de>  Sun, 21 Dec 2003 22:54:25 +0100
+
+knx-installer (0.2-1) unstable; urgency=low
+
+  * Complete rewrite with more modular approach.
+  * Fixed many bugs.
+
+ -- Fabian Franz <knx-installer@fabian-franz.de>  Mon, 15 Sep 2003 14:10:38 +0200
+
+knx-installer (0.1-3) unstable; urgency=low
+
+  * Added sanity check for progressbar to satisfy Xdialog
+  * Mark additional partitions with 0 2 instead of 0 0
+
+ -- Fabian Franz <knx-@fabian-franz.de>  Fri, 20 Jun 2003 19:44:13 +0200
+
+knx-installer (0.1-2) unstable; urgency=low
+
+  * Fixed some small errors regarding multiple partitions
+
+ -- Fabian Franz <knx-@fabian-franz.de>  Thu, 19 Jun 2003 18:30:00 +0200
+
+knx-installer (0.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Fabian Franz <knoppix-installer@fabian-franz.de>  Tue, 15 Apr 2003 22:17:21 +0200
 

@@ -1,0 +1,50 @@
+What needs stillt to be done:
+
+Important:
+
+- Problem with /tmp and multiple partitions ?
+
+Far away ;-):
+
+- Use MBR for user
+
+KANO:
+
+<Kano> hi Fabianx, haste die mails bekommen?
+<Kano> hab grad den installer bisserl gepatcht, erstmal wegen alsa, mal sehen obs ging - sollte ja kein problem im prinzip dargestellt haben...
+<Kano> boote gleich mal neu
+<-- Kano has quit ("Verlassend")
+--> Kano (~Kano@dsl-213-023-019-095.arcor-ip.net) has joined #kanotix
+<Kano> Fabianx, bei alsa kommt auch noch ein cp fehler wegen sound
+<Kano> nicht nur wegen floppy..
+<Kano> und die hotplug fehler am start nerven mich auch
+<Kano> und nochwas: vorhandene linux partitionen werden nichtmehr aufgenommen
+<Kano> das ist ein schwerwiegender fehler
+<Kano> die rechte von /etc/lilo.conf müsste man nicht so restiktriv setzen
+<Kano> aber das ist ansichtssache...
+<Kano> solange kein passwort drin gesetzt wird sollte es kein problem sein, wenns jeder lesen daf
+
+---
+
+<Kano> es fehlt
+<Kano> hda2 und hda3 - beides linux partitionen
+<Fabianx> hat genliloconf die erkannt? Bei mir nämlich nie ...
+<Kano> bei mir schon
+
+---
+
+* Es kommt zu anfang ein cp fehler wegen einer floppy datei in sysconfig (welche nicht existiert, habe keine floppy)
+
+* der automounter wird für floppy mitgestartet
+
+* für dsl on boot
+
+[ -x /etc/ppp/ppp_on_boot ] && /etc/ppp/ppp_on_boot
+
+---
+
+diemal hab ich nicht die 2. platte benützt, sondern die erste. dazu hab ich einen speziellen bootsektor installiert:
+
+lilo -M /dev/hda ext
+
+und die partition aktiv gesetzt. also /dev/hda7. grub wurde aber nicht gefunden. ich hatte dazu parallel auf die 2. platte eine beginner install gemacht, und von der dann grub installiert - das suse grub aber mit grub-install und update-grub von der debian variante. beim manuellen installieren gings.  achja was ich vorhin geschreiben habe mit dsl_on_boot: normalerweise ist /etc/init.d/ppp dafür zuständig, am einfachsten dies aktivieren.
