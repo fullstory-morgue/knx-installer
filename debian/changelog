@@ -3,8 +3,11 @@ knx-installer (0.4.0.30) unstable; urgency=low
   * move to utf-8.
   * fix lintian errors.
   * remove obsolete non-udev usb-storage support.
+  * remove obsolete compatibilty symlinks k2hd, knx2hd and ktx2hd.
+  * don't install k*ix-installer-latest-web, knxinstaller can't deal with it
+    anyways.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 13:27:51 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 13:36:05 +0100
 
 knx-installer (0.4.0.29) unstable; urgency=low
 
