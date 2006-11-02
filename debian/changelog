@@ -1,3 +1,9 @@
+knx-installer (0.4.0.31) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 13:38:45 +0100
+
 knx-installer (0.4.0.30) unstable; urgency=low
 
   * move to utf-8.
