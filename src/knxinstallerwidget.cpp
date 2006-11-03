@@ -58,7 +58,7 @@ knxinstallerWidget::knxinstallerWidget(QWidget* parent, const char* name, WFlags
         {
             knofig.readLine( temp, 512 );
             
-            // Kommentare l√∂schen
+            // Kommentare lˆschen
             temp = temp.section( "#", 0, 0 );
             temp = temp.simplifyWhiteSpace();
             if ( temp.isNull() ) {
@@ -152,7 +152,7 @@ void knxinstallerWidget::readFstab()
     while ( !fstab.atEnd() ) {
         fstab.readLine( temp, 512 );
 
-        // Kommentare l√∂schen
+        // Kommentare lˆschen
         temp = temp.section( "#", 0, 0 );
         temp = temp.simplifyWhiteSpace();
         if ( temp.isNull() ) {
@@ -204,7 +204,7 @@ void knxinstallerWidget::readFstab()
             inputRootPartition_Recover->insertItem( zeile.section( " ", 0, 0 ) );
         }
     }
-    // Root-Partition vorausw√§hlen
+    // Root-Partition vorausw‰hlen
     for ( int j = 0; j < partTable->numRows(); j++ )
     {
         if ( partTable->text( j, 0 ) == inputRootPartition->currentText() )
@@ -255,7 +255,7 @@ QString encrypt( QString pwd )
 
 void knxinstallerWidget::cmdNext_clicked()
 {
-    // Shell zum Ausf√ºhren vorbereiten
+    // Shell zum Ausf¸hren vorbereiten
     ExecProcess *shell = new ExecProcess();
     
     if ( tabWidget->currentPageIndex() < tabWidget->count()-1 )
@@ -278,7 +278,7 @@ void knxinstallerWidget::cmdNext_clicked()
             f << txtExclude->text();
             f.close();
             
-            // Ausf√ºhren
+            // Ausf¸hren
             shell->setCommand( command );
             shell->start( false );
             exit( 0 );
@@ -369,7 +369,7 @@ void knxinstallerWidget::cmdNext_clicked()
 
         if( doChecks ) {
         QString error = "";
-        // Daten auf Richtigkeit √ºberpr√ºfen
+        // Daten auf Richtigkeit ¸berpr¸fen
         if ( ((QString) inputRootPW1->password()) != ((QString) inputRootPW2->password()) )
         {
             tabWidget->setCurrentPage( 3 );
@@ -433,7 +433,7 @@ void knxinstallerWidget::cmdNext_clicked()
         }
         }
         
-        // Passw√∂rter verschl√ºsseln oder geladene Passw√∂rter verwenden
+        // Passwˆrter verschl¸sseln oder geladene Passwˆrter verwenden
         QString strRootPW; QString strUserPW;
         if( inputRootPW1->password() == QString("******") && rootpass_crypt )
             { strRootPW = rootpass_crypt; }
@@ -449,8 +449,8 @@ void knxinstallerWidget::cmdNext_clicked()
         if(!services_start) services_start = "kdm cupsys";
         
         // Datei .knofig erzeugen
-        // erstmal tempor√§r, da nicht sicher ist ob wir Schreibrecht f√ºr /home/knoppix haben
-        // wird sp√§ter aber dannn per sudo nach /home/knoppix/.knofig verschoben
+        // erstmal tempor‰r, da nicht sicher ist ob wir Schreibrecht f¸r /home/knoppix haben
+        // wird sp‰ter aber dannn per sudo nach /home/knoppix/.knofig verschoben
         fstream f;
         f.open("/tmp/.knofig", ios::out);
 f << "REGISTERED=' SYSTEM_MODULE SYSTEM_TYPE HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK SWAP_MODULE SWAP_AUTODETECT SWAP_CHOICES NAME_MODULE NAME_NAME USER_MODULE USER_NAME USERPASS_MODULE USERPASS_CRYPT ROOTPASS_MODULE ROOTPASS_CRYPT HOST_MODULE HOST_NAME SERVICES_MODULE SERVICES_START BOOT_MODULE BOOT_LOADER BOOT_DISK BOOT_WHERE INSTALL_READY'" << endl << endl;
@@ -478,7 +478,7 @@ f << "HD_MAP='";
 if( chkMountpoints->isChecked() )
 for ( int j = 0; j < partTable->numRows(); j++ )
 {
-    // Nur wenn die L√§nge > 1, da so das root-Verzeichnis ausgelassen wird ("/")
+    // Nur wenn die L‰nge > 1, da so das root-Verzeichnis ausgelassen wird ("/")
     if ( partTable->text( j, 1 ).length() > 1 )
     {
         f << partTable->text( j, 0 ) << ":";
@@ -543,7 +543,7 @@ f << "INSTALL_READY='yes'" << endl;
         f.close();
         
         if ( doChecks ) {
-        // Die Konfigurationsdatei auf Fehler √ºberpr√ºfen
+        // Die Konfigurationsdatei auf Fehler ¸berpr¸fen
         shell->setCommand( "kanotix-check-knofig /tmp/.knofig" );
         shell->start( true );
         

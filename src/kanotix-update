@@ -5,7 +5,7 @@
 
 #################### Default Settings ####################
 
-# EXCLUDE_LIST sind die Pfade, die vom Update ausgenommen werden (also nicht gelÃ¶scht/
+# EXCLUDE_LIST sind die Pfade, die vom Update ausgenommen werden (also nicht gelöscht/
 # ersetzt werden)
 EXCLUDE_LIST="/etc/fstab
 /etc/group
@@ -37,8 +37,8 @@ EXCLUDE_LIST="/etc/fstab
 /srv
 /var"
 
-# INCLUDE_LIST sind die Pfade, die unbedingt gelÃ¶scht/ersetzt werden mÃ¼ssen, da ansonsten
-# Konflikte mit der neuen Installation auftreten wÃ¼rden
+# INCLUDE_LIST sind die Pfade, die unbedingt gelöscht/ersetzt werden müssen, da ansonsten
+# Konflikte mit der neuen Installation auftreten würden
 INCLUDE_LIST="/etc/init.d
 /etc/rc?.d
 /etc/modprobe.d
@@ -67,10 +67,10 @@ INCLUDE_LIST="/etc/init.d
 /root/.kde/share/config/kmixctrlrc
 /root/.kde/share/config/kmixrc"
 
-# MOUNTPOINTS_TO_OVERWRITE sind die Mountpoints, die wÃ¤hrend des Upgrades gemounted werden.
+# MOUNTPOINTS_TO_OVERWRITE sind die Mountpoints, die während des Upgrades gemounted werden.
 # Wenn z.B. /dev/hda3 auf /usr gemounted wird und /usr in MOUNTPOINTS_TO_OVERWRITE steht,
-# dann werden alle Dateien/Ordner auf hda3 gelÃ¶scht, auÃŸer in der EXCLUDE_LIST steht /usr
-# oder ein Unterverzeichnis von /usr (das wÃ¼rde dann Ã¼brig bleiben).
+# dann werden alle Dateien/Ordner auf hda3 gelöscht, außer in der EXCLUDE_LIST steht /usr
+# oder ein Unterverzeichnis von /usr (das würde dann übrig bleiben).
 MOUNTPOINTS_TO_OVERWRITE="/bin
 /dev
 /etc

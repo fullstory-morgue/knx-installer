@@ -1,0 +1,132 @@
+diff -Nrup --exclude='*.svn' a/src/kanotix-update b/src/kanotix-update
+--- a/src/kanotix-update	2006-11-04 00:35:28.000000000 +0100
++++ b/src/kanotix-update	2006-11-04 00:35:11.000000000 +0100
+@@ -5,7 +5,7 @@
+ 
+ #################### Default Settings ####################
+ 
+-# EXCLUDE_LIST sind die Pfade, die vom Update ausgenommen werden (also nicht gelˆscht/
++# EXCLUDE_LIST sind die Pfade, die vom Update ausgenommen werden (also nicht gel√∂scht/
+ # ersetzt werden)
+ EXCLUDE_LIST="/etc/fstab
+ /etc/group
+@@ -37,8 +37,8 @@ EXCLUDE_LIST="/etc/fstab
+ /srv
+ /var"
+ 
+-# INCLUDE_LIST sind die Pfade, die unbedingt gelˆscht/ersetzt werden m¸ssen, da ansonsten
+-# Konflikte mit der neuen Installation auftreten w¸rden
++# INCLUDE_LIST sind die Pfade, die unbedingt gel√∂scht/ersetzt werden m√ºssen, da ansonsten
++# Konflikte mit der neuen Installation auftreten w√ºrden
+ INCLUDE_LIST="/etc/init.d
+ /etc/rc?.d
+ /etc/modprobe.d
+@@ -67,10 +67,10 @@ INCLUDE_LIST="/etc/init.d
+ /root/.kde/share/config/kmixctrlrc
+ /root/.kde/share/config/kmixrc"
+ 
+-# MOUNTPOINTS_TO_OVERWRITE sind die Mountpoints, die w‰hrend des Upgrades gemounted werden.
++# MOUNTPOINTS_TO_OVERWRITE sind die Mountpoints, die w√§hrend des Upgrades gemounted werden.
+ # Wenn z.B. /dev/hda3 auf /usr gemounted wird und /usr in MOUNTPOINTS_TO_OVERWRITE steht,
+-# dann werden alle Dateien/Ordner auf hda3 gelˆscht, auﬂer in der EXCLUDE_LIST steht /usr
+-# oder ein Unterverzeichnis von /usr (das w¸rde dann ¸brig bleiben).
++# dann werden alle Dateien/Ordner auf hda3 gel√∂scht, au√üer in der EXCLUDE_LIST steht /usr
++# oder ein Unterverzeichnis von /usr (das w√ºrde dann √ºbrig bleiben).
+ MOUNTPOINTS_TO_OVERWRITE="/bin
+ /dev
+ /etc
+diff -Nrup --exclude='*.svn' a/src/knxinstallerwidget.cpp b/src/knxinstallerwidget.cpp
+--- a/src/knxinstallerwidget.cpp	2006-09-09 21:46:42.000000000 +0200
++++ b/src/knxinstallerwidget.cpp	2006-11-04 00:35:11.000000000 +0100
+@@ -58,7 +58,7 @@ knxinstallerWidget::knxinstallerWidget(Q
+         {
+             knofig.readLine( temp, 512 );
+             
+-            // Kommentare lˆschen
++            // Kommentare l√∂schen
+             temp = temp.section( "#", 0, 0 );
+             temp = temp.simplifyWhiteSpace();
+             if ( temp.isNull() ) {
+@@ -152,7 +152,7 @@ void knxinstallerWidget::readFstab()
+     while ( !fstab.atEnd() ) {
+         fstab.readLine( temp, 512 );
+ 
+-        // Kommentare lˆschen
++        // Kommentare l√∂schen
+         temp = temp.section( "#", 0, 0 );
+         temp = temp.simplifyWhiteSpace();
+         if ( temp.isNull() ) {
+@@ -204,7 +204,7 @@ void knxinstallerWidget::readFstab()
+             inputRootPartition_Recover->insertItem( zeile.section( " ", 0, 0 ) );
+         }
+     }
+-    // Root-Partition vorausw‰hlen
++    // Root-Partition vorausw√§hlen
+     for ( int j = 0; j < partTable->numRows(); j++ )
+     {
+         if ( partTable->text( j, 0 ) == inputRootPartition->currentText() )
+@@ -255,7 +255,7 @@ QString encrypt( QString pwd )
+ 
+ void knxinstallerWidget::cmdNext_clicked()
+ {
+-    // Shell zum Ausf¸hren vorbereiten
++    // Shell zum Ausf√ºhren vorbereiten
+     ExecProcess *shell = new ExecProcess();
+     
+     if ( tabWidget->currentPageIndex() < tabWidget->count()-1 )
+@@ -278,7 +278,7 @@ void knxinstallerWidget::cmdNext_clicked
+             f << txtExclude->text();
+             f.close();
+             
+-            // Ausf¸hren
++            // Ausf√ºhren
+             shell->setCommand( command );
+             shell->start( false );
+             exit( 0 );
+@@ -369,7 +369,7 @@ void knxinstallerWidget::cmdNext_clicked
+ 
+         if( doChecks ) {
+         QString error = "";
+-        // Daten auf Richtigkeit ¸berpr¸fen
++        // Daten auf Richtigkeit √ºberpr√ºfen
+         if ( ((QString) inputRootPW1->password()) != ((QString) inputRootPW2->password()) )
+         {
+             tabWidget->setCurrentPage( 3 );
+@@ -433,7 +433,7 @@ void knxinstallerWidget::cmdNext_clicked
+         }
+         }
+         
+-        // Passwˆrter verschl¸sseln oder geladene Passwˆrter verwenden
++        // Passw√∂rter verschl√ºsseln oder geladene Passw√∂rter verwenden
+         QString strRootPW; QString strUserPW;
+         if( inputRootPW1->password() == QString("******") && rootpass_crypt )
+             { strRootPW = rootpass_crypt; }
+@@ -449,8 +449,8 @@ void knxinstallerWidget::cmdNext_clicked
+         if(!services_start) services_start = "kdm cupsys";
+         
+         // Datei .knofig erzeugen
+-        // erstmal tempor‰r, da nicht sicher ist ob wir Schreibrecht f¸r /home/knoppix haben
+-        // wird sp‰ter aber dannn per sudo nach /home/knoppix/.knofig verschoben
++        // erstmal tempor√§r, da nicht sicher ist ob wir Schreibrecht f√ºr /home/knoppix haben
++        // wird sp√§ter aber dannn per sudo nach /home/knoppix/.knofig verschoben
+         fstream f;
+         f.open("/tmp/.knofig", ios::out);
+ f << "REGISTERED=' SYSTEM_MODULE SYSTEM_TYPE HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK SWAP_MODULE SWAP_AUTODETECT SWAP_CHOICES NAME_MODULE NAME_NAME USER_MODULE USER_NAME USERPASS_MODULE USERPASS_CRYPT ROOTPASS_MODULE ROOTPASS_CRYPT HOST_MODULE HOST_NAME SERVICES_MODULE SERVICES_START BOOT_MODULE BOOT_LOADER BOOT_DISK BOOT_WHERE INSTALL_READY'" << endl << endl;
+@@ -478,7 +478,7 @@ f << "HD_MAP='";
+ if( chkMountpoints->isChecked() )
+ for ( int j = 0; j < partTable->numRows(); j++ )
+ {
+-    // Nur wenn die L‰nge > 1, da so das root-Verzeichnis ausgelassen wird ("/")
++    // Nur wenn die L√§nge > 1, da so das root-Verzeichnis ausgelassen wird ("/")
+     if ( partTable->text( j, 1 ).length() > 1 )
+     {
+         f << partTable->text( j, 0 ) << ":";
+@@ -543,7 +543,7 @@ f << "INSTALL_READY='yes'" << endl;
+         f.close();
+         
+         if ( doChecks ) {
+-        // Die Konfigurationsdatei auf Fehler ¸berpr¸fen
++        // Die Konfigurationsdatei auf Fehler √ºberpr√ºfen
+         shell->setCommand( "kanotix-check-knofig /tmp/.knofig" );
+         shell->start( true );
+         
