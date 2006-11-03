@@ -1,1692 +1,673 @@
-# translation of knxinstaller.pot to Italian
-# This file is distributed under the same license as the knxinstaller package.
-# Copyright (C) 2005 Andreas Loibl <andreas@andreas-loibl.de>
-# For italian translation only Alessio Giustini <alessio@alessiogiustini.com>, GNU/FDL 2005.
+# Translation of knx-installer.po into italian
+# Copyright (C) eduknoppix.org team, GPL license
+# Marco Ciampa <ciampix@libero.it>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: it\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-04 22:46+0200\n"
-"PO-Revision-Date: 2006-01-06 10:47+0100\n"
-"Last-Translator: Alessio Giustini <alessio@alessiogiustini.com>\n"
-"Language-Team: <it@li.org>\n"
+"Project-Id-Version: 0.3\n"
+"PO-Revision-Date: 2004-05-20 17:22+0200\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: 2\n"
 
-#: _translatorinfo.cpp:1
+#: knoppix-installer:62
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "l'installatore di $FLL_DISTRO_NAME è stato interrotto"
+
+#: knoppix-installer:77
+msgid "Save configuration?"
+msgstr "Salvare la configurazione?"
+
+#: knoppix-installer:77
+msgid "Do you want to save your configuration?"
+msgstr "Vuoi salvare la configurazione?"
+
+#: knoppix-installer:88
+msgid "$FLL_DISTRO_NAME Installation"
+msgstr "Installazione di $FLL_DISTRO_NAME"
+
+#: knoppix-installer:89
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+msgstr "Installazione di $FLL_DISTRO_NAME su harddisk (passo 0/$MAX)"
+
+#: knoppix-installer:90
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
+msgstr "Inizializzazione dell'installazione di $FLL_DISTRO_NAME"
+
+#: knoppix-installer:92
+msgid "Installation failed"
+msgstr "Installazione fallita"
+
+#: knoppix-installer:93
+msgid "Installation successfull"
+msgstr "Installazione terminata con successo"
+
+#: knoppix-installer:94
+msgid "Fatal dialog error"
+msgstr "Errore fatale delle finestre di dialogo"
+
+#: knoppix-installer:154
+msgid "Choose System Type"
+msgstr "Scegli il tipo di sistema"
+
+#: knoppix-installer:167
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Passo di creazione della configurazione di $FLL_DISTRO_NAME (0/$NUM_REAL_MODULES)"
+
+#: knoppix-installer:195 knoppix-installer:197
 msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr ""
-"_: NOME DEI TRADUTTORI\n"
-"Alessio Giustini"
+"Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
+msgstr "Errore: valore sconosciuto $2 per $1\\nUso valore predefinito ($DEFAULT_TEMP)."
 
-#: _translatorinfo.cpp:3
+#: knoppix-installer:206 knoppix-installer:208
 msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr ""
-"_: EMAIL DEI TRADUTTORI\n"
-"alessio@alessiogiustini.com"
+"Error: Check failed for $1 ($2)\\nThe configuration module will now be "
+"started."
+msgstr "Errore: controllo fallito per $1 ($2)\\nOra verrà eseguito il modulo di configurazione."
 
-#: knxinstallerwidget.cpp:231 knxinstallerwidget.cpp:304
-msgid "MBR of %1"
-msgstr "MBR di %1"
+#: knoppix-installer:223
+msgid "Loading $FLL_DISTRO_NAME configuration"
+msgstr "Caricamento della configurazione di $FLL_DISTRO_NAME"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 588
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1134
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1283
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1372
-#. i18n: file ./knxinstallerwidgetbase.ui line 588
-#. i18n: file ./knxinstallerwidgetbase.ui line 1142
-#. i18n: file ./knxinstallerwidgetbase.ui line 1291
-#. i18n: file ./knxinstallerwidgetbase.ui line 1380
-#: knxinstallerwidget.cpp:234 knxinstallerwidgetbase.cpp:4069
-#: knxinstallerwidgetbase.cpp:4117 knxinstallerwidgetbase.cpp:4134
-#: knxinstallerwidgetbase.cpp:4147 rc.cpp:132 rc.cpp:236 rc.cpp:272 rc.cpp:301
-#: rc.cpp:454 rc.cpp:561 rc.cpp:597 rc.cpp:626
-#, no-c-format
-msgid "Rootpartition"
-msgstr "Partizione di root"
+#: knoppix-installer:226
+msgid "Here you can input a filename to load an existing configuration"
+msgstr "Qui puoi inserire un nome file per caricare una configurazione preesistente"
 
-#: knxinstallerwidget.cpp:332
-msgid "Bootloader successfully installed."
-msgstr "Gestore d'avvio installato con successo."
+#: knoppix-installer:226
+msgid "Input the configuration filename to be loaded"
+msgstr "Inserire il nome della configurazione da caricare"
 
-#: knxinstallerwidget.cpp:338
-msgid "Clear MBR"
-msgstr "Pulisci MBR"
-
-#: knxinstallerwidget.cpp:338
+#: knoppix-installer:231
 msgid ""
-"Are you sure that you want to restore\n"
-"the standart MBR to harddisk %1?"
-msgstr ""
-"Sei sicuro di volere ripristinare\n"
-"l'MBR standard nell'hard disk %1?"
+"File $CONFIG_USER could not be found. The loading of the configuration will "
+"be aborted."
+msgstr "File $CONFIG_USER non trovato. Il caricamento della configurazione verrà interrotto."
 
-#: knxinstallerwidget.cpp:345
-msgid "Successfully restored default MBR."
-msgstr "MBR di default ripristinato con successo."
+#: knoppix-installer:254
+msgid "Saving $FLL_DISTRO_NAME configuration"
+msgstr "Salvataggio della configurazione di $FLL_DISTRO_NAME"
 
-#: knxinstallerwidget.cpp:350
-msgid "An Error occurred while running %1!"
-msgstr "Un errore si è verificato eseguendo %1!"
+#: knoppix-installer:257
+msgid "Here you can input a filename to save the configuration"
+msgstr "Qui puoi inserire un nome file su cui salvare la configurazione"
 
-#: knxinstallerwidget.cpp:368
+#: knoppix-installer:257
+msgid "Input a filename for the configuration"
+msgstr "Inserire un nome file su cui salvare la configurazione"
+
+#: knoppix-installer:263
 msgid ""
-"Warning: You have selected to force the installation.\n"
-"This means, that no RAM-/Swap-/Partition-/Format-Check etc. will be done!\n"
-"\n"
-"Do you really want to continue?"
-msgstr ""
-"Attenzione: hai scelto di forzare l'installazione.\n"
-"Questo significa che non verrà controllato:RAM,Swap,Partizioni,Formattazione,"
-"ecc.!\n"
-"\n"
-"Vuoi veramente continuare?"
+"If you click yes, the file will be overwritten, otherwise this script will "
+"abort"
+msgstr "Se si fa clic su Sì, il file verrà sovrascritto, altrimenti lo script verrà interrotto"
 
-#: knxinstallerwidget.cpp:385
-msgid "The specified Root-Passwords don't match!"
-msgstr "La password di root specificata non corrisponde!"
+#: knoppix-installer:263
+msgid "Do you really want to overwrite $CONFIG_USER?"
+msgstr "Sei sicuro di voler sovrascrivere $CONFIG_USER?"
 
-#: knxinstallerwidget.cpp:391
-msgid "The specified Root-Password is too short (min. 6 chars)"
-msgstr "La password di root specificata è troppo corta (min. 6 caratteri)"
+#: knoppix-installer:276
+msgid "Possible are:"
+msgstr "Possibilità:"
 
-#: knxinstallerwidget.cpp:397
-msgid "The specified Root-Password is too long (max. 20 chars)"
-msgstr "La password di root specificata è troppo lunga (max. 20 caratteri)"
+#: knoppix-installer:278
+msgid "This value will be checked by function"
+msgstr "Questo valore verrà controllato per funzione"
 
-#: knxinstallerwidget.cpp:403
-msgid "The specified User-Passwords don't match!"
-msgstr "La password dell'utente specificata non corrisponde!"
+#: knoppix-installer:280
+msgid "Default value is:"
+msgstr "Il valore predefinito è:"
 
-#: knxinstallerwidget.cpp:409
-msgid "The specified User-Password is too short (min. 6 chars)"
-msgstr "La password dell'utente specificata è troppo corta (min. 6 caratteri)"
-
-#: knxinstallerwidget.cpp:415
-msgid "The specified User-Password is too long (max. 20 chars)"
-msgstr "La password dell'utente specificata è troppo lunga (max. 20 caratteri)"
-
-#: knxinstallerwidget.cpp:421
-msgid "You must enter a Username!"
-msgstr "Devi inserire un nome utente!"
-
-#: knxinstallerwidget.cpp:427
-msgid "You must enter a Hostname!"
-msgstr "Devi inserire un nome di host!"
-
-#: knxinstallerwidget.cpp:433
+#: knoppix-installer:299
 msgid ""
-"You must select a Root-Partition!\n"
-"\n"
-"If there is nothing to choose you must create a Linux-Partition first..."
-msgstr ""
-"Devi selezionare una partizione di root!\n"
-"\n"
-"Se non c'è niente da scegliere devi prima creare una partizione Linux..."
+"Several of this options can only be changed in the Configurationfile "
+"$CONFIG_FILE."
+msgstr "Molte di queste opzioni possono essere cambiate solo nel file di configurazione $CONFIG_FILE."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 53
-#. i18n: file ./knxinstallerwidgetbase.ui line 53
-#: knxinstallerwidget.cpp:438 knxinstallerwidget.cpp:671
-#: knxinstallerwidgetbase.cpp:4006 rc.cpp:6 rc.cpp:324
-#, no-c-format
-msgid "Next"
-msgstr "Avanti"
-
-#: knxinstallerwidget.cpp:586 knxinstallerwidget.cpp:596
-msgid "Begin Installation"
-msgstr "Inizia l'installazione"
-
-#: knxinstallerwidget.cpp:586
+#: knoppix-installer:300
 msgid ""
-"The configuration has been saved successfully.\n"
-"Do you really want to start the Installation now?"
-msgstr ""
-"La configurazione è stata salvata con successo.\n"
-"Vuoi veramente iniziare l'installazione adesso?"
+"The Installation will now be started. The author and knopper.net give no "
+"warranty against any damage caused by this script."
+msgstr "L'installazione inizierà ora. L'autore e knopper.net non danno nessuna garanzia per i danni eventuali che questo script potrebbe provocare."
 
-#: knxinstallerwidget.cpp:596
+#: knoppix-installer:302
+msgid "Do you want to proceed with these parameters?"
+msgstr "Procedere con questi parametri?"
+
+#: knoppix-installer:304
 msgid ""
-"The configuration has been saved successfully.\n"
-"Do you want to see/manually edit it?"
-msgstr ""
-"La configurazione è stata salvata con successo.\n"
-"Vuoi vederla/modificarla manualmente?"
+"Make sure you agree to all parameters, if so proceed with the installation."
+msgstr "Controlla la correttezza di tutti i parametri, quando hai finito procedi con l'installazione."
 
-#: knxinstallerwidget.cpp:630 knxinstallerwidget.cpp:664
-msgid "Begin installation"
-msgstr "Inizia l'installazione"
+#: knoppix-installer:319
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
+msgstr "Conversione di $FLL_DISTRO_NAME in Debian..."
 
-#: knxinstallerwidget.cpp:650
-msgid "Begin Recovery"
-msgstr "Inizia il ripristino"
+#: knoppix-installer:349 knoppix-installer:359 knoppix-installer:463
+msgid "Starting $FLL_DISTRO_NAME installation"
+msgstr "Inizio installazione $FLL_DISTRO_NAME"
 
-#: knxinstallerwidget.cpp:654
-msgid "Begin Update"
-msgstr "Inizia l'aggiornamento"
+#: knoppix-installer:352
+msgid "Error: No complete Configuration found"
+msgstr "Errore: non è stata trovata una configurazione completa"
 
-#: knxinstallerwidget.cpp:723
+#: knoppix-installer:360 knoppix-installer:464
+msgid "Installing"
+msgstr "Installazione in corso"
+
+#: knoppix-installer:376
+msgid "Creating floppy disk"
+msgstr "Creazione di un disco floppy in corso"
+
+#: knoppix-installer:376
 msgid ""
-"The Partition-Table has been changed.\n"
-"Do you want to rebuild the FStab now?"
+"Please insert now an empty floppy disk into your floppydrive. Warning: All "
+"data on it will be lost. If you don't want to create a disk you can choose "
+"No."
+msgstr "Inserire un disco floppy vuoto nel drive. Attenzione: tutti i dati presenti su di esso verranno persi! Se non si vuole creare un disco, scegliere No."
+
+#: knoppix-installer:396 knoppix-installer:397 knoppix-installer:484
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
+msgstr "$FLL_DISTRO_NAME è stato installato con successo su hd."
+
+#: knoppix-installer:403
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "Menu principale di $FLL_DISTRO_NAME"
+
+#: knoppix-installer:404
+msgid "Thats the main menu\\nChoose the action you want"
+msgstr "Questo è il menu principale\\nScegli l'operazione da svolgere"
+
+#: knoppix-installer:404 modules/00-hd-tools.bm:174
+msgid "Choose an action"
+msgstr "Scegli l'operazione"
+
+#: knoppix-installer:405
+msgid "Configure Installation"
+msgstr "Configura l'installazione"
+
+#: knoppix-installer:405
+msgid "Create a new configuration"
+msgstr "Crea una nuova configurazione"
+
+#: knoppix-installer:406
+msgid "Start installation"
+msgstr "Comincia l'installazione"
+
+#: knoppix-installer:406
+msgid "Start the installation"
+msgstr "Comincia l'installazione"
+
+#: knoppix-installer:407 modules/00-hd-tools.bm:174
+msgid "Partition"
+msgstr "Partiziona"
+
+#: knoppix-installer:407 modules/00-hd-tools.bm:174
+msgid "Partition the hard disk"
+msgstr "Partiziona il disco rigido"
+
+#: knoppix-installer:408
+msgid "Load config"
+msgstr "Carica configurazione"
+
+#: knoppix-installer:408
+msgid "Load an existing configuration"
+msgstr "Carica una configurazione preesistente"
+
+#: knoppix-installer:409
+msgid "Save config"
+msgstr "Salva configurazione"
+
+#: knoppix-installer:409
+msgid "Save the configuration"
+msgstr "Salva la configurazione"
+
+#: knoppix-installer:410 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
+msgid "Quit"
+msgstr "Esci"
+
+#: knoppix-installer:410 modules/00-hd-tools.bm:174
+msgid "Quit the program"
+msgstr "Esci dal programma"
+
+#: knoppix-installer:415 knoppix-installer:450
+msgid "$FLL_DISTRO_NAME-installer started"
+msgstr "partenza installatore $FLL_DISTRO_NAME"
+
+#: knoppix-installer:416
+msgid ""
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
+"still an very early version and under heavy development.\n"
+"The author and knopper.net take no responsibility for data loss or hardware "
+"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \\n"
+"\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal."
+"de> \\nfixes by Joerg Schirottke <master@kanotix.de>"
 msgstr ""
-"La tabella delle partizioni è cambiata.\n"
-"Vuoi ricostruire l'fstab ora?"
+"Questo script installerà $FLL_DISTRO_NAME sul disco rigido. Nota che questa è una delle prime versioni e ancora in fase di forte sviluppo.\n"
+"L'autore e knopper.net non si prendono nessuna responsabilità per perdite di dati o danneggiamento hardware. \\n\\nAutore: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nbasata sull'ottimo lavoro di Christian Perle <perle@itm.tu-clausthal.de> \\ncorrezioni di Joerg Schirottke <master@kanotix.de>"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 388
-#. i18n: file ./knxinstallerwidgetbase.ui line 388
-#: knxinstallerwidgetbase.cpp:3590 knxinstallerwidgetbase.cpp:4052 rc.cpp:96
-#: rc.cpp:418
-#, no-c-format
-msgid "Device"
-msgstr "Periferica"
+#: knoppix-installer:427
+msgid ""
+"The installer detected that the installation requierements are not "
+"fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
+"at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. Also we need a "
+"swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
+"Memory or more.\\n\\nIn the following menu, you can start some tools to "
+"partition your harddrive.\\nIf you really really know what you are doing "
+"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
+msgstr "L'installatore ha rilevato che i requisiti per l'installazione non sono ancora soddisfatti.\\n\\nControllare la presenza di una partizione libera con almeno $[ROOT_MIN/(1024*1024)] GB per installarvi sopra $FLL_DISTRO_NAME. È necessaria anche una partizione di scambio (swap) se non si ha almeno 512 MB di RAM.\\n\\nNel menu seguente è possibile eseguire alcuni strumenti per il partizionamento del disco rigido.\\nSe lo si desidera e se si è sicuri di ciò che si fa' è possibile eseguire l'installatore con il comando: IGNORE_CHECK=1 sudo knoppix-installer per evitare questo menu."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 393
-#. i18n: file ./knxinstallerwidgetbase.ui line 393
-#: knxinstallerwidgetbase.cpp:3592 knxinstallerwidgetbase.cpp:4053 rc.cpp:99
-#: rc.cpp:421
-#, no-c-format
-msgid "Mountpoint"
-msgstr "Punto di mount"
+#: knoppix-installer:434 knoppix-installer:453
+msgid "Partition check succeeded"
+msgstr "Controllo delle partizioni passato"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 23
-#. i18n: file ./knxinstallerwidgetbase.ui line 23
-#: knxinstallerwidgetbase.cpp:4005 rc.cpp:3 rc.cpp:321
-#, no-c-format
-msgid "knxinstallerwidgetbase"
-msgstr "knxinstallerwidgetbase"
+#: knoppix-installer:457
+msgid ""
+"Config file $CONFIG_FILE could not be found. This is necessary for non-"
+"interactive mode."
+msgstr "Il file di configurazione $CONFIG_FILE non è stato trovato. È necessario per la modalità non interattiva."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 67
-#. i18n: file ./knxinstallerwidgetbase.ui line 67
-#: knxinstallerwidgetbase.cpp:4009 rc.cpp:13 rc.cpp:331
-#, no-c-format
-msgid "Alt+C"
-msgstr "Alt+C"
+#: knoppix-installer:498
+msgid "root permission needed."
+msgstr "sono necessari i permessi di amministratore (root)."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 75
-#. i18n: file ./knxinstallerwidgetbase.ui line 75
-#: knxinstallerwidgetbase.cpp:4010 rc.cpp:16 rc.cpp:334
-#, no-c-format
-msgid "Pre&vious"
+#: modules/booting/boot-tools.bm:705
+msgid "Creating initrd for kernel $BOOT_KERNEL ..."
+msgstr "Creazione di initrd per il kernel $BOOT_KERNEL..."
+
+#: modules/booting/boot-tools.bm:730
+msgid "Installing $BOOT_LOADER to $BOOT_WHERE"
+msgstr "Installazione di $BOOT_LOADER su $BOOT_WHERE"
+
+#: modules/booting/boot-tools.bm:740
+msgid "Finishing installation"
+msgstr "Fine dell'installazione"
+
+#: modules/01-hd.bm:11
+msgid "Determines if the HD should be formatted. (mkfs.*)"
+msgstr "Controllo se il disco rigido necessita di formattazione."
+
+#: modules/01-hd.bm:12
+msgid "Sets the Filesystem type."
+msgstr "Imposta il tipo di file system."
+
+#: modules/01-hd.bm:13
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
+msgstr "Qui verrà installato il sistema $FLL_DISTRO_NAME"
+
+#: modules/01-hd.bm:14
+msgid ""
+"Here you can give additional mappings. (Experimental) You need to have the "
+"partitions formatted yourself and give the correct mappings like: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr "Qui è possibile aggiungere impostazioni (sperimentale). Devi avere delle partizioni preformattate e devi inserire i dati correttamente, come per esempio: \\\"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+
+#: modules/01-hd.bm:15
+msgid ""
+"If set to yes, the program will NOT check if there is enough space to "
+"install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful "
+"for example with HD_MAP if you only have a small root partition."
+msgstr "Se imposti 'Sì', il programma non controllerà se c'è spazio a sufficienza per installare $FLL_DISTRO_NAME sulle partizioni selezionate. Usare a vostro rischio e pericolo! Utile per esempio con HD_MAP se si possiede solo una piccola partizione di root."
+
+#: modules/01-hd.bm:21
+msgid "Drive-Options:"
+msgstr "Opzioni-disco:"
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
+msgstr "Il disco $HD_CHOICE verrà formattato con il file system $HD_FSTYPE."
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be used for the installation."
+msgstr "Verrà usato per l'installazione il disco $HD_CHOICE."
+
+#: modules/01-hd.bm:52
+msgid "Copying files. This can take a while. Please be patient."
+msgstr "Copia dei file. Può richiedere parecchio tempo. Attendere."
+
+#: modules/01-hd.bm:64
+msgid "Formatting $HD_CHOICE..."
+msgstr "Formattazione di $HD_CHOICE..."
+
+#: modules/01-hd.bm:82
+msgid ""
+"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
+"$ERROR_MESSAGES"
+msgstr "La formattazione di $HD_CHOICE è fallita. Ecco alcuni messaggi da mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:90
+msgid "Mounting $HD_CHOICE r/w..."
+msgstr "Mount di $HD_CHOICE in lettura e scrittura..."
+
+#: modules/01-hd.bm:96
+msgid ""
+"Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+msgstr "Operazione di mount di $HD_CHOICE fallita. Ecco alcuni messaggi da mount: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:101
+msgid "Mounting additional partitions r/w..."
+msgstr "Mount di partizioni aggiuntive in lettura scrittura..."
+
+#: modules/01-hd.bm:118
+msgid ""
+"Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
+msgstr "Qui devi scegliere una delle partizioni disponibili\\n per usarla con $FLL_DISTRO_NAME."
+
+#: modules/01-hd.bm:118
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
+msgstr "Scegli la partizione dove installare $FLL_DISTRO_NAME"
+
+#: modules/01-hd.bm:131
+msgid "Here you must choose one of the available filesystem types."
+msgstr "Qui devi scegliere uno dei file system disponibili."
+
+#: modules/01-hd.bm:131
+msgid "Choose filesystem-type."
+msgstr "Scegli il tipo di file system."
+
+#: modules/01-hd.bm:132
+msgid "Extended 2 filesystem with journal support."
+msgstr "File system ext con il supporto di journal (ext3)."
+
+#: modules/01-hd.bm:133
+msgid "ReiserFS 3.6: journaling filesystem developed by Namesys."
+msgstr "ReiserFS 3.6: File system sviluppato da Namesys con il supporto di journal."
+
+#: modules/03-host.bm:9
+msgid "Your hostname is: $HOST_NAME"
+msgstr "Il nome della macchina è: $HOST_NAME"
+
+#: modules/03-host.bm:15
+msgid "box"
+msgstr "scatola"
+
+#: modules/03-host.bm:16
+msgid "Here you must input your hostname. This is the name of you box."
+msgstr "Qui devi inserire il nome che preferisci per la tua macchina."
+
+#: modules/03-host.bm:16
+msgid "Input your preferred hostname"
+msgstr "Inserisci il nome scelto per la tua macchina"
+
+#: modules/00-dialog.bm:18
+msgid "Fatal security error."
+msgstr "Errore di sicurezza fatale."
+
+#: modules/00-dialog.bm:64
+msgid "Previous"
 msgstr "Precedente"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 78
-#. i18n: file ./knxinstallerwidgetbase.ui line 78
-#: knxinstallerwidgetbase.cpp:4011 rc.cpp:19 rc.cpp:337
-#, no-c-format
-msgid "Alt+V"
-msgstr "Alt+V"
+#: modules/00-dialog.bm:64
+msgid "Next"
+msgstr "Successivo"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 126
-#. i18n: file ./knxinstallerwidgetbase.ui line 126
-#: knxinstallerwidgetbase.cpp:4012 rc.cpp:25 rc.cpp:343
-#, no-c-format
+#: modules/00-dialog.bm:64
+msgid "Help"
+msgstr "Aiuto"
+
+#: modules/00-hd-tools.bm:77
+msgid "model unknown"
+msgstr "modello sconosciuto"
+
+#: modules/00-hd-tools.bm:88
 msgid ""
-"<font size=\"+3\" face=\"Voreinstellung\">Welcome to the Kanotix HD-"
-"Installation</font>"
-msgstr ""
-"<font size=\"+3\" face=\"Voreinstellung\">Benvenuto nel programma di "
-"installazione di KANOTIX</font>"
+"The following swap-partitions are marked as swap, but are not yet formatted. "
+"Check those you want to format. Warning, you'll loose all data on the "
+"partition."
+msgstr "Le seguenti partizioni sono marcate come di scambio (swap), ma non sono formattate. Seleziona quelle che desideri formattare. Attenzione: tutti i dati presenti sulle suddette partizioni saranno persi!"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 175
-#. i18n: file ./knxinstallerwidgetbase.ui line 175
-#: knxinstallerwidgetbase.cpp:4013 rc.cpp:28 rc.cpp:346
-#, no-c-format
+#: modules/00-hd-tools.bm:141
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
+msgstr "Partizionamento del disco rigido per $FLL_DISTRO_NAME"
+
+#: modules/00-hd-tools.bm:144
 msgid ""
-"<p><b>This application will install Kanotix to your harddisk.</b></p>\n"
-"\n"
-"<p><font color=\"#ff0000\">Note that this version is still an very early "
-"version and under heavy development. The author takes no responsibility for "
-"data loss or hardware damage.</font></p>\n"
-"\n"
-"<p>If you need any help with the installation visit the Kanotix-Website, -"
-"Wiki, -Forum or -Chat!</p>\n"
-"\n"
-"<p>Author: <b>Andreas Loibl</b> &lt;andreas@andreas-loibl.de&gt;<br>\n"
-"<u>http://www.andreas-loibl.de/</u></p>\n"
-"\n"
-"<p>The built-in Partition-Manager in Kanotix-Installer is based on QTParted, "
-"version 0.4.5, by <b>Vanni Brutto</b>.<br>\n"
-"<u>http://qtparted.sourceforge.net/</u></p>\n"
-"\n"
-"<p>\n"
-"Kanotix-Website: <u>http://www.kanotix.net</u>\n"
-"Kanotix-Wiki: <u>http://wiki.kanotix.net</u>\n"
-"Kanotix-Forum: <u>http://forum.kanotix.net</u>\n"
-"Kanotix-IRC: <u>http://irc.kanotix.net</u>\n"
-"</p>"
-msgstr ""
-"<p><b>Questo programma installerà Kanotix nel tuo hard disk.</b></p>\n"
-"\n"
-"<p><font color=\"#ff0000\">Tenere presente che questa è ancora una versione "
-"beta ed è tutt'ora in fase di sviluppo. L'autore non si prende "
-"responsabilità alcuna per perdite di dati o danneggiamento dell'hardware.</"
-"font></p>\n"
-"\n"
-"<p>Se hai bisogno di aiuto con l'installazione visita il sito web di "
-"KANOTIX, il wiki, il forum o la chat!</p>\n"
-"\n"
-"<p>Autore: <b>Andreas Loibl</b> &lt;andreas@andreas-loibl.de&gt;<br>\n"
-"<u>http://www.andreas-loibl.de/</u></p>\n"
-"\n"
-"<p>Il gestore di partizioni integrato nel programma di installazione di "
-"KANOTIX è basato su QTParted, versione 0.4.5, di <b>Vanni Brutto</b>.<br>\n"
-"<u>http://qtparted.sourceforge.net/</u></p>\n"
-"\n"
-"<p>\n"
-"Kanotix-Website: <u>http://www.kanotix.net</u>\n"
-"Kanotix-Wiki: <u>http://wiki.kanotix.net</u>\n"
-"Kanotix-Forum: <u>http://forum.kanotix.net</u>\n"
-"Kanotix-IRC: <u>http://irc.kanotix.net</u>\n"
-"</p>"
+"Here you must choose one of the available disks \\n and partition it for "
+"$FLL_DISTRO_NAME."
+msgstr "Qui devi scegliere uno dei dischi e partizioni \\n disponibili per $FLL_DISTRO_NAME."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 183
-#. i18n: file ./knxinstallerwidgetbase.ui line 183
-#: knxinstallerwidgetbase.cpp:4031 rc.cpp:48 rc.cpp:366
-#, no-c-format
-msgid "Select your Installation-Mode"
-msgstr "Seleziona la modalità di installazione"
+#: modules/00-hd-tools.bm:144
+msgid "Choose one disk"
+msgstr "Scegli un disco"
 
-#. i18n: file ./knxinstallerwidgetbase.ui line 194
-#: knxinstallerwidgetbase.cpp:4032 rc.cpp:369
-#, fuzzy, no-c-format
-msgid "&Install Kanotix to HD"
-msgstr "Installa KANOTIX nell'hard disk"
+#: modules/00-hd-tools.bm:173
+msgid "$FLL_DISTRO_NAME Partition-Menu"
+msgstr "Menu di partizionamento $FLL_DISTRO_NAME"
 
-#. i18n: file ./knxinstallerwidgetbase.ui line 197
-#: knxinstallerwidgetbase.cpp:4033 rc.cpp:372
-#, fuzzy, no-c-format
-msgid "Alt+I"
-msgstr "Alt+C"
+#: modules/00-hd-tools.bm:174
+msgid "Here you can partition your hard disk"
+msgstr "Qui puoi partizionare il tuo disco rigido"
 
-#. i18n: file ./knxinstallerwidgetbase.ui line 208
-#: knxinstallerwidgetbase.cpp:4034 rc.cpp:375
-#, fuzzy, no-c-format
-msgid "Update an existing &Kanotix HD-Installation"
-msgstr "Aggiorna una installazione su hard disk già esistente di KANOTIX"
+#: modules/02-swap.bm:12
+msgid "If set to yes, the swap partitions will be autodetected."
+msgstr "Se imposti 'Sì', le partizioni di scambio (swap) saranno autorilevate."
 
-#. i18n: file ./knxinstallerwidgetbase.ui line 211
-#: knxinstallerwidgetbase.cpp:4035 rc.cpp:378
-#, fuzzy, no-c-format
-msgid "Alt+K"
-msgstr "Alt+C"
+#: modules/02-swap.bm:13
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
+msgstr "Le partizioni di scambio usate dalla $FLL_DISTRO_NAME installata."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 219
-#. i18n: file ./knxinstallerwidgetbase.ui line 219
-#: knxinstallerwidgetbase.cpp:4036 rc.cpp:59 rc.cpp:381
-#, no-c-format
-msgid "&Recover an existing Kanotix-HD-Installation"
-msgstr "Ripristina una installazione su hard disk già esistente di KANOTIX"
+#: modules/02-swap.bm:18
+msgid "Swapspace-Options:"
+msgstr "Opzioni di scambio (swap):"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 222
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 478
-#. i18n: file ./knxinstallerwidgetbase.ui line 222
-#. i18n: file ./knxinstallerwidgetbase.ui line 478
-#: knxinstallerwidgetbase.cpp:4037 knxinstallerwidgetbase.cpp:4061 rc.cpp:62
-#: rc.cpp:115 rc.cpp:384 rc.cpp:437
-#, no-c-format
-msgid "Alt+R"
-msgstr "Alt+R"
+#: modules/02-swap.bm:21
+msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
+msgstr "Verranno usati i dischi di scambio (swap) autorilevati $SWAP_CHOICES."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 107
-#. i18n: file ./knxinstallerwidgetbase.ui line 107
-#: knxinstallerwidgetbase.cpp:4038 rc.cpp:22 rc.cpp:340
-#, no-c-format
-msgid "Welc&ome"
-msgstr "Benvenuto"
+#: modules/02-swap.bm:21
+msgid "The choosen swapdrives $SWAP_CHOICES will be used."
+msgstr "Verranno usati i dischi di scambio (swap) scelti $SWAP_CHOICES."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 261
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1061
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1318
-#. i18n: file ./knxinstallerwidgetbase.ui line 261
-#. i18n: file ./knxinstallerwidgetbase.ui line 1069
-#. i18n: file ./knxinstallerwidgetbase.ui line 1326
-#: knxinstallerwidgetbase.cpp:4039 knxinstallerwidgetbase.cpp:4111
-#: knxinstallerwidgetbase.cpp:4139 rc.cpp:68 rc.cpp:224 rc.cpp:284 rc.cpp:390
-#: rc.cpp:549 rc.cpp:609
-#, no-c-format
-msgid "Root-Partition:"
-msgstr "Partizione di root:"
+#: modules/02-swap.bm:23
+msgid "No swap partitions are needed."
+msgstr "Non è necessario usare nessuna partizione di scambio (swap)."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 284
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1084
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1263
-#. i18n: file ./knxinstallerwidgetbase.ui line 284
-#. i18n: file ./knxinstallerwidgetbase.ui line 1092
-#. i18n: file ./knxinstallerwidgetbase.ui line 1271
-#: knxinstallerwidgetbase.cpp:4041 knxinstallerwidgetbase.cpp:4113
-#: knxinstallerwidgetbase.cpp:4130 rc.cpp:71 rc.cpp:227 rc.cpp:263 rc.cpp:393
-#: rc.cpp:552 rc.cpp:588
-#, no-c-format
-msgid "/dev/hda1"
-msgstr "/dev/hda1"
+#: modules/02-swap.bm:39
+msgid "Adding swap-devices to /etc/fstab ..."
+msgstr "Inserimento dei dispositivi di scambio (swap) a /etc/fstab..."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 289
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1089
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1268
-#. i18n: file ./knxinstallerwidgetbase.ui line 289
-#. i18n: file ./knxinstallerwidgetbase.ui line 1097
-#. i18n: file ./knxinstallerwidgetbase.ui line 1276
-#: knxinstallerwidgetbase.cpp:4042 knxinstallerwidgetbase.cpp:4114
-#: knxinstallerwidgetbase.cpp:4131 rc.cpp:74 rc.cpp:230 rc.cpp:266 rc.cpp:396
-#: rc.cpp:555 rc.cpp:591
-#, no-c-format
-msgid "/dev/hda2"
-msgstr "/dev/hda2"
+#: modules/00-setuser.bm:5
+msgid "Changing user in Passwd/Shadow..."
+msgstr "Cambio utente in passwd/shadow..."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 311
-#. i18n: file ./knxinstallerwidgetbase.ui line 311
-#: knxinstallerwidgetbase.cpp:4043 rc.cpp:77 rc.cpp:399
-#, no-c-format
-msgid "format &with"
-msgstr "formatta con"
+#: modules/00-setuser.bm:23
+msgid "Setting passwords ..."
+msgstr "Impostazioni password..."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 314
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1002
-#. i18n: file ./knxinstallerwidgetbase.ui line 314
-#. i18n: file ./knxinstallerwidgetbase.ui line 1010
-#: knxinstallerwidgetbase.cpp:4044 knxinstallerwidgetbase.cpp:4107 rc.cpp:80
-#: rc.cpp:214 rc.cpp:402 rc.cpp:539
-#, no-c-format
-msgid "Alt+W"
-msgstr "Alt+W"
+#: modules/00-setuser.bm:28
+msgid "Updating group ..."
+msgstr "Aggiornamento gruppo..."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 340
-#. i18n: file ./knxinstallerwidgetbase.ui line 340
-#: knxinstallerwidgetbase.cpp:4046 rc.cpp:83 rc.cpp:405
-#, no-c-format
-msgid "ext3"
-msgstr "ext3"
+#: modules/04-user-name-pass.bm:9
+msgid "Name-Options:"
+msgstr "Opzioni del nome:"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 345
-#. i18n: file ./knxinstallerwidgetbase.ui line 345
-#: knxinstallerwidgetbase.cpp:4047 rc.cpp:86 rc.cpp:408
-#, no-c-format
-msgid "reiserfs"
-msgstr "reiserfs"
+#: modules/04-user-name-pass.bm:10
+msgid "Your name is: $NAME_NAME"
+msgstr "Il tuo nome è: $NAME_NAME"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 350
-#. i18n: file ./knxinstallerwidgetbase.ui line 350
-#: knxinstallerwidgetbase.cpp:4048 rc.cpp:89 rc.cpp:411
-#, no-c-format
-msgid "jfs"
-msgstr "jfs"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 382
-#. i18n: file ./knxinstallerwidgetbase.ui line 382
-#: knxinstallerwidgetbase.cpp:4050 rc.cpp:92 rc.cpp:414
-#, no-c-format
+#: modules/04-user-name-pass.bm:15
 msgid ""
-"Set mountpoints of other partitions\n"
-"(will not be formatted automatically)"
-msgstr ""
-"Assegna i punti di mount di altre partizioni\n"
-"(non verranno formattate automaticamente)"
+"Here you must input your whole name. It is used to create a default user."
+msgstr "Qui devi inserire il tuo nome completo. Serve per creare un utente predefinito."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 431
-#. i18n: file ./knxinstallerwidgetbase.ui line 431
-#: knxinstallerwidgetbase.cpp:4054 rc.cpp:102 rc.cpp:424
-#, no-c-format
+#: modules/04-user-name-pass.bm:15
+msgid "Input your whole name (name surname)"
+msgstr "Inserire il nome completo (nome cognome)"
+
+#: modules/04-user-name-pass.bm:30
+msgid "Your choosen username is: $USER_NAME"
+msgstr "Il nome che hai scelto è: $USER_NAME"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Here you must input your preferred username. Suggested: $proposal"
+msgstr "Qui devi inserire il tuo nome utente preferito. Suggerimento: $proposal"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Input your user name (perhaps you like: $proposal)"
+msgstr "Inserisci il tuo nome utente (forse potrebbe andare: $proposal)"
+
+#: modules/04-user-name-pass.bm:60
 msgid ""
-"<p><b>Root-Partition</b>: On this partition the main system will be "
-"installed</p>\n"
-"<p><b>Mountpoints of other partitions</b>: With this you can use a seperate "
-"home-partition (Mountpoint: /home)</p>"
-msgstr ""
-"<p><b>Partizione di root</b>: in questa partizione verrà installato il "
-"sistema principale</p>\n"
-"<p><b>Punti di mount di altre partizioni</b>: con questo puoi utilizzare una "
-"partizione home separata (Punto di mount: /home)</p>"
+"Here you must choose the password for the user $USER_NAME and input it "
+"twice. If you have already chosen one, you can leave the fields blank. But "
+"you cannot recover the password once saved, as it is encrypted."
+msgstr "Qui devi scegliere una password per l'utente $USER_NAME e inserirla due volte. Se se hai già scelta una, puoi lasciare i campi vuoti, ma non puoi controllarla una volta salvata, dato che viene crittografata."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 463
-#. i18n: file ./knxinstallerwidgetbase.ui line 463
-#: knxinstallerwidgetbase.cpp:4056 rc.cpp:106 rc.cpp:428
-#, no-c-format
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password"
+msgstr "Inserisci la tua password utente"
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password again"
+msgstr "Inserisci nuovamente la tua password"
+
+#: modules/04-user-name-pass.bm:60 modules/04-user-name-pass.bm:80
+msgid "Passwords do not match or no password was given."
+msgstr "Le password non coincidono, nessuna password impostata."
+
+#: modules/04-user-name-pass.bm:80
 msgid ""
-"Start\n"
-"Part.-manager"
-msgstr ""
-"Avvia\n"
-"Gestore partizioni"
+"Here you must choose the password for system administration (user root) and "
+"input it twice. If you have already chosen one, you can leave the fields "
+"blank. But you cannot recover the password once saved, as it is encrypted. "
+"Remember that the root-User is the Administrator of the system, so it is a "
+"very important password."
+msgstr "Qui devi scegliere una password per l'amministratore (utente root) e inserirla due volte. Se ne hai già scelta una, puoi lasciare i campi liberi ma non puoi controllare la password una volta salvata, dato che è crittografata. Ricorda che l'utente root è l'amministratore del sistema, perciò questa password è molto importante."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 475
-#. i18n: file ./knxinstallerwidgetbase.ui line 475
-#: knxinstallerwidgetbase.cpp:4059 rc.cpp:111 rc.cpp:433
-#, no-c-format
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password"
+msgstr "Inserisci la passord per l'amministratore (root)"
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password again"
+msgstr "Inserisci ancora la password per l'amministratore"
+
+#: modules/05-services.bm:9
+msgid "Services-Options:"
+msgstr "Opzioni servizi:"
+
+#: modules/05-services.bm:10
 msgid ""
-"&Re-read\n"
-"/etc/fstab"
+"The following services will be started, after each system bootup: "
+"$SERVICES_START"
 msgstr ""
-"Rilegge\n"
-"/etc/fstab"
+"I seguenti servizi verranno eseguiti ad ogni partenza del sistema:\n"
+"$SERVICES_START"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 234
-#. i18n: file ./knxinstallerwidgetbase.ui line 234
-#: knxinstallerwidgetbase.cpp:4062 rc.cpp:65 rc.cpp:387
-#, no-c-format
-msgid "Par&titioning"
-msgstr "Partizionamento"
+#: modules/05-services.bm:15
+msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgstr "I servizi possibili per ora sono: kdm cupsys smail ssh samba"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 527
-#. i18n: file ./knxinstallerwidgetbase.ui line 527
-#: knxinstallerwidgetbase.cpp:4063 rc.cpp:121 rc.cpp:443
-#, no-c-format
+#: modules/06-boot.bm:9
+msgid "Chooses the Boot-Loader"
+msgstr "Scegliere il boot manager"
+
+#: modules/06-boot.bm:10
+msgid "If set to 'yes' a boot disk will be created!"
+msgstr "Se imposti 'Sì' verrà creato un disco di boot!"
+
+#: modules/06-boot.bm:11
+msgid "Where the Boot-Loader will be installed"
+msgstr "Dove verrà installato il boot manager"
+
+#: modules/06-boot.bm:15
+msgid "Bootloader-Options:"
+msgstr "Opzioni del boot manager:"
+
+#: modules/06-boot.bm:16
+msgid "A bootdisk will be created."
+msgstr "Verrà creato un dischetto di boot."
+
+#: modules/06-boot.bm:16
+msgid "No bootdisk will be created."
+msgstr "Non verrà creato nessun dischetto di boot"
+
+#: modules/06-boot.bm:17
+msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+msgstr "Verrà usato il boot manager $BOOT_LOADER ed installato in $BOOT_WHERE."
+
+#: modules/06-boot.bm:29
 msgid ""
-"<p><b>Bootmanager</b>: A bootmanager allows you to choose the OS you want to "
-"boot at startup.</p>\n"
-"<p><b>Installation-place</b>: MBR (Master Boot Record) or root-partition</p>"
-msgstr ""
-"<p><b>Gestore d'avvio</b>: un gestore d'avvio ti permette di scegliere il S."
-"O. che vuoi avviare.</p>\n"
-"<p><b>Dove installarlo</b>: MBR (Master Boot Record) o partizione di root</p>"
+"Here you must choose if you want to install the boot-loader to MBR or to a "
+"partition."
+msgstr "Qui è necessario scegliere se si vuole installare il boot manager nel MBR o in una partizione."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 574
-#. i18n: file ./knxinstallerwidgetbase.ui line 574
-#: knxinstallerwidgetbase.cpp:4065 rc.cpp:125 rc.cpp:447
-#, no-c-format
-msgid "Create a bootdisk"
-msgstr "Crea un disco d'avvio"
+#: modules/06-boot.bm:29
+msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
+msgstr "Scegliere dove si vuole installare $BOOT_LOADER"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 583
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1129
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1278
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1367
-#. i18n: file ./knxinstallerwidgetbase.ui line 583
-#. i18n: file ./knxinstallerwidgetbase.ui line 1137
-#. i18n: file ./knxinstallerwidgetbase.ui line 1286
-#. i18n: file ./knxinstallerwidgetbase.ui line 1375
-#: knxinstallerwidgetbase.cpp:4068 knxinstallerwidgetbase.cpp:4116
-#: knxinstallerwidgetbase.cpp:4133 knxinstallerwidgetbase.cpp:4146 rc.cpp:129
-#: rc.cpp:233 rc.cpp:269 rc.cpp:298 rc.cpp:451 rc.cpp:558 rc.cpp:594
-#: rc.cpp:623
-#, no-c-format
-msgid "MBR"
-msgstr "MBR"
+#: modules/06-boot.bm:29
+msgid "Master Boot Record"
+msgstr "Master Boot Record"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 598
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1144
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1293
-#. i18n: file ./knxinstallerwidgetbase.ui line 598
-#. i18n: file ./knxinstallerwidgetbase.ui line 1152
-#. i18n: file ./knxinstallerwidgetbase.ui line 1301
-#: knxinstallerwidgetbase.cpp:4071 knxinstallerwidgetbase.cpp:4119
-#: knxinstallerwidgetbase.cpp:4136 rc.cpp:135 rc.cpp:239 rc.cpp:275 rc.cpp:457
-#: rc.cpp:564 rc.cpp:600
-#, no-c-format
-msgid "GRUB"
-msgstr "GRUB"
+#: modules/06-boot.bm:29
+msgid "To Root-Partition"
+msgstr "Partizione di root"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 603
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1149
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1298
-#. i18n: file ./knxinstallerwidgetbase.ui line 603
-#. i18n: file ./knxinstallerwidgetbase.ui line 1157
-#. i18n: file ./knxinstallerwidgetbase.ui line 1306
-#: knxinstallerwidgetbase.cpp:4072 knxinstallerwidgetbase.cpp:4120
-#: knxinstallerwidgetbase.cpp:4137 rc.cpp:138 rc.cpp:242 rc.cpp:278 rc.cpp:460
-#: rc.cpp:567 rc.cpp:603
-#, no-c-format
-msgid "Lilo"
-msgstr "Lilo"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 615
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1161
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1310
-#. i18n: file ./knxinstallerwidgetbase.ui line 615
-#. i18n: file ./knxinstallerwidgetbase.ui line 1169
-#. i18n: file ./knxinstallerwidgetbase.ui line 1318
-#: knxinstallerwidgetbase.cpp:4073 knxinstallerwidgetbase.cpp:4121
-#: knxinstallerwidgetbase.cpp:4138 rc.cpp:141 rc.cpp:245 rc.cpp:281 rc.cpp:463
-#: rc.cpp:570 rc.cpp:606
-#, no-c-format
-msgid "Installation-place"
-msgstr "Dove installarlo"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 623
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1169
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1326
-#. i18n: file ./knxinstallerwidgetbase.ui line 623
-#. i18n: file ./knxinstallerwidgetbase.ui line 1177
-#. i18n: file ./knxinstallerwidgetbase.ui line 1334
-#: knxinstallerwidgetbase.cpp:4074 knxinstallerwidgetbase.cpp:4122
-#: knxinstallerwidgetbase.cpp:4140 rc.cpp:144 rc.cpp:248 rc.cpp:287 rc.cpp:466
-#: rc.cpp:573 rc.cpp:612
-#, no-c-format
-msgid "Bootmanager"
-msgstr "Gestore d'avvio"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 490
-#. i18n: file ./knxinstallerwidgetbase.ui line 490
-#: knxinstallerwidgetbase.cpp:4075 rc.cpp:118 rc.cpp:440
-#, no-c-format
-msgid "Gr&ub"
-msgstr "Grub"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 658
-#. i18n: file ./knxinstallerwidgetbase.ui line 658
-#: knxinstallerwidgetbase.cpp:4076 rc.cpp:150 rc.cpp:472
-#, no-c-format
+#: modules/07-system.bm:5
 msgid ""
-"<b>Root-password</b>: This password will be used for the administrator. So "
-"keep it in mind!<br>\n"
-"<br>\n"
-"<b>Username</b>: The username should consist of lower case letters (and "
-"numbers) only.<br>\n"
-"<br>\n"
-"<b>Important: All passwords have to be between 6 and 20 characters long!</b>"
-msgstr ""
-"<b>Password di root</b>: questa password verrà utilizzata "
-"dall'amministratore. Da tenere a mente!<br>\n"
-"<br>\n"
-"<b>Nome utente</b>: il nome utente deve essere composto di caratteri "
-"minuscoli (e numeri) soltanto.<br>\n"
-"<br>\n"
-"<b>Importante: tutte le password devono avere una lunghezza compresa tra 6 e "
-"20 caratteri!</b>"
+"Determines if the system is a debian-derivate, a copy from CD or a nice mix "
+"of both"
+msgstr "Determina se il sistema dovrà essere una Debian derivata, una copia del CD o un miscuglio delle due"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 721
-#. i18n: file ./knxinstallerwidgetbase.ui line 704
-#: knxinstallerwidgetbase.cpp:4081 rc.cpp:157 rc.cpp:479
-#, no-c-format
-msgid "Password:"
-msgstr "Password:"
+#: modules/07-system.bm:11
+msgid "System-Options:"
+msgstr "Opzioni di sistema:"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 729
-#. i18n: file ./knxinstallerwidgetbase.ui line 712
-#: knxinstallerwidgetbase.cpp:4082 rc.cpp:160 rc.cpp:482
-#, no-c-format
-msgid "Root-password again:"
-msgstr "Password di root di nuovo:"
+#: modules/07-system.bm:12
+msgid "The installed system will be a $SYSTEM_TYPE type system."
+msgstr "Il sistema installato sarà di tipo $SYSTEM_TYPE"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 756
-#. i18n: file ./knxinstallerwidgetbase.ui line 739
-#: knxinstallerwidgetbase.cpp:4083 rc.cpp:163 rc.cpp:485
-#, no-c-format
-msgid "Root-password:"
-msgstr "Password di root:"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 769
-#. i18n: file ./knxinstallerwidgetbase.ui line 752
-#: knxinstallerwidgetbase.cpp:4084 rc.cpp:166 rc.cpp:488
-#, no-c-format
-msgid "Password again:"
-msgstr "Password di nuovo:"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 777
-#. i18n: file ./knxinstallerwidgetbase.ui line 760
-#: knxinstallerwidgetbase.cpp:4085 rc.cpp:169 rc.cpp:491
-#, no-c-format
-msgid "Realname:"
-msgstr "Vero nome:"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 800
-#. i18n: file ./knxinstallerwidgetbase.ui line 783
-#: knxinstallerwidgetbase.cpp:4086 rc.cpp:172 rc.cpp:494
-#, no-c-format
-msgid "Username:"
-msgstr "Nome utente:"
-
-#. i18n: file ./knxinstallerwidgetbase.ui line 810
-#: knxinstallerwidgetbase.cpp:4087 rc.cpp:497
-#, no-c-format
-msgid "Autolo&gin (you don't need to enter a password at the login-manager)"
-msgstr ""
-
-#. i18n: file ./knxinstallerwidgetbase.ui line 635
-#: knxinstallerwidgetbase.cpp:4088 rc.cpp:469
-#, fuzzy, no-c-format
-msgid "U&ser"
-msgstr "Utente"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 831
-#. i18n: file ./knxinstallerwidgetbase.ui line 839
-#: knxinstallerwidgetbase.cpp:4089 rc.cpp:178 rc.cpp:503
-#, no-c-format
+#: modules/07-system.bm:27
 msgid ""
-"<b>Hostname</b>: The hostname should consist of letters (and numbers) only "
-"and it must not begin with a number.<br>"
-msgstr ""
-"<b>Nome dell'host</b>: il nome dell'host deve essere composto di lettere (e "
-"numeri) soltanto e non deve iniziare con un numero.<br>"
+"Here you must choose the type of your system. A Beginner System will have "
+"hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work "
+"exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
+"full featured debian system and works like the 'old installer'."
+msgstr "Qui devi scegliere il tipo del tuo sistema. Un sistema per principianti avrà l'autorilevamento dell'hardware ma anche il supporto per più utenti. Un sistema $FLL_DISTRO_NAME funzionerà esattamente come su CD ma funzioneranno anche strumenti come apt-get. Il tipo Debian è un sistema completo che funziona come con il 'vecchio installatore'."
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 889
-#. i18n: file ./knxinstallerwidgetbase.ui line 897
-#: knxinstallerwidgetbase.cpp:4090 rc.cpp:181 rc.cpp:506
-#, no-c-format
-msgid "KanotixBox"
-msgstr "KanotixBox"
+#: modules/07-system.bm:27
+msgid "Choose your system type"
+msgstr "Scegliere il tipo di sistema"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 897
-#. i18n: file ./knxinstallerwidgetbase.ui line 905
-#: knxinstallerwidgetbase.cpp:4091 rc.cpp:184 rc.cpp:509
-#, no-c-format
-msgid "Hostname:"
-msgstr "Nome dell'host:"
+#: modules/07-system.bm:28
+msgid "Multi-User System with hw-detection (preferred way)"
+msgstr "Sistema multi utente con rilevamento hardware (preferito)"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 812
-#. i18n: file ./knxinstallerwidgetbase.ui line 820
-#: knxinstallerwidgetbase.cpp:4092 rc.cpp:175 rc.cpp:500
-#, no-c-format
-msgid "Net&work"
-msgstr "Rete"
+#: modules/07-system.bm:29
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "Sistema $FLL_DISTRO_NAME come da CD"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 932
-#. i18n: file ./knxinstallerwidgetbase.ui line 940
-#: knxinstallerwidgetbase.cpp:4093 rc.cpp:190 rc.cpp:515
-#, no-c-format
+#: modules/07-system.bm:30
+msgid "Debian-like system (old installer way)"
+msgstr "Sistema tipo Debian (stile vecchio installatore)"
+
+#: modules/install/01-fstab.bm:5
+msgid "Updating /etc/fstab..."
+msgstr "Aggiornamento di /etc/fastab..."
+
+#: modules/install/03-system_types.bm:24
+msgid "Converting $FLL_DISTRO_NAME to Multi-User-System..."
+msgstr "Conversione di $FLL_DISTRO_NAME a sistema multi utente..."
+
+#: modules/install/02-install-tools.bm:63
+msgid "Copying custom configuration ..."
+msgstr "Copia della configurazione personalizzata..."
+
+#: modules/install/02-install-tools.bm:94
+msgid "Copying home directory ..."
+msgstr "Copia della cartella utente..."
+
+#: modules/install/02-install-tools.bm:231
 msgid ""
-"You provided all Information neccessary to start the Kanotix-Installation."
-"<br>\n"
-"<br>\n"
-"You can check or change your Options once again by pressing the \"<b>Back</b>"
-"\" Button.<br>\n"
-"<br>\n"
-"If everything is correct for you, begin the installation by pressing "
-"\"<b>Begin installation</b>\"."
-msgstr ""
-"Hai inserito tutte le informazioni necessarie per iniziare l'installazione "
-"di KANOTIX.<br>\n"
-"<br>\n"
-"Puoi controllare di nuovo o cambiare le tue opzioni premendo il pulsante "
-"\"<b>Precedente</b>\".<br>\n"
-"<br>\n"
-"Se per te è tutto corretto, inizia l'installazione premendo il pulsante "
-"\"<b>Inizia l'installazione</b>\"."
+"Warning: Templates could not be found. Not updating: profile, inittab, "
+"sudoers, hosts.allow!"
+msgstr "Attenzione: i modelli non sono stati trovati. Non sono stati aggiornati: profile, inittab, sudoers, host.allow!"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 977
-#. i18n: file ./knxinstallerwidgetbase.ui line 985
-#: knxinstallerwidgetbase.cpp:4099 rc.cpp:198 rc.cpp:523
-#, no-c-format
-msgid ""
-"Save configuration\n"
-"and start installation"
-msgstr ""
-"Salva la configurazione\n"
-"e inizia l'installazione"
+#: modules/install/02-install-tools.bm:415
+msgid "Welcome to $FLL_DISTRO_NAME"
+msgstr "Benvenuti alla $FLL_DISTRO_NAME"
 
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 986
-#. i18n: file ./knxinstallerwidgetbase.ui line 994
-#: knxinstallerwidgetbase.cpp:4101 rc.cpp:202 rc.cpp:527
-#, no-c-format
-msgid ""
-"Save configuration\n"
-"onl&y (~/.knofig)"
-msgstr ""
-"Salva la configurazione\n"
-"soltanto (~/.knofig)"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 989
-#. i18n: file ./knxinstallerwidgetbase.ui line 997
-#: knxinstallerwidgetbase.cpp:4103 rc.cpp:206 rc.cpp:531
-#, no-c-format
-msgid "Alt+Y"
-msgstr "Alt+Y"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 999
-#. i18n: file ./knxinstallerwidgetbase.ui line 1007
-#: knxinstallerwidgetbase.cpp:4104 rc.cpp:209 rc.cpp:534
-#, no-c-format
-msgid ""
-"Start Kanotix-Installer-Script\n"
-"&without configuration\n"
-"(this configuration will be lost)"
-msgstr ""
-"Avvia lo script Kanotix-Installer\n"
-"senza configurazione\n"
-"(questa configurazione sarà persa)"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1029
-#. i18n: file ./knxinstallerwidgetbase.ui line 1037
-#: knxinstallerwidgetbase.cpp:4108 rc.cpp:217 rc.cpp:542
-#, no-c-format
-msgid "Force Installation (Ignore RAM-/Partition-Check, etc.)"
-msgstr "Forza l'installazione (ignora il controllo di RAM,Partizioni,ecc.)"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 909
-#. i18n: file ./knxinstallerwidgetbase.ui line 917
-#: knxinstallerwidgetbase.cpp:4110 rc.cpp:187 rc.cpp:512
-#, no-c-format
-msgid "I&nstallation"
-msgstr "Installazione"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1179
-#. i18n: file ./knxinstallerwidgetbase.ui line 1187
-#: knxinstallerwidgetbase.cpp:4123 rc.cpp:251 rc.cpp:576
-#, no-c-format
-msgid "Prevent these Paths from Updating (one Path per Line)"
-msgstr "Impedisce l'aggiornamento di questi percorsi (un percorso per linea)"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1197
-#. i18n: file ./knxinstallerwidgetbase.ui line 1205
-#: knxinstallerwidgetbase.cpp:4124 rc.cpp:254 rc.cpp:579
-#, no-c-format
-msgid ""
-"<p><b>Root-Partition</b>: The partition where the old Kanotix - Installation "
-"is</p>\n"
-"<p><b>Bootmanager</b>: A bootmanager allows you to choose the OS you want to "
-"boot at startup.</p>\n"
-"<p><b>Installation-place</b>: MBR (Master Boot Record) or root-partition</p>"
-msgstr ""
-"<p><b>Partizione di root</b>: la partizione dove c'è la vecchia "
-"installazione di KANOTIX</p>\n"
-"<p><b>Gestore d'avvio</b>: un gestore d'avvio ti permette di scegliere il S."
-"O. che vuoi avviare.</p>\n"
-"<p><b>Dove installarlo</b>: MBR (Master Boot Record) o partizione di root</p>"
-
-#. i18n: file ./knxinstallerwidgetbase.ui line 1050
-#: knxinstallerwidgetbase.cpp:4127 rc.cpp:546
-#, fuzzy, no-c-format
-msgid "Update-&Installation"
-msgstr "Aggiorna l'installazione"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1339
-#. i18n: file ./knxinstallerwidgetbase.ui line 1347
-#: knxinstallerwidgetbase.cpp:4141 rc.cpp:290 rc.cpp:615
-#, no-c-format
-msgid "Recover Kanotix-Bootmanager"
-msgstr "Ripristina il gestore d'avvio di KANOTIX"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1358
-#. i18n: file ./knxinstallerwidgetbase.ui line 1366
-#: knxinstallerwidgetbase.cpp:4143 rc.cpp:294 rc.cpp:619
-#, no-c-format
-msgid "Restore standard MBR on"
-msgstr "Ripristina l'MBR standard"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1240
-#. i18n: file ./knxinstallerwidgetbase.ui line 1248
-#: knxinstallerwidgetbase.cpp:4148 rc.cpp:259 rc.cpp:584
-#, no-c-format
-msgid "Recover&y-Tools"
-msgstr "Strumenti di ripristino"
-
-#: main.cpp:22
-msgid "A KDE KPart Application"
-msgstr "Un'applicazione KDE Kpart"
-
-#: main.cpp:34
-msgid "Kanotix-Installer by A. Loibl"
-msgstr "Kanotix-Installer di A. Loibl"
-
-#: qp_actlist.cpp:124
-msgid "Critical error during ped_disk_new!"
-msgstr "Errore critico durante ped_disk_new!"
-
-#: qp_actlist.cpp:140
-msgid "Critical error during ped_disk_duplicate!"
-msgstr "Errore critico durante ped_disk_duplicate!"
-
-#: qp_actlist.cpp:397 qp_actlist.cpp:417
-msgid "Getting info about partition %1."
-msgstr "Raccolgo informazioni sulla partizione %1"
-
-#: qp_actlist.cpp:645
-msgid "Creating partition."
-msgstr "Creo la partizione."
-
-#: qp_actlist.cpp:654
-msgid "Preparation for removing a partition."
-msgstr "Preparazione per la rimozione di una partizione."
-
-#: qp_actlist.cpp:658
-msgid "Removing a partition."
-msgstr "Rimuovo una partizione."
-
-#: qp_actlist.cpp:667
-msgid "Preparation for resizing a partition."
-msgstr "Preparazione per il ridimensionamento di una partizione."
-
-#: qp_actlist.cpp:671
-msgid "Resizing a partition."
-msgstr "Ridimensiono una partizione."
-
-#: qp_actlist.cpp:680
-msgid "Preparation for moving a partition."
-msgstr "Preparazione per muovere una partizione."
-
-#: qp_actlist.cpp:684
-msgid "Moving a partition."
-msgstr "Muovo una partizione."
-
-#: qp_actlist.cpp:693
-msgid "Preparation for activating a partition."
-msgstr "Preparazione per l'attivazione di una partizione."
-
-#: qp_actlist.cpp:697
-msgid "Activating a partition."
-msgstr "Attivo una partizione."
-
-#: qp_actlist.cpp:706
-msgid "Preparation for hiding a partition."
-msgstr "Preparazione per nascondere una partizione."
-
-#: qp_actlist.cpp:710
-msgid "Hiding a partition."
-msgstr "Nascondo una partizione."
-
-#: qp_actlist.cpp:719
-msgid "Preparation for formatting a partition."
-msgstr "Preparazione per formattare una partizione."
-
-#: qp_actlist.cpp:723
-msgid "Formatting a partition."
-msgstr "Formatto una partizione."
-
-#: qp_actlist.cpp:758
-msgid "Rescan of the disk."
-msgstr "Scansiono di nuovo il disco."
-
-#: qp_actlist.cpp:765
-msgid "All operations completed."
-msgstr "Tutte le operazioni sono state completate."
-
-#: qp_dlgcreate.cpp:145
-msgid "This filesystem cannot be greater of %1"
-msgstr "Questo filesystem non può essere più grande di %1"
-
-#: qp_dlgdevprop.cpp:53
-msgid "Devfs is disabled."
-msgstr "Devfs è disabilitato."
-
-#: qp_dlgdevprop.cpp:62
-msgid "Partition table: %1"
-msgstr "Tabella delle partizioni: %1"
-
-#: qp_dlgprogress.cpp:42
-msgid "Initializing"
-msgstr "Inizializzazione"
-
-#: qp_dlgprogress.cpp:60
-msgid "Time Left: %1"
-msgstr "Tempo rimasto: %1"
-
-#: qp_dlgprogress.cpp:70
-msgid ""
-"Operation: %1 of %2.\n"
-"Current operation: %3"
-msgstr ""
-"Operazione: %1 di %2.\n"
-"Operazione corrente: %3"
-
-#: qp_dlgprogress.cpp:81
-msgid "Operations completed sucessfully."
-msgstr "Operazioni completate con successo."
-
-#: qp_dlgresize.cpp:81
-msgid "Minimum Size: %1 MB"
-msgstr "Dimensione minima: %1 MB"
-
-#. i18n: file ./qp_ui_resize.ui line 16
-#: qp_dlgresize.cpp:95 qp_ui_resize.cpp:121 rc.cpp:692
-#, no-c-format
-msgid "Resize partition"
-msgstr "Ridimensiona la partizione"
-
-#: qp_dlgresize.cpp:97
-msgid ""
-"Warning: Resizing partitions can be very dangerous.\n"
-"You can loose data if things go wrong, even if the program\n"
-"works perfectly - a power outage while writing changes to \n"
-"the disk would be disastrous.\n"
-"\n"
-"Make sure you have a backup!"
-msgstr ""
-"Attenzione: Ridimensionare le partizioni può essere molto pericoloso.\n"
-"Puoi perdere i dati se le cose vanno storte, anche se il programma\n"
-"funziona perfettamente un black out elettrico mentre vengono\n"
-"scritti i cambiamenti nel disco sarebbe disastroso.\n"
-"\n"
-"Assicurati di avere un salvataggio!"
-
-#: qp_dlgresize.cpp:103
-msgid "Move partition"
-msgstr "Muove la partizione"
-
-#: qp_drivelist.cpp:67
-msgid "Disks"
-msgstr "Dischi"
-
-#: qp_drivelist.cpp:75
-msgid "No device found. Maybe you're not using root user?"
-msgstr ""
-"Nessuna periferica trovata. Probabilmente non stai utilizzando l'utente root."
-
-#: qp_fswrap.cpp:43
-msgid "command not found"
-msgstr "comando non trovato"
-
-#: qp_fswrap.cpp:258 qp_fswrap.cpp:574 qp_fswrap.cpp:903
-msgid "Cannot enlarge a partition if the disk device is busy"
-msgstr "Non posso allargare una partizione se la periferica disco è occupata"
-
-#: qp_fswrap.cpp:355 qp_fswrap.cpp:409
-msgid "Resizing in progress."
-msgstr "Ridimensionamento in corso."
-
-#: qp_fswrap.cpp:422
-msgid "Syncing device."
-msgstr "Sincronizzazione della periferica."
-
-#: qp_fswrap.cpp:772
-msgid "Writing superblocks and filesystem."
-msgstr "Scrittura dei superblock e del filesystem."
-
-#: qp_fswrap.cpp:793
-msgid "Writing inode tables."
-msgstr "Scrittura delle tabelle inode."
-
-#: qp_fswrap.cpp:804
-msgid "There was a problem with mkfs.ext3."
-msgstr "C'è stato un problema con mkfs.ext3"
-
-#: qp_fswrap.cpp:882
-msgid "There was a problem with mkfs.xfs."
-msgstr "C'è stato un problema con mkfs.xfs"
-
-#: qp_fswrap.cpp:978
-msgid "Error during xfs_grow."
-msgstr "Errore durante xfs_grow."
-
-#: qp_fswrap.cpp:1076
-msgid "No label"
-msgstr "Nessuna etichetta"
-
-#: qp_fswrap.cpp:1112
-msgid "There was a problem with mkfs.reiserfs."
-msgstr "C'è stato un problema con mkfs.reiserfs"
-
-#: qp_libparted.cpp:41
-msgid "Operation successfully completed."
-msgstr "Operazione completata con successo."
-
-#: qp_libparted.cpp:42
-msgid "An error has occurs during the operation."
-msgstr "C'è stato un errore durante l'operazione."
-
-#: qp_libparted.cpp:43
-msgid "An error has happened during the ped_disk_new call."
-msgstr "C'è stato un errore durante la chiamata a ped_disk_new."
-
-#: qp_libparted.cpp:44
-msgid "An error has happened during the ped_disk_get_partition call."
-msgstr "C'è stato un errore durante la chiamata a ped_disk_get_partition."
-
-#: qp_libparted.cpp:45
-msgid "An error has happened during ped_partition_new call."
-msgstr "C'è stato un errore durante la chiamata a ped_partition_new."
-
-#: qp_libparted.cpp:46
-msgid "An error has happened during ped_disk_add_partition call."
-msgstr "C'è stato un errore durante la chiamata a ped_disk_add_partition."
-
-#: qp_libparted.cpp:47
-msgid "An error has happened during ped_partition_set_system call."
-msgstr "C'è stato un errore durante la chiamata a ped_partition_set_system."
-
-#: qp_libparted.cpp:48
-msgid "An error has happened during ped_partition_set_flag call."
-msgstr "C'è stato un errore durante la chiamata a ped_partition_set_flag."
-
-#: qp_libparted.cpp:49
-msgid "An error has happened during ped_disk_delete_partition call."
-msgstr "C'è stato un errore durante la chiamata a ped_disk_delete_partition."
-
-#: qp_libparted.cpp:166 qp_libparted.cpp:225 qp_libparted.cpp:1195
-#: qp_window.cpp:575 qp_window.cpp:632 qp_window.cpp:732
-msgid "This is a virtual partition. You cannot alter it: use undo instead."
-msgstr ""
-"Questa è una partizione virtuale. Non la puoi alterare, devi utillizzare "
-"Annulla."
-
-#: qp_libparted.cpp:214
-msgid "Bug during mkfs! Cannot format virtual partitions!"
-msgstr "Errore durante mkfs! Non posso formattare partizioni virtuali!"
-
-#: qp_libparted.cpp:468 qp_libparted.cpp:504
-msgid "Scanning all disk partitions."
-msgstr "Analisi di tutte le partizioni del disco."
-
-#: qp_libparted.cpp:553
-msgid "Cannot get parted version."
-msgstr "Non posso ottenere la versione di parted."
-
-#: qp_libparted.cpp:622
-msgid "Cannot change the active status on this partition"
-msgstr "Non posso cambiare lo stato attivo di questa partizione"
-
-#: qp_libparted.cpp:663
-msgid "Cannot change the hidden status on this partition"
-msgstr "Non posso cambiare lo stato nascosto di questa partizione"
-
-#: qp_libparted.cpp:802
-msgid "A bug was found in QTParted during set_system, please report it!"
-msgstr ""
-"Si è verificato un errore in QTParted durante set_system, per favore "
-"segnalalo!"
-
-#: qp_libparted.cpp:814
-msgid ""
-"A bug was found in QTParted during ped_file_system_type_get, please report "
-"it!"
-msgstr ""
-"Si è verificato un errore in QTParted durante ped_file_system_type_get, per "
-"favore segnalalo!"
-
-#: qp_libparted.cpp:841
-msgid "A bug was found in QTParted during \"mkfs\" scan, please report it!"
-msgstr ""
-"Si è verificato un errore in QTParted durante la scansione \"mkfs\", per "
-"favore segnalalo!"
-
-#: qp_libparted.cpp:1210 qp_libparted.cpp:1279
-msgid "The partition is mounted."
-msgstr "La partizione è montata."
-
-#: qp_libparted.cpp:1246 qp_window.cpp:753
-msgid "This is a virtual partition. You cannot umount it."
-msgstr "Questa è una partizione virtuale. Non può essere smontata."
-
-#: qp_libparted.cpp:1299
-msgid "A bug was found in QTParted during \"move\" scan, please report it!"
-msgstr ""
-"Si è verificato un errore in QTParted durante la scansione \"move\", per "
-"favore segnalalo!"
-
-#: qp_libparted.cpp:1316
-msgid "Can't move extended partitions."
-msgstr "Non posso muovere le partizioni estese."
-
-#: qp_libparted.cpp:1371 qp_libparted.cpp:1483
-msgid "Can't move a partition onto itself. Try using resize, perhaps?"
-msgstr ""
-"Non si può muovere una partizione su se stessa. Provo a ridimensionarla?"
-
-#: qp_libparted.cpp:1508
-msgid "A bug was found in QTParted during \"resize\" scan, please report it!"
-msgstr ""
-"Si è verificato un errore in QTParted durante la scansione \"resize\", per "
-"favore segnalalo!"
-
-#: qp_libparted.cpp:1539 qp_libparted.cpp:1678
-msgid "An error happen during ped_geometry_init call."
-msgstr "Si è verificato un errore durante la chiamata ped_geometry_init."
-
-#: qp_libparted.cpp:1552 qp_libparted.cpp:1577 qp_libparted.cpp:1691
-msgid "An error happen during ped_disk_set_partition_geom call."
-msgstr "Si è verificato un errore durante la chiamata ped_disk_set_partition."
-
-#: qp_libparted.cpp:1569
-msgid "An error happen during ped_file_system_open call."
-msgstr "Si è verificato un errore durante la chiamata ped_file_system_open."
-
-#: qp_libparted.cpp:1592
-msgid "An error happen during ped_file_system_resize call."
-msgstr "Si è verificato un errore durante la chiamata ped_file_system_resize."
-
-#: qp_libparted.cpp:1772
-#, c-format
-msgid "Partition %s is being used."
-msgstr "La partizione %s sta per essere utilizzata."
-
-#: qp_libparted.cpp:1794
-msgid ""
-"Error committing device.\n"
-"This can happen when a device is mounted in the disk.\n"
-"Try to unmount all partitions on this disk.\n"
-"Please read the FAQ for this kind of error!"
-msgstr ""
-"Errore aggiornando la periferica.\n"
-"Questo può succedere quando una periferica è montata.\n"
-"Prova a smontare tutte le partizioni di questo disco.\n"
-"Per favore leggi le FAQ per questo tipo di errore!"
-
-#: qp_listview.cpp:53
-msgid "mounted"
-msgstr "montata"
-
-#: qp_listview.cpp:58
-msgid "not mounted"
-msgstr "non montata"
-
-#: qp_listview.cpp:99
-msgid "Number"
-msgstr "Numero"
-
-#: qp_listview.cpp:100
-msgid "Partition"
-msgstr "Partizione"
-
-#: qp_listview.cpp:102
-msgid "Type"
-msgstr "Tipo"
-
-#: qp_listview.cpp:103
-msgid "Status"
-msgstr "Stato"
-
-#: qp_listview.cpp:104
-msgid "Size"
-msgstr "Dimensione"
-
-#: qp_listview.cpp:106
-msgid "Used space"
-msgstr "Spazio utilizzato"
-
-#: qp_listview.cpp:108
-msgid "Start"
-msgstr "Inizio"
-
-#: qp_listview.cpp:110
-msgid "End"
-msgstr "Fine"
-
-#: qp_listview.cpp:112
-msgid "Label"
-msgstr "Etichetta"
-
-#: qp_listview.cpp:113
-msgid "Mounted"
-msgstr "Montata"
-
-#: qp_listview.cpp:148 qp_listview.cpp:202
-msgid "Active"
-msgstr "Attiva"
-
-#: qp_listview.cpp:153 qp_listview.cpp:207
-msgid "Hidden"
-msgstr "Nascosta"
-
-#: qp_listview.cpp:158 qp_listview.cpp:212
-msgid "N/A"
-msgstr "N/A"
-
-#: qp_listview.cpp:170
-msgid "Empty"
-msgstr "Vuota"
-
-#: qp_listview.cpp:171
-msgid "Partition table"
-msgstr "Tabella della partizione"
-
-#: qp_navview.cpp:66
-msgid "Drive Info"
-msgstr "Informazioni sulla periferica"
-
-#: qp_navview.cpp:96
-msgid "No Drive Selected"
-msgstr "Nessuna periferica selezionata"
-
-#: qp_navview.cpp:107
-msgid "Device:"
-msgstr "Periferica:"
-
-#: qp_navview.cpp:108
-msgid "Model:"
-msgstr "Modello:"
-
-#: qp_navview.cpp:109
-msgid "Capacity (Mb):"
-msgstr "Capacità (MB):"
-
-#: qp_navview.cpp:110
-msgid "Length sectors:"
-msgstr "Lunghezza dei settori:"
-
-#: qp_navview.cpp:113 qp_navview.cpp:115 qp_navview.cpp:117
-msgid "Status: "
-msgstr "Stato:"
-
-#: qp_navview.cpp:113
-msgid "readonly."
-msgstr "sola lettura."
-
-#: qp_navview.cpp:115
-msgid "busy."
-msgstr "occupata."
-
-#: qp_navview.cpp:117
-msgid "available."
-msgstr "disponibile."
-
-#. i18n: file ./qp_ui_config.ui line 33
-#: qp_ui_config.cpp:100 rc.cpp:649
-#, no-c-format
-msgid "QTParted &layout"
-msgstr "layout QTParted"
-
-#. i18n: file ./qp_ui_config.ui line 42
-#: qp_ui_config.cpp:102 rc.cpp:652
-#, no-c-format
-msgid "Chart and ListBox"
-msgstr "Tabella e Lista"
-
-#. i18n: file ./qp_ui_config.ui line 47
-#: qp_ui_config.cpp:103 rc.cpp:655
-#, no-c-format
-msgid "Only Chart"
-msgstr "Solo tabella"
-
-#. i18n: file ./qp_ui_config.ui line 52
-#: qp_ui_config.cpp:104 rc.cpp:658
-#, no-c-format
-msgid "Only ListBox"
-msgstr "Solo lista"
-
-#. i18n: file ./qp_ui_config.ui line 81
-#: qp_ui_config.cpp:105 rc.cpp:661
-#, no-c-format
-msgid "&External Tools"
-msgstr "Strumenti esterni"
-
-#. i18n: file ./qp_ui_config.ui line 114
-#: qp_ui_config.cpp:106 rc.cpp:664
-#, no-c-format
-msgid "&Full executable path"
-msgstr "Percorso completo dell'eseguibile"
-
-#. i18n: file ./qp_ui_create.ui line 28
-#: qp_ui_create.cpp:158 rc.cpp:716
-#, no-c-format
-msgid "Create partition"
-msgstr "Crea partizione"
-
-#. i18n: file ./qp_ui_format.ui line 68
-#. i18n: file ./qp_ui_create.ui line 55
-#: qp_ui_create.cpp:159 qp_ui_format.cpp:102 rc.cpp:679 rc.cpp:719
-#, no-c-format
-msgid "&Partition Type:"
-msgstr "Tipo di partizione:"
-
-#. i18n: file ./qp_ui_format.ui line 47
-#. i18n: file ./qp_ui_create.ui line 71
-#: qp_ui_create.cpp:160 qp_ui_format.cpp:101 rc.cpp:676 rc.cpp:722
-#, no-c-format
-msgid "&Label:"
-msgstr "Etichetta:"
-
-#. i18n: file ./qp_ui_create.ui line 92
-#: qp_ui_create.cpp:161 rc.cpp:725
-#, no-c-format
-msgid "Create &as:"
-msgstr "Crea come:"
-
-#. i18n: file ./qp_ui_create.ui line 108
-#: qp_ui_create.cpp:162 rc.cpp:728
-#, no-c-format
-msgid "&Size:"
-msgstr "Dimensione:"
-
-#. i18n: file ./qp_ui_create.ui line 152
-#: qp_ui_create.cpp:163 rc.cpp:731
-#, no-c-format
-msgid "Position"
-msgstr "Posizione"
-
-#. i18n: file ./qp_ui_create.ui line 169
-#: qp_ui_create.cpp:164 rc.cpp:734
-#, no-c-format
-msgid "&Beginning of unallocated space"
-msgstr "Inizio dello spazio non allocato"
-
-#. i18n: file ./qp_ui_create.ui line 177
-#: qp_ui_create.cpp:165 rc.cpp:737
-#, no-c-format
-msgid "&End of unallocated space"
-msgstr "Fine dello spazio non allocato"
-
-#. i18n: file ./qp_ui_create.ui line 201
-#: qp_ui_create.cpp:166 rc.cpp:740
-#, no-c-format
-msgid "Pe&rcent of unallocated space:"
-msgstr "Percentuale dello spazio non allocato:"
-
-#. i18n: file ./qp_ui_devprop.ui line 16
-#: qp_ui_devprop.cpp:90 qp_window.cpp:327 rc.cpp:629
-#, no-c-format
-msgid "Device property"
-msgstr "Proprietà della periferica"
-
-#. i18n: file ./qp_ui_devprop.ui line 33
-#: qp_ui_devprop.cpp:91 rc.cpp:632
-#, no-c-format
-msgid "Device short name"
-msgstr "Nome di device corto"
-
-#. i18n: file ./qp_ui_devprop.ui line 69
-#: qp_ui_devprop.cpp:93 rc.cpp:636
-#, no-c-format
-msgid "Device long name"
-msgstr "Nome di device lungo"
-
-#. i18n: file ./qp_ui_format.ui line 28
-#: qp_ui_format.cpp:100 rc.cpp:673
-#, no-c-format
-msgid "Format partition"
-msgstr "Formatta partizione"
-
-#. i18n: file ./qp_ui_progress.ui line 16
-#: qp_ui_progress.cpp:97 rc.cpp:304
-#, no-c-format
-msgid "Progress"
-msgstr "Avanzamento"
-
-#. i18n: file ./qp_ui_progress.ui line 50
-#: qp_ui_progress.cpp:98 rc.cpp:307
-#, no-c-format
-msgid "Current operation:"
-msgstr "Operazione corrente:"
-
-#. i18n: file ./qp_ui_progress.ui line 91
-#: qp_ui_progress.cpp:101 rc.cpp:312
-#, no-c-format
-msgid "Time Left:"
-msgstr "Tempo rimasto:"
-
-#. i18n: file ./qp_ui_progress.ui line 124
-#: qp_ui_progress.cpp:102 rc.cpp:315
-#, no-c-format
-msgid "Progress:"
-msgstr "Avanzamento:"
-
-#. i18n: file ./qp_ui_resize.ui line 77
-#: qp_ui_resize.cpp:122 rc.cpp:695
-#, no-c-format
-msgid "Minimum Size:"
-msgstr "Dimensione minima:"
-
-#. i18n: file ./qp_ui_resize.ui line 112
-#: qp_ui_resize.cpp:123 rc.cpp:698
-#, no-c-format
-msgid "Free Space &Before:"
-msgstr "Spazio libero prima:"
-
-#. i18n: file ./qp_ui_resize.ui line 138
-#: qp_ui_resize.cpp:124 rc.cpp:701
-#, no-c-format
-msgid "New Size:"
-msgstr "Nuova dimensione:"
-
-#. i18n: file ./qp_ui_resize.ui line 161
-#: qp_ui_resize.cpp:125 rc.cpp:704
-#, no-c-format
-msgid "Free Space &After:"
-msgstr "Spazio libero dopo:"
-
-#. i18n: file ./qp_ui_resize.ui line 179
-#: qp_ui_resize.cpp:126 rc.cpp:707
-#, no-c-format
-msgid "It is recommended to backup your data before do this operation!"
-msgstr ""
-"Si raccomanda di fare il salvataggio dei dati prima di eseguire questa "
-"operazione!"
-
-#: qp_window.cpp:59
-msgid "Kanotix-Installer: Partition-Manager"
-msgstr "Kanotix-Installer: Gestore delle Partizioni"
-
-#: qp_window.cpp:140
-msgid "Getting devices"
-msgstr "Ottengo le periferiche"
-
-#: qp_window.cpp:147
-msgid "load user settings"
-msgstr "carica le impostazioni utente"
-
-#: qp_window.cpp:150
-msgid "Ready"
-msgstr "Pronto"
-
-#: qp_window.cpp:190
-msgid "Undo last operation"
-msgstr "Annulla l'ultima operazione"
-
-#: qp_window.cpp:197 qp_window.cpp:199
-msgid "Commit"
-msgstr "Conferma"
-
-#: qp_window.cpp:200
-msgid "Commit all operations"
-msgstr "Conferma tutte le operazioni"
-
-#: qp_window.cpp:210
-msgid "Quit from the application"
-msgstr "Esce dall'applicazione"
-
-#: qp_window.cpp:217 qp_window.cpp:219
-msgid "Property"
-msgstr "Proprietà"
-
-#: qp_window.cpp:220
-msgid "Property of the selected partition"
-msgstr "Proprietà della partizione selezionata"
-
-#: qp_window.cpp:227 qp_window.cpp:229
-msgid "Create"
-msgstr "Crea"
-
-#: qp_window.cpp:230
-msgid "Create a new partition"
-msgstr "Crea una nuova partizione"
-
-#: qp_window.cpp:238 qp_window.cpp:240
-msgid "Format"
-msgstr "Formatta"
-
-#: qp_window.cpp:241
-msgid "Format a new partition"
-msgstr "Formatta una nuova partizione"
-
-#: qp_window.cpp:248 qp_window.cpp:250
-msgid "Resize"
-msgstr "Ridimensiona"
-
-#: qp_window.cpp:251
-msgid "Resize a partition"
-msgstr "Ridimensiona una partizione"
-
-#: qp_window.cpp:261
-msgid "Move a partition"
-msgstr "Muove una partizione"
-
-#: qp_window.cpp:271
-msgid "Delete a new partition"
-msgstr "Cancella una partizione"
-
-#: qp_window.cpp:278 qp_window.cpp:280
-msgid "Umount"
-msgstr "Smonta"
-
-#: qp_window.cpp:281
-msgid "Umount a new partition"
-msgstr "Smonta una nuova partizione"
-
-#: qp_window.cpp:288
-msgid "Configuration..."
-msgstr "Configurazione..."
-
-#: qp_window.cpp:290
-msgid "Configuration of QTParted"
-msgstr "Configurazione di QTParted"
-
-#: qp_window.cpp:291
-msgid "Open the configuration dialog"
-msgstr "Apre la finestra di configurazione"
-
-#: qp_window.cpp:298 qp_window.cpp:300
-msgid "What's This"
-msgstr "Cos'è questo"
-
-#: qp_window.cpp:301
-msgid ""
-"Enter <b>What's This</b> modeIt enables the user to ask for help about "
-"widgets on the screen."
-msgstr ""
-"Abilita il modo <b>Cos'è questo</b>. Mostra con delle etichette l'aiuto "
-"riguardo le funzioni del programma."
-
-#: qp_window.cpp:311
-msgid "About knxinstaller/QTParted"
-msgstr "Informazioni su knxinstaller/QTParted"
-
-#: qp_window.cpp:312
-msgid "About QTParted"
-msgstr "Informazioni su QTParted"
-
-#: qp_window.cpp:313
-msgid "Information about knxinstaller and QTParted"
-msgstr "Informazioni riguardo knxinstaller e QTParted"
-
-#: qp_window.cpp:319 qp_window.cpp:320
-msgid "About QT"
-msgstr "Informazioni su QT"
-
-#: qp_window.cpp:321
-msgid "Information about QT"
-msgstr "Informazioni riguardo QT"
-
-#: qp_window.cpp:329
-msgid "See the property of this disk device"
-msgstr "Vedere le proprietà di questa periferica disco"
-
-#: qp_window.cpp:330
-msgid "Some information about the disk device"
-msgstr "Alcune informazioni riguardo la periferica disco"
-
-#: qp_window.cpp:337
-msgid "Make a new Partition Table"
-msgstr "Crea una nuova tabella delle partizioni"
-
-#: qp_window.cpp:339
-msgid "This will make the partition table"
-msgstr "Questo creerà la tabella delle partizioni"
-
-#: qp_window.cpp:340
-msgid "You're going to loose all partition data! Are you sure? :)"
-msgstr "Si stanno per perdere tutti i dati delle partizioni! Sei sicuro? :)"
-
-#: qp_window.cpp:361
-msgid "&Operations"
-msgstr "Operazioni"
-
-#: qp_window.cpp:372
-msgid "Set Active..."
-msgstr "Marca come attiva..."
-
-#: qp_window.cpp:376
-msgid "Hide"
-msgstr "Nascondi"
-
-#: qp_window.cpp:387
-msgid "&Disks"
-msgstr "Dischi"
-
-#: qp_window.cpp:393
-msgid "&Device"
-msgstr "Periferica"
-
-#: qp_window.cpp:640
-msgid ""
-"An internal error happened during partition scan.\n"
-"This means that you cannot resize or move this partition."
-msgstr ""
-"Un errore interno si è verificato durante l'esame delle partizioni.\n"
-"Questo significa che non puoi ridimensionare o muovere questa partizione."
-
-#: qp_window.cpp:800
-msgid "primary"
-msgstr "primaria"
-
-#: qp_window.cpp:802
-msgid "logical"
-msgstr "logica"
-
-#: qp_window.cpp:803
-msgid "extended"
-msgstr "estesa"
-
-#: qp_window.cpp:805
-msgid ""
-"this is a %1 partition\n"
-"it start at: %2 and end at: %3\n"
-"it can grow left: %4 and right: %5\n"
-"the filesystem is: %6"
-msgstr ""
-"questa è una partizione %1\n"
-"inizia a: %2 e finisce a: %3\n"
-"può aumentare verso sinistra: %4 e verso destra: %5\n"
-"il filesystem è: %6"
-
-#: qp_window.cpp:883
-msgid ""
-"You're going to make a new partition table. Are you sure?\n"
-"All data will be lost!"
-msgstr ""
-"Stai per creare una nuova tabella delle partizioni. Sei sicuro?\n"
-"Tutti i dati saranno persi!"
-
-#: qp_window.cpp:898
-msgid "It was not possible to make a new partition table."
-msgstr "Non è stato possibile creare una nuova tabella delle partizioni."
-
-#: qp_window.cpp:1012
-msgid "(No Active on Drive)"
-msgstr "(Nessuna partizione Attiva)"
-
-#: qp_window.cpp:1025
-msgid ""
-"Currently active partition: %1\n"
-"Change active partition to: %2\n"
-"\n"
-"Are you sure you want to change the active partition?"
-msgstr ""
-"Partizione attiva corrente: %1\n"
-"Cambia la partizione attiva a: %2\n"
-"\n"
-"Sei sicuro di voler cambiare la partizione attiva?"
-
-#: qp_window.cpp:1060
-msgid ""
-"You're commiting all changes. Warning, you can lost data!\n"
-"Make sure also that you're not commiting a busy device...\n"
-"In other word PLEASE UMOUNT ALL PARTITIONS before commiting changes!"
-msgstr ""
-"Stai confermando tutti i cambiamenti. Attenzione, puoi perdere i dati!\n"
-"Assicurati anche che non stai aggiornando una periferica occupata...\n"
-"In altre parole PER FAVORE SMONTA TUTTE LE PARTIZIONI prima di confermare i "
-"cambiamenti!"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 194
-#: rc.cpp:51
-#, no-c-format
-msgid "Install Kanotix to HD"
-msgstr "Installa KANOTIX nell'hard disk"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 208
-#: rc.cpp:55
-#, no-c-format
-msgid "Update an existing Kanotix HD-Installation"
-msgstr "Aggiorna una installazione su hard disk già esistente di KANOTIX"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 635
-#: rc.cpp:147
-#, no-c-format
-msgid "User"
-msgstr "Utente"
-
-#. i18n: file ./knxinstallerwidgetbase.2.ui line 1042
-#: rc.cpp:221
-#, no-c-format
-msgid "Update-Installation"
-msgstr "Aggiorna l'installazione"
-
-#. i18n: file ./knxinstallerui.rc line 4
-#: rc.cpp:689
-#, no-c-format
-msgid "C&ustom"
-msgstr "Personalizzato"

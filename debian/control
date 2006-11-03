@@ -1,8 +1,7 @@
 Source: knx-installer
 Section: admin
 Priority: optional
-Maintainer: Joerg Schirottke <master@kanotix.com>
-Uploaders: Stefan Lippers-Hollmann <s.l-h@gmx.de>
+Maintainer: Stefan Lippers-Hollmann <s.l-h@gmx.de>
 Build-Depends: cdbs (>= 0.4.23-1.1), debhelper (>= 5.0.0)
 Standards-Version: 3.7.2
 
@@ -10,17 +9,9 @@ Package: knx-installer
 Architecture: all
 Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, whois, yaird, kanotix-udev-config
 Suggests: gparted, xdialog, distro-defaults, 855resolution
-Conflicts: ifrename
+Conflicts: ifrename, initscripts-kanotix
 Description: installs kanotix to hd
  kanotix-installer is an fully functional installation program
  to easily install kanotix to hd. It has support for config-files, 
  which allow more advanced usages.
 
-Package: initscripts-kanotix
-Architecture: all
-Depends: bash (>>2.05), whois
-Suggests: distro-defaults, kudzu | kudzu-kanotix
-Replaces: knx-installer (<< 0.3.19.20)
-Provides: knx-installer
-Description: KANOTIX initscripts for HD uses
- KANOTIX also uses some initscripts on the harddisk for advanced tasks.

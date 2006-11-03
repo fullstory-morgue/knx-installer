@@ -1,8 +1,15 @@
-knx-installer (0.4.0.32) UNRELEASED; urgency=low
+knx-installer (0.4.0.32) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * get rid of initscripts-kanotix.
+  * remove obsolete knoppix tools.
+  * remove remaining X11R6 oddities.
+  * remove mkdesktophdicons.
+  * remove autofs handling.
+  * purge kanotix-terminalserver after installing.
+  * another round of quoting/ escaping fixes.
+  * get rid of bogus/ ancient compatibility code.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  2 Nov 2006 23:36:30 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri,  3 Nov 2006 22:32:53 +0100
 
 knx-installer (0.4.0.31) unstable; urgency=low
 

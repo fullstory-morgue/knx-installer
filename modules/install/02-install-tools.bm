@@ -18,48 +18,29 @@ system_findchanged(){
 
 system_add_hd_autoconfig()
 {
-	echo "SYSTEM_TYPE=$SYSTEM_TYPE" >> $TARGET_MNT_POINT/etc/default/knoppix
-	echo "SYSTEM_HW_PROFILE=yes" >> $TARGET_MNT_POINT/etc/default/knoppix
+	echo "SYSTEM_TYPE=$SYSTEM_TYPE" >>	"$TARGET_MNT_POINT/etc/default/knoppix"
+	echo "SYSTEM_HW_PROFILE=yes" >>		"$TARGET_MNT_POINT/etc/default/knoppix"
 	
-	# TODO: :-)
-	[ ! -r /etc/init.d/knoppix-hd-autoconfig -a -x tools/knoppix-hd-autoconfig ] && cp -f tools/knoppix-hd-autoconfig "$TARGET_MNT_POINT/etc/init.d/"
-
 	chroot_it update-rc.d -f knoppix-autoconfig remove . &>/dev/null
 	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
-	[ "$SYSTEM_TYPE" = "beginner" ] && chroot_it update-rc.d knoppix-hd-autoconfig start 00 S . >/dev/null
 
 	# TODO: Remove the hacks
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-
-	# TODO: Really _fix_ it:
-	perl -pi -e 's/ReadOnly=1/ReadOnly=0/g' "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons"	&>/dev/null
-	perl -pi -e 's/uid=knoppix,gid=knoppix,//g' "$TARGET_MNT_POINT/etc/automount.sh"	&>/dev/null
-
-	if [ -x "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons" ]; then
-		mount --bind /proc "$TARGET_MNT_POINT/proc"
-		chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
-		umount "$TARGET_MNT_POINT/proc"
-	fi
 }
 
 system_add_hd_config()
 {
-	# TODO: :-)
-	[ ! -r /etc/init.d/knoppix-hd-config -a -x tools/knoppix-hd-config ] && cp -f tools/knoppix-hd-config "$TARGET_MNT_POINT/etc/init.d/"
+	DEFAULT_CONFIG_DIR="$TARGET_MNT_POINT/etc/knoppix"
 
-	DEFAULT_CONFIG_DIR=$TARGET_MNT_POINT/etc/knoppix
-
-	mkdir -p $DEFAULT_CONFIG_DIR/etc/network/
+	mkdir -p "$DEFAULT_CONFIG_DIR/etc/network/"
 	
-	save_config $DEFAULT_CONFIG_DIR/install-configuration
-	chmod 600 $DEFAULT_CONFIG_DIR/install-configuration
+	save_config "$DEFAULT_CONFIG_DIR/install-configuration"
+	chmod 600 "$DEFAULT_CONFIG_DIR/install-configuration"
 
-	cp -af /$DEFAULT_DIR/etc/network/interfaces $DEFAULT_CONFIG_DIR/etc/network/
-	cp -af /$DEFAULT_DIR/etc/pcmcia $DEFAULT_CONFIG_DIR/etc/
-	cp -af /$DEFAULT_DIR/etc/cups $DEFAULT_CONFIG_DIR/etc/
-
-	chroot_it update-rc.d knoppix-hd-config start 01 S . >/dev/null
+	cp -af "/$DEFAULT_DIR/etc/network/interfaces" "$DEFAULT_CONFIG_DIR/etc/network/"
+	cp -af "/$DEFAULT_DIR/etc/pcmcia" "$DEFAULT_CONFIG_DIR/etc/"
+	cp -af "/$DEFAULT_DIR/etc/cups" "$DEFAULT_CONFIG_DIR/etc/"
 }
 
 system_copy_etc()
@@ -67,20 +48,16 @@ system_copy_etc()
 	update_status $"Copying custom configuration ..."
 	
 	# copy changed files in /etc
-	( cd $TARGET_MNT_POINT; system_findchanged /etc /KNOPPIX/etc | egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf -) 2>/dev/null
+	( cd "$TARGET_MNT_POINT"; system_findchanged /etc /KNOPPIX/etc | egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf -) 2>/dev/null
 
 	# TODO: Add support for installing nvidia drivers here if they are there
 	# install_nvidia_drivers
 	# For now we will just use the old one ...
-	[ -r /etc/X11/XF86Config-4.1st ] && mv -f $TARGET_MNT_POINT/etc/X11/XF86Config-4.1st $TARGET_MNT_POINT/etc/X11/XF86Config-4
+	[ -r /etc/X11/xorg.conf.1st ] && mv -f "$TARGET_MNT_POINT/etc/X11/xorg.conf.1st" "$TARGET_MNT_POINT/etc/X11/xorg.conf"
 
-	# Rename XF86Config-4 to xorg.conf when Xorg is used and activate xorg-common
-	if [ -x /usr/X11R6/bin/Xorg ]; then
-		mv $TARGET_MNT_POINT/etc/X11/XF86Config-4 $TARGET_MNT_POINT/etc/X11/xorg.conf
-		[ -x $TARGET_MNT_POINT/etc/init.d/xorg-common ] && chroot_it update-rc.d xorg-common start 70 S . >/dev/null
-		[ -x $TARGET_MNT_POINT/etc/init.d/x-common ]    && chroot_it update-rc.d x-common    start 70 S . >/dev/null
-		[ -x $TARGET_MNT_POINT/etc/init.d/x11-common ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
-	fi
+	# Rename XF86Config-4 (if present) to xorg.conf when Xorg is used and activate xorg-common
+	[ -f "$TARGET_MNT_POINT/etc/X11/XF86Config-4" -a ! -f "$TARGET_MNT_POINT/etc/X11/xorg.conf" ] && mv "$TARGET_MNT_POINT/etc/X11/XF86Config-4" "$TARGET_MNT_POINT/etc/X11/xorg.conf"
+	[ -x "$TARGET_MNT_POINT/etc/init.d/x11-common" ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
 
   	# Save ALSA sound volume
 
@@ -88,19 +65,16 @@ system_copy_etc()
 	
 	# Copy volume setting
 
-	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state $TARGET_MNT_POINT/var/lib/alsa
+	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
 
 	if [ ! "$SYSTEM_TYPE" = "debian" ]; then
 		# TODO: Remove hack from here
 		perl -pi -e "s/insmod/modprobe/g" "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 		[ -e "$TARGET_MNT_POINT/etc/default/kde-services-knoppix" ] && perl -pi -e 's/^#//g' "$TARGET_MNT_POINT/etc/default/kde-services-knoppix"
-		[ -e $TARGET_MNT_POINT/etc/default/kde-services-kanotix ] && perl -pi -e 's/^#//g' $TARGET_MNT_POINT/etc/default/kde-services-kanotix
+		[ -e "$TARGET_MNT_POINT/etc/default/kde-services-kanotix" ] && perl -pi -e 's/^#//g' "$TARGET_MNT_POINT/etc/default/kde-services-kanotix"
 		# TODO: Send hacks to Klaus ...
 		perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-		[ "$INSTALL_KANO" = "no" ] && perl -pi -e 's/modutils/modutils-knoppix/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 		perl -pi -e 's/if grep -q /if egrep -q/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-		# TODO: :-)
-		[ "$INSTALL_KANO" = "no" ] && [ ! -r /etc/init.d/modutils-knoppix -a -x tools/modutils-knoppix ] && cp -f tools/modutils-knoppix "$TARGET_MNT_POINT/etc/init.d/"
 	fi
 	
 	# Add dpi setting from cheatcode to hd install
@@ -109,17 +83,15 @@ system_copy_etc()
 	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
 	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
 	if [ "$CUSTOM_DPI" != "auto" -a "$CUSTOM_DPI" ]; then
-		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/Xservers ] && perl -pi -e "s|(/usr/X11R6/bin/X -nolisten tcp).*|\1 -dpi $CUSTOM_DPI -br|" $TARGET_MNT_POINT/etc/kde3/kdm/Xservers
-		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi $CUSTOM_DPI -br|"  $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+		[ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 	else
-		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/Xservers ] && perl -pi -e "s|(/usr/X11R6/bin/X -nolisten tcp).*|\1 -br|"                  $TARGET_MNT_POINT/etc/kde3/kdm/Xservers
-		[ -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|"                   $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+		[ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|"                   "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 	fi
 
 	# Auto login
-	if [ "$AUTOLOGIN" = "yes" -a -e $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc ]; then
-		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
-		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  $TARGET_MNT_POINT/etc/kde3/kdm/kdmrc
+	if [ "$AUTOLOGIN" = "yes" -a -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 	fi
 }
 
@@ -148,14 +120,6 @@ system_copy_home()
 	fi
 
 	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
-
-	if [ -x "$TARGET_MNT_POINT/usr/bin/mkdesktophdicons" ]; then
-		mount --bind /proc "$TARGET_MNT_POINT/proc"
-		chroot "$TARGET_MNT_POINT" su "$USER_NAME" -c mkdesktophdicons
-		umount "$TARGET_MNT_POINT/proc"
-	fi
-
-	# --- Added by Joerg Schirottke (modified by Fabian Franz)
 
 	# LOKALE ANPASSUNGEN
 
@@ -207,7 +171,6 @@ system_copy_home()
 	fi
 
 	# Neue Symbole für KANOTIX und KNOPPIX auf dem Desktop
-
 	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" <<EOF
 [Desktop Entry]
 Name=KANOTIX
@@ -232,17 +195,6 @@ EOF
 
 system_setup_kdm()
 {
-	# backup Knoppix specific Xsession file
-	# mv "$TARGET_MNT_POINT/etc/X11/Xsession.d/45xsession" "$TARGET_MNT_POINT/root/xsession.knx-hdinstall.backup"
-
-	# Make the system insecure ? Never! (FF)
-	
-	# fix display permissions for xdm/kdm (bug in woody?)
-	#sed -e 's,DisplayManager\*authorize:.*true,DisplayManager*authorize: false,g' /etc/X11/xdm/xdm-config >$TARGET_MNT_POINT/etc/X11/xdm/xdm-config
-	#for x in /etc/kde[23]/kdm/kdmrc; do
-	#	perl -pi -e 's,#Authorize=false,Authorize=false,g' $TARGET_MNT_POINT/$x
-	#done
-
 	# force kde first time configuration
 	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]; then
 		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc"
@@ -268,10 +220,6 @@ system_install_templates()
 
 		# "normalize" /etc/inittab
 		cp -af "$TEMPLATE_PATH/etc/inittab" "$TARGET_MNT_POINT/etc/inittab"
-	
-		# change /etc/inputrc to 8-bit clean input
-		# why ?
-		#cp -af $TEMPLATE_PATH/etc/inputrc $TARGET_MNT_POINT/etc/inputrc
 	
 		# remove Knoppix entry from /etc/sudoers
 		cp -af "$TEMPLATE_PATH/etc/sudoers" "$TARGET_MNT_POINT/etc/sudoers"
@@ -321,109 +269,105 @@ system_add_services()
 		[ "$MODE" ] && chroot_it update-rc.d 915resolution defaults &>/dev/null
 	fi
 	
-	if [ "$INSTALL_KANO" = "no" ]; then
-		# Set packages to hold/ prevent KDE update (Knoppix only):
-		echo "kdelibs4-dev hold"  | chroot_it dpkg --set-selections
-		echo "libqt3-mt-dev hold" | chroot_it dpkg --set-selections
-		echo "libxft2-dev hold"   | chroot_it dpkg --set-selections
-	else
-		# XXX: well, we only need the old version for live purposes
-		echo "eject install"      | chroot_it dpkg --set-selections
-		
-		# disable portmap
-		chroot_it update-rc.d -f portmap remove &>/dev/null
+	# XXX: well, we only need the old version for live purposes
+	echo "eject install"      | chroot_it dpkg --set-selections
+	
+	# disable portmap
+	chroot_it update-rc.d -f portmap remove &>/dev/null
 
-		# start powernowd
-		pidof powernowd &> /dev/null && chroot_it update-rc.d powernowd defaults &>/dev/null
+	# start powernowd
+	pidof powernowd &> /dev/null && chroot_it update-rc.d powernowd defaults &>/dev/null
 
-		# start powersaved
-		pidof powersaved &> /dev/null && chroot_it update-rc.d powersaved defaults &>/dev/null
-		
-		# start sl-modem-daemon
-		pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
-		
-		# configure /etc/kernel-pkg.conf
-		[ -f "$TARGET_MNT_POINT/etc/kernel-pkg.conf" ] && \
-			perl -pi -e "s/^maintainer.*\=.*/maintainer \:\= $NAME_NAME/;s/^email.*\=.*/email \:\= $USER_NAME\@$HOST_NAME\.local/" "$TARGET_MNT_POINT/etc/kernel-pkg.conf"
-		
-		# enable KDE sounds
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/knotifyrc"
-		# create ssh keys
-		#[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" ] || ssh-keygen -q -t rsa1 -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" -C '' -N ''
-		[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
-		[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
+	# start powersaved
+	pidof powersaved &> /dev/null && chroot_it update-rc.d powersaved defaults &>/dev/null
+	
+	# start sl-modem-daemon
+	pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
+	
+	# configure /etc/kernel-pkg.conf
+	[ -f "$TARGET_MNT_POINT/etc/kernel-pkg.conf" ] && \
+		perl -pi -e "s/^maintainer.*\=.*/maintainer \:\= $NAME_NAME/;s/^email.*\=.*/email \:\= $USER_NAME\@$HOST_NAME\.local/" "$TARGET_MNT_POINT/etc/kernel-pkg.conf"
+	
+	# enable KDE sounds
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/knotifyrc"
+	# create ssh keys
+	#[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" ] || ssh-keygen -q -t rsa1 -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" -C '' -N ''
+	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
+	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
 
-		if [ "$SYSTEM_TYPE" = "debian" ]; then
-			chroot_it dpkg --purge	initscripts-kanotix-live \
-						initscripts-kanotix \
-						kanotix-remountrw \
-						kanotix-setpassword \
-						kanotix-splash \
-						kanotix-splash-utils \
-						kde-services-kanotix \
-						mkdosswapfile-kanotix \
-						mkpersistenthome-kanotix \
-						restartx-kanotix \
-						sambastart-kanotix \
-						startsyslog-kanotix \
-						sudoers-kanotix \
-						xsession-initscript-kanotix \
-						xsession-kanotix \
-						xf86config-kanotix			&> /dev/null
-			#chroot_it dpkg --purge checkmem-kanotix			&> /dev/null	# under evaluation
-			
-			#  disable live config
-			[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
-				perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
-		fi
-
-		# remove live- only packages
-		chroot_it dpkg --purge	firewall-kanotix \
+	if [ "$SYSTEM_TYPE" = "debian" ]; then
+		chroot_it dpkg --purge	autofs \
+					automount-kanotix \
+					checkmem-kanotix \
+					busybox-kanotix \
+					fix-cdrom \
+					hotplug-kanotix \
+					initscripts-kanotix-live \
+					initscripts-kanotix \
+					firewall-kanotix \
+					kanotix-remountrw \
+					kanotix-setpassword \
+					kanotix-splash \
+					kanotix-splash-utils \
+					kanotix-terminalserver \
 					knxinstaller \
 					knx-installer \
-					saveconfig-kanotix				&> /dev/null
+					kde-services-kanotix \
+					mkdesktophdicons-kanotix \
+					mkdosswapfile-kanotix \
+					mknbi \
+					mkpersistenthome-kanotix \
+					restartx-kanotix \
+					sambastart-kanotix \
+					saveconfig-kanotix \
+					startsyslog-kanotix \
+					sudoers-kanotix \
+					syslinux \
+					tftpd-hpa \
+					xsession-initscript-kanotix \
+					xsession-kanotix \
+					xf86config-kanotix			&> /dev/null
+		
+		#  disable live config
+		[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
+			perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
+	fi
 
-		# enable udev, if installed
-		if [ -x /etc/init.d/udev ]; then
-			chroot_it dpkg --purge	autofs \
-						automount-kanotix \
-						fix-cdrom \
-						hotplug-kanotix \
-						mkdesktophdicons-kanotix		&> /dev/null
-			pidof cardmgr >/dev/null || chroot_it dpkg --purge pcmcia-cs	&> /dev/null
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom[1-9]\]
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/Floppy
-			rm -f "$TARGET_MNT_POINT/etc/skel/Desktop"/Floppy
-			
-			mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config" \
-				 "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
-			touch "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
-			awk '/^\[Media\]/ { f = 1; next } /^\[.+\]/ { f = 0 } ! f' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
-				> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-			cat << EOF >> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+	# enable udev, if installed
+	if [ -x /etc/init.d/udev ]; then
+		pidof cardmgr >/dev/null || chroot_it dpkg --purge pcmcia-cs	&> /dev/null
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom[1-9]\]
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/Floppy
+		rm -f "$TARGET_MNT_POINT/etc/skel/Desktop"/Floppy
+		
+		mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config" \
+			 "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
+		touch "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+		awk '/^\[Media\]/ { f = 1; next } /^\[.+\]/ { f = 0 } ! f' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
+			> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+		cat << EOF >> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 [Media]
 enabled=true
 exclude=media/hdd_unmounted
 EOF
-			cat "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
-				> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
+		cat "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
+			> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
 
-			# fix ownership
-			chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
-		fi
-
-		# enable splashy, if installed
-		if [ -x /etc/init.d/splashy-init ]; then
-			chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
-			chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
-		fi
-
-		# enable acpi-support, if installed
-		[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
+		# fix ownership
+		chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 	fi
+
+	# enable splashy, if installed
+	if [ -x /etc/init.d/splashy-init ]; then
+		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
+		chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+	fi
+
+	# enable acpi-support, if installed
+	[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
 	
 	# remove temporary kde- user files
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.DCOPserver_*_*"
@@ -437,7 +381,6 @@ system_services()
 {
 	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:89 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:11 cron:89:11"
 	# delete knoppix specific programs from runlevel directories
-	# delete also knoppix-hd-config
 	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt,live-autoconfig,live-halt,live-reboot}"
 
 	# start services wanted in config ...
@@ -570,10 +513,6 @@ system_services()
 		chroot_it update-rc.d "$SYSTEM_SERVICE" defaults "$SYSTEM_START" "$SYSTEM_STOP"			&>/dev/null
 	done
 
-	# start automounter
-	chroot_it update-rc.d -f autofs remove									&>/dev/null
-	chroot_it update-rc.d autofs defaults									&>/dev/null
-
 	# Display Manager "korrekt" starten - also nur im Runlevel 5
 	#	(das gilt aber auch eigentlich nur für nicht-debian Systeme ;-))
 	
@@ -682,7 +621,7 @@ EOF
 	# Also save /etc/sysconfig/
 	mkdir -p $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)
 	cp -f /etc/sysconfig/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
-	cp -f /etc/X11/XF86Config* $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
+	cp -f /etc/X11/xorg.conf* $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
 	
 	# add DMA activation to bootmisc.sh (commented out if nodma is set)
 	if [ "$INSTALL_KANO" = "no" ]; then
