@@ -1,247 +1,242 @@
-# translation of fr.po to français
-# translation of messages-french-ebdomino.po to français
-# translation of messages.po to français
+# translation of messages.po to Spanish
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# Barons <ebdomino@knoppix-fr.org>, 2004.
-# Barons Eric <ebdomino@knoppix-fr.org>, 2004.
+# Luis Llorente Campo <luis.llorente@hispalinux.es>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-02-18 17:57+0100\n"
-"PO-Revision-Date: 2004-04-23 18:32+0200\n"
-"Last-Translator: Barons Eric <ebdomino@knoppix-fr.org>\n"
-"Language-Team: français <fr@li.org>\n"
+"PO-Revision-Date: 2004-02-19 13:52+0100\n"
+"Last-Translator: Luis Llorente Campo <luis.llorente@hispalinux.es>\n"
+"Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: knoppix-installer:62
-msgid "knoppix-installer terminated"
-msgstr "knoppix-installer terminé"
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "$FLL_DISTRO_NAME-installer terminado"
 
 #: knoppix-installer:77
 msgid "Save configuration?"
-msgstr "Enregistrer la configuration?"
+msgstr "¿Guardar configuración?"
 
 #: knoppix-installer:77
 msgid "Do you want to save your configuration?"
-msgstr "Voulez-vous enregistrez votre configuration?"
+msgstr "¿Quiere grabar su configuración?"
 
 #: knoppix-installer:88
 msgid "$FLL_DISTRO_NAME Installation"
-msgstr "Installation de $FLL_DISTRO_NAME"
+msgstr "Instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:89
 msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
-msgstr "Installation de $FLL_DISTRO_NAME sur le disque du (Etape 0/$MAX)"
+msgstr "Instalación de $FLL_DISTRO_NAME en el disco duro (Paso 0/$MAX)"
 
 #: knoppix-installer:90
 msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
-msgstr "Démarrage de l'installation de $FLL_DISTRO_NAME"
+msgstr "Inicialización de la instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:92
 msgid "Installation failed"
-msgstr "L'installation a échouée"
+msgstr "La instalación falló"
 
 #: knoppix-installer:93
 msgid "Installation successfull"
-msgstr "Installation réussie"
+msgstr "Instalación con éxito"
 
 #: knoppix-installer:94
 msgid "Fatal dialog error"
-msgstr "Erreur fatale de dialog"
+msgstr "Error grave de dialog"
 
 #: knoppix-installer:154
 msgid "Choose System Type"
-msgstr "Choisissez votre mode d'installation"
+msgstr "Elija el tipo de sistema"
 
 #: knoppix-installer:167
 msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
-msgstr "Configuration de l'installation de $FLL_DISTRO_NAME Etape(0/$NUM_REAL_MODULES)"
+msgstr "Creando configuración de $FLL_DISTRO_NAME Paso (0/$NUM_REAL_MODULES)"
 
 #: knoppix-installer:195 knoppix-installer:197
 msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
-msgstr "Erreur: Valeur inconnue$2 pour $1\\nUtilisation de la valeur par défaut($DEFAULT_TEMP)."
+msgstr "Error: Valor $2 desconocido para $1\\nVolviendo al valor por defecto ($DEFAULT_TEMP)."
 
 #: knoppix-installer:206 knoppix-installer:208
 msgid ""
 "Error: Check failed for $1 ($2)\\nThe configuration module will now be "
 "started."
-msgstr "Erreur: La vérification a échouée pour $1 ($2)\\nLe module de configuration va être démarré"
+msgstr "Error: Comprobación falló para $1 ($2)\\nEl módulo de configuración será iniciado ahora."
 
 #: knoppix-installer:223
 msgid "Loading $FLL_DISTRO_NAME configuration"
-msgstr "Charger une configuration  "
+msgstr "Cargando configuración de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:226
 msgid "Here you can input a filename to load an existing configuration"
-msgstr "Vous pouvez entrer ici le nom d'un fichier de configuration existant"
+msgstr "Aquí puede introducir un nombre de archivo para cargar una configuración ya existente"
 
 #: knoppix-installer:226
 msgid "Input the configuration filename to be loaded"
-msgstr "Entrez le nom du fichier de configuration à charger"
+msgstr "Introduzca el nombre del archivo de configuración a cargar"
 
 #: knoppix-installer:231
 msgid ""
 "File $CONFIG_USER could not be found. The loading of the configuration will "
 "be aborted."
-msgstr "Le fichier $CONFIG_USER n'a pas été trouvé.Le chargement de la configuration a échouée"
+msgstr "El archivo $CONFIG_USER no se encontró. La carga de la configuración será cancelada."
 
 #: knoppix-installer:254
 msgid "Saving $FLL_DISTRO_NAME configuration"
-msgstr "Enregistrer le fichier de configuration "
+msgstr "Guardando configuración de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:257
 msgid "Here you can input a filename to save the configuration"
-msgstr "Vous pouvez entrer ici un nom pour le fichier de configuration"
+msgstr "Aquí puede introducir un nombre de archivo para guardar la configuración"
 
 #: knoppix-installer:257
 msgid "Input a filename for the configuration"
-msgstr "Entrez un nom pour le fichier de configuration"
+msgstr "Introduzca un nombre de archivo para la configuración"
 
 #: knoppix-installer:263
 msgid ""
 "If you click yes, the file will be overwritten, otherwise this script will "
 "abort"
-msgstr "Si vous cliquez sur oui,le fichier sera modifié, sinon le script va se terminer"
+msgstr "Si pulsa Si, el archivo se sobreescribirá, de otra forma este script finalizará"
 
 #: knoppix-installer:263
 msgid "Do you really want to overwrite $CONFIG_USER?"
-msgstr "Voulez-vous vraiment modifier$CONFIG_USER?"
+msgstr "¿Quiere realmente sobreescribir $CONFIG_USER?"
 
 #: knoppix-installer:276
 msgid "Possible are:"
-msgstr "Choix possibles:"
+msgstr "Son posibles:"
 
 #: knoppix-installer:278
 msgid "This value will be checked by function"
-msgstr "Cette valeur sera vérifiée par"
+msgstr "Este valor será comprobado por función"
 
 #: knoppix-installer:280
 msgid "Default value is:"
-msgstr "Valeur par défaut:"
+msgstr "Valor por defecto es:"
 
 #: knoppix-installer:299
 msgid ""
 "Several of this options can only be changed in the Configurationfile "
 "$CONFIG_FILE."
-msgstr ""
-"Beaucoup d'options peuvent êtres paramétrées dans le fichier de configuration"
-"$CONFIG_FILE."
+msgstr "Varias de estas opciones sólo se pueden cambiar en el archivo de configuración $CONFIG_FILE."
 
 #: knoppix-installer:300
 msgid ""
 "The Installation will now be started. The author and knopper.net give no "
 "warranty against any damage caused by this script."
-msgstr "l'installation va maintenant commencée. Les auteurs et knopper.net ne pourront être tenus responsables pour les dommage éventuels causés par ce script."
+msgstr "La instalación comenzará ahora. El autor y knopper.net no dan garantía de que este script no vaya a causar algún daño."
 
 #: knoppix-installer:302
 msgid "Do you want to proceed with these parameters?"
-msgstr "Voulez-vous lancer l'installation avec ces paramètres?"
+msgstr "¿Quiere proceder con estos parámetros?"
 
 #: knoppix-installer:304
 msgid "Make sure you agree to all parameters, if so proceed with the installation."
-msgstr "Vérifiez bien tous les paramètres, avant de démarrer l'installation."
+msgstr "Asegúrese de que está de acuerdo con todos los parámetros. En ese caso, prosiga con la instalación."
 
 #: knoppix-installer:319
 msgid "Converting $FLL_DISTRO_NAME to Debian..."
-msgstr "conversion de $FLL_DISTRO_NAME vers Debian..."
+msgstr "Convirtiendo $FLL_DISTRO_NAME a Debian..."
 
 #: knoppix-installer:351 knoppix-installer:361
 msgid "Starting $FLL_DISTRO_NAME installation"
-msgstr "Démarrage de l'installation de $FLL_DISTRO_NAME"
+msgstr "Comenzando instalación de $FLL_DISTRO_NAME"
 
 #: knoppix-installer:354
 msgid "Error: No complete Configuration found"
-msgstr "Erreur:La configuration est incomplète"
+msgstr "Error: No se encontró la configuración completa"
 
 #: knoppix-installer:362
 msgid "Installing"
-msgstr "Installation en cours"
+msgstr "Instalando"
 
 #: knoppix-installer:378
 msgid "Creating floppy disk"
-msgstr "Création de la disquette"
+msgstr "Creando disquete"
 
 #: knoppix-installer:378
 msgid ""
 "Please insert now an empty floppy disk into your floppydrive. Warning: All "
 "data on it will be lost. If you don't want to create a disk you can choose "
 "No."
-msgstr "Insérez une disquette vierge dans le lecteur. Attention Toutes les données de la disquette seront effacées. Si vous ne voulez pas créer de disquette choisissez Non."
+msgstr "Por favor, inserte ahora un disquete vacío en la disquetera. Atención: Todos los datos en él se perderán. Si no quiere crear un disquete puede seleccionar No."
 
 #: knoppix-installer:398 knoppix-installer:399
 msgid "$FLL_DISTRO_NAME was successfully installed to hd."
-msgstr "$FLL_DISTRO_NAME a été installée avec succès."
+msgstr "$FLL_DISTRO_NAME se instaló correctamente en el disco duro."
 
 #: knoppix-installer:405
 msgid "$FLL_DISTRO_NAME Main-Menu"
-msgstr "$FLL_DISTRO_NAME Menu d'installation"
+msgstr "$FLL_DISTRO_NAME Menú-Principal"
 
 #: knoppix-installer:406
 msgid "Thats the main menu\\nChoose the action you want"
-msgstr "Menu d'installation\\nChoisissez ce que vous voulez faire"
+msgstr "Este es el menú principal\\nElija la opción que quiera"
 
 #: knoppix-installer:406 modules/00-hd-tools.bm:174
 msgid "Choose an action"
-msgstr "Que voulez-vous faire?"
+msgstr "Elija una acción"
 
 #: knoppix-installer:407
 msgid "Configure Installation"
-msgstr "Configurer l'installation"
+msgstr "Configurar la instalación"
 
 #: knoppix-installer:407
 msgid "Create a new configuration"
-msgstr "Créer une nouvelle configuration"
+msgstr "Crear una nueva configuración"
 
 #: knoppix-installer:408
 msgid "Start installation"
-msgstr "Démarrer installation"
+msgstr "Comenzar instalación"
 
 #: knoppix-installer:408
 msgid "Start the installation"
-msgstr "Démarrer l'installation"
+msgstr "Comenzar la instalación"
 
 #: knoppix-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition"
-msgstr "Partitionner"
+msgstr "Particionar"
 
 #: knoppix-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition the hard disk"
-msgstr "Partitionner le disque dur"
+msgstr "Particionar el disco duro"
 
 #: knoppix-installer:410
 msgid "Load config"
-msgstr "Charger configuration"
+msgstr "Cargar configuración"
 
 #: knoppix-installer:410
 msgid "Load an existing configuration"
-msgstr "Charger une configuration existante"
+msgstr "Cargar una configuración ya existente"
 
 #: knoppix-installer:411
 msgid "Save config"
-msgstr "Sauver config"
+msgstr "Guardar configuración"
 
 #: knoppix-installer:411
 msgid "Save the configuration"
-msgstr "Enregistrer une configuration"
+msgstr "Guardar la configuración"
 
 #: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
 #: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
 msgid "Quit"
-msgstr "Quitter"
+msgstr "Salir"
 
 #: knoppix-installer:412 modules/00-hd-tools.bm:174
 msgid "Quit the program"
-msgstr "Quitter le programme"
+msgstr "Salir del programa"
 
 #: knoppix-installer:417
 msgid "$FLL_DISTRO_NAME-installer started"
-msgstr "Démarrage de $FLL_DISTRO_NAME-installer"
+msgstr "$FLL_DISTRO_NAME-installer comenzado"
 
 #: knoppix-installer:418
 msgid ""
@@ -250,10 +245,7 @@ msgid ""
 "The author and knopper.net take no responsibility for data loss or hardware "
 "damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
-msgstr ""
-"Ce script va installer $FLL_DISTRO_NAME sur le disque dur. Retenez que cette version est toujours en développement.\n"
-"L'auteur et knopper.net ne peuvent être tenus pour responsables en cas de dommages ou de pertes de données. \\n\\nAuteur: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
-"\\nbasé sur l'excellent travail de Christian Perle <perle@itm.tu-clausthal.de>"
+msgstr "Este script instalará $FLL_DISTRO_NAME en el disco duro. Nótese que esta versión es todavía una versión muy temprana y bajo gran desarrollo.\nEl autor y knopper.net no toman responsabilidad ninguna por posible pérdida de datos o daño del hardware.\\n\\nAutor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nbasado en el excelente trabajo de Christian Perle <perle@itm.tu-clausthal.de>"
 
 #: knoppix-installer:427
 msgid ""
@@ -264,292 +256,267 @@ msgid ""
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
 "start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
-msgstr ""
-"Votre système ne semble pas avoir la configuration minimale requise "
-"pour l'installation.\\n\\nVérifiez que vous avez une partition libre d'au "
-"moins $[ROOT_MIN/(1024*1024)] GB pour installer $FLL_DISTRO_NAME. Vous "
-"avez aussi besoin d'une partition d'échange (swap) d'au moins$[SWAP_MIN/1024] MB, "
-"si vous avez moins de 512 MB\\n\\nVous pourrez partitionner votre disque "
-"dans le menu suivant.\\nsi vous savez ce que vous faites démarrez le script "
-"avec: IGNORE_CHECK=1 sudo knoppix-installer pour arriver au menu."
+msgstr "El instalador detectó que todavía no se satisfacen los requerimientos.\\n\\nPor favor, asegúrese de que tiene una partición libre con al menos $[ROOT_MIN/(1024*1024)] GB para instalar $FLL_DISTRO_NAME en ella. También necesita una partición de intercambio con al menos $[SWAP_MIN/1024] MB si no tiene 512 MB de memoria o más.\\n\\nEn el siguiente menú, puede ejecutar algunas herramientas para particionar su disco duro.\\nSi realmente sabe lo que está haciendo, ejecute con: IGNORE_CHECK=1 sudo knoppix-installer para evitar el menú."
 
 #: knoppix-installer:434
 msgid "Partition check succeeded"
-msgstr "Vérification de la partition réussie"
+msgstr "Comprobación de partición con éxito"
 
 #: knoppix-installer:447
 msgid "root permission needed."
-msgstr "Vous devez être root"
+msgstr "se necesita permiso de root."
 
 #: modules/booting/boot-tools.bm:445
 msgid "Creating initrd (if needed)"
-msgstr "Création de initrd (si nécessaire)"
+msgstr "Creando initrd (si es necesario)"
 
 #: modules/booting/boot-tools.bm:456
 msgid "Installing LILO to $BOOT_WHERE"
-msgstr "Installation de LILO sur $BOOT_WHERE"
+msgstr "Instalando LILO en $BOOT_WHERE"
 
 #: modules/booting/boot-tools.bm:461
 msgid "Finishing installation"
-msgstr "Fin de l'installation"
+msgstr "Terminando instalación"
 
 #: modules/01-hd.bm:11
 msgid "Determines if the HD should be formatted. (mkfs.*)"
-msgstr "Détermine si le disque dur doit être formaté. (mkfs.*)"
+msgstr "Determina si el disco duro debería ser formateado. (mkfs.*)"
 
 #: modules/01-hd.bm:12
 msgid "Sets the Filesystem type."
-msgstr "Choix du système de Fichiers"
+msgstr "Asigna el tipo de sistema de archivos."
 
 #: modules/01-hd.bm:13
 msgid "Here the $FLL_DISTRO_NAME-System will be installed"
-msgstr "$FLL_DISTRO_NAME sera installé sur cette partition"
+msgstr "El Sistema-$FLL_DISTRO_NAME será instalado aquí"
 
 #: modules/01-hd.bm:14
 msgid ""
 "Here you can give additional mappings. (Experimental) You need to have the "
 "partitions formatted yourself and give the correct mappings like: \\\"/dev/"
 "hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
-msgstr ""
-"Vous pouvez ici ajouter des partitions supplémentaires. (Expérimental) "
-"Vous devez les formater vous mêmes.Désignez les sous cette forme. \\\"/dev/"
-"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr "Aquí puede utilizar mapeados adicionales. (Experimental) Necesita haber formateado usted mismo las particiones y utilizar los mapeados correctos como:.\\\"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
 
 #: modules/01-hd.bm:15
 msgid ""
 "If set to yes, the program will NOT check if there is enough space to "
 "install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful "
 "for example with HD_MAP if you only have a small root partition."
-msgstr ""
-"Si la valeur est yes le programme NE VERIFIERA PAS s'il y'a assez d'espace "
-"pour installer $FLL_DISTRO_NAME sur la ou les partition(s) sélectionnée(s). Utisez à vos "
-"risques et péril. Cela est utile par exemple, si vous avez désignez plusieurs "
-"partitions d'installation dans HD_MAP et si vous avez une partition root de "
-"petite taille."
+msgstr "Si está puesto a Si, el programa NO comprobará si existe espacio suficiente para instalar $FLL_DISTRO_NAME en la(s) partición(es) seleccionada(s). ¡Utilícelo bajo su propia responsabilidad! Útil por ejemplo con HD_MAP si sólo tiene una pequeña partición raíz."
 
 #: modules/01-hd.bm:21
 msgid "Drive-Options:"
-msgstr "Options du disque:"
+msgstr "Opciones de unidad:"
 
 #: modules/01-hd.bm:22
 msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
-msgstr "Le disque $HD_CHOICE sera formaté avec le système de fichiers $HD_FSTYPE ."
+msgstr "La unidad $HD_CHOICE se formateará con el sitema de archivos $HD_FSTYPE."
 
 #: modules/01-hd.bm:22
 msgid "The Drive $HD_CHOICE will be used for the installation."
-msgstr "Le disque $HD_CHOICE ser utilisé pour l'installation."
+msgstr "La unidad $HD_CHOICE se utilizará para la instalación."
 
 #: modules/01-hd.bm:52
 msgid "Copying files. This can take a while. Please be patient."
-msgstr "Copie des fichiers. Cela peut être long. Soyez patients."
+msgstr "Copiando archivos. Esto puede llevar un rato. Por favor, sea paciente."
 
 #: modules/01-hd.bm:64
 msgid "Formatting $HD_CHOICE..."
-msgstr "Formattage de $HD_CHOICE..."
+msgstr "Formateando $HD_CHOICE..."
 
 #: modules/01-hd.bm:82
 msgid ""
 "Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
 "$ERROR_MESSAGES"
-msgstr ""
-"Le formattage de $HD_CHOICE a échoué. Plusieurs messages de mkfs. $HD_FSTYPE: "
-"$ERROR_MESSAGES"
+msgstr "El formateo de $HD_CHOICE falló. Algunos mensajes de mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
 
 #: modules/01-hd.bm:90
 msgid "Mounting $HD_CHOICE r/w..."
-msgstr "Montage de $HD_CHOICE r/w..."
+msgstr "Montando $HD_CHOICE r/w..."
 
 #: modules/01-hd.bm:96
 msgid "Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
-msgstr "Le montage de $HD_CHOICE a échoué. Plusieurs messages de mount. $ERROR_MESSAGES"
+msgstr "El montaje de $HD_CHOICE falló. Algunos mensajes de mount: $ERROR_MESSAGES"
 
 #: modules/01-hd.bm:101
 msgid "Mounting additional partitions r/w..."
-msgstr "Montage des partitons additionnelles r/w..."
+msgstr "Montando particiones adicionales r/w..."
 
 #: modules/01-hd.bm:118
 msgid "Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
-msgstr "Choisissez ici une partition parmi celles proposées\\n pour installer $FLL_DISTRO_NAME."
+msgstr "Aquí debe elegir alguna de las particiones disponibles\\n para utilizar con $FLL_DISTRO_NAME."
 
 #: modules/01-hd.bm:118
 msgid "Choose the partition to install $FLL_DISTRO_NAME"
-msgstr "Choisissez la partition d'installation de $FLL_DISTRO_NAME"
+msgstr "Elija la partición en la que instalar $FLL_DISTRO_NAME"
 
 #: modules/01-hd.bm:131
 msgid "Here you must choose one of the available filesystem types."
-msgstr "Ici vous devez choisir un des système de fichiers proposé."
+msgstr "Aquí debe elegir alguno de los sistemas de archivos disponibles."
 
 #: modules/01-hd.bm:131
 msgid "Choose filesystem-type."
-msgstr "Choisissez le système de fichiers."
+msgstr "Elija el sistema de archivos."
 
 #: modules/01-hd.bm:132
 msgid "Extended 2 filesystem with journal support."
-msgstr "Système de fichiers Extended 2 avec journalisation."
+msgstr "Sistema de archivos Extensión 2 con soporte de journal."
 
 #: modules/01-hd.bm:133
 msgid "ReiserFS 3.6: journaling filesystem developed by Namesys."
-msgstr "ReiserFS 3.6: Système de fichiers développé par Namesys avec journalisation."
+msgstr "ReiserFS 3.6: Sistema de archivos desarrollado por Namesys con soporte de journal."
 
 #: modules/03-host.bm:9
 msgid "Your hostname is: $HOST_NAME"
-msgstr "Nom de l'ordinateur: $HOST_NAME"
+msgstr "El nombre de la máquina es: $HOST_NAME"
 
 #: modules/03-host.bm:15
 msgid "box"
-msgstr "monpc"
+msgstr "box"
 
 #: modules/03-host.bm:16
 msgid "Here you must input your hostname. This is the name of you box."
-msgstr "Entrez ici le nom d'hote. C'est le nom de votre ordinateur."
+msgstr "Aquí debe introducir su nombre de máquina. Este es el nombre de su ordenador."
 
 #: modules/03-host.bm:16
 msgid "Input your preferred hostname"
-msgstr "Entrez votre nom d'hôte"
+msgstr "Introduzca su nombre de máquina"
 
 #: modules/00-dialog.bm:18
 msgid "Fatal security error."
-msgstr "Erreur fatale de sécurité"
+msgstr "Error fatal de seguridad."
 
 #: modules/00-dialog.bm:64
 msgid "Previous"
-msgstr "Précèdent"
+msgstr "Anterior"
 
 #: modules/00-dialog.bm:64
 msgid "Next"
-msgstr "Suivant"
+msgstr "Siguiente"
 
 #: modules/00-dialog.bm:64
 msgid "Help"
-msgstr "Aide"
+msgstr "Ayuda"
 
 #: modules/00-hd-tools.bm:77
 msgid "model unknown"
-msgstr "modèle inconnu"
+msgstr "modelo desconocido"
 
 #: modules/00-hd-tools.bm:88
 msgid ""
 "The following swap-partitions are marked as swap, but are not yet formatted. "
 "Check those you want to format. Warning, you'll loose all data on the "
 "partition."
-msgstr ""
-"La partition choisie commemémoire d'échange n'est pas encore formattée. "
-"elle va être formattée.Attention toutes les données de la partition "
-"seront perdues."
+msgstr "Las siguiente particiones de intercambio están marcada como de intercambio, pero no están todavía formateadas. Seleccione aquellas que quiera formatear. Atención. Perderá todos los datos en la partición."
 
 #: modules/00-hd-tools.bm:141
 msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
-msgstr "Partitionner le disque dur pour $FLL_DISTRO_NAME"
+msgstr "Particionando el disco duro para $FLL_DISTRO_NAME"
 
 #: modules/00-hd-tools.bm:144
 msgid ""
 "Here you must choose one of the available disks \\n and partition it for "
 "$FLL_DISTRO_NAME."
-msgstr ""
-"Choisissez ici un des disque dur \\n et partitionner le pour "
-"installer $FLL_DISTRO_NAME."
+msgstr "Aquí debe seleccionar alguno de los discos disponibles \\n y particionarlo para $FLL_DISTRO_NAME."
 
 #: modules/00-hd-tools.bm:144
 msgid "Choose one disk"
-msgstr "Choisissez un disque dur"
+msgstr "Elija un disco"
 
 #: modules/00-hd-tools.bm:173
 msgid "$FLL_DISTRO_NAME Partition-Menu"
-msgstr "$FLL_DISTRO_NAME Menu Partition"
+msgstr "Menú-Partición de $FLL_DISTRO_NAME"
 
 #: modules/00-hd-tools.bm:174
 msgid "Here you can partition your hard disk"
-msgstr "Vous pouvez partitionnez votre disque ici"
+msgstr "Aquí puede particionar su disco duro"
 
 #: modules/02-swap.bm:12
 msgid "If set to yes, the swap partitions will be autodetected."
-msgstr "Si la valeur est yes, la ou les partition(s) d'échange seront autodétectée(s)."
+msgstr "Si está puesto a sí, las particiones de intercambio se detectarán automáticamente."
 
 #: modules/02-swap.bm:13
 msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
-msgstr "La partition d'échange utilisée pour $FLL_DISTRO_NAME"
+msgstr "Las particiones de intercambio que serán usadas por la $FLL_DISTRO_NAME instalada."
 
 #: modules/02-swap.bm:18
 msgid "Swapspace-Options:"
-msgstr "Options pour la swap:"
+msgstr "Opciones de espacio de intercambio:"
 
 #: modules/02-swap.bm:21
 msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
-msgstr "La partitiond'échange utilisée sera $SWAP_CHOICES "
+msgstr "Las unidades autodetectadas $SWAP_CHOICES se utilizarán."
 
 #: modules/02-swap.bm:21
 msgid "The choosen swapdrives $SWAP_CHOICES will be used."
-msgstr "La partition $SWAP_CHOICES choisie sera utilisée comme swap."
+msgstr "Las unidades seleccionadas $SWAP_CHOICES se utilizarán."
 
 #: modules/02-swap.bm:23
 msgid "No swap partitions are needed."
-msgstr "Aucune partition de swap n'est nécessaire."
+msgstr "No se necesitan particiones de intercambio."
 
 #: modules/02-swap.bm:39
 msgid "Adding swap-devices to /etc/fstab ..."
-msgstr "Ajout de la swap a /etc/fstab"
+msgstr "Añadiendo unidades de intercambio a /etc/fstab ..."
 
 #: modules/00-setuser.bm:5
 msgid "Changing user in Passwd/Shadow..."
-msgstr "Changement de l'utilisateur dans Passwd/Shadow..."
+msgstr "Modificando usuario en Passwd/Shadow..."
 
 #: modules/00-setuser.bm:23
 msgid "Setting passwords ..."
-msgstr "Paramètrage des mots de passes"
+msgstr "Asignando contraseñas ..."
 
 #: modules/00-setuser.bm:28
 msgid "Updating group ..."
-msgstr "Mise à jour des groupes"
+msgstr "Actualizando grupo ..."
 
 #: modules/04-user-name-pass.bm:9
 msgid "Name-Options:"
-msgstr "Options-du-Nom:"
+msgstr "Opciones de nombre:"
 
 #: modules/04-user-name-pass.bm:10
 msgid "Your name is: $NAME_NAME"
-msgstr "Votre nom est: $NAME_NAME"
+msgstr "Su nombre es: $NAME_NAME"
 
 #: modules/04-user-name-pass.bm:15
 msgid "Here you must input your whole name. It is used to create a default user."
-msgstr "Entrez ici votre nom complet. Ceci pour la création d'un utilisateur par défaut."
+msgstr "Aquí debe introducir su nombre completo. Se utiliza para crear un usuario por defecto."
 
 #: modules/04-user-name-pass.bm:15
 msgid "Input your whole name (name surname)"
-msgstr "Saississez votre nom complet (nom prénom)"
+msgstr "Introduzca su nombre completo (nombre y apellidos)"
 
 #: modules/04-user-name-pass.bm:30
 msgid "Your choosen username is: $USER_NAME"
-msgstr "Votre nom d'utilisateur est: $USER_NAME"
+msgstr "Su nombre seleccionado es: $USER_NAME"
 
 #: modules/04-user-name-pass.bm:38
 msgid "Here you must input your preferred username. Suggested: $proposal"
-msgstr "Saisissez ici un nom d'utilisateur. Suggestion: $proposal"
+msgstr "Aquí debe introducir su nombre de usuario. Sugerido: $proposal"
 
 #: modules/04-user-name-pass.bm:38
 msgid "Input your user name (perhaps you like: $proposal)"
-msgstr "Saisissez votre nom d'utilisateur (peut être préfèrez-vous: $proposal)"
+msgstr "Introduzca su nombre de usuario (quizás algo como: $proposal)"
 
 #: modules/04-user-name-pass.bm:60
 msgid ""
 "Here you must choose the password for the user $USER_NAME and input it "
 "twice. If you have already chosen one, you can leave the fields blank. But "
 "you cannot recover the password once saved, as it is encrypted."
-msgstr ""
-"Choisissez ici un mot de passe pour l'utilisateur $USER_NAME et saisissez le "
-"deux fois. si vous en avez déja choisis un, vous pouvez laiser les champs vides. "
-"Mais vous ne pourrez plus récupèrez le mot de passe une fois enregistré et crypté."
+msgstr "Aquí debe seleccionar la contraseña para el usuario $USER_NAME e introducirla dos veces. Si ya ha elegido una, puede dejar los campos en blanco. Pero no puede recuperar la contraseña una vez guardada, ya que está cifrada."
 
 #: modules/04-user-name-pass.bm:60
 msgid "Input your user-password"
-msgstr "Saisissez le mot de passe de l'utilisateur"
+msgstr "Introduzca su contraseña de usuario"
 
 #: modules/04-user-name-pass.bm:60
 msgid "Input your user-password again"
-msgstr "Saisissez le encore une fois"
+msgstr "Introduzca su contraseña de usuario otra vez"
 
 #: modules/04-user-name-pass.bm:60 modules/04-user-name-pass.bm:80
 msgid "Passwords do not match or no password was given."
-msgstr "Les deux mots de passe sont différents ou vous n'avez rien saisis."
+msgstr "Las contraseñas no coinciden o no se introdujo contraseña."
 
 #: modules/04-user-name-pass.bm:80
 msgid ""
@@ -558,100 +525,89 @@ msgid ""
 "blank. But you cannot recover the password once saved, as it is encrypted. "
 "Remember that the root-User is the Administrator of the system, so it is a "
 "very important password."
-msgstr ""
-"Choisissez ici un mot de passe pour l'administrateur du système (root) et saisissez le "
-"deux fois. si vous en avez déja choisis un, vous pouvez laiser les champs vides. "
-"Mais vous ne pourrez plus récupèrez le mot de passe une fois enregistré et crypté. "
-"L'utilisateur root est l'admnistrateur du système, donc c'est un mot de passe très "
-"important, ne le perdez pas."
+msgstr "Aquí debe seleccionar la contraseña para el administrador del sistema (usuario root) e introducirla dos veces. Si ya ha elegido una, puede dejar los campos en blanco. Pero no puede recuperar la contraseña una vez guardada, ya que está cifrada. Recuerde que el usuario root es el Administrador del sistema, por lo que es una contraseña muy importante."
 
 #: modules/04-user-name-pass.bm:80
 msgid "Input your administration password"
-msgstr "Saisissez le mot de passe de l'administrateur"
+msgstr "Introduzca la contraseña de administración"
 
 #: modules/04-user-name-pass.bm:80
 msgid "Input your administration password again"
-msgstr "Saisissez le encore une fois"
+msgstr "Introduzca la contraseña de administración otra vez"
 
 #: modules/05-services.bm:9
 msgid "Services-Options:"
-msgstr "Options-des-Services:"
+msgstr "Opciones de servicios:"
 
 #: modules/05-services.bm:10
 msgid ""
 "The following services will be started, after each system bootup: "
 "$SERVICES_START"
-msgstr ""
-"Les services suivants seront lancés à chaque démarrage: "
-"$SERVICES_START"
+msgstr "Los siguientes servicios se iniciarán después de cada arranque del sistema: $SERVICES_START"
 
 #: modules/05-services.bm:15
 msgid "Possible services are for now: kdm cupsys smail ssh samba"
-msgstr "Services disponibles: kdm cupsys smail ssh samba"
+msgstr "Los posibles servicios por ahora son: kdm cupsys smail ssh samba"
 
 #: modules/06-boot.bm:9
 msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"
-msgstr "Choisissez un chargeur de boot (grub n'est pas disponible pour le moment)"
+msgstr "Selecciona el gestor de arranque (grub no funciona por el momento)"
 
 #: modules/06-boot.bm:10
 msgid "If set to 'yes' a boot disk will be created!"
-msgstr "Si la valeur est yes une disquette de boot sera créée!"
+msgstr "Si está puesto a sí, se creará un disquete de arranque"
 
 #: modules/06-boot.bm:11
 msgid "Where the Boot-Loader will be installed"
-msgstr "Emplacement où sera installé le chargeur de boot"
+msgstr "Donde se instalará el gestor de arranque"
 
 #: modules/06-boot.bm:15
 msgid "Bootloader-Options:"
-msgstr "Options-du -chargeur-de-boot:"
+msgstr "Opciones del gestor de arranque:"
 
 #: modules/06-boot.bm:16
 msgid "A bootdisk will be created."
-msgstr "Une disquette sera créée"
+msgstr "Se creará un disquete de arranque."
 
 #: modules/06-boot.bm:16
 msgid "No bootdisk will be created."
-msgstr "Aucune disquette ne sera créée."
+msgstr "No se creará disquete de arranque."
 
 #: modules/06-boot.bm:17
 msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
-msgstr "Le chargeur de boot $BOOT_LOADER sera utilisé et installé sur $BOOT_WHERE."
+msgstr "El gestor de arranque $BOOT_LOADER se utilizará e instalará en $BOOT_WHERE."
 
 #: modules/06-boot.bm:29
 msgid ""
 "Here you must choose if you want to install the boot-loader to MBR or to a "
 "partition."
-msgstr ""
-"Vous pouvez choisir ici si vous souhaitez installer le chargeur de boot sur le MBR "
-"ou sur une partition."
+msgstr "Aquí debe seleccionar si quiere instalar el gestor de arranque en el MBR(Sector de Arranque) o en una partición."
 
 #: modules/06-boot.bm:29
 msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
-msgstr "Choisissez ou le chargeur de boot ($BOOT_LOADER) sera installé."
+msgstr "Elija dónde quiere que el gestor de arranque ($BOOT_LOADER) se instale"
 
 #: modules/06-boot.bm:29
 msgid "Master Boot Record"
-msgstr "Master Boot Record"
+msgstr "Sector de Arranque Primario"
 
 #: modules/06-boot.bm:29
 msgid "To Root-Partition"
-msgstr "Sur la partition Root"
+msgstr "En la partición raíz"
 
 #: modules/07-system.bm:5
 msgid ""
 "Determines if the system is a debian-derivate, a copy from CD or a nice mix "
 "of both"
-msgstr ""
-"Détermine si le système sera un dérivé de Debian, une copie du CD ou "
-"un savant mélange des deux."
+msgstr "Determina si el sistema es una derivación de debian, una copia del CD o una mezcla de ambos"
 
 #: modules/07-system.bm:11
 msgid "System-Options:"
-msgstr "Options-du-système:"
+msgstr "Opciones del Sistema:"
 
 #: modules/07-system.bm:12
 msgid "The installed system will be a debian type system."
-msgstr "Le système installé sera du type: debian"
+msgstr "El sistema instalado será un sistema de tipo debian."
 
 #: modules/07-system.bm:27
 msgid ""
@@ -659,55 +615,47 @@ msgid ""
 "hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work "
 "exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
 "full featured debian system and works like the 'old installer'."
-msgstr ""
-"Ici vous pouvez choisir le type d'installation. Une installation pour débutant "
-"qui gardera la détection matérielle, mais aussi le support multi-utilisateurs. "
-"Une installation à la façon du CD $FLL_DISTRO_NAME, le comportement sera exactment "
-"le même, mais des outils comme apt-get fonctionneront. Enfin, une installation "
-"à la façon Debian , vous aurez sur votre disque dur un système debian "
-"pleinement fonctionnel, comme avec l'ancien script d'installation."
+msgstr "Aquí debe seleccionar el tipo de su sistema. Un sistema de principiante tendrá detección de hardware, but también soporta múltiples usuarios. Un sistema $FLL_DISTRO_NAME no funcionará exactamente como desde el CD, pero herramientas como apt-get funcionan. Un sistema tipo Debian es un sistema debian con todas las características y funciona como el 'antiguo instalador'."
 
 #: modules/07-system.bm:27
 msgid "Choose your system type"
-msgstr "Choisissez votre type d'installation"
+msgstr "Elija el tipo de sistema"
 
 #: modules/07-system.bm:28
 msgid "Multi-User System with hw-detection (preferred way)"
-msgstr "Système Multi-utilisateurs avec détection des périphériques (recommandé)"
+msgstr "Sistema multi usuario con detección de hardware (sistema preferido)"
 
 #: modules/07-system.bm:29
 msgid "$FLL_DISTRO_NAME system like from CD"
-msgstr "$FLL_DISTRO_NAME système identique au CD"
+msgstr "Sistema $FLL_DISTRO_NAME como desde CD"
 
 #: modules/07-system.bm:30
 msgid "Debian-like system (old installer way)"
-msgstr "Debian, système à la debian (équivalent au script knx-hdinstall)"
+msgstr "Sistema como Debian (método del antiguo instalador)"
 
 #: modules/install/01-fstab.bm:5
 msgid "Updating /etc/fstab..."
-msgstr "Mise à jour de /etc/fstab..."
+msgstr "Actualizando /etc/fstab..."
 
 #: modules/install/03-system_types.bm:24
 msgid "Converting $FLL_DISTRO_NAME to Multi-User-System..."
-msgstr "Conversion de $FLL_DISTRO_NAME vers Système-Multi-Utilisateurs..."
+msgstr "Convirtiendo $FLL_DISTRO_NAME a un sistema Multi usuario..."
 
 #: modules/install/02-install-tools.bm:51
 msgid "Copying custom configuration ..."
-msgstr "Copie de la configuration personnalisée"
+msgstr "Copiando la configuración propia ..."
 
 #: modules/install/02-install-tools.bm:68
 msgid "Copying home directory ..."
-msgstr "Copie du répertoire home ..."
+msgstr "Copiando el directorio home ..."
 
 #: modules/install/02-install-tools.bm:183
 msgid ""
 "Warning: Templates could not be found. Not updating: profile, inittab, "
 "sudoers, hosts.allow!"
-msgstr ""
-"attention: Les templates n'ont pas étés trovés. Les fichiers profile, inittab, "
-"sudoers, hosts allow n'ont pas étés mis à jour!"
+msgstr "Atención: No se encontraron las plantillas. ¡No se actualiza: profile, inittab, sudoers, hosts.allow !"
 
 #: modules/install/02-install-tools.bm:354
 msgid "Welcome to $FLL_DISTRO_NAME"
-msgstr "Bienvenue sur $FLL_DISTRO_NAME"
+msgstr "Bienvenido a $FLL_DISTRO_NAME"
 

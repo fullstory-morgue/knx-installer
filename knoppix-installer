@@ -39,29 +39,6 @@ fi
 
 DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
 
-if [ -n "$FLL_DISTRO_NAME" ]; then
-	# use distro-defaults to determine the distribution name
-	case "$FLL_DISTRO_NAME" in
-		[kK][aA][nN][oO][tT][iI][xX]*)
-			INSTALL_KANO="yes"
-			;;
-		[kK][nN][oO][pP][pP][iI][xX]*)
-			INSTALL_KANO="no"
-			;;
-		*)
-			INSTALL_KANO="no"
-			;;
-	esac
-else
-	# judge based on /etc/kanotix-version
-	if [ -e /etc/kanotix-version ]; then
-		INSTALL_KANO="yes"
-	else
-		INSTALL_KANO="no"
-	fi
-fi
-
-
 [ -f /proc/cmdline ] || mount -t proc proc /proc 2>/dev/null
 
 MEM_SWAP_NEEDED=$((512*1000)) # need some lower so that people with 512 MB can use this option
@@ -196,7 +173,7 @@ function create_config
 	# TODO: How to get back there ...
 
 	module_system 0 || return 1
-	if [ "$SYSTEM_MODULE" == "configured" ]; then
+	if [ "$SYSTEM_MODULE" = "configured" ]; then
 		# Set MODULES / NUM_MODULES for the configured system type.
 		module_system_set_modules
 	fi
@@ -330,15 +307,8 @@ function show_install_options
 
 function old_installer
 {
-	if [ "$SYSTEM_TYPE" = "knoppix" ]; then
-		system_type_knoppix
-		return 0
-	fi
-	
 	system_type_beginner
 	
-	[ "$SYSTEM_TYPE" = "beginner" ] && return 0
-
 	update_status $"Converting $FLL_DISTRO_NAME to Debian..."
 
 	system_services

@@ -1,0 +1,736 @@
+# translation of messages.po to Ukrainian
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Ivan Petrouchtchak <iip@telus.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-18 17:57+0100\n"
+"PO-Revision-Date: 2004-02-18 18:00-0800\n"
+"Last-Translator: Ivan Petrouchtchak <iip@telus.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#: knoppix-installer:62
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "Встановлювач $FLL_DISTRO_NAME-installer зупинено"
+
+#: knoppix-installer:77
+msgid "Save configuration?"
+msgstr "Зберегти конфігурацію?"
+
+#: knoppix-installer:77
+msgid "Do you want to save your configuration?"
+msgstr "Хочете зберегти вашу конфігурацію?"
+
+#: knoppix-installer:88
+msgid "$FLL_DISTRO_NAME Installation"
+msgstr "Встановлення Кнопікса"
+
+#: knoppix-installer:89
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+msgstr "Встановлення Кнопікса на жорсткий диск (Крок 0/$MAX)"
+
+#: knoppix-installer:90
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
+msgstr "Підготовка встановлення Кнопікса"
+
+#: knoppix-installer:92
+msgid "Installation failed"
+msgstr "Помилка встановлення"
+
+#: knoppix-installer:93
+msgid "Installation successfull"
+msgstr "Встановлення було успішним"
+
+#: knoppix-installer:94
+msgid "Fatal dialog error"
+msgstr "Фатальна помилка діалогу"
+
+#: knoppix-installer:154
+msgid "Choose System Type"
+msgstr "Виберіть тип системи"
+
+#: knoppix-installer:167
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Створення конфігурації Кнопікса - крок (0/$NUM_REAL_MODULES)"
+
+#: knoppix-installer:195 knoppix-installer:197
+msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
+msgstr "Помилка: невідоме значення $2 для $1\\nВстановлення типового значення ($DEFAULT_TEMP)."
+
+#: knoppix-installer:206 knoppix-installer:208
+msgid ""
+"Error: Check failed for $1 ($2)\\nThe configuration module will now be "
+"started."
+msgstr "Помилка: невдала перевірка $1 ($2)\\nЗараз буде запущено модуль налаштування."
+
+#: knoppix-installer:223
+msgid "Loading $FLL_DISTRO_NAME configuration"
+msgstr "Завантаження конфігурації Кнопікса"
+
+#: knoppix-installer:226
+msgid "Here you can input a filename to load an existing configuration"
+msgstr ""
+"Тут Ви можете ввести назву файла для завантаження існуючої "
+"конфігурації"
+
+#: knoppix-installer:226
+msgid "Input the configuration filename to be loaded"
+msgstr "Введіть назву файла конфігурації для завантаження"
+
+#: knoppix-installer:231
+msgid ""
+"File $CONFIG_USER could not be found. The loading of the configuration will "
+"be aborted."
+msgstr ""
+"Файл $CONFIG_USER неможливо знайти. Завантаження конфігурації "
+"буде припинено."
+
+#: knoppix-installer:254
+msgid "Saving $FLL_DISTRO_NAME configuration"
+msgstr "Збереження конфігурації Кнопікса"
+
+#: knoppix-installer:257
+msgid "Here you can input a filename to save the configuration"
+msgstr "Тут можна ввести назву файла для збереження конфігурації"
+
+#: knoppix-installer:257
+msgid "Input a filename for the configuration"
+msgstr "Введіть назву файла для конфігурації"
+
+#: knoppix-installer:263
+msgid ""
+"If you click yes, the file will be overwritten, otherwise this script will "
+"abort"
+msgstr ""
+"Якщо ви клацнете так, файл буде перезаписано, якщо ні, то скрипт "
+"буде перервано"
+
+#: knoppix-installer:263
+msgid "Do you really want to overwrite $CONFIG_USER?"
+msgstr "Ви справді хочете перезаписати $CONFIG_USER?"
+
+#: knoppix-installer:276
+msgid "Possible are:"
+msgstr "Можливі:"
+
+#: knoppix-installer:278
+msgid "This value will be checked by function"
+msgstr "Це значення буде перевірене функцією"
+
+#: knoppix-installer:280
+msgid "Default value is:"
+msgstr "Типове значення:"
+
+#: knoppix-installer:299
+msgid ""
+"Several of this options can only be changed in the Configurationfile "
+"$CONFIG_FILE."
+msgstr ""
+"Деякі з цих параметрів можуть бути змінені тільки в файлі "
+"конфігурації $CONFIG_FILE."
+
+#: knoppix-installer:300
+msgid ""
+"The Installation will now be started. The author and knopper.net give no "
+"warranty against any damage caused by this script."
+msgstr ""
+"Зараз розпочнеться встановлення. Автор і knopper.net не дають "
+"ніякої гарантії проти пошкодження завданого цим скриптом."
+
+#: knoppix-installer:302
+msgid "Do you want to proceed with these parameters?"
+msgstr "Хочете продовжити з цими параметрами?"
+
+#: knoppix-installer:304
+msgid "Make sure you agree to all parameters, if so proceed with the installation."
+msgstr ""
+"Переконайтесь, що ви погоджуєтесь з усіма параметрами. Якщо "
+"так, то продовжуйте встановлення."
+
+#: knoppix-installer:319
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
+msgstr "Конвертація Кнопікса у Debian..."
+
+#: knoppix-installer:351 knoppix-installer:361
+msgid "Starting $FLL_DISTRO_NAME installation"
+msgstr "Розпочато встановлення Кнопікса"
+
+#: knoppix-installer:354
+msgid "Error: No complete Configuration found"
+msgstr "Помилка: не знайдено завершеної конфігурації"
+
+#: knoppix-installer:362
+msgid "Installing"
+msgstr "Йде встановлення"
+
+#: knoppix-installer:378
+msgid "Creating floppy disk"
+msgstr "Йде створення гнучкого диска"
+
+#: knoppix-installer:378
+msgid ""
+"Please insert now an empty floppy disk into your floppydrive. Warning: All "
+"data on it will be lost. If you don't want to create a disk you can choose "
+"No."
+msgstr ""
+"Будь ласка, вставте порожній гнучкий диск у дисковод. "
+"Попередження: буде втрачено всі дані на ньому. Якщо ви не "
+"хочете створювати диск, виберіть Ні."
+
+#: knoppix-installer:398 knoppix-installer:399
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
+msgstr "Кнопікс було успішно встановлено на HD."
+
+#: knoppix-installer:405
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "Кнопікс - головне меню"
+
+#: knoppix-installer:406
+msgid "Thats the main menu\\nChoose the action you want"
+msgstr "Це головне меню\\nВиберіть бажану дію"
+
+#: knoppix-installer:406 modules/00-hd-tools.bm:174
+msgid "Choose an action"
+msgstr "Виберіть дію"
+
+#: knoppix-installer:407
+msgid "Configure Installation"
+msgstr "Конфігурація встановлення"
+
+#: knoppix-installer:407
+msgid "Create a new configuration"
+msgstr "Створити нову конфігурацію"
+
+#: knoppix-installer:408
+msgid "Start installation"
+msgstr "Почати встановлення"
+
+#: knoppix-installer:408
+msgid "Start the installation"
+msgstr "Почати встановлення"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition"
+msgstr "Розділ диску"
+
+#: knoppix-installer:409 modules/00-hd-tools.bm:174
+msgid "Partition the hard disk"
+msgstr "Розподілити жорсткий диск"
+
+#: knoppix-installer:410
+msgid "Load config"
+msgstr "Завантажити конфіг."
+
+#: knoppix-installer:410
+msgid "Load an existing configuration"
+msgstr "Завантажити існуючу конфігурацію"
+
+#: knoppix-installer:411
+msgid "Save config"
+msgstr "Зберегти конфіг."
+
+#: knoppix-installer:411
+msgid "Save the configuration"
+msgstr "Зберегти конфігурацію"
+
+#: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
+msgid "Quit"
+msgstr "Вийти"
+
+#: knoppix-installer:412 modules/00-hd-tools.bm:174
+msgid "Quit the program"
+msgstr "Вийти з програми"
+
+#: knoppix-installer:417
+msgid "$FLL_DISTRO_NAME-installer started"
+msgstr "Запущено встановлювач $FLL_DISTRO_NAME-installer"
+
+#: knoppix-installer:418
+msgid ""
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
+"still an very early version and under heavy development.\n"
+"The author and knopper.net take no responsibility for data loss or hardware "
+"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
+msgstr ""
+"Цей скрипт встановить Кнопікс на жорсткий диск. Зверніть увагу, "
+"що ця версія ще дуже рання і знаходиться в стані активної розробки.\n"
+"Автор і knopper.net не беруть на себе жодної відповідальності за "
+"втрату даних чи пошкодження обладнання. \\n\\n"
+"Автор: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nна основі на дуже цінної праці Christian Perle <perle@itm.tu-clausthal.de>"
+
+#: knoppix-installer:427
+msgid ""
+"The installer detected that the installation requierements are not "
+"fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
+"at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. Also we need a "
+"swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
+"Memory or more.\\n\\nIn the following menu, you can start some tools to "
+"partition your harddrive.\\nIf you really really know what you are doing "
+"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
+msgstr ""
+"Встановлювач виявив, що вимоги для встановлення ще не "
+"виконані.\\n\\nБудь ласка переконайтесь, що ви маєте вільний розділ  "
+"принаймні з $[ROOT_MIN/(1024*1024)] ГБ для встановлення. Також необхідний "
+"розділ свопінгу принаймні з $[SWAP_MIN/1024] МБ, якщо ви не маєте 512 МБ "
+"або більше пам'яті.\\n\\nЗ наступного меню ви можете запустити деякі засоби "
+"для розподілу жорсткого диска.\\nЯкщо ви справді знаєте, що ви робите, "
+"запустіть з: IGNORE_CHECK=1 sudo knoppix-installer, щоб обійти меню."
+
+#: knoppix-installer:434
+msgid "Partition check succeeded"
+msgstr "Перевірка розділів успішна"
+
+#: knoppix-installer:447
+msgid "root permission needed."
+msgstr "Необхідні привілеї адміністратора (root)."
+
+#: modules/booting/boot-tools.bm:445
+msgid "Creating initrd (if needed)"
+msgstr "Створення initrd (якщо потрібно)"
+
+#: modules/booting/boot-tools.bm:456
+msgid "Installing LILO to $BOOT_WHERE"
+msgstr "Встановлення LILO на $BOOT_WHERE"
+
+#: modules/booting/boot-tools.bm:461
+msgid "Finishing installation"
+msgstr "Завершення встановлення"
+
+#: modules/01-hd.bm:11
+msgid "Determines if the HD should be formatted. (mkfs.*)"
+msgstr "Йде визначення чи потрібне форматування HD. (mkfs.*)"
+
+#: modules/01-hd.bm:12
+msgid "Sets the Filesystem type."
+msgstr "Встановлює тип файлової системи."
+
+#: modules/01-hd.bm:13
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
+msgstr "Тут буде встановлено систему Кнопікс"
+
+#: modules/01-hd.bm:14
+msgid ""
+"Here you can give additional mappings. (Experimental) You need to have the "
+"partitions formatted yourself and give the correct mappings like: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr ""
+"Тут можна дати додаткові карти розміщення. (ще в експериментальному "
+"стані) Потрібно самому відформатувати розділи і дати вірні карти: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+
+#: modules/01-hd.bm:15
+msgid ""
+"If set to yes, the program will NOT check if there is enough space to "
+"install knoppix on the selected partition(s). Use at your own risk! Useful "
+"for example with HD_MAP if you only have a small root partition."
+msgstr ""
+"Якщо вибрано так, програма не перевірятиме чи достатньо місця "
+"для встановлення Кнопікса на вибраних розділ(і|ах). Використовуйте на "
+"власний ризик! Може використовуватись з HD_MAP, якщо ви маєте "
+"лише маленький розділ root."
+
+#: modules/01-hd.bm:21
+msgid "Drive-Options:"
+msgstr "Параметри приводу:"
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
+msgstr "Дисковод $HD_CHOICE буде відформатовано у файлову систему $HD_FSTYPE."
+
+#: modules/01-hd.bm:22
+msgid "The Drive $HD_CHOICE will be used for the installation."
+msgstr "Дисковод $HD_CHOICE буде використано для встановлення."
+
+#: modules/01-hd.bm:52
+msgid "Copying files. This can take a while. Please be patient."
+msgstr ""
+"Йде копіювання файлів. Будь ласка, будьте терпеливі, оскільки це "
+"може тривати трохи довго."
+
+#: modules/01-hd.bm:64
+msgid "Formatting $HD_CHOICE..."
+msgstr "Йде форматування $HD_CHOICE..."
+
+#: modules/01-hd.bm:82
+msgid ""
+"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
+"$ERROR_MESSAGES"
+msgstr ""
+"Невдача при форматуванні $HD_CHOICE. Деякі "
+"повідомлення з mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:90
+msgid "Mounting $HD_CHOICE r/w..."
+msgstr "Йде монтування $HD_CHOICE r/w..."
+
+#: modules/01-hd.bm:96
+msgid "Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+msgstr ""
+"Невдача при монтуванні $HD_CHOICE. Деякі повідомлення з "
+"mount: $ERROR_MESSAGES"
+
+#: modules/01-hd.bm:101
+msgid "Mounting additional partitions r/w..."
+msgstr "Йде монтування додаткових розділів r/w..."
+
+#: modules/01-hd.bm:118
+msgid "Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
+msgstr ""
+"Тут мусите вибрати один з наявних розділів\\n для "
+"використання у Кнопіксі."
+
+#: modules/01-hd.bm:118
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
+msgstr "Виберіть розділ для встановлення Кнопікса"
+
+#: modules/01-hd.bm:131
+msgid "Here you must choose one of the available filesystem types."
+msgstr "Тут мусите вибрати один з наявних типів файлових систем."
+
+#: modules/01-hd.bm:131
+msgid "Choose filesystem-type."
+msgstr "Виберіть тип файлової системи."
+
+#: modules/01-hd.bm:132
+msgid "Extended 2 filesystem with journal support."
+msgstr "Файлова система Extended 2 з підтримкою журналу."
+
+#: modules/01-hd.bm:133
+msgid "ReiserFS 3.6: journaling filesystem developed by Namesys."
+msgstr "ReiserFS 3.6: Молода файлова система розроблена Namesys."
+
+#: modules/03-host.bm:9
+msgid "Your hostname is: $HOST_NAME"
+msgstr "Назва вашої машини: $HOST_NAME"
+
+#: modules/03-host.bm:15
+msgid "box"
+msgstr "рамка"
+
+#: modules/03-host.bm:16
+msgid "Here you must input your hostname. This is the name of you box."
+msgstr "Тут мусите ввести назву вашої машини. Це назва вашого коробки."
+
+#: modules/03-host.bm:16
+msgid "Input your preferred hostname"
+msgstr "Введіть вибрану назву машини"
+
+#: modules/00-dialog.bm:18
+msgid "Fatal security error."
+msgstr "Фатальна помилка безпеки."
+
+#: modules/00-dialog.bm:64
+msgid "Previous"
+msgstr "Попередній"
+
+#: modules/00-dialog.bm:64
+msgid "Next"
+msgstr "Далі"
+
+#: modules/00-dialog.bm:64
+msgid "Help"
+msgstr "Довідка"
+
+#: modules/00-hd-tools.bm:77
+msgid "model unknown"
+msgstr "невідома модель"
+
+#: modules/00-hd-tools.bm:88
+msgid ""
+"The following swap-partitions are marked as swap, but are not yet formatted. "
+"Check those you want to format. Warning, you'll loose all data on the "
+"partition."
+msgstr ""
+"Наступні розділи свопінгу позначені як свопінг, але ще не відформатовані. "
+"Позначте ті, які ви хочете відформатувати. Попередження: ви втратите всі "
+"дані на цих розділах."
+
+#: modules/00-hd-tools.bm:141
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
+msgstr "Йде розподіл жорсткого диска для Кнопікса"
+
+#: modules/00-hd-tools.bm:144
+msgid ""
+"Here you must choose one of the available disks \\n and partition it for "
+"$FLL_DISTRO_NAME."
+msgstr ""
+"Тут ви мусите вибрати один з наявних дисків \\n і розподілити його "
+"для Кнопікса"
+
+#: modules/00-hd-tools.bm:144
+msgid "Choose one disk"
+msgstr "Виберіть один диск"
+
+#: modules/00-hd-tools.bm:173
+msgid "$FLL_DISTRO_NAME Partition-Menu"
+msgstr "Кнопікс - меню розподілу"
+
+#: modules/00-hd-tools.bm:174
+msgid "Here you can partition your hard disk"
+msgstr "Тут можна розподілити ваш жорсткий диск"
+
+#: modules/02-swap.bm:12
+msgid "If set to yes, the swap partitions will be autodetected."
+msgstr "Якщо вибрано так, то розділ свопінгу буде визначено автоматично."
+
+#: modules/02-swap.bm:13
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
+msgstr "Розділ свопінгу для використання встановленим Кнопіксом."
+
+#: modules/02-swap.bm:18
+msgid "Swapspace-Options:"
+msgstr "Свопінг - параметри:"
+
+#: modules/02-swap.bm:21
+msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
+msgstr "Будуть використовуватись автовизначені свопінги $SWAP_CHOICES."
+
+#: modules/02-swap.bm:21
+msgid "The choosen swapdrives $SWAP_CHOICES will be used."
+msgstr "Будуть використовуватись вибрані свопінги $SWAP_CHOICES."
+
+#: modules/02-swap.bm:23
+msgid "No swap partitions are needed."
+msgstr "Розділи свопінгу непотрібні."
+
+#: modules/02-swap.bm:39
+msgid "Adding swap-devices to /etc/fstab ..."
+msgstr "Пристрої свопінгу додаються до /etc/fstab ..."
+
+#: modules/00-setuser.bm:5
+msgid "Changing user in Passwd/Shadow..."
+msgstr "Зміна користувача в Passwd/Shadow..."
+
+#: modules/00-setuser.bm:23
+msgid "Setting passwords ..."
+msgstr "Установка паролів ..."
+
+#: modules/00-setuser.bm:28
+msgid "Updating group ..."
+msgstr "Поновлення групи ..."
+
+#: modules/04-user-name-pass.bm:9
+msgid "Name-Options:"
+msgstr "Назва - параметри:"
+
+#: modules/04-user-name-pass.bm:10
+msgid "Your name is: $NAME_NAME"
+msgstr "Ваше ім'я: $NAME_NAME"
+
+#: modules/04-user-name-pass.bm:15
+msgid "Here you must input your whole name. It is used to create a default user."
+msgstr ""
+"Тут ви мусите ввести ваше повне ім'я. Воно використовується для "
+"створення типового користувача."
+
+#: modules/04-user-name-pass.bm:15
+msgid "Input your whole name (name surname)"
+msgstr "Введіть ваше повне ім'я (ім'я прізвище)"
+
+#: modules/04-user-name-pass.bm:30
+msgid "Your choosen username is: $USER_NAME"
+msgstr "Ваше вибране ім'я користувача: $USER_NAME"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Here you must input your preferred username. Suggested: $proposal"
+msgstr "Тут ви мусите ввести вибране ім'я користувача. Пропонується: $proposal"
+
+#: modules/04-user-name-pass.bm:38
+msgid "Input your user name (perhaps you like: $proposal)"
+msgstr "Введіть ваше ім'я користувача (можливо вам подобається: $proposal)"
+
+#: modules/04-user-name-pass.bm:60
+msgid ""
+"Here you must choose the password for the user $USER_NAME and input it "
+"twice. If you have already chosen one, you can leave the fields blank. But "
+"you cannot recover the password once saved, as it is encrypted."
+msgstr ""
+"Тут ви мусите вибрати пароль для користувача $USER_NAME і ввести"
+"його двічі. Якщо ви вже його вибрали, можете залишити ці поля "
+"порожніми. Але ви не зможете.відновити пароль після збереження, "
+"бо він під час цього зашифровується."
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password"
+msgstr "Введіть ваш пароль користувача"
+
+#: modules/04-user-name-pass.bm:60
+msgid "Input your user-password again"
+msgstr "Введіть ваш пароль користувача знов"
+
+#: modules/04-user-name-pass.bm:60 modules/04-user-name-pass.bm:80
+msgid "Passwords do not match or no password was given."
+msgstr "Паролі не співпадають або не були введені."
+
+#: modules/04-user-name-pass.bm:80
+msgid ""
+"Here you must choose the password for system administration (user root) and "
+"input it twice. If you have already chosen one, you can leave the fields "
+"blank. But you cannot recover the password once saved, as it is encrypted. "
+"Remember that the root-User is the Administrator of the system, so it is a "
+"very important password."
+msgstr ""
+"Тут ви мусите вибрати пароль для адміністрування системи (root) і "
+"ввести його двічі. Якщо ви вже його вибрали, можете залишити ці "
+"поля порожніми. Але ви не зможете.відновити пароль після збереження, бо він під "
+"час цього зашифровується. Пам'ятайте, що користувач root - це "
+"адміністратор системи, тому це дуже важливий пароль."
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password"
+msgstr "Введіть ваш адміністраційний пароль"
+
+#: modules/04-user-name-pass.bm:80
+msgid "Input your administration password again"
+msgstr "Введіть ваш адміністраційний пароль знов"
+
+#: modules/05-services.bm:9
+msgid "Services-Options:"
+msgstr "Служби - параметри:"
+
+#: modules/05-services.bm:10
+msgid ""
+"The following services will be started, after each system bootup: "
+"$SERVICES_START"
+msgstr ""
+"Наступні служби будуть запускатись при запуску системи: "
+"$SERVICES_START"
+
+#: modules/05-services.bm:15
+msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgstr "Можливі служби (поки що): kdm cupsys smail ssh samba"
+
+#: modules/06-boot.bm:9
+msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"
+msgstr "Вибирається завантажувач системи (grub поки що не працює)"
+
+#: modules/06-boot.bm:10
+msgid "If set to 'yes' a boot disk will be created!"
+msgstr "Якщо вибрано 'так', то буде створено диск завантаження!"
+
+#: modules/06-boot.bm:11
+msgid "Where the Boot-Loader will be installed"
+msgstr "Куди буде встановлено завантажувач"
+
+#: modules/06-boot.bm:15
+msgid "Bootloader-Options:"
+msgstr "Завантажувач - параметри:"
+
+#: modules/06-boot.bm:16
+msgid "A bootdisk will be created."
+msgstr "Буде створено диск завантаження."
+
+#: modules/06-boot.bm:16
+msgid "No bootdisk will be created."
+msgstr "Диск завантаження не буде створено."
+
+#: modules/06-boot.bm:17
+msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+msgstr ""
+"Буде використано завантажувач $BOOT_LOADER і встановлено в "
+"$BOOT_WHERE."
+
+#: modules/06-boot.bm:29
+msgid ""
+"Here you must choose if you want to install the boot-loader to MBR or to a "
+"partition."
+msgstr ""
+"Тут мусите вибрати чи встановлювати завантажувач в MBR "
+"(Головний Запис Завантаження) чи в розділ диску."
+
+#: modules/06-boot.bm:29
+msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
+msgstr "Виберіть куди встановити завантажувач ($BOOT_LOADER)"
+
+#: modules/06-boot.bm:29
+msgid "Master Boot Record"
+msgstr "Головний Запис Завантаження (MBR)"
+
+#: modules/06-boot.bm:29
+msgid "To Root-Partition"
+msgstr "До розділу root"
+
+#: modules/07-system.bm:5
+msgid ""
+"Determines if the system is a debian-derivate, a copy from CD or a nice mix "
+"of both"
+msgstr ""
+"Визначає чи система походить з debian, копія з CD, чи гарна суміш "
+"двох"
+
+#: modules/07-system.bm:11
+msgid "System-Options:"
+msgstr "Система - параметри:"
+
+#: modules/07-system.bm:12
+msgid "The installed system will be a debian type system."
+msgstr "Встановлена система буде debian типом системи."
+
+#: modules/07-system.bm:27
+msgid ""
+"Here you must choose the type of your system. A Beginner System will have "
+"hwdetection, but also support multiple users. A $FLL_DISTRO_NAME system will work "
+"exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
+"full featured debian system and works like the 'old installer'."
+msgstr ""
+"Тут ви мусите вибрати тип вашої системи. Система початківця матиме "
+"визначення обладнання, але також і підтримку для багатьох користувачів. "
+"Система Кнопікс працюватиме точно як із CD, але засоби, такі як apt-get "
+"працюватимуть. Тип Debian, однак, це повна система debian і працює як "
+"'старий встановлювач'."
+
+#: modules/07-system.bm:27
+msgid "Choose your system type"
+msgstr "Виберіть тип вашої системи"
+
+#: modules/07-system.bm:28
+msgid "Multi-User System with hw-detection (preferred way)"
+msgstr ""
+"Система для багатьох користувачів з виявленням обладнання "
+"(бажаний шлях)"
+
+#: modules/07-system.bm:29
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "Система Кнопікс як на CD"
+
+#: modules/07-system.bm:30
+msgid "Debian-like system (old installer way)"
+msgstr "Debian-подібна система (шлях старого встановлювача)"
+
+#: modules/install/01-fstab.bm:5
+msgid "Updating /etc/fstab..."
+msgstr "Поновлення /etc/fstab..."
+
+#: modules/install/03-system_types.bm:24
+msgid "Converting $FLL_DISTRO_NAME to Multi-User-System..."
+msgstr "Конвертація Кнопікса у систему для багатьох користувачів..."
+
+#: modules/install/02-install-tools.bm:51
+msgid "Copying custom configuration ..."
+msgstr "Копіювання нетипової конфігурації ..."
+
+#: modules/install/02-install-tools.bm:68
+msgid "Copying home directory ..."
+msgstr "Копіювання домашньої теки ..."
+
+#: modules/install/02-install-tools.bm:183
+msgid ""
+"Warning: Templates could not be found. Not updating: profile, inittab, "
+"sudoers, hosts.allow!"
+msgstr ""
+"Попередження: неможливо знайти шаблони. Не будуть поновлені: "
+"profile, inittab, sudoers, hosts.allow!"
+
+#: modules/install/02-install-tools.bm:354
+msgid "Welcome to $FLL_DISTRO_NAME"
+msgstr "Ласкаво просимо до Кнопікса"
+

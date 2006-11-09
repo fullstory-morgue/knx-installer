@@ -18,7 +18,6 @@ system_findchanged(){
 
 system_add_hd_autoconfig()
 {
-	echo "SYSTEM_TYPE=$SYSTEM_TYPE" >>	"$TARGET_MNT_POINT/etc/default/knoppix"
 	echo "SYSTEM_HW_PROFILE=yes" >>		"$TARGET_MNT_POINT/etc/default/knoppix"
 	
 	chroot_it update-rc.d -f knoppix-autoconfig remove . &>/dev/null
@@ -27,20 +26,6 @@ system_add_hd_autoconfig()
 	# TODO: Remove the hacks
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
 	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-}
-
-system_add_hd_config()
-{
-	DEFAULT_CONFIG_DIR="$TARGET_MNT_POINT/etc/knoppix"
-
-	mkdir -p "$DEFAULT_CONFIG_DIR/etc/network/"
-	
-	save_config "$DEFAULT_CONFIG_DIR/install-configuration"
-	chmod 600 "$DEFAULT_CONFIG_DIR/install-configuration"
-
-	cp -af "/$DEFAULT_DIR/etc/network/interfaces" "$DEFAULT_CONFIG_DIR/etc/network/"
-	cp -af "/$DEFAULT_DIR/etc/pcmcia" "$DEFAULT_CONFIG_DIR/etc/"
-	cp -af "/$DEFAULT_DIR/etc/cups" "$DEFAULT_CONFIG_DIR/etc/"
 }
 
 system_copy_etc()
@@ -60,25 +45,12 @@ system_copy_etc()
 	[ -x "$TARGET_MNT_POINT/etc/init.d/x11-common" ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
 
   	# Save ALSA sound volume
-
 	[ -e /proc/asound/modules -a -x /usr/sbin/alsactl ] && /usr/sbin/alsactl store
 	
 	# Copy volume setting
-
 	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
 
-	if [ ! "$SYSTEM_TYPE" = "debian" ]; then
-		# TODO: Remove hack from here
-		perl -pi -e "s/insmod/modprobe/g" "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-		[ -e "$TARGET_MNT_POINT/etc/default/kde-services-knoppix" ] && perl -pi -e 's/^#//g' "$TARGET_MNT_POINT/etc/default/kde-services-knoppix"
-		[ -e "$TARGET_MNT_POINT/etc/default/kde-services-kanotix" ] && perl -pi -e 's/^#//g' "$TARGET_MNT_POINT/etc/default/kde-services-kanotix"
-		# TODO: Send hacks to Klaus ...
-		perl -pi -e 's/^CMDLINE=/[ -z "\$CMDLINE" ] && CMDLINE=/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-		perl -pi -e 's/if grep -q /if egrep -q/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
-	fi
-	
 	# Add dpi setting from cheatcode to hd install
-
 	[ ! -e /etc/sysconfig/base ] && [ -e /etc/sysconfig/knoppix ] && source /etc/sysconfig/knoppix
 	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
 	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
@@ -100,7 +72,6 @@ system_copy_home()
 	update_status $"Copying home directory ..."
 	
 	#copy home directory from running user
-
 	#check if already data is there then stop
 	if [ -d "$TARGET_MNT_POINT/home/$USER_NAME" ]; then
 		chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
@@ -124,33 +95,23 @@ system_copy_home()
 	# LOKALE ANPASSUNGEN
 
 	# Remove autostart scripts
-
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/sorticons.desktop"
 
 	# Fix background
-
-	if [ "$INSTALL_KANO" = "no" ]; then
-		[ -e "$DEFAULT_DIR/usr/local/lib/knoppix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/knoppix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-		[ -e "$DEFAULT_DIR/usr/local/lib/knoppix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/knoppix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-	else
-		[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/kanotix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-		[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/kanotix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-	fi
+	[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/kanotix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+	[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/kanotix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 
 	# Remove Netscape Directories
-	
 	rm -rf "$TARGET_MNT_POINT/home/$USER_NAME/.netscape*"
 
 	# Remove KNOPPIX/KANOTIX Firewall
-
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-knoppix.desktop"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-kanotix.desktop"
 	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-kanotix.desktop"
 	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-knoppix.desktop"
 
 	# Mozilla Konfigdateien korrigieren
-
 	if [ "$USER_NAME" != "$DEFAULT_USER" ];	then
 		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/appreg"
 		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/pluginreg.dat"
@@ -161,7 +122,6 @@ system_copy_home()
 		fi
 
 		# Bei unterschiedlichem OLD/NEWHOME muss man die Pfade anpassen, sonst funktionieren die Anwendungen nicht korrekt
-
 		OLDHOME="/home/$DEFAULT_USER"
 		NEWHOME="/home/$USER_NAME"
 		PART="$TARGET_MNT_POINT"
@@ -295,43 +255,41 @@ system_add_services()
 	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
 	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
 
-	if [ "$SYSTEM_TYPE" = "debian" ]; then
-		chroot_it dpkg --purge	autofs \
-					automount-kanotix \
-					checkmem-kanotix \
-					busybox-kanotix \
-					fix-cdrom \
-					hotplug-kanotix \
-					initscripts-kanotix-live \
-					initscripts-kanotix \
-					firewall-kanotix \
-					kanotix-remountrw \
-					kanotix-setpassword \
-					kanotix-splash \
-					kanotix-splash-utils \
-					kanotix-terminalserver \
-					knxinstaller \
-					knx-installer \
-					kde-services-kanotix \
-					mkdesktophdicons-kanotix \
-					mkdosswapfile-kanotix \
-					mknbi \
-					mkpersistenthome-kanotix \
-					restartx-kanotix \
-					sambastart-kanotix \
-					saveconfig-kanotix \
-					startsyslog-kanotix \
-					sudoers-kanotix \
-					syslinux \
-					tftpd-hpa \
-					xsession-initscript-kanotix \
-					xsession-kanotix \
-					xf86config-kanotix			&> /dev/null
-		
-		#  disable live config
-		[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
-			perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
-	fi
+	chroot_it dpkg --purge	autofs \
+				automount-kanotix \
+				checkmem-kanotix \
+				busybox-kanotix \
+				fix-cdrom \
+				hotplug-kanotix \
+				initscripts-kanotix-live \
+				initscripts-kanotix \
+				firewall-kanotix \
+				kanotix-remountrw \
+				kanotix-setpassword \
+				kanotix-splash \
+				kanotix-splash-utils \
+				kanotix-terminalserver \
+				knxinstaller \
+				knx-installer \
+				kde-services-kanotix \
+				mkdesktophdicons-kanotix \
+				mkdosswapfile-kanotix \
+				mknbi \
+				mkpersistenthome-kanotix \
+				restartx-kanotix \
+				sambastart-kanotix \
+				saveconfig-kanotix \
+				startsyslog-kanotix \
+				sudoers-kanotix \
+				syslinux \
+				tftpd-hpa \
+				xsession-initscript-kanotix \
+				xsession-kanotix \
+				xf86config-kanotix			&> /dev/null
+	
+	#  disable live config
+	[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
+		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
 
 	# enable udev, if installed
 	if [ -x /etc/init.d/udev ]; then
@@ -550,13 +508,12 @@ system_install_i18n()
 	if [ -e "$TARGET_MNT_POINT/etc/sysconfig/i18n" ]; then
 		source "$TARGET_MNT_POINT/etc/sysconfig/i18n"
 		echo LANG=$LANG >> "$TARGET_MNT_POINT/etc/environment"
-		if [ "$LANG" == "el_GR" ]; then
+		if [ "$LANG" = "el_GR" ]; then
 			echo LANGUAGE=$(echo $LANG|perl -pe '($_)=/(..)/') >> "$TARGET_MNT_POINT/etc/environment"
 	  		echo LC_ALL=$LANG >> "$TARGET_MNT_POINT/etc/environment"
 	 	fi
 
 		# Add localisation for kde3
-		
 		 cat << EOF >> "$TARGET_MNT_POINT/etc/kde3/system.kdeglobals"
 [Locale]
 Charset=$CHARSET
@@ -572,7 +529,6 @@ EOF
 }
 
 # Everything needed for hw-detection
-
 system_create_modules()
 {
 	# create device symlink /dev/mouse ( normally done by hwsetup )
@@ -619,37 +575,15 @@ EOF
 	umount "$TARGET_MNT_POINT/proc"
 	
 	# Also save /etc/sysconfig/
-	mkdir -p $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)
-	cp -f /etc/sysconfig/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
-	cp -f /etc/X11/xorg.conf* $TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/ 2>/dev/null # silence messages
-	
-	# add DMA activation to bootmisc.sh (commented out if nodma is set)
-	if [ "$INSTALL_KANO" = "no" ]; then
-		x=""
-		checkbootparam nodma && x='#'
-		echo "# enable DMA" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-		if [ -f /proc/partitions ]; then
-			while read x x x p x; do
-			    	case "$p" in
-			    		hd?)
-						[ -r "/proc/ide/$p/media" ] && echo "$x /sbin/hdparm -qd1 /dev/$p" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-						;;
-				esac
-			done < /proc/partitions
-		fi
-	fi
-	
-	# Run fix-cdrom at boottime
-	if [ -x $TARGET_MNT_POINT/usr/sbin/fix-cdrom ]; then
-		echo "# detect CDROMs" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-		echo "[ -x /usr/sbin/fix-cdrom ] && /usr/sbin/fix-cdrom" >>$TARGET_MNT_POINT/etc/init.d/bootmisc.sh
-	fi
+	mkdir -p "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)"
+	cp -f /etc/sysconfig/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/" 2>/dev/null # silence messages
+	cp -f /etc/X11/xorg.conf* "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/" 2>/dev/null # silence messages
 }
 
 system_update_files()
 {
 	# update /etc/motd
-	echo -e $"Welcome to Kanotix" "(Kernel $(uname -r))\n" > $TARGET_MNT_POINT/etc/motd
+	echo -e $"Welcome to Kanotix" "(Kernel $(uname -r))\n" > "$TARGET_MNT_POINT/etc/motd"
 
 	cat <<EOF >$TARGET_MNT_POINT/etc/hosts
 127.0.0.1	localhost
@@ -666,30 +600,22 @@ ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 EOF
 
-	echo "$HOST_NAME" > $TARGET_MNT_POINT/etc/hostname
-	echo "$HOST_NAME" > $TARGET_MNT_POINT/etc/mailname
+	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/hostname"
+	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/mailname"
 	
 	# create "real" /tmp with mode 1777
-	rm -f $TARGET_MNT_POINT/tmp 2>/dev/null
-	mkdir -p $TARGET_MNT_POINT/tmp
-	chmod 1777 $TARGET_MNT_POINT/tmp
+	rm -f "$TARGET_MNT_POINT/tmp" 2>/dev/null
+	mkdir -p "$TARGET_MNT_POINT/tmp"
+	chmod 1777 "$TARGET_MNT_POINT/tmp"
 
 	# create /etc/mtab as a regular file
-	rm -f $TARGET_MNT_POINT/etc/mtab
-	touch $TARGET_MNT_POINT/etc/mtab
-
-	# For us users use an us-mirror
-	case "$LANGUAGE" in
-		us*)
-			#perl -pi -e "s/ftp2.de.debian.org/ftp.uk.debian.org/" $TARGET_MNT_POINT/etc/apt/sources.list
-			:
-		;;
-	esac
+	rm -f "$TARGET_MNT_POINT/etc/mtab"
+	touch "$TARGET_MNT_POINT/etc/mtab"
 }
 
 system_fix_menus()
 {
-	[ -d $TARGET_MNT_POINT/usr/share/applnk/Knoppix ] && suknoppixmenus $TARGET_MNT_POINT/usr/share/applnk/Knoppix kdesu
+	[ -d "$TARGET_MNT_POINT/usr/share/applnk/Knoppix" ] && suknoppixmenus "$TARGET_MNT_POINT/usr/share/applnk/Knoppix" kdesu
 
 	for i in `egrep -l -r -e '(xcdroast|ethereal|kbackup)' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; do
         	perl -pi -e 's|Exec=sudo /|Exec=/|g' "$TARGET_MNT_POINT$i"
@@ -701,12 +627,5 @@ system_fix_menus()
 	done
 
 	chroot_it update-menus
-
-	# Fix also qtparted / parted / ...
-	# -- Disabled as paths did change
-	#perl -pi -e "s/Exec=/Exec=kdesu -- /g" $TARGET_MNT_POINT/usr/share/applnk/System/qtparted.desktop
-	#perl -pi -e 's|Exec=sudo -H |Exec=su-to-root -X -c |g' /usr/lib/menu/qtparted
-	#perl -pi -e 's|Exec=sudo -H |Exec=su-to-root -X -c |g' /usr/share/applications/qtparted.desktop
-	#perl -pi -e "s/Exec=/Exec=su -c /g" $TARGET_MNT_POINT/usr/share/applnk/System/Partition_Image.desktop
 }
 

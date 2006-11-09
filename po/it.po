@@ -618,8 +618,8 @@ msgid "System-Options:"
 msgstr "Opzioni di sistema:"
 
 #: modules/07-system.bm:12
-msgid "The installed system will be a $SYSTEM_TYPE type system."
-msgstr "Il sistema installato sarà di tipo $SYSTEM_TYPE"
+msgid "The installed system will be a debian type system."
+msgstr "Il sistema installato sarà di tipo debian"
 
 #: modules/07-system.bm:27
 msgid ""

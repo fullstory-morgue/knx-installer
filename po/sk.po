@@ -1,0 +1,658 @@
+# translation of knx-installer.po into slovenský jazyk
+# (c) danix.cz team, GPL license
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+# Fabian Franz <knx-i18n@fabian-franz.de>, 2003.
+# Kai Lahmann <kl@3dots.de>, 2003.
+# David Pravec <alekibango@ceskylinux.org>, 2004.
+# Jozef Říha <zefo at seznam dot cz>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"PO-Revision-Date: 2004-03-18 14:30+0100\n"
+"Last-Translator: Jozef Říha <zefo at seznam dot cz>\n"
+"Language-Team: slovenský jazyk <sk@li.org>\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 &&n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: knoppix-installer:58
+msgid "$FLL_DISTRO_NAME-installer terminated"
+msgstr "Inštalácia bola prerušená."
+
+#: knoppix-installer:76
+msgid "Save configuration?"
+msgstr "Uložiť konfiguráciu?"
+
+#: knoppix-installer:76
+msgid "Do you want to save your configuration?"
+msgstr "Chcete uložiť vašu konfiguráciu?"
+
+#: knoppix-installer:87
+msgid "$FLL_DISTRO_NAME Installation"
+msgstr "Inštalácia"
+
+#: knoppix-installer:88
+msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
+msgstr "Inštalácia na pevný disk (Krok 0/$MAX)"
+
+#: knoppix-installer:89
+msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
+msgstr "Inicializácia inštalácie"
+
+#: knoppix-installer:91
+msgid "Installation failed"
+msgstr "Inštalácia bola neúspešná"
+
+#: knoppix-installer:92
+msgid "Installation successfull"
+msgstr " Inštalácia bola úspěšná"
+
+#: knoppix-installer:93
+msgid "Fatal dialog error"
+msgstr "Fatálna chyba dialogu"
+
+#: knoppix-installer:175
+msgid "model unknown"
+msgstr "neznámý model"
+
+#: knoppix-installer:185
+msgid ""
+"The following swap-partitions are marked as swap, but are not yet formatted. "
+"Check those you want to format. Warning, you'll loose all data on the "
+"partition."
+msgstr "Následujúce oddiely swap sú označené ako swap, ale zatiaľ neboli naformátované. Označite tie, ktoré si prajete naformátovat. Upozornenie: stratíte všetky dáta na týchto oddieloch."
+
+#: knoppix-installer:244
+msgid "Partitioning harddisk for $FLL_DISTRO_NAME"
+msgstr "Prebieha vytváranie oddielov"
+
+#: knoppix-installer:247
+msgid ""
+"Here you must choose one of the available disks \\n and partition it for "
+"$FLL_DISTRO_NAME."
+msgstr "Tu si musíte zvoliť jeden z dostupných diskov \\n a rozdeliť ho"
+
+#: knoppix-installer:247
+msgid "Choose one disk"
+msgstr "Vyberte jeden disk"
+
+#: knoppix-installer:276
+msgid "$FLL_DISTRO_NAME Partition-Menu"
+msgstr "Menu rozdelenia disku"
+
+#: knoppix-installer:278
+msgid "Here you can partition your hard disk"
+msgstr "Tu môžete rozdeliť pevný disk"
+
+#: knoppix-installer:278 knoppix-installer:1250
+msgid "Choose an action"
+msgstr "Vyberte úkon"
+
+#: knoppix-installer:278 knoppix-installer:1253
+msgid "Partition"
+msgstr "Diskový oddiel"
+
+#: knoppix-installer:278 knoppix-installer:1253
+msgid "Partition the hard disk"
+msgstr "Rozdeľte disk"
+
+#: knoppix-installer:278 knoppix-installer:1256 modules/dialog.bm:56
+#: modules/dialog.bm:58 modules/dialog.bm:64 modules/dialog.bm:75
+msgid "Quit"
+msgstr "Koniec"
+
+#: knoppix-installer:278 knoppix-installer:1256
+msgid "Quit the program"
+msgstr "Ukončiť program"
+
+#: knoppix-installer:322
+msgid "Determines if the HD should be formatted. (mkfs.*)"
+msgstr "Určuje či má byť disk naformátovaný. (mkfs.*)"
+
+#: knoppix-installer:323
+msgid "Sets the Filesystem type."
+msgstr "Nastavuje súborový systém."
+
+#: knoppix-installer:324
+msgid "Here the $FLL_DISTRO_NAME-System will be installed"
+msgstr "Systém bude nainštalovaný na toto miesto."
+
+#: knoppix-installer:325
+msgid ""
+"Here you can give additional mappings. (Experimental) You need to have the "
+"partitions formatted yourself and give the correct mappings like: \\\"/dev/"
+"hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+msgstr "Tu môžete zadať dodatočné mapovanie. (Experimentálne). Potrebujete mať naformátované oddiely a zadať správné mapovanie, napr. \\\"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\\\""
+
+#: knoppix-installer:326
+msgid ""
+"If set to yes, the program will NOT check if there is enough space to "
+"install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful "
+"for example with HD_MAP if you only have a small root partition."
+msgstr "Pokiaľ je zaškrtnutá voľba áno, program NEBUDE kontrolovať či je na vybranom diskovom oddiele (oddieloch) dostatok miesta na inštaláciu. Používajte túto voľbu na vlastné riziko! Tato voľba je užitočná napríklad s HD_MAP keď máte malý oddiel root."
+
+#: knoppix-installer:332
+msgid "Drive-Options:"
+msgstr "Nastavenie zariadenia:"
+
+#: knoppix-installer:333
+msgid "The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem."
+msgstr "Zariadenie $HD_CHOICE bude naformátované súborovým systémom $HD_FSTYPE"
+
+#: knoppix-installer:333
+msgid "The Drive $HD_CHOICE will be used for the installation."
+msgstr "Zariadenie $HD_CHOICE bude použité pre inštaláciu"
+
+#: knoppix-installer:363
+msgid "Copying files (statusbar is resetted) ..."
+msgstr "Kopírovanie súborov (stavová lišta je obnovená) ..."
+
+#: knoppix-installer:375
+
+msgid "Formatting $HD_CHOICE..."
+msgstr "Formátovanie $HD_CHOICE..."
+
+#: knoppix-installer:393
+msgid ""
+"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: "
+"$ERROR_MESSAGES"
+msgstr "Pri formátovaní $HD_CHOICE došlo k chybe. Chybová hláška príkazu mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
+
+#: knoppix-installer:401
+msgid "Mounting $HD_CHOICE r/w..."
+msgstr "Pripájanie $HD_CHOIDE r/w..."
+
+#: knoppix-installer:407
+msgid "Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+msgstr "Pri pripájaní zariadenia $HD_CHOICE došlo k chybe. Chybová hláška príkazu mount: $ERROR_MESSAGES"
+
+#: knoppix-installer:412
+msgid "Mounting additional partitions r/w..."
+msgstr "Pripájanie dodatočných oddielov r/w..."
+
+#: knoppix-installer:429
+msgid "Here you must choose one of the available partitions\\n for use with $FLL_DISTRO_NAME."
+msgstr "Tu musíte zvoliť jeden z dostupných oddielov\\ pre inštaláciu"
+
+#: knoppix-installer:429
+msgid "Choose the partition to install $FLL_DISTRO_NAME"
+msgstr "Vyberte si diskový oddiel pre inštaláciu"
+
+#: knoppix-installer:447
+msgid "If set to yes, the swap partitions will be autodetected."
+msgstr "Pokiaľ je voľba nastavená na áno, swap oddiely budú nájdené automaticky."
+
+#: knoppix-installer:448
+msgid "The swap partitions to be used by the installed $FLL_DISTRO_NAME."
+msgstr "Oddiely swap, ktoré budú použité"
+
+#: knoppix-installer:453
+msgid "Swapspace-Options:"
+msgstr "Voľby priestoru swap:"
+
+#: knoppix-installer:456
+msgid "The autodetected swapdrives $SWAP_CHOICES will be used."
+msgstr "Budú použité automaticky nájdené zariadenia swap $SWAP_CHOICES."
+
+#: knoppix-installer:456
+msgid "The choosen swapdrives $SWAP_CHOICES will be used."
+msgstr "Budú použité vybrané zariadenia swap $SWAP_CHOICES."
+
+#: knoppix-installer:458
+msgid "No swap partitions are needed."
+msgstr "Nie sú potrebné žiadné swap oddiely."
+
+#: knoppix-installer:474
+msgid "Adding swap-devices to /etc/fstab ..."
+msgstr "Pridávanie swap-zariadení do /etc/fstab ..."
+
+#: knoppix-installer:513
+msgid "Your hostname is: $HOST_NAME"
+msgstr "Názov počítača (hostname) je: $HOST_NAME"
+
+#: knoppix-installer:519
+msgid "box"
+msgstr "stanica"
+
+#: knoppix-installer:520
+msgid "Here you must input your hostname. This is the name of you box."
+msgstr "Vložte prosím názov vášho počítača. Toto je názov vašej stanice."
+
+#: knoppix-installer:520
+msgid "Input your preferred hostname"
+msgstr "Zadajte názov počítače (hostname)"
+
+#: knoppix-installer:535
+msgid "Name-Options:"
+msgstr "Meno-Volby:"
+
+#: knoppix-installer:536
+msgid "Your name is: $NAME_NAME"
+msgstr "Vaše meno je: $NAME_NAME"
+
+#: knoppix-installer:541
+msgid "Here you must input your whole name. It is used to create a default user."
+msgstr "Zadajte prosím vaše méno a priezvisko, ktoré bude použité pre vytvorenie štandardného uživateľa."
+
+#: knoppix-installer:541
+msgid "Input your whole name (name surname)"
+msgstr "Zadejte vaše celé meno (meno priezvisko)"
+
+#: knoppix-installer:556
+msgid "Your choosen username is: $USER_NAME"
+msgstr "Zvolili ste uživateľské meno: $USER_NAME"
+
+#: knoppix-installer:564
+msgid "Here you must input your preferred username. Suggested: $proposal"
+msgstr "Zadajte prosím uživateľské meno (login). Návrh: $proposal"
+
+#: knoppix-installer:564
+msgid "Input your user name (perhaps you like: $proposal)"
+msgstr "Zadejte vaše meno (napr. $proposal)"
+
+#: knoppix-installer:586
+msgid ""
+"Here you must choose the password for the user $USER_NAME and input it "
+"twice. If you have already chosen one, you can leave the fields blank. But "
+"you cannot recover the password once saved, as it is encrypted."
+msgstr "Tu musíte zvoliť heslo pre užívateľa $USER_NAME a zadať ho dvakrát. Pokiaľ ste už heslo zvolili, môžete nechať políčka prázdné. Nemôžete však obnoviť heslo akonáhle je uložené, pretože je zašifrované."
+
+#: knoppix-installer:586
+msgid "Input your user-password"
+msgstr "Zadejte heslo pre užívateľa"
+
+#: knoppix-installer:586
+msgid "Input your user-password again"
+msgstr "Zadajte heslo pre užívateľa ešte raz"
+
+#: knoppix-installer:586 knoppix-installer:606
+msgid "Passwords do not match or no password was given."
+msgstr "Nezadali ste heslo alebo sú zadané heslá rozdielne."
+
+#: knoppix-installer:606
+msgid ""
+"Here you must choose the password for system administration (user root) and "
+"input it twice. If you have already chosen one, you can leave the fields "
+"blank. But you cannot recover the password once saved, as it is encrypted. "
+"Remember that the root-User is the Administrator of the system, so it is a "
+"very important password."
+msgstr "Tu musíte zvoliť heslo pre správcu systému (uživateľ root) a zadať ho dvakrát. Pokiaľ ste už heslo zvolili, môžete nechať políčka prázdne. Nemôžete však obnoviť heslo akonáhle je uložené, pretože je zašifrované. Pamätajte si, že uživateľ root je správca systému, takže je to veľmi dôležité heslo."
+
+#: knoppix-installer:606
+msgid "Input your administration password"
+msgstr "Zadajte heslo správcu systému"
+
+#: knoppix-installer:606
+msgid "Input your administration password again"
+
+msgstr "Zadajte heslo správcu systému ešte raz"
+
+#: knoppix-installer:621
+msgid "Services-Options:"
+msgstr "Služby-Voľby:"
+
+#: knoppix-installer:622
+msgid ""
+"The following services will be started, after each system bootup: "
+"$SERVICES_START"
+msgstr "Nasledujúce služby budú spustené po každom štarte počítača: $SERVICES_START"
+
+#: knoppix-installer:627
+msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgstr "Momentálne môžete vybrať služby: kdm cupsys smail ssh samba"
+
+
+#: knoppix-installer:645
+msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"
+msgstr "Vyberá boot-loader (grub je momentálne nepouživaný)"
+
+#: knoppix-installer:646
+msgid "If set to 'yes' a boot disk will be created!"
+msgstr "Pokiaľ je zaškrtnutá voľba áno, bude vytvorená bootovacia (štartovacia) disketa!"
+
+#: knoppix-installer:647
+msgid "Where the Boot-Loader will be installed"
+msgstr "Kam bude boot-loader nainštalováný"
+
+#: knoppix-installer:651
+msgid "Bootloader-Options:"
+msgstr "Bootloader-Voľby:"
+
+#: knoppix-installer:652
+msgid "A bootdisk will be created."
+msgstr "Bude vytvorená bootovacia disketa."
+
+#: knoppix-installer:652
+msgid "No bootdisk will be created."
+msgstr "Nebude vytvorená bootovacia disketa."
+
+#: knoppix-installer:653
+msgid "The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+msgstr "Bootloader $BOOT_LOADER bude použitý a nainštalovaný do $BOOT_WHERE."
+
+#: knoppix-installer:665
+msgid ""
+"Here you must choose if you want to install the boot-loader to MBR or to a "
+"partition."
+msgstr "Tu musíte vybrať či chcete nainštalovať boot-loader do MBR alebo do oddielu."
+
+#: knoppix-installer:665
+msgid "Choose where the boot-loader ($BOOT_LOADER) shall be installed"
+msgstr "Vyberte prosím kam bude boot-loader ($BOOT_LOADER) nainštalovaný"
+
+#: knoppix-installer:665
+msgid "Master Boot Record"
+msgstr "Master Boot Record"
+
+#: knoppix-installer:665
+msgid "To Root-Partition"
+msgstr "Do koreňového (root) oddielu"
+
+#: knoppix-installer:676
+msgid ""
+"Determines if the system is a debian-derivate or just a copy from CD (copy "
+"from CD is experimental for now)"
+msgstr "Určuje či je systém klon debianu alebo iba kópia CD (kópia CD je momentálne experimentálna)"
+
+#: knoppix-installer:681
+msgid "System-Options:"
+msgstr "Systém-Voľby:"
+
+#: knoppix-installer:682
+msgid "The installed system will be a debian type system."
+msgstr "Inštalovaný systém bude systém typu debian"
+
+#: knoppix-installer:694
+msgid ""
+"Here you must choose the type of your system. A $FLL_DISTRO_NAME system will work "
+"exactly as from CD, but tools like apt-get do work. Debian-Type however is a "
+"full featured debian system and works like the 'old instaler'."
+msgstr "Tu musíte zvoliť typ vašeho systému. $FLL_DISTRO_NAME systém bude fungovať presne tak ako z CD, ale nástroje ako apt-get budú fungovať. Typ Debian je plne funkčný systém Debian a pracuje ako 'starý inštalátor'."
+
+#: knoppix-installer:694
+msgid "Choose your system type"
+msgstr "Zvoľte typ systému"
+
+#: knoppix-installer:694
+msgid "Debian-like system (old installer way)"
+msgstr "Ako Debian (spôsob starého inštalátoru)"
+
+#: knoppix-installer:694
+msgid "$FLL_DISTRO_NAME system like from CD"
+msgstr "$FLL_DISTRO_NAME systém ako z CD"
+
+#: knoppix-installer:718
+msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
+msgstr "Vytváranie nastavení (Krok 0/$NUM_REAL_MODULES)"
+
+#: knoppix-installer:747 knoppix-installer:749
+msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
+msgstr "Chyba: Neznámá hodnota $2 pro $1\\nNastavené na štandardnú hodnotu ($DEFAULT_TEMP)."
+
+#: knoppix-installer:758 knoppix-installer:760
+msgid ""
+"Error: Check failed for $1 ($2)\\nThe configuration module will now be "
+"started."
+msgstr "Chyba: Zlihanie kontroly pre $1 ($2)\\nBude spustený konfiguračný modul."
+
+#: knoppix-installer:775
+msgid "Loading $FLL_DISTRO_NAME configuration"
+msgstr "Nahrávánie konfigurácie"
+
+#: knoppix-installer:778
+msgid "Here you can input a filename to load an existing configuration"
+
+msgstr "Tu môžete zadať názov súboru s existujúcou konfiguráciou"
+
+#: knoppix-installer:778
+msgid "Input the configuration filename to be loaded"
+msgstr "Zadejte názov súboru s konfiguráciou"
+
+#: knoppix-installer:783
+msgid ""
+"File $CONFIG_USER could not be found. The loading of the configuration will "
+"be aborted."
+msgstr "Súbor $CONFIG_USER nebol nájdený. Nahrávanie konfigurácie bude zrušené."
+
+#: knoppix-installer:806
+msgid "Saving $FLL_DISTRO_NAME configuration"
+msgstr "Ukladanie konfigurácie"
+
+#: knoppix-installer:809
+msgid "Here you can input a filename to save the configuration"
+msgstr "Tu môžete zadať názov súboru pre uloženie konfigurácie"
+
+#: knoppix-installer:809
+msgid "Input a filename for the configuration"
+msgstr "Zadajte názov súboru pre uloženie konfigurácie"
+
+#: knoppix-installer:815
+msgid ""
+"If you click yes, the file will be overwritten, otherwise this script will "
+"abort"
+msgstr "Pokiaľ kliknete na áno, súbor bude prepísaný, v opačnom prípade bude skript zrušený"
+
+#: knoppix-installer:815
+msgid "Do you really want to overwrite $CONFIG_USER?"
+msgstr "Skutočně si prajete prepísať súbor $CONFIG_USER?"
+
+#: knoppix-installer:828
+msgid "Possible are:"
+msgstr "Možnosti sú:"
+
+#: knoppix-installer:830
+msgid "This value will be checked by function"
+msgstr "Táto hodnota bude overená funkciou"
+
+#: knoppix-installer:832
+msgid "Default value is:"
+msgstr "Východzia hodnota je:"
+
+#: knoppix-installer:848
+msgid ""
+"Several of this options can only be changed in the Configurationfile "
+"$CONFIG_FILE."
+msgstr "Niektoré z týchto volieb môžu byť zmenené iba v konfiguračnom súbore $CONFIG_FILE."
+
+#: knoppix-installer:849
+msgid ""
+"The Installation will now be started. The author and knopper.net give no "
+"warranty against any damage caused by this script."
+msgstr ""
+"Nyní bude spuštěna vlastní Instalace. "
+
+"Software je dodáváný v dobrej viere v jeho užitočnosť, avšak autori distribúcie, inštalátoru alebo jednotlivých programových balíkov neručia za prípadné škody akéhokoľvek charakteru, ktoré si pripádne spôsobíte."
+
+#: knoppix-installer:851
+msgid "Do you want to proceed with these parameters?"
+msgstr "Prajete si pokračovať s týmito nastaveniami?"
+
+#: knoppix-installer:853
+msgid "Make sure you agree to all parameters, if so proceed with the installation."
+msgstr "Uistite sa, že všetky parametry inštalácie sú správne. Pokiaľ je tomu tak, pokračujte v inštalácii."
+
+#: knoppix-installer:858
+msgid "Updating /etc/fstab..."
+msgstr "Aktualizácia /etc/fstab..."
+
+#: knoppix-installer:934
+msgid "Copying custom configuration ..."
+msgstr "Kopírovánie užívateľskej konfigurácie ..."
+
+#: knoppix-installer:941
+msgid "Converting $FLL_DISTRO_NAME to Debian..."
+msgstr "Konvertovanie na Debian..."
+
+#: knoppix-installer:997
+msgid "Welcome to $FLL_DISTRO_NAME"
+msgstr "Vitajte v $FLL_DISTRO_NAME"
+
+#: knoppix-installer:1199
+msgid "Starting $FLL_DISTRO_NAME installation"
+msgstr "Štartuje inštalácia"
+
+#: knoppix-installer:1202
+msgid "Error: No complete Configuration found"
+msgstr "Chyba: Nebola nájdená kompletná konfigurácia"
+
+#: knoppix-installer:1208
+msgid "Installing"
+msgstr "Inštalácia"
+
+
+#: knoppix-installer:1224
+msgid "Creating floppy disk"
+msgstr "Vytváranie spúšťacej diskety"
+
+#: knoppix-installer:1224
+msgid ""
+"Please insert now an empty floppy disk into your floppydrive. Warning: All "
+"data on it will be lost. If you don't want to create a disk you can choose "
+"No."
+msgstr "Prosím teraz vložte prázdnu disketu do mechaniky. Varovanie: Všetky dáta budú z diskety zmazané. Pokiaľ si neprajete vytvořit spúšťaciu disketu, môžete zvoliť Nie."
+
+#: knoppix-installer:1242 knoppix-installer:1243
+msgid "$FLL_DISTRO_NAME was successfully installed to hd."
+msgstr "Systém bol úspešne nainštalovaný na pevný disk."
+
+#: knoppix-installer:1249
+msgid "$FLL_DISTRO_NAME Main-Menu"
+msgstr "$FLL_DISTRO_NAME Hlavné-Menu"
+
+#: knoppix-installer:1250
+msgid "Thats the main menu\\nChoose the action you want"
+msgstr "Toto je hlavné menu\\nVyberte si jednu z možností"
+
+#: knoppix-installer:1251
+msgid "Configure Installation"
+msgstr "Nastaviť inštaláciu"
+
+#: knoppix-installer:1251
+msgid "Create a new configuration"
+msgstr "Vytvoriť novú konfiguráciu"
+
+#: knoppix-installer:1252
+msgid "Start installation"
+msgstr "Spustiť inštaláciu"
+
+#: knoppix-installer:1252
+msgid "Start the installation"
+msgstr "Spustiť inštaláciu"
+
+#: knoppix-installer:1254
+msgid "Load config"
+msgstr "Nahrať konfiguráciu"
+
+#: knoppix-installer:1254
+msgid "Load an existing configuration"
+msgstr "Nahrať uloženú konfiguráciu"
+
+#: knoppix-installer:1255
+msgid "Save config"
+msgstr "Uložiť konfiguráciu"
+
+#: knoppix-installer:1255
+msgid "Save the configuration"
+
+msgstr "Uložiť konfiguráciu"
+
+#: knoppix-installer:1272
+msgid ""
+"Fatal Error: The required file knx-templates-$SVERSION.tgz is missing or "
+"corrupted. The script will be terminated."
+msgstr "Fatálna chyba: Požadovaný súbor knx-templates-$SVERSION.tgz chýba alebo je poškodený. Skript bude ukončený."
+
+#: knoppix-installer:1280
+msgid "$FLL_DISTRO_NAME-installer started"
+msgstr "inštalátor spustený"
+
+#: knoppix-installer:1281
+msgid ""
+"This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
+"still an very early version and under heavy development.\n"
+"The author and knopper.net take no responsibility for data loss or hardware "
+"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
+msgstr ""
+"Tento skript nainštaluje systém na disk. Prosím uvedomte si, že táto verzia je stále ešte vo veľmi rannom vývojovom štádiu a neustále sa na nej pracuje.\n"
+"Autor a knopper.net neberú na seba žiadnu zodpovednosť za prípadnú stratu dát alebo poškodenie hardware. \\n\\nAutor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"\\nzaložené na skvelej práci Christiana Perleho <perle@itm.tu-clausthal.de>"
+
+#: knoppix-installer:1293
+msgid "Partition check succeeded"
+msgstr "Kontrola oddielov bola úspešná"
+
+#: knoppix-installer:1309
+msgid "root permission needed."
+msgstr "je potrebné oprávnenie správcu systému (roota)"
+
+#: modules/boot.bm:5
+msgid "Creating initrd (if needed)"
+msgstr "Vytváranie initrd (ak je treba)"
+
+#: modules/boot.bm:86
+msgid "Installing LILO to $BOOT_WHERE"
+msgstr "Inštalácia LILO do $BOOT_WHERE"
+
+#: modules/boot.bm:147
+msgid "Finishing installation"
+msgstr "Dokončovanie inštalácie"
+
+#: modules/dialog.bm:18 modules/mepis.bm:9
+msgid "Fatal security error."
+msgstr "Fatálna bezpečnostná chyba."
+
+#: modules/dialog.bm:64
+msgid "Previous"
+msgstr "Predcházajúci"
+
+#: modules/dialog.bm:64
+msgid "Next"
+msgstr "Daľší"
+
+#: modules/dialog.bm:64
+msgid "Help"
+msgstr "Nápoveda"
+
+#: modules/setuser.bm:5
+msgid "Changing user in Passwd/Shadow..."
+msgstr "Zmena užívateľa v Passwd/Shadow..."
+
+#: modules/setuser.bm:23
+msgid "Setting passwords ..."
+msgstr "Nastavenie hesiel ..."
+
+#: modules/setuser.bm:28
+msgid "Updating group ..."
+msgstr "Aktualizácia skupiny ..."
+
+msgid "Really quit?"
+msgstr "Skutočne ukončiť?"
+
+msgid "Do you really want to quit?"
+msgstr "Skutočne si prajete ukončiť program?"
+
+msgid "Chooses the Boot-Loader"
+msgstr "Vyberá boot-loader"
+
+msgid "Choose the root partition"
+msgstr "Zvoľte hlavný (root) oddiel"
+
+msgid "Input your root-password"
+msgstr "Zadajte root heslo"
+
+msgid "Input your root-password again"
+msgstr "Znovu zadajte root heslo"
+
+msgid "If set to yes, SWAP_CHOICES will be overwritten by autodetection"
+msgstr "Pokiaľ je voľba nastavená na áno, SWAP_CHOICES budú prepísané automaticky"
+

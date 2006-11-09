@@ -1,0 +1,38 @@
+#!/bin/bash
+
+module_system_defaults()
+{
+	module_system_set_modules
+}
+
+module_system_showinfo()
+{
+	echo $"System-Options:"
+	echo "  " $"The installed system will be a debian type system."
+}
+
+module_system()
+{
+	module_system_defaults
+
+	SYSTEM_MODULE="configured"
+	register_vars "SYSTEM_MODULE"
+	
+	return 0
+}
+
+module_system_set_modules()
+{
+	MODULES=(hd swap name user userpass rootpass host services boot autologin)
+	NUM_MODULES=${#MODULES[@]}
+}
+
+module_system_get_cmdlines()
+{
+	SYSTEM_RESCUE_CMDS="acpi|noapic|nosmp|pci|pnpbios|noapm|nohlt|nolapic|irqpoll|i8042|=scsi"
+	SYSTEM_RESCUE_CMDLINE=$(cat /proc/cmdline | tr ' ' '\n' | egrep "$SYSTEM_RESCUE_CMDS" |  tr '\n' ' ')
+	[ -f /etc/sysconfig/i18n ] && source /etc/sysconfig/i18n
+	[ -n "$LANGUAGE" ] || LANGUAGE="de"
+	echo "$SYSTEM_RESCUE_CMDLINE quiet"
+}
+

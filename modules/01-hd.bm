@@ -8,141 +8,150 @@
 
 function module_hd_defaults
 {
-  register_var "HD_FORMAT" $"Determines if the HD should be formatted. (mkfs.*)" "yes|no" "" "yes"
-  register_var "HD_FSTYPE" $"Sets the Filesystem type." "ext3|ext2|reiserfs|xfs|jfs" "" "reiserfs"
-  register_var "HD_CHOICE" $"Here the $FLL_DISTRO_NAME-System will be installed" "" "module_hd_check" ""
-  register_var "HD_MAP" $"Here you can give additional mappings. (Experimental) You need to have the partitions formatted yourself and give the correct mappings like: \"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\"" "" "" ""
-  register_var "HD_IGNORECHECK" $"If set to yes, the program will NOT check if there is enough space to install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition." "yes|no" "" "no"
-  
+	register_var "HD_FORMAT" $"Determines if the HD should be formatted. (mkfs.*)" "yes|no" "" "yes"
+	register_var "HD_FSTYPE" $"Sets the Filesystem type." "ext3|ext2|reiserfs|xfs|jfs" "" "reiserfs"
+	register_var "HD_CHOICE" $"Here the $FLL_DISTRO_NAME-System will be installed" "" "module_hd_check" ""
+	register_var "HD_MAP" $"Here you can give additional mappings. (Experimental) You need to have the partitions formatted yourself and give the correct mappings like: \"/dev/hda4:/boot /dev/hda5:/var /dev/hda6:/tmp\"" "" "" ""
+	register_var "HD_IGNORECHECK" $"If set to yes, the program will NOT check if there is enough space to install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition." "yes|no" "" "no"
 }
 
 function module_hd_showinfo
 {
-  echo $"Drive-Options:"
-  [ "$HD_FORMAT" = "yes" ] && echo "  " $"The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem." || echo "  " $"The Drive $HD_CHOICE will be used for the installation."
-
+	echo $"Drive-Options:"
+	[ "$HD_FORMAT" = "yes" ] && echo "  " $"The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem." || echo "  " $"The Drive $HD_CHOICE will be used for the installation."
 }
 
 function module_hd_check
 {
-  [ "$HD_IGNORECHECK" = "yes" ] && ROOT_MIN=0
-  ROOT_PARTS=$(find_root_partitions $HD_CHOICE)
-  stringinstring " on" "$ROOT_PARTS" && return 0
-  return 1
+	[ "$HD_IGNORECHECK" = "yes" ] && ROOT_MIN=0
+	ROOT_PARTS=$(find_root_partitions $HD_CHOICE)
+	stringinstring " on" "$ROOT_PARTS" && return 0
+	
+	return 1
 }
 
 function module_hd_progressbar
 {
-  {
-  PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
-  TOTAL=$[ROOT_MIN_CORR+PROGRESS] # Set starting point
-  p=$1
-  while [ -d /proc/$p ]
-  do
-    PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
-    PERC=$[PROGRESS*100/TOTAL]
-    [ "$PERC" -lt "100" ] && echo $PERC
-    sleep 10
-  done
-  }
+	PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
+	TOTAL=$[ROOT_MIN_CORR+PROGRESS] # Set starting point
+	p=$1
+	
+	while [ -d "/proc/$p" ]; do
+		PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
+		PERC=$[PROGRESS*100/TOTAL]
+		[ "$PERC" -lt "100" ] && echo $PERC
+		sleep 10
+	done
 }
 
 function module_hd_knoppix_copy
 {
-  update_status $"Copying files. This can take a while. Please be patient."
-  (cd /$DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
-  module_hd_progressbar $!
-  # two beeps
-  echo -ne "\007" >/dev/tty1 ; sleep 0.5
-  echo -ne "\007" >/dev/tty1 ; sleep 0.5
+	update_status $"Copying files. This can take a while. Please be patient."
+	(cd /$DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
+	module_hd_progressbar $!
+	# two beeps
+	echo -ne "\007" >/dev/tty1
+	sleep 0.5
+	echo -ne "\007" >/dev/tty1
+	sleep 0.5
 }
 
 function module_hd_doaction
 {
-  if [ $HD_FORMAT = "yes" ]
-  then
-    update_status $"Formatting $HD_CHOICE..."
-    umount $HD_CHOICE 2>/dev/null
-    dd if=/dev/zero of=$HD_CHOICE bs=1k count=16 >/dev/null 2>/dev/null # shutup! :-)
-    case $HD_FSTYPE in
-	  xfs)
-	    mkfs.$HD_FSTYPE -f $HD_CHOICE 2> $TMP 1>&2
-	  ;;
-	  reiser*)
-	    echo y | mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
-	  ;;
-	  jfs)
-	    echo y | mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
-	  ;;
-	  *)
-	    mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
-	  ;;
-    esac
-    RC="$?"
-    if [ $RC -ne 0 ]
-    then
-      ERROR_MESSAGES=$(tail -8 $TMP)
-      MODULE_ERROR=$"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
-      logit $MODULE_ERROR
-      echo "$MODULE_ERROR" > $TMPDIR/errors
-      return 1
-    fi
-    # Deactivate dir_index-feature of ext2/ext3-partitions
-    case $HD_FSTYPE in *ext*) tune2fs -O ^dir_index $HD_CHOICE;; esac
-  fi
-  update_status $"Mounting $HD_CHOICE r/w..."
-  mkdir -p $TARGET_MNT_POINT
-  mount -t $HD_FSTYPE $HD_CHOICE $TARGET_MNT_POINT
-  if [ $? -ne 0 ]
-  then
-    ERROR_MESSAGES=$(tail -8 $TMP)
-    MODULE_ERROR=$"Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
-    logit $MODULE_ERROR
-    echo "$MODULE_ERROR" > $TMPDIR/errors
-    return 1
-  fi
-  update_status $"Mounting additional partitions r/w..."
-  for i in $HD_MAP
-  do
-    part=$(echo $i | cut -d":" -f1)
-    point=$(echo $i | cut -d":" -f2)
-    mkdir -p $TARGET_MNT_POINT$point
-    mount $part $TARGET_MNT_POINT$point 2> /dev/null
-  done
-  module_hd_knoppix_copy
+	if [ $HD_FORMAT = "yes" ]; then
+		update_status $"Formatting $HD_CHOICE..."
+		umount $HD_CHOICE 2>/dev/null
+		
+		dd if=/dev/zero of=$HD_CHOICE bs=1k count=16 >/dev/null 2>/dev/null # shutup! :-)
+
+		case $HD_FSTYPE in
+			xfs)
+				mkfs.$HD_FSTYPE -f $HD_CHOICE 2> $TMP 1>&2
+				;;
+			reiser*)
+				echo y | mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
+				;;
+			jfs)
+				echo y | mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
+				;;
+			*)
+				mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
+				;;
+		esac
+		
+		RC="$?"
+		if [ $RC -ne 0 ]; then
+			ERROR_MESSAGES=$(tail -8 $TMP)
+			MODULE_ERROR=$"Formatting of $HD_CHOICE failed. Some messages from mkfs.$HD_FSTYPE: $ERROR_MESSAGES"
+			logit $MODULE_ERROR
+			echo "$MODULE_ERROR" > $TMPDIR/errors
+			
+			return 1
+		fi
+
+		# Deactivate dir_index-feature of ext2/ext3-partitions
+		case $HD_FSTYPE in
+			*ext*)
+				tune2fs -O ^dir_index $HD_CHOICE
+				;;
+		esac
+	fi
+
+	update_status $"Mounting $HD_CHOICE r/w..."
+	mkdir -p $TARGET_MNT_POINT
+	mount -t $HD_FSTYPE $HD_CHOICE $TARGET_MNT_POINT
+
+	if [ $? -ne 0 ]; then
+		ERROR_MESSAGES=$(tail -8 $TMP)
+		MODULE_ERROR=$"Mounting of $HD_CHOICE failed. Some messages from mount: $ERROR_MESSAGES"
+		logit $MODULE_ERROR
+		echo "$MODULE_ERROR" > $TMPDIR/errors
+		
+		return 1
+	fi
+
+	update_status $"Mounting additional partitions r/w..."
+
+	for i in $HD_MAP; do
+		part=$(echo $i | cut -d":" -f1)
+		point=$(echo $i | cut -d":" -f2)
+		mkdir -p $TARGET_MNT_POINT$point
+		mount $part $TARGET_MNT_POINT$point 2> /dev/null
+	done
+	
+	module_hd_knoppix_copy
 }
 
 function module_hd
 {
-  module_hd_defaults # register some automatic variables
+	module_hd_defaults # register some automatic variables
   
-  ROOT_PARTS=$(find_root_partitions $HD_CHOICE)
+	ROOT_PARTS=$(find_root_partitions $HD_CHOICE)
   
-  radiolist $"Here you must choose one of the available partitions\n for use with $FLL_DISTRO_NAME." $"Choose the partition to install $FLL_DISTRO_NAME" $ROOT_PARTS
-  [ $? -eq 1 ] && return 1
+	radiolist $"Here you must choose one of the available partitions\n for use with $FLL_DISTRO_NAME." $"Choose the partition to install $FLL_DISTRO_NAME" $ROOT_PARTS
+	[ "$?" -eq 1 ] && return 1
   
-  HD_CHOICE="$(cat $TMP)"
+	HD_CHOICE="$(cat $TMP)"
 
-  if [ "$SYSTEM_TYPE" = "debian" ]
-  then
-    CB_JFS="off"
-    CB_REISER="off"
-    CB_EXT3="off"
-    [ "$HD_FSTYPE" = "ext3" ] && CB_EXT3="on"
-    [ "$HD_FSTYPE" = "ext2" ] && CB_EXT3="on"
-    [ "$HD_FSTYPE" = "reiserfs" ] && CB_REISER="on"
-    [ "$HD_FSTYPE" = "jfs" ] && CB_JFS="on"
+	CB_JFS="off"
+	CB_REISER="off"
+	CB_EXT3="off"
+	[ "$HD_FSTYPE" = "ext3" ] && CB_EXT3="on"
+	[ "$HD_FSTYPE" = "ext2" ] && CB_EXT3="on"
+	[ "$HD_FSTYPE" = "reiserfs" ] && CB_REISER="on"
+	[ "$HD_FSTYPE" = "jfs" ] && CB_JFS="on"
     
-    radiolist $"Here you must choose one of the available filesystem types." $"Choose filesystem-type." \
-    "ext3" $"Extended 2 filesystem with journal support." "$CB_EXT3" \
-    "reiserfs" $"ReiserFS 3.6: journaling filesystem developed by Namesys." "$CB_REISER" \
-    "jfs" $"JFS: journaling filesystem developed by IBM." "$CB_JFS"
-    [ $? -eq 1 ] && return 1
+	radiolist $"Here you must choose one of the available filesystem types." $"Choose filesystem-type." \
+	"ext3" $"Extended 2 filesystem with journal support." "$CB_EXT3" \
+	"reiserfs" $"ReiserFS 3.6: journaling filesystem developed by Namesys." "$CB_REISER" \
+	"jfs" $"JFS: journaling filesystem developed by IBM." "$CB_JFS"
+	[ $? -eq 1 ] && return 1
   
-    HD_FSTYPE="$(cat $TMP)"
- fi
+	HD_FSTYPE="$(cat $TMP)"
 
-  HD_MODULE="configured"
-  register_vars "HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK"
-  return 0
+	HD_MODULE="configured"
+	register_vars "HD_MODULE HD_FORMAT HD_FSTYPE HD_CHOICE HD_MAP HD_IGNORECHECK"
+
+	return 0
 }
+

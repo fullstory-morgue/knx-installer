@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo $"This script will download and start the latest knoppix-installer to your home directory. Do you want to proceed?"" [Y/n]"
+read answer
+[ "$answer" = "n" -o "$answer" = "N" ] && exit 1
+
+FILE="$(wget http://kanotix.com/files/debian/pool/main/k/knx-installer/latest -O -)"
+echo "Downloading $FILE ..."
+
+cd "$HOME"
+wget "http://kanotix.com/files/debian/pool/main/k/knx-installer/$FILE"
+tar xzf $(basename "$FILE")
+
+cd knx-installer-*
+kanotix-su chown -R root:root .
+exec kanotix-su ./knoppix-installer
+
