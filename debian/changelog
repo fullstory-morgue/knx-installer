@@ -1,8 +1,9 @@
-knx-installer (0.4.0.34) UNRELEASED; urgency=low
+knx-installer (0.4.0.34) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * fix insecure tempfile handling.
+  * re- indent modules/00-dialog.bm and tools/mkext2fs.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  9 Nov 2006 22:26:16 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 10 Nov 2006 14:59:44 +0100
 
 knx-installer (0.4.0.33) unstable; urgency=low
 
