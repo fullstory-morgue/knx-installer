@@ -8,7 +8,7 @@
 
 get_short_kernel_name()
 {
-  echo $1 | tr '.' '_' | tr '-' '_'
+	echo $1 | tr '.' '_' | tr '-' '_'
 }
 
 
@@ -48,14 +48,14 @@ create_initrd()
 	
 	# Prepare the usage of mkext2fs
 	if [ -z "$USE_CRAMFS" ]
-	then
+		then
 		# TODO: :-)
 		[ -z "$(which mkext2fs)" -a -x "tools/mkext2fs" ] && cp -f tools/mkext2fs $TARGET_MNT_POINT/usr/sbin/
 		perl -pi -e "s/mkcramfs/mkext2fs/g" $TARGET_MNT_POINT/etc/mkinitrd/mkinitrd.conf
 		perl -pi -e "s/(^MODULES)=dep/\1=most/g" $TARGET_MNT_POINT/etc/mkinitrd/mkinitrd.conf
 		export INITRD_PARAM_$INITRD_POSTFIX="ramdisk_size=100000 "
 	fi
- 
+	
 	# As we don't use the very modular debian kernel
 	# we still need to create /etc/mkinitrd/modules
 	# for the filesystems
@@ -63,74 +63,74 @@ create_initrd()
 	INITRD_MODULES_TEST=""
 	
 	case "$HD_FSTYPE" in
-  		ext2|ext3)
-    		INITRD_MODULES_TEST="$INITRD_MODULES_TEST jbd ext3"
-    	;;
+		ext2|ext3)
+			INITRD_MODULES_TEST="$INITRD_MODULES_TEST jbd ext3"
+			;;
 		reiserfs)
-    		INITRD_MODULES_TEST="$INITRD_MODULES_TEST reiserfs"
-    	;;
+			INITRD_MODULES_TEST="$INITRD_MODULES_TEST reiserfs"
+			;;
 		reiser4)
-    		INITRD_MODULES_TEST="$INITRD_MODULES_TEST reiser4"
-    	;;
+			INITRD_MODULES_TEST="$INITRD_MODULES_TEST reiser4"
+			;;
 		xfs)
-    		INITRD_MODULES_TEST="$INITRD_MODULES_TEST xfs"
-    	;;
+			INITRD_MODULES_TEST="$INITRD_MODULES_TEST xfs"
+			;;
 		jfs)
-    		INITRD_MODULES_TEST="$INITRD_MODULES_TEST jfs"
-    	;;
-  		*)
-    	;;
+			INITRD_MODULES_TEST="$INITRD_MODULES_TEST jfs"
+			;;
+		*)
+			;;
 	esac
 
 	# Test if the modules do really exist
    	# Else they were (hopefully) build into the kernel
-	
+
 	INITRD_MODULES=""
-	
-	for i in $INITRD_MODULES_TEST
-	do
-		INITRD_MODPATH=$(find $TARGET_MNT_POINT/lib/modules/$BOOT_KERNEL/ -name "$i.*")
-		[ -n "$INITRD_MODPATH" ] && INITRD_MODULES="$INITRD_MODULES $i"
-	done
-	
-	if [ -n "$INITRD_MODULES" -o true ] # added true for SCSI install
-	then
-		# Update /etc/mkinitrd/modules
-		# Replace all lines, which have are not comment
-		# and append to it
-		
-		cp -f $TARGET_MNT_POINT/etc/mkinitrd/modules $TMPDIR
-		grep "^#" $TMPDIR/modules > $TARGET_MNT_POINT/etc/mkinitrd/modules
-		echo "$INITRD_MODULES" | tr ' ' '\n' >> $TARGET_MNT_POINT/etc/mkinitrd/modules
 
-		#
-		# Make the real initrd
-		#
-
-		# mkinitrd uses TMPDIR in the code... #fixme: yeah, mkinitrd can be stupid
-		if [ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ]; then
-			chroot_it mount -t sysfs sysfs /sys
-			TMPDIR= chroot_it mkinitrd.yaird -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL
-			chroot_it umount /sys
-		else
-			TMPDIR= chroot_it mkinitrd -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL 2>/dev/null
-		fi
-		
-		# Be verbose ...
-		[ ! -s $TARGET_MNT_POINT/boot/initrd.img-$BOOT_KERNEL ] && return 2
-
-		# Outcomment the initrd for ext2-filesystems
-		INITRD_COMMENT=""
-		[ "$HD_FSTYPE" = "ext2" ] && INITRD_COMMENT="#"
-		
-		# Set the right variable for make_lilo_conf
-		export INITRD_$INITRD_POSTFIX="$INITRD_COMMENT	initrd=/boot/initrd.img-$BOOT_KERNEL"
-	else
-		# Unset unneded parameter
-		export INITRD_PARAM_$INITRD_POSTFIX=""
-		export INITRD_$INITRD_POSTFIX=""
-	fi
-
+    for i in $INITRD_MODULES_TEST
+      do
+      INITRD_MODPATH=$(find $TARGET_MNT_POINT/lib/modules/$BOOT_KERNEL/ -name "$i.*")
+      [ -n "$INITRD_MODPATH" ] && INITRD_MODULES="$INITRD_MODULES $i"
+    done
+    
+    if [ -n "$INITRD_MODULES" -o true ] # added true for SCSI install
+    	then
+    		# Update /etc/mkinitrd/modules
+    		# Replace all lines, which have are not comment
+    		# and append to it
+    	
+    	cp -f $TARGET_MNT_POINT/etc/mkinitrd/modules $TMPDIR
+    	grep "^#" $TMPDIR/modules > $TARGET_MNT_POINT/etc/mkinitrd/modules
+    	echo "$INITRD_MODULES" | tr ' ' '\n' >> $TARGET_MNT_POINT/etc/mkinitrd/modules
+    
+    		#
+    		# Make the real initrd
+    		#
+    
+    		# mkinitrd uses TMPDIR in the code... #fixme: yeah, mkinitrd can be stupid
+    	if [ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ]; then
+    		chroot_it mount -t sysfs sysfs /sys
+    		TMPDIR= chroot_it mkinitrd.yaird -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL
+    		chroot_it umount /sys
+    	else
+    		TMPDIR= chroot_it mkinitrd -o /boot/initrd.img-$BOOT_KERNEL $BOOT_KERNEL 2>/dev/null
+    	fi
+    	
+    		# Be verbose ...
+    	[ ! -s $TARGET_MNT_POINT/boot/initrd.img-$BOOT_KERNEL ] && return 2
+    
+    		# Outcomment the initrd for ext2-filesystems
+    	INITRD_COMMENT=""
+    	[ "$HD_FSTYPE" = "ext2" ] && INITRD_COMMENT="#"
+    	
+    		# Set the right variable for make_lilo_conf
+    	export INITRD_$INITRD_POSTFIX="$INITRD_COMMENT	initrd=/boot/initrd.img-$BOOT_KERNEL"
+    else
+    		# Unset unneded parameter
+    	export INITRD_PARAM_$INITRD_POSTFIX=""
+    	export INITRD_$INITRD_POSTFIX=""
+    fi
+    
 	# Everything seems to be ok.	
 	return 0
 }
@@ -159,7 +159,7 @@ make_lilo_conf()
 
 	LILO_TIMEOUT="50"
 
-cat <<EOF
+	cat <<EOF
 # /etc/lilo.conf - See: 'lilo(8)' and 'lilo.conf(5)',
 # ---------------       'install-mbr(8)', '/usr/share/doc/lilo/',
 #                       and '/usr/share/doc/mbr/'.
@@ -697,7 +697,7 @@ do_bootloader = no
 do_symlinks = Yes
 relative_links = Yes
 EOF
-[ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
+	[ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
 
 	# install grub
 	

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#
+# Setup bootloader - auto
+#
+
+function module_boot_defaults
+{
+	register_var "BOOT_LOADER" $"Chooses the Boot-Loader" "lilo|grub" "" "grub"
+	register_var "BOOT_DISK" $"If set to 'yes' a boot disk will be created!" "yes|no" "" "yes"
+	if [ "$FS_TYPE" = "xfs" -o "$FS_TYPE" = "jfs" ]; then
+		register_var "BOOT_WHERE" $"Where the Boot-Loader will be installed" "mbr" "" "mbr"
+	else
+		register_var "BOOT_WHERE" $"Where the Boot-Loader will be installed" "mbr|partition" "" "mbr"
+	fi
+}
+function module_boot_showinfo
+{
+	echo $"Bootloader-Options:"
+	[ "$BOOT_DISK" = "yes" ] && echo "  " $"A bootdisk will be created." || echo "  " $"No bootdisk will be created."
+	echo "  " $"The bootloader $BOOT_LOADER will be used and installed in $BOOT_WHERE."
+}
+
+function module_boot
+{
+  #[ "$1" -lt "0" ] && return 1 # all automatic modules need to use this code
+
+	module_boot_defaults
+
+	[ "$BOOT_WHERE" = "mbr" ] && MBR_CB="on" || MBR_CB="off"
+	[ "$BOOT_WHERE" = "partition" ] && PART_CB="on" || PART_CB="off"
+	
+	radiolist $"Here you must choose if you want to install the boot-loader to MBR or to a partition." $"Choose where the boot-loader ($BOOT_LOADER) shall be installed" "mbr" $"Master Boot Record" "$MBR_CB" "partition" $"To Root-Partition" "$PART_CB" 
+	[ $? -eq 1 ] && return 1
+
+	BOOT_WHERE=$(cat $TMP)
+	BOOT_MODULE="configured"
+	register_vars "BOOT_MODULE BOOT_LOADER BOOT_DISK BOOT_WHERE"
+	return 0
+}
