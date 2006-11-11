@@ -1,3 +1,9 @@
+knx-installer (0.4.0.36) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 11 Nov 2006 21:47:25 +0100
+
 knx-installer (0.4.0.35) unstable; urgency=low
 
   * re- indent, thanks to x-un-i.
