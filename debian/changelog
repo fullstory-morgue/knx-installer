@@ -1,3 +1,9 @@
+knx-installer (0.4.0.37) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 21 Nov 2006 15:37:51 +0100
+
 knx-installer (0.4.0.36) unstable; urgency=low
 
   * adapt template handling for updated etcskel-kanotix.
