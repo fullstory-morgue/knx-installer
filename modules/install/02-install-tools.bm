@@ -175,19 +175,21 @@ system_install_templates()
 	TEMPLATE_PATH=""
 	[ -d "$SEARCHPATH/templates" ] && TEMPLATE_PATH="$SEARCHPATH/templates"
 	if [ -n "$TEMPLATE_PATH" ]; then 
-		# change prompt (/etc/profile)
-		cp -af "$TEMPLATE_PATH/etc/profile" "$TARGET_MNT_POINT/etc/profile"
+		# don't allow everyone to use sudo.
+		sed	-e '/KANOTIX\/live/d'
+			-e '/.*alias.*su\=.*/d'
+			-e '/.*alias.*sux\=.*/d'
+				"$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
+
 
 		# "normalize" /etc/inittab
-		cp -af "$TEMPLATE_PATH/etc/inittab" "$TARGET_MNT_POINT/etc/inittab"
+		rm -f "$TARGET_MNT_POINT/etc/inittab"
+		sed s/id\:[0-6]\:initdefault\:/id\:5\:initdefault\:/ "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" > "$TARGET_MNT_POINT/etc/inittab"
 	
 		# remove Knoppix entry from /etc/sudoers
 		cp -af "$TEMPLATE_PATH/etc/sudoers" "$TARGET_MNT_POINT/etc/sudoers"
 		chown root:root "$TARGET_MNT_POINT/etc/sudoers"
 		chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
-
-		# use less restrictive /etc/hosts.allow
-		cp -af "$TEMPLATE_PATH/etc/hosts.allow" "$TARGET_MNT_POINT/etc/hosts.allow"
 	else
 		echo $"Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 1>&2
 	fi
