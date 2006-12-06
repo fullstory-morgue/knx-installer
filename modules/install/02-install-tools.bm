@@ -24,8 +24,8 @@ system_add_hd_autoconfig()
 	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
 
 	# TODO: Remove the hacks
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
-	perl -pi -e 's/rebuildfstab -r -u knoppix -g knoppix/[ -d \/KNOPPIX ] && rebuildfstab -r -u knoppix -g knoppix >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/KNOPPIX ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/KNOPPIX ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 }
 
 system_copy_etc()
@@ -99,16 +99,16 @@ system_copy_home()
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/sorticons.desktop"
 
 	# Fix background
-	[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/kanotix.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-	[ -e "$DEFAULT_DIR/usr/local/lib/kanotix.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/kanotix.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/sidux.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
+	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/sidux.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 
 	# Remove Netscape Directories
 	rm -rf "$TARGET_MNT_POINT/home/$USER_NAME/.netscape*"
 
 	# Remove KNOPPIX/KANOTIX Firewall
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-knoppix.desktop"
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-kanotix.desktop"
-	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-kanotix.desktop"
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-sidux.desktop"
+	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-sidux.desktop"
 	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-knoppix.desktop"
 
 	# Mozilla Konfigdateien korrigieren
@@ -131,11 +131,11 @@ system_copy_home()
 	fi
 
 	# Neue Symbole für KANOTIX und KNOPPIX auf dem Desktop
-	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KANOTIX.desktop" <<EOF
+	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" <<EOF
 [Desktop Entry]
-Name=KANOTIX
-# Exec=kfmclient openProfile webbrowsing http://kanotix.com/
-Exec=konqueror --geometry 800x600+110+40 http://kanotix.com/
+Name=sidux
+# Exec=kfmclient openProfile webbrowsing http://sidux.com/
+Exec=konqueror --geometry 800x600+110+40 http://sidux.com/
 Type=Application
 Icon=html
 Terminal=0
@@ -176,7 +176,7 @@ system_install_templates()
 	[ -d "$SEARCHPATH/templates" ] && TEMPLATE_PATH="$SEARCHPATH/templates"
 	if [ -n "$TEMPLATE_PATH" ]; then 
 		# don't allow everyone to use sudo.
-		sed	-e '/KANOTIX\/live/d'
+		sed	-e '/sidux\/live/d'
 			-e '/.*alias.*su\=.*/d'
 			-e '/.*alias.*sux\=.*/d'
 				"$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
@@ -258,36 +258,29 @@ system_add_services()
 	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
 
 	chroot_it dpkg --purge	autofs \
-				automount-kanotix \
-				checkmem-kanotix \
-				busybox-kanotix \
+				checkmem \
+				busybox-sidux \
 				fix-cdrom \
-				hotplug-kanotix \
-				initscripts-kanotix-live \
-				initscripts-kanotix \
-				firewall-kanotix \
-				kanotix-remountrw \
-				kanotix-setpassword \
-				kanotix-splash \
-				kanotix-splash-utils \
-				kanotix-terminalserver \
+				initscripts-sidux-live \
+				firewall-sidux \
+				sidux-setpassword \
+				sidux-terminalserver \
 				knxinstaller \
 				knx-installer \
-				kde-services-kanotix \
-				mkdesktophdicons-kanotix \
-				mkdosswapfile-kanotix \
+				kde-services-sidux \
+				mkdosswapfile \
 				mknbi \
-				mkpersistenthome-kanotix \
-				restartx-kanotix \
-				sambastart-kanotix \
-				saveconfig-kanotix \
-				startsyslog-kanotix \
-				sudoers-kanotix \
+				mkpersistenthome \
+				restartx \
+				sambastart-sidux \
+				saveconfig \
+				startsyslog-sidux \
+				sudoers-sidux \
 				syslinux \
 				tftpd-hpa \
-				xsession-initscript-kanotix \
-				xsession-kanotix \
-				xf86config-kanotix			&> /dev/null
+				xsession-initscript-sidux \
+				xsession-sidux \
+				xf86config-sidux			&> /dev/null
 	
 	#  disable live config
 	[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
@@ -585,7 +578,7 @@ EOF
 system_update_files()
 {
 	# update /etc/motd
-	echo -e $"Welcome to Kanotix" "(Kernel $(uname -r))\n" > "$TARGET_MNT_POINT/etc/motd"
+	echo -e $"Welcome to $FLL_DISTRO_NAME" "(Kernel $(uname -r))\n" > "$TARGET_MNT_POINT/etc/motd"
 
 	cat <<EOF >$TARGET_MNT_POINT/etc/hosts
 127.0.0.1	localhost

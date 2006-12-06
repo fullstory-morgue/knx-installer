@@ -24,7 +24,7 @@ LOG="$HOME/.knofig_log"
 TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
 TARGET_MNT_NAME="hdinstall" # TR1 in old installer
 
-FLL_DISTRO_NAME="Kanotix"
+FLL_DISTRO_NAME="sidux"
 
 # make use of distro-defaults
 if [ -f /etc/defaults/distro ]; then

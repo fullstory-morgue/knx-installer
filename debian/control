@@ -7,11 +7,11 @@ Standards-Version: 3.7.2
 
 Package: knx-installer
 Architecture: all
-Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, whois, yaird, kanotix-udev-config
+Depends: dialog, initrd-tools, perl, bash (>>2.05), lilo, kdm, grub-gfxboot | grub, whois, yaird, udev-config-sidux
 Suggests: gparted, xdialog, distro-defaults, 855resolution
 Conflicts: ifrename, initscripts-kanotix
-Description: installs kanotix to hd
- kanotix-installer is an fully functional installation program
- to easily install kanotix to hd. It has support for config-files, 
+Description: installs sidux to hd
+ sidux-installer is an fully functional installation program
+ to easily install sidux to hd. It has support for config-files, 
  which allow more advanced usages.
 

@@ -19,7 +19,7 @@ system_type_beginner()
 	system_copy_home
 	system_copy_etc
 	
-	update_status $"Converting Kanotix to Multi-User-System..."
+	update_status $"Converting $FLL_DISTRO_NAME to Multi-User-System..."
 
 	system_install_templates
 	
