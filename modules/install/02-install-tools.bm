@@ -24,8 +24,8 @@ system_add_hd_autoconfig()
 	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
 
 	# TODO: Remove the hacks
-	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/KNOPPIX ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
-	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/KNOPPIX ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/$FLL_IMAGE_DIR ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
+	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/$FLL_IMAGE_DIR ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 }
 
 system_copy_etc()
@@ -176,9 +176,9 @@ system_install_templates()
 	[ -d "$SEARCHPATH/templates" ] && TEMPLATE_PATH="$SEARCHPATH/templates"
 	if [ -n "$TEMPLATE_PATH" ]; then 
 		# don't allow everyone to use sudo.
-		sed	-e '/sidux\/live/d'
-			-e '/.*alias.*su\=.*/d'
-			-e '/.*alias.*sux\=.*/d'
+		sed	-e '/sidux\/live/d' \
+			-e '/.*alias.*su\=.*/d' \
+			-e '/.*alias.*sux\=.*/d' \
 				"$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
 
 

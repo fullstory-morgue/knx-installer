@@ -3,8 +3,9 @@ knx-installer (0.4.0.37) UNRELEASED; urgency=low
   * NOT RELEASED YET
 
   * Initial version for sidux
+  * hunting the bugs
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu,  7 Dec 2006 00:33:20 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Thu, 21 Dec 2006 10:39:57 +0100
 
 knx-installer (0.4.0.36) unstable; urgency=low
 

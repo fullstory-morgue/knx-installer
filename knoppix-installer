@@ -27,8 +27,8 @@ TARGET_MNT_NAME="hdinstall" # TR1 in old installer
 FLL_DISTRO_NAME="sidux"
 
 # make use of distro-defaults
-if [ -f /etc/defaults/distro ]; then
-	source /etc/defaults/distro
+if [ -f /etc/default/distro ]; then
+	source /etc/default/distro
 
 	[ -n "$FLL_LIVE_USER" ] && DEFAULT_USER="$FLL_LIVE_USER" || DEFAULT_USER="knoppix"
 	[ -n "$FLL_MEDIA_DIR" ] && DEFAULT_DIR="$FLL_MEDIA_DIR"  || DEFAULT_DIR="KNOPPIX"
