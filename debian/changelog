@@ -1,6 +1,4 @@
-knx-installer (0.4.0.37) UNRELEASED; urgency=low
-
-  * NOT RELEASED YET
+knx-installer (0.4.1.0) unstable; urgency=low
 
   * Initial version for sidux
   * hunting the bugs
