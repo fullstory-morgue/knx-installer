@@ -1,15 +1,17 @@
 knx-installer (0.4.1.1) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * going further with cleanup
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 21 Dec 2006 22:35:09 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat, 23 Dec 2006 13:11:43 +0100
 
 knx-installer (0.4.1.0) unstable; urgency=low
 
   * Initial version for sidux
   * hunting the bugs
+  * going further with cleanup
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu, 21 Dec 2006 10:39:57 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Fri, 22 Dec 2006 22:27:37 +0100
 
 knx-installer (0.4.0.36) unstable; urgency=low
 

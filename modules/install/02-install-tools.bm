@@ -33,7 +33,7 @@ system_copy_etc()
 	update_status $"Copying custom configuration ..."
 	
 	# copy changed files in /etc
-	( cd "$TARGET_MNT_POINT"; system_findchanged /etc /KNOPPIX/etc | egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf -) 2>/dev/null
+	( cd "$TARGET_MNT_POINT"; system_findchanged /etc /${FLL_IMAGE_DIR}/etc | egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf -) 2>/dev/null
 
 	# TODO: Add support for installing nvidia drivers here if they are there
 	# install_nvidia_drivers
@@ -231,9 +231,6 @@ system_add_services()
 		[ "$MODE" ] && chroot_it update-rc.d 915resolution defaults &>/dev/null
 	fi
 	
-	# XXX: well, we only need the old version for live purposes
-	echo "eject install"      | chroot_it dpkg --set-selections
-	
 	# disable portmap
 	chroot_it update-rc.d -f portmap remove &>/dev/null
 
@@ -268,6 +265,7 @@ system_add_services()
 				knxinstaller \
 				knx-installer \
 				kde-services-sidux \
+				live-initrd-sidux \
 				mkdosswapfile \
 				mknbi \
 				mkpersistenthome \
