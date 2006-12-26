@@ -1,3 +1,9 @@
+knx-installer (0.4.1.2) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 26 Dec 2006 14:00:04 +0100
+
 knx-installer (0.4.1.1) unstable; urgency=low
 
   * going further with cleanup.
