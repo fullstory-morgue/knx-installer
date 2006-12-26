@@ -1,7 +1,6 @@
-knx-installer (0.4.1.1) UNRELEASED; urgency=low
+knx-installer (0.4.1.1) unstable; urgency=low
 
-  * NOT RELEASED YET
-  * going further with cleanup
+  * going further with cleanup.
 
  -- Joaquim Boura <x-un-i@sidux.com>  Sat, 23 Dec 2006 13:11:43 +0100
 
