@@ -576,6 +576,9 @@ install_grub()
 	# create device.map
 	grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
 	[ $? -ne 0 ] && grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
+
+	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
+
 	if [ "$BOOT_WHERE" = "mbr" ]
 	then
 		GRUB_MBR=$(grep "(hd0)" $TARGET_MNT_POINT/boot/grub/device.map | awk '{ print $2 }')
@@ -589,6 +592,25 @@ install_grub()
 	rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
+	# install grub
+	
+	# in case of jfs/xfs force installation to mbr - usually not needed
+
+	case $FS_TYPE in
+		jfs|xfs) BOOT_WHERE="mbr";;
+	esac
+
+	# install now
+		
+	case $BOOT_WHERE in
+		partition)
+			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
+			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
+			;;
+		mbr)
+			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
+			;;
+	esac
 	# change menu.lst
 
 	# Add german keybindings 
@@ -628,15 +650,29 @@ EOF
 	perl -pi -e 's/^# alternative=true/# alternative=false/g' $TARGET_MNT_POINT/boot/grub/menu.lst
 	# save the default setting
 	perl -pi -e 's/^default .*/default saved/g' $TARGET_MNT_POINT/boot/grub/menu.lst
+
+
 	# add graphical menu
-	GROOT=$(egrep "^# groot=" $TARGET_MNT_POINT/boot/grub/menu.lst | sed 's/# groot=//g')
+	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
+    export kernel_vers=$(uname -r)
+    root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |grep -v "single" |sed 's#^kernel.*root=##'|sed 's# .*$##')
+    GROOT=$(translate_linux_to_grub $root_device)
+
 	if [ -n "$GROOT" -a -s $TARGET_MNT_POINT/boot/message ]; then
+
 		if { mount | grep -q $TARGET_MNT_POINT/boot ; }; then
 			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 		else
 			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/boot/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 		fi
 	fi
+
+	if [ "$BOOT_WHERE" = "partition" ]
+    then
+        perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+		 sed "s/^root.*$/root\t\t${GROOT}/" $TARGET_MNT_POINT/boot/grub/menu.lst >/tmp/m.tmp
+		 mv -f /tmp/m.tmp $TARGET_MNT_POINT/boot/grub/menu.lst 
+    fi
 	# Create a new cmdline
 	
 	GRUB_CMDLINE=$(module_system_get_cmdlines)
@@ -687,7 +723,7 @@ EOF
 
 	# update menu.lst
 	rm -f $TARGET_MNT_POINT/boot/vmlinuz $TARGET_MNT_POINT/boot/System.map $TARGET_MNT_POINT/boot/initrd.img
-	chroot_it update-grub -y >/dev/null 2>/dev/null
+	# chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# hook update-grub -y into the kernel installing chain
 cat << EOF >$TARGET_MNT_POINT/etc/kernel-img.conf
@@ -699,26 +735,6 @@ relative_links = Yes
 EOF
 	[ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
 
-	# install grub
-	
-	# in case of jfs/xfs force installation to mbr - usually not needed
-
-	case $FS_TYPE in
-		jfs|xfs) BOOT_WHERE="mbr";;
-	esac
-
-	# install now
-		
-	case $BOOT_WHERE in
-		partition)
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
-			;;
-		mbr)
-			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
-			;;
-	esac
-	
 	return 0
 }
 

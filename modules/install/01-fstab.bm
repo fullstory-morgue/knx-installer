@@ -36,7 +36,7 @@ function update_fstab
 {
 	update_status $"Updating /etc/fstab..."
 
-	cp "$TARGET_MNT_POINT/etc/fstab" "$TMPDIR/"
+	grep "^/dev/" /etc/fstab |grep -v '^/dev/fd' |grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
 
 	cat <<EOF > "$TARGET_MNT_POINT/etc/fstab"
 # /etc/fstab: static file system information.
@@ -67,6 +67,8 @@ EOF
 			hd_map_fstype="auto"
 		fi
 		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >> "$TARGET_MNT_POINT/etc/fstab"
+    grep -v "^${part}" $TMPDIR/fstab > $TMPDIR/fstab-1 
+    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
 	# Let Kanotix detect all other partitions
@@ -88,12 +90,16 @@ EOF
 		[ "$m" = "/cdrom" ] && m="/cdrom0"
 		[ -d "$TARGET_MNT_POINT/media$m" ] || mkdir -p "$TARGET_MNT_POINT/media$m"
 		stringinfile "/dev/$(readlink $c)" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
+    grep -v "^/dev/$(readlink $c)" $TMPDIR/fstab > $TMPDIR/fstab-1 
+    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done	
 
 	# Add floppy devices to /etc/fstab
 	for f in $(ls -d /sys/block/fd* 2>/dev/null); do
 		[ -d "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}" ] || mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
 		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
+    grep -v "^/dev${f#/sys/block}" $TMPDIR/fstab > $TMPDIR/fstab-1 
+    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
 	# Remove not needed device links

@@ -73,6 +73,28 @@ done
 #
 # Main program
 #
+# well try to get some debug output
+debug_it=0
+
+while getopts d name
+do
+        case $name in
+        d)  debug_it=1;;
+        esac
+done
+shift $(($OPTIND - 1))
+
+LOG_DEBUG=${HOME}/.knofig.debug
+function debugit
+{
+    if test ${debug_it} -eq 1
+    then
+	    TIME=$(date)
+	    [ -n "$*" ] && echo $TIME: "$@" >> ${LOG_DEBUG} || echo >> ${LOG_DEBUG}
+    fi
+}
+
+#------------------
 
 clean_exit(){
 	[ -n "$TMPDIR" ] && rm -rf "$TMPDIR"

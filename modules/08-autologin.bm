@@ -13,3 +13,7 @@ function module_autologin
 	return 0
 }
 
+function module_autologin_showinfo
+{
+    [ "$AUTOLOGIN_MODULE" = "configured" ] && echo AutoLogin configure || echo "AutoLogin not configured"
+}

@@ -191,8 +191,27 @@ system_install_templates()
 		chown root:root "$TARGET_MNT_POINT/etc/sudoers"
 		chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
 	else
+		debugit "Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 
 		echo $"Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 1>&2
 	fi
+    cat <<EOF >> "$TARGET_MNT_POINT/etc/profile"
+
+# enable bash completion in interactive shells
+[ "\$PS1" -a -f /etc/bash_completion ] && . /etc/bash_completion
+alias ..="cd .."
+alias which="type -path"
+alias where="type -all"
+alias ll="ls -l --color=auto"
+alias l="ls -a --color=auto"
+alias rm="rm -i"
+alias mv="mv -i"
+alias cp="cp -i"
+alias la="ls -la --color=auto"
+alias ls="ls --color=auto"
+[ -f ~/.alias ] && . ~/.alias
+
+EOF
+
 	
 	# disable all services in /etc/inetd.conf
 	chroot_it update-inetd --multi --disable '*'
@@ -321,11 +340,17 @@ EOF
 	[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
 	
 	# remove temporary kde- user files
+	debugit "remove temporary kde- user files"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.DCOPserver_*_*"
+    debugit "ReturnCode 1: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/cache-*"
+    debugit "ReturnCode 2: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/socket-*"
+    debugit "ReturnCode 3: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
+    debugit "ReturnCode 4: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
+    debugit "ReturnCode 5: \"$?\""
 }
 
 system_services()
