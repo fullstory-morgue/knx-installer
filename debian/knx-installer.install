@@ -1,3 +1,4 @@
-*-installer				usr/sbin/
-modules 				usr/share/knx-installer/
-templates 				usr/share/knx-installer/
+*-installer	usr/sbin/
+*.desktop	usr/share/applnk/sidux/
+modules 	usr/share/knx-installer/
+templates 	usr/share/knx-installer/

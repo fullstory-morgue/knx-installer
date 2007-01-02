@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=knx-installer
+Exec=su-me /usr/sbin/knx-installer
+Icon=knx-installer
+Type=Application
+Comment=Install sidux to hd
