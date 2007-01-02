@@ -20,12 +20,7 @@ system_add_hd_autoconfig()
 {
 	echo "SYSTEM_HW_PROFILE=yes" >>		"$TARGET_MNT_POINT/etc/default/knoppix"
 	
-	chroot_it update-rc.d -f knoppix-autoconfig remove . &>/dev/null
 	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
-
-	# TODO: Remove the hacks
-	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/$FLL_IMAGE_DIR ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER || rebuildfstab -r/g' "$TARGET_MNT_POINT/sbin/hotplug-knoppix" &>/dev/null
-	perl -pi -e 's/rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER/[ -d \/$FLL_IMAGE_DIR ] && rebuildfstab -r -u $FLL_LIVE_USER -g $FLL_LIVE_USER >\/dev\/null 2>\/dev\/null || rebuildfstab -r/g' "$TARGET_MNT_POINT/etc/init.d/live-autoconfig" "$TARGET_MNT_POINT/etc/init.d/knoppix-autoconfig" &>/dev/null
 }
 
 system_copy_etc()
@@ -40,8 +35,7 @@ system_copy_etc()
 	# For now we will just use the old one ...
 	[ -r /etc/X11/xorg.conf.1st ] && mv -f "$TARGET_MNT_POINT/etc/X11/xorg.conf.1st" "$TARGET_MNT_POINT/etc/X11/xorg.conf"
 
-	# Rename XF86Config-4 (if present) to xorg.conf when Xorg is used and activate xorg-common
-	[ -f "$TARGET_MNT_POINT/etc/X11/XF86Config-4" -a ! -f "$TARGET_MNT_POINT/etc/X11/xorg.conf" ] && mv "$TARGET_MNT_POINT/etc/X11/XF86Config-4" "$TARGET_MNT_POINT/etc/X11/xorg.conf"
+	# activate xorg-common
 	[ -x "$TARGET_MNT_POINT/etc/init.d/x11-common" ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
 
   	# Save ALSA sound volume
@@ -101,15 +95,6 @@ system_copy_home()
 	# Fix background
 	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/sidux.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/sidux.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-
-	# Remove Netscape Directories
-	rm -rf "$TARGET_MNT_POINT/home/$USER_NAME/.netscape*"
-
-	# Remove KNOPPIX/KANOTIX Firewall
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-knoppix.desktop"
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/firewall-sidux.desktop"
-	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-sidux.desktop"
-	rm -f "$TARGET_MNT_POINT/etc/skel/Desktop/firewall-knoppix.desktop"
 
 	# Mozilla Konfigdateien korrigieren
 	if [ "$USER_NAME" != "$DEFAULT_USER" ];	then

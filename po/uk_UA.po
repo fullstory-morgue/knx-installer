@@ -16,75 +16,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
 
-#: knoppix-installer:62
+#: knx-installer:62
 msgid "$FLL_DISTRO_NAME-installer terminated"
 msgstr "Встановлювач $FLL_DISTRO_NAME-installer зупинено"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Save configuration?"
 msgstr "Зберегти конфігурацію?"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Do you want to save your configuration?"
 msgstr "Хочете зберегти вашу конфігурацію?"
 
-#: knoppix-installer:88
+#: knx-installer:88
 msgid "$FLL_DISTRO_NAME Installation"
 msgstr "Встановлення Кнопікса"
 
-#: knoppix-installer:89
+#: knx-installer:89
 msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
 msgstr "Встановлення Кнопікса на жорсткий диск (Крок 0/$MAX)"
 
-#: knoppix-installer:90
+#: knx-installer:90
 msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
 msgstr "Підготовка встановлення Кнопікса"
 
-#: knoppix-installer:92
+#: knx-installer:92
 msgid "Installation failed"
 msgstr "Помилка встановлення"
 
-#: knoppix-installer:93
+#: knx-installer:93
 msgid "Installation successfull"
 msgstr "Встановлення було успішним"
 
-#: knoppix-installer:94
+#: knx-installer:94
 msgid "Fatal dialog error"
 msgstr "Фатальна помилка діалогу"
 
-#: knoppix-installer:154
+#: knx-installer:154
 msgid "Choose System Type"
 msgstr "Виберіть тип системи"
 
-#: knoppix-installer:167
+#: knx-installer:167
 msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
 msgstr "Створення конфігурації Кнопікса - крок (0/$NUM_REAL_MODULES)"
 
-#: knoppix-installer:195 knoppix-installer:197
+#: knx-installer:195 knx-installer:197
 msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
 msgstr "Помилка: невідоме значення $2 для $1\\nВстановлення типового значення ($DEFAULT_TEMP)."
 
-#: knoppix-installer:206 knoppix-installer:208
+#: knx-installer:206 knx-installer:208
 msgid ""
 "Error: Check failed for $1 ($2)\\nThe configuration module will now be "
 "started."
 msgstr "Помилка: невдала перевірка $1 ($2)\\nЗараз буде запущено модуль налаштування."
 
-#: knoppix-installer:223
+#: knx-installer:223
 msgid "Loading $FLL_DISTRO_NAME configuration"
 msgstr "Завантаження конфігурації Кнопікса"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Here you can input a filename to load an existing configuration"
 msgstr ""
 "Тут Ви можете ввести назву файла для завантаження існуючої "
 "конфігурації"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Input the configuration filename to be loaded"
 msgstr "Введіть назву файла конфігурації для завантаження"
 
-#: knoppix-installer:231
+#: knx-installer:231
 msgid ""
 "File $CONFIG_USER could not be found. The loading of the configuration will "
 "be aborted."
@@ -92,19 +92,19 @@ msgstr ""
 "Файл $CONFIG_USER неможливо знайти. Завантаження конфігурації "
 "буде припинено."
 
-#: knoppix-installer:254
+#: knx-installer:254
 msgid "Saving $FLL_DISTRO_NAME configuration"
 msgstr "Збереження конфігурації Кнопікса"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Here you can input a filename to save the configuration"
 msgstr "Тут можна ввести назву файла для збереження конфігурації"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Input a filename for the configuration"
 msgstr "Введіть назву файла для конфігурації"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid ""
 "If you click yes, the file will be overwritten, otherwise this script will "
 "abort"
@@ -112,23 +112,23 @@ msgstr ""
 "Якщо ви клацнете так, файл буде перезаписано, якщо ні, то скрипт "
 "буде перервано"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid "Do you really want to overwrite $CONFIG_USER?"
 msgstr "Ви справді хочете перезаписати $CONFIG_USER?"
 
-#: knoppix-installer:276
+#: knx-installer:276
 msgid "Possible are:"
 msgstr "Можливі:"
 
-#: knoppix-installer:278
+#: knx-installer:278
 msgid "This value will be checked by function"
 msgstr "Це значення буде перевірене функцією"
 
-#: knoppix-installer:280
+#: knx-installer:280
 msgid "Default value is:"
 msgstr "Типове значення:"
 
-#: knoppix-installer:299
+#: knx-installer:299
 msgid ""
 "Several of this options can only be changed in the Configurationfile "
 "$CONFIG_FILE."
@@ -136,7 +136,7 @@ msgstr ""
 "Деякі з цих параметрів можуть бути змінені тільки в файлі "
 "конфігурації $CONFIG_FILE."
 
-#: knoppix-installer:300
+#: knx-installer:300
 msgid ""
 "The Installation will now be started. The author and knopper.net give no "
 "warranty against any damage caused by this script."
@@ -144,37 +144,37 @@ msgstr ""
 "Зараз розпочнеться встановлення. Автор і knopper.net не дають "
 "ніякої гарантії проти пошкодження завданого цим скриптом."
 
-#: knoppix-installer:302
+#: knx-installer:302
 msgid "Do you want to proceed with these parameters?"
 msgstr "Хочете продовжити з цими параметрами?"
 
-#: knoppix-installer:304
+#: knx-installer:304
 msgid "Make sure you agree to all parameters, if so proceed with the installation."
 msgstr ""
 "Переконайтесь, що ви погоджуєтесь з усіма параметрами. Якщо "
 "так, то продовжуйте встановлення."
 
-#: knoppix-installer:319
+#: knx-installer:319
 msgid "Converting $FLL_DISTRO_NAME to Debian..."
 msgstr "Конвертація Кнопікса у Debian..."
 
-#: knoppix-installer:351 knoppix-installer:361
+#: knx-installer:351 knx-installer:361
 msgid "Starting $FLL_DISTRO_NAME installation"
 msgstr "Розпочато встановлення Кнопікса"
 
-#: knoppix-installer:354
+#: knx-installer:354
 msgid "Error: No complete Configuration found"
 msgstr "Помилка: не знайдено завершеної конфігурації"
 
-#: knoppix-installer:362
+#: knx-installer:362
 msgid "Installing"
 msgstr "Йде встановлення"
 
-#: knoppix-installer:378
+#: knx-installer:378
 msgid "Creating floppy disk"
 msgstr "Йде створення гнучкого диска"
 
-#: knoppix-installer:378
+#: knx-installer:378
 msgid ""
 "Please insert now an empty floppy disk into your floppydrive. Warning: All "
 "data on it will be lost. If you don't want to create a disk you can choose "
@@ -184,90 +184,90 @@ msgstr ""
 "Попередження: буде втрачено всі дані на ньому. Якщо ви не "
 "хочете створювати диск, виберіть Ні."
 
-#: knoppix-installer:398 knoppix-installer:399
+#: knx-installer:398 knx-installer:399
 msgid "$FLL_DISTRO_NAME was successfully installed to hd."
 msgstr "Кнопікс було успішно встановлено на HD."
 
-#: knoppix-installer:405
+#: knx-installer:405
 msgid "$FLL_DISTRO_NAME Main-Menu"
 msgstr "Кнопікс - головне меню"
 
-#: knoppix-installer:406
+#: knx-installer:406
 msgid "Thats the main menu\\nChoose the action you want"
 msgstr "Це головне меню\\nВиберіть бажану дію"
 
-#: knoppix-installer:406 modules/00-hd-tools.bm:174
+#: knx-installer:406 modules/00-hd-tools.bm:174
 msgid "Choose an action"
 msgstr "Виберіть дію"
 
-#: knoppix-installer:407
+#: knx-installer:407
 msgid "Configure Installation"
 msgstr "Конфігурація встановлення"
 
-#: knoppix-installer:407
+#: knx-installer:407
 msgid "Create a new configuration"
 msgstr "Створити нову конфігурацію"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Start installation"
 msgstr "Почати встановлення"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Start the installation"
 msgstr "Почати встановлення"
 
-#: knoppix-installer:409 modules/00-hd-tools.bm:174
+#: knx-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition"
 msgstr "Розділ диску"
 
-#: knoppix-installer:409 modules/00-hd-tools.bm:174
+#: knx-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition the hard disk"
 msgstr "Розподілити жорсткий диск"
 
-#: knoppix-installer:410
+#: knx-installer:410
 msgid "Load config"
 msgstr "Завантажити конфіг."
 
-#: knoppix-installer:410
+#: knx-installer:410
 msgid "Load an existing configuration"
 msgstr "Завантажити існуючу конфігурацію"
 
-#: knoppix-installer:411
+#: knx-installer:411
 msgid "Save config"
 msgstr "Зберегти конфіг."
 
-#: knoppix-installer:411
+#: knx-installer:411
 msgid "Save the configuration"
 msgstr "Зберегти конфігурацію"
 
-#: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: knx-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
 #: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
 msgid "Quit"
 msgstr "Вийти"
 
-#: knoppix-installer:412 modules/00-hd-tools.bm:174
+#: knx-installer:412 modules/00-hd-tools.bm:174
 msgid "Quit the program"
 msgstr "Вийти з програми"
 
-#: knoppix-installer:417
+#: knx-installer:417
 msgid "$FLL_DISTRO_NAME-installer started"
 msgstr "Запущено встановлювач $FLL_DISTRO_NAME-installer"
 
-#: knoppix-installer:418
+#: knx-installer:418
 msgid ""
 "This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
-"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"damage. \\n\\nAuthor: Fabian Franz <knx-installer@fabian-franz.de>\\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
 msgstr ""
 "Цей скрипт встановить Кнопікс на жорсткий диск. Зверніть увагу, "
 "що ця версія ще дуже рання і знаходиться в стані активної розробки.\n"
 "Автор і knopper.net не беруть на себе жодної відповідальності за "
 "втрату даних чи пошкодження обладнання. \\n\\n"
-"Автор: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nна основі на дуже цінної праці Christian Perle <perle@itm.tu-clausthal.de>"
+"Автор: Fabian Franz <knx-installer@fabian-franz.de>\\n\\nна основі на дуже цінної праці Christian Perle <perle@itm.tu-clausthal.de>"
 
-#: knoppix-installer:427
+#: knx-installer:427
 msgid ""
 "The installer detected that the installation requierements are not "
 "fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
@@ -275,7 +275,7 @@ msgid ""
 "swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
-"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
+"start with: IGNORE_CHECK=1 sudo knx-installer to avoid the menu."
 msgstr ""
 "Встановлювач виявив, що вимоги для встановлення ще не "
 "виконані.\\n\\nБудь ласка переконайтесь, що ви маєте вільний розділ  "
@@ -283,13 +283,13 @@ msgstr ""
 "розділ свопінгу принаймні з $[SWAP_MIN/1024] МБ, якщо ви не маєте 512 МБ "
 "або більше пам'яті.\\n\\nЗ наступного меню ви можете запустити деякі засоби "
 "для розподілу жорсткого диска.\\nЯкщо ви справді знаєте, що ви робите, "
-"запустіть з: IGNORE_CHECK=1 sudo knoppix-installer, щоб обійти меню."
+"запустіть з: IGNORE_CHECK=1 sudo knx-installer, щоб обійти меню."
 
-#: knoppix-installer:434
+#: knx-installer:434
 msgid "Partition check succeeded"
 msgstr "Перевірка розділів успішна"
 
-#: knoppix-installer:447
+#: knx-installer:447
 msgid "root permission needed."
 msgstr "Необхідні привілеї адміністратора (root)."
 

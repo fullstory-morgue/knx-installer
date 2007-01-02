@@ -12,243 +12,243 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: knoppix-installer:62
+#: knx-installer:62
 msgid "$FLL_DISTRO_NAME-installer terminated"
 msgstr "l'installatore di $FLL_DISTRO_NAME è stato interrotto"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Save configuration?"
 msgstr "Salvare la configurazione?"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Do you want to save your configuration?"
 msgstr "Vuoi salvare la configurazione?"
 
-#: knoppix-installer:88
+#: knx-installer:88
 msgid "$FLL_DISTRO_NAME Installation"
 msgstr "Installazione di $FLL_DISTRO_NAME"
 
-#: knoppix-installer:89
+#: knx-installer:89
 msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
 msgstr "Installazione di $FLL_DISTRO_NAME su harddisk (passo 0/$MAX)"
 
-#: knoppix-installer:90
+#: knx-installer:90
 msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
 msgstr "Inizializzazione dell'installazione di $FLL_DISTRO_NAME"
 
-#: knoppix-installer:92
+#: knx-installer:92
 msgid "Installation failed"
 msgstr "Installazione fallita"
 
-#: knoppix-installer:93
+#: knx-installer:93
 msgid "Installation successfull"
 msgstr "Installazione terminata con successo"
 
-#: knoppix-installer:94
+#: knx-installer:94
 msgid "Fatal dialog error"
 msgstr "Errore fatale delle finestre di dialogo"
 
-#: knoppix-installer:154
+#: knx-installer:154
 msgid "Choose System Type"
 msgstr "Scegli il tipo di sistema"
 
-#: knoppix-installer:167
+#: knx-installer:167
 msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
 msgstr "Passo di creazione della configurazione di $FLL_DISTRO_NAME (0/$NUM_REAL_MODULES)"
 
-#: knoppix-installer:195 knoppix-installer:197
+#: knx-installer:195 knx-installer:197
 msgid ""
 "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
 msgstr "Errore: valore sconosciuto $2 per $1\\nUso valore predefinito ($DEFAULT_TEMP)."
 
-#: knoppix-installer:206 knoppix-installer:208
+#: knx-installer:206 knx-installer:208
 msgid ""
 "Error: Check failed for $1 ($2)\\nThe configuration module will now be "
 "started."
 msgstr "Errore: controllo fallito per $1 ($2)\\nOra verrà eseguito il modulo di configurazione."
 
-#: knoppix-installer:223
+#: knx-installer:223
 msgid "Loading $FLL_DISTRO_NAME configuration"
 msgstr "Caricamento della configurazione di $FLL_DISTRO_NAME"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Here you can input a filename to load an existing configuration"
 msgstr "Qui puoi inserire un nome file per caricare una configurazione preesistente"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Input the configuration filename to be loaded"
 msgstr "Inserire il nome della configurazione da caricare"
 
-#: knoppix-installer:231
+#: knx-installer:231
 msgid ""
 "File $CONFIG_USER could not be found. The loading of the configuration will "
 "be aborted."
 msgstr "File $CONFIG_USER non trovato. Il caricamento della configurazione verrà interrotto."
 
-#: knoppix-installer:254
+#: knx-installer:254
 msgid "Saving $FLL_DISTRO_NAME configuration"
 msgstr "Salvataggio della configurazione di $FLL_DISTRO_NAME"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Here you can input a filename to save the configuration"
 msgstr "Qui puoi inserire un nome file su cui salvare la configurazione"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Input a filename for the configuration"
 msgstr "Inserire un nome file su cui salvare la configurazione"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid ""
 "If you click yes, the file will be overwritten, otherwise this script will "
 "abort"
 msgstr "Se si fa clic su Sì, il file verrà sovrascritto, altrimenti lo script verrà interrotto"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid "Do you really want to overwrite $CONFIG_USER?"
 msgstr "Sei sicuro di voler sovrascrivere $CONFIG_USER?"
 
-#: knoppix-installer:276
+#: knx-installer:276
 msgid "Possible are:"
 msgstr "Possibilità:"
 
-#: knoppix-installer:278
+#: knx-installer:278
 msgid "This value will be checked by function"
 msgstr "Questo valore verrà controllato per funzione"
 
-#: knoppix-installer:280
+#: knx-installer:280
 msgid "Default value is:"
 msgstr "Il valore predefinito è:"
 
-#: knoppix-installer:299
+#: knx-installer:299
 msgid ""
 "Several of this options can only be changed in the Configurationfile "
 "$CONFIG_FILE."
 msgstr "Molte di queste opzioni possono essere cambiate solo nel file di configurazione $CONFIG_FILE."
 
-#: knoppix-installer:300
+#: knx-installer:300
 msgid ""
 "The Installation will now be started. The author and knopper.net give no "
 "warranty against any damage caused by this script."
 msgstr "L'installazione inizierà ora. L'autore e knopper.net non danno nessuna garanzia per i danni eventuali che questo script potrebbe provocare."
 
-#: knoppix-installer:302
+#: knx-installer:302
 msgid "Do you want to proceed with these parameters?"
 msgstr "Procedere con questi parametri?"
 
-#: knoppix-installer:304
+#: knx-installer:304
 msgid ""
 "Make sure you agree to all parameters, if so proceed with the installation."
 msgstr "Controlla la correttezza di tutti i parametri, quando hai finito procedi con l'installazione."
 
-#: knoppix-installer:319
+#: knx-installer:319
 msgid "Converting $FLL_DISTRO_NAME to Debian..."
 msgstr "Conversione di $FLL_DISTRO_NAME in Debian..."
 
-#: knoppix-installer:349 knoppix-installer:359 knoppix-installer:463
+#: knx-installer:349 knx-installer:359 knx-installer:463
 msgid "Starting $FLL_DISTRO_NAME installation"
 msgstr "Inizio installazione $FLL_DISTRO_NAME"
 
-#: knoppix-installer:352
+#: knx-installer:352
 msgid "Error: No complete Configuration found"
 msgstr "Errore: non è stata trovata una configurazione completa"
 
-#: knoppix-installer:360 knoppix-installer:464
+#: knx-installer:360 knx-installer:464
 msgid "Installing"
 msgstr "Installazione in corso"
 
-#: knoppix-installer:376
+#: knx-installer:376
 msgid "Creating floppy disk"
 msgstr "Creazione di un disco floppy in corso"
 
-#: knoppix-installer:376
+#: knx-installer:376
 msgid ""
 "Please insert now an empty floppy disk into your floppydrive. Warning: All "
 "data on it will be lost. If you don't want to create a disk you can choose "
 "No."
 msgstr "Inserire un disco floppy vuoto nel drive. Attenzione: tutti i dati presenti su di esso verranno persi! Se non si vuole creare un disco, scegliere No."
 
-#: knoppix-installer:396 knoppix-installer:397 knoppix-installer:484
+#: knx-installer:396 knx-installer:397 knx-installer:484
 msgid "$FLL_DISTRO_NAME was successfully installed to hd."
 msgstr "$FLL_DISTRO_NAME è stato installato con successo su hd."
 
-#: knoppix-installer:403
+#: knx-installer:403
 msgid "$FLL_DISTRO_NAME Main-Menu"
 msgstr "Menu principale di $FLL_DISTRO_NAME"
 
-#: knoppix-installer:404
+#: knx-installer:404
 msgid "Thats the main menu\\nChoose the action you want"
 msgstr "Questo è il menu principale\\nScegli l'operazione da svolgere"
 
-#: knoppix-installer:404 modules/00-hd-tools.bm:174
+#: knx-installer:404 modules/00-hd-tools.bm:174
 msgid "Choose an action"
 msgstr "Scegli l'operazione"
 
-#: knoppix-installer:405
+#: knx-installer:405
 msgid "Configure Installation"
 msgstr "Configura l'installazione"
 
-#: knoppix-installer:405
+#: knx-installer:405
 msgid "Create a new configuration"
 msgstr "Crea una nuova configurazione"
 
-#: knoppix-installer:406
+#: knx-installer:406
 msgid "Start installation"
 msgstr "Comincia l'installazione"
 
-#: knoppix-installer:406
+#: knx-installer:406
 msgid "Start the installation"
 msgstr "Comincia l'installazione"
 
-#: knoppix-installer:407 modules/00-hd-tools.bm:174
+#: knx-installer:407 modules/00-hd-tools.bm:174
 msgid "Partition"
 msgstr "Partiziona"
 
-#: knoppix-installer:407 modules/00-hd-tools.bm:174
+#: knx-installer:407 modules/00-hd-tools.bm:174
 msgid "Partition the hard disk"
 msgstr "Partiziona il disco rigido"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Load config"
 msgstr "Carica configurazione"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Load an existing configuration"
 msgstr "Carica una configurazione preesistente"
 
-#: knoppix-installer:409
+#: knx-installer:409
 msgid "Save config"
 msgstr "Salva configurazione"
 
-#: knoppix-installer:409
+#: knx-installer:409
 msgid "Save the configuration"
 msgstr "Salva la configurazione"
 
-#: knoppix-installer:410 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: knx-installer:410 modules/00-dialog.bm:56 modules/00-dialog.bm:58
 #: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
 msgid "Quit"
 msgstr "Esci"
 
-#: knoppix-installer:410 modules/00-hd-tools.bm:174
+#: knx-installer:410 modules/00-hd-tools.bm:174
 msgid "Quit the program"
 msgstr "Esci dal programma"
 
-#: knoppix-installer:415 knoppix-installer:450
+#: knx-installer:415 knx-installer:450
 msgid "$FLL_DISTRO_NAME-installer started"
 msgstr "partenza installatore $FLL_DISTRO_NAME"
 
-#: knoppix-installer:416
+#: knx-installer:416
 msgid ""
 "This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
-"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \\n"
+"damage. \\n\\nAuthor: Fabian Franz <knx-installer@fabian-franz.de> \\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal."
 "de> \\nfixes by Joerg Schirottke <master@kanotix.de>"
 msgstr ""
 "Questo script installerà $FLL_DISTRO_NAME sul disco rigido. Nota che questa è una delle prime versioni e ancora in fase di forte sviluppo.\n"
-"L'autore e knopper.net non si prendono nessuna responsabilità per perdite di dati o danneggiamento hardware. \\n\\nAutore: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\nbasata sull'ottimo lavoro di Christian Perle <perle@itm.tu-clausthal.de> \\ncorrezioni di Joerg Schirottke <master@kanotix.de>"
+"L'autore e knopper.net non si prendono nessuna responsabilità per perdite di dati o danneggiamento hardware. \\n\\nAutore: Fabian Franz <knx-installer@fabian-franz.de>\\n\\nbasata sull'ottimo lavoro di Christian Perle <perle@itm.tu-clausthal.de> \\ncorrezioni di Joerg Schirottke <master@kanotix.de>"
 
-#: knoppix-installer:427
+#: knx-installer:427
 msgid ""
 "The installer detected that the installation requierements are not "
 "fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
@@ -256,20 +256,20 @@ msgid ""
 "swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
-"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
-msgstr "L'installatore ha rilevato che i requisiti per l'installazione non sono ancora soddisfatti.\\n\\nControllare la presenza di una partizione libera con almeno $[ROOT_MIN/(1024*1024)] GB per installarvi sopra $FLL_DISTRO_NAME. È necessaria anche una partizione di scambio (swap) se non si ha almeno 512 MB di RAM.\\n\\nNel menu seguente è possibile eseguire alcuni strumenti per il partizionamento del disco rigido.\\nSe lo si desidera e se si è sicuri di ciò che si fa' è possibile eseguire l'installatore con il comando: IGNORE_CHECK=1 sudo knoppix-installer per evitare questo menu."
+"start with: IGNORE_CHECK=1 sudo knx-installer to avoid the menu."
+msgstr "L'installatore ha rilevato che i requisiti per l'installazione non sono ancora soddisfatti.\\n\\nControllare la presenza di una partizione libera con almeno $[ROOT_MIN/(1024*1024)] GB per installarvi sopra $FLL_DISTRO_NAME. È necessaria anche una partizione di scambio (swap) se non si ha almeno 512 MB di RAM.\\n\\nNel menu seguente è possibile eseguire alcuni strumenti per il partizionamento del disco rigido.\\nSe lo si desidera e se si è sicuri di ciò che si fa' è possibile eseguire l'installatore con il comando: IGNORE_CHECK=1 sudo knx-installer per evitare questo menu."
 
-#: knoppix-installer:434 knoppix-installer:453
+#: knx-installer:434 knx-installer:453
 msgid "Partition check succeeded"
 msgstr "Controllo delle partizioni passato"
 
-#: knoppix-installer:457
+#: knx-installer:457
 msgid ""
 "Config file $CONFIG_FILE could not be found. This is necessary for non-"
 "interactive mode."
 msgstr "Il file di configurazione $CONFIG_FILE non è stato trovato. È necessario per la modalità non interattiva."
 
-#: knoppix-installer:498
+#: knx-installer:498
 msgid "root permission needed."
 msgstr "sono necessari i permessi di amministratore (root)."
 

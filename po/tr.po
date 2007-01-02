@@ -16,238 +16,238 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: knoppix-installer:62
+#: knx-installer:62
 msgid "$FLL_DISTRO_NAME-installer terminated"
 msgstr "$FLL_DISTRO_NAME kurulum uygulaması sonlandırıldı"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Save configuration?"
 msgstr "Ayarlar kaydedilsin mi?"
 
-#: knoppix-installer:77
+#: knx-installer:77
 msgid "Do you want to save your configuration?"
 msgstr "Ayarlarınızı kaydetmek istiyor musunuz ?"
 
-#: knoppix-installer:88
+#: knx-installer:88
 msgid "$FLL_DISTRO_NAME Installation"
 msgstr "$FLL_DISTRO_NAME kurulumu"
 
-#: knoppix-installer:89
+#: knx-installer:89
 msgid "Installation of $FLL_DISTRO_NAME to harddisk (Step 0/$MAX)"
 msgstr "Sabit diske $FLL_DISTRO_NAME kurulumu(Step 0/$MAX)"
 
-#: knoppix-installer:90
+#: knx-installer:90
 msgid "Initialisation of $FLL_DISTRO_NAME-Installation"
 msgstr "$FLL_DISTRO_NAME kurulumu başlıyor"
 
-#: knoppix-installer:92
+#: knx-installer:92
 msgid "Installation failed"
 msgstr "Kurulum başarısız"
 
-#: knoppix-installer:93
+#: knx-installer:93
 msgid "Installation successfull"
 msgstr "Kurulum başarıyla tamamlandı"
 
-#: knoppix-installer:94
+#: knx-installer:94
 msgid "Fatal dialog error"
 msgstr "Diyalog hatası"
 
-#: knoppix-installer:154
+#: knx-installer:154
 msgid "Choose System Type"
 msgstr "Sistem tipini seçin"
 
-#: knoppix-installer:167
+#: knx-installer:167
 msgid "Creating $FLL_DISTRO_NAME Configuration Step (0/$NUM_REAL_MODULES)"
 msgstr "$FLL_DISTRO_NAME Yapılandırma adımı oluşturuluyor (0/$NUM_REAL_MODULES)"
 
-#: knoppix-installer:195 knoppix-installer:197
+#: knx-installer:195 knx-installer:197
 msgid "Error: Unknown value $2 for $1\\nSetting to default value ($DEFAULT_TEMP)."
 msgstr "Hata:$1 için bilinmeyen $2 değeri \\n Öntanımlı değere ayarlanıyor($DEFAULT_TEMP)."
 
-#: knoppix-installer:206 knoppix-installer:208
+#: knx-installer:206 knx-installer:208
 msgid ""
 "Error: Check failed for $1 ($2)\\nThe configuration module will now be "
 "started."
 msgstr "Hata: $1($2) için denetim başarısız\\n Yapılandırma modülü şimdi başlatılacak"
 
-#: knoppix-installer:223
+#: knx-installer:223
 msgid "Loading $FLL_DISTRO_NAME configuration"
 msgstr "$FLL_DISTRO_NAME yapılandırması yükleniyor"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Here you can input a filename to load an existing configuration"
 msgstr "Burada var olan yapılandırmanızı yükleyeceğiniz dosya ismini girebilirsiniz"
 
-#: knoppix-installer:226
+#: knx-installer:226
 msgid "Input the configuration filename to be loaded"
 msgstr "Yüklenecek yapılandırma dosyanızın adını girin"
 
-#: knoppix-installer:231
+#: knx-installer:231
 msgid ""
 "File $CONFIG_USER could not be found. The loading of the configuration will "
 "be aborted."
 msgstr "$CONFIG_USER dosyası bulunamıyor.Yapılandırma dosyasının yüklenmesi iptal ediliyor"
 
-#: knoppix-installer:254
+#: knx-installer:254
 msgid "Saving $FLL_DISTRO_NAME configuration"
 msgstr "$FLL_DISTRO_NAME yapılandırması kaydediliyor"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Here you can input a filename to save the configuration"
 msgstr "Burada yapılandırmanızı kaydedeceğiniz dosyanın adını girebilirsiniz"
 
-#: knoppix-installer:257
+#: knx-installer:257
 msgid "Input a filename for the configuration"
 msgstr "Yapılandırma için bir dosya adı girin"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid ""
 "If you click yes, the file will be overwritten, otherwise this script will "
 "abort"
 msgstr "Eğer \"evet\"i tıklarsanız dosyanın üzerine yazılacak aksi takdirde bu betik iptal edecektir"
 
-#: knoppix-installer:263
+#: knx-installer:263
 msgid "Do you really want to overwrite $CONFIG_USER?"
 msgstr "$CONFIG_USER dosyasının üzerine yazmak istediğininize emin misiniz ?"
 
-#: knoppix-installer:276
+#: knx-installer:276
 msgid "Possible are:"
 msgstr "Mevcut olanlar:"
 
-#: knoppix-installer:278
+#: knx-installer:278
 msgid "This value will be checked by function"
 msgstr "Bu değer fonksiyon tarafından kontrol edilecek"
 
-#: knoppix-installer:280
+#: knx-installer:280
 msgid "Default value is:"
 msgstr "Öntanımlı değer:"
 
-#: knoppix-installer:299
+#: knx-installer:299
 msgid ""
 "Several of this options can only be changed in the Configurationfile "
 "$CONFIG_FILE."
 msgstr "Bu seçeneklerin çoğu $CONFIG_FILE yapılandırma dosyasından değiştirilebilir"
 
-#: knoppix-installer:300
+#: knx-installer:300
 msgid ""
 "The Installation will now be started. The author and knopper.net give no "
 "warranty against any damage caused by this script."
 msgstr "Kurulum şimdi başlatılacak. Yazar ve knopper.net, bu betik tarafından oluşacak zararlardan sorumlu değildir."
 
-#: knoppix-installer:302
+#: knx-installer:302
 msgid "Do you want to proceed with these parameters?"
 msgstr "Bu parametreler ile devam etmek istiyor musunuz ?"
 
-#: knoppix-installer:304
+#: knx-installer:304
 msgid "Make sure you agree to all parameters, if so proceed with the installation."
 msgstr "Tüm parametreleri kabul ettiğinize emin olun, eğer öyle ise kuruluma devam edin"
 
-#: knoppix-installer:319
+#: knx-installer:319
 msgid "Converting $FLL_DISTRO_NAME to Debian..."
 msgstr "$FLL_DISTRO_NAME, Debian'a dönüştürülüyor"
 
-#: knoppix-installer:351 knoppix-installer:361
+#: knx-installer:351 knx-installer:361
 msgid "Starting $FLL_DISTRO_NAME installation"
 msgstr "$FLL_DISTRO_NAME kurulumu başlatılıyor"
 
-#: knoppix-installer:354
+#: knx-installer:354
 msgid "Error: No complete Configuration found"
 msgstr "Hata: Tamamlanmış bir yapılandırma dosyası bulunamadı"
 
-#: knoppix-installer:362
+#: knx-installer:362
 msgid "Installing"
 msgstr "Kuruluyor"
 
-#: knoppix-installer:378
+#: knx-installer:378
 msgid "Creating floppy disk"
 msgstr "Disket (floppy disk) oluşturuluyor"
 
-#: knoppix-installer:378
+#: knx-installer:378
 msgid ""
 "Please insert now an empty floppy disk into your floppydrive. Warning: All "
 "data on it will be lost. If you don't want to create a disk you can choose "
 "No."
 msgstr "Lütfen disket sürücünüze bir floppy disk yerleştirin. Uyarı : Disket üzerindeki tüm veriler silinecektir, eğer bir disket oluşturmak istemiyorsanız Hayır'ı seçin."
 
-#: knoppix-installer:398 knoppix-installer:399
+#: knx-installer:398 knx-installer:399
 msgid "$FLL_DISTRO_NAME was successfully installed to hd."
 msgstr "$FLL_DISTRO_NAME sabit diske başarıyla kuruldu"
 
-#: knoppix-installer:405
+#: knx-installer:405
 msgid "$FLL_DISTRO_NAME Main-Menu"
 msgstr "$FLL_DISTRO_NAME Ana Menü"
 
-#: knoppix-installer:406
+#: knx-installer:406
 msgid "Thats the main menu\\nChoose the action you want"
 msgstr "Burası ana menü\\nYapmak istediğiniz eylemi seçin"
 
-#: knoppix-installer:406 modules/00-hd-tools.bm:174
+#: knx-installer:406 modules/00-hd-tools.bm:174
 msgid "Choose an action"
 msgstr "Bir eylem seçin"
 
-#: knoppix-installer:407
+#: knx-installer:407
 msgid "Configure Installation"
 msgstr "Kurulumu yapılandır"
 
-#: knoppix-installer:407
+#: knx-installer:407
 msgid "Create a new configuration"
 msgstr "Yeni bir yapılandırma oluştur"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Start installation"
 msgstr "Kurulumu başlat"
 
-#: knoppix-installer:408
+#: knx-installer:408
 msgid "Start the installation"
 msgstr "Kurulumu başlat"
 
-#: knoppix-installer:409 modules/00-hd-tools.bm:174
+#: knx-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition"
 msgstr "Bölüm"
 
-#: knoppix-installer:409 modules/00-hd-tools.bm:174
+#: knx-installer:409 modules/00-hd-tools.bm:174
 msgid "Partition the hard disk"
 msgstr "Sabit diski bölümle"
 
-#: knoppix-installer:410
+#: knx-installer:410
 msgid "Load config"
 msgstr "Yapılandırmayı yükle"
 
-#: knoppix-installer:410
+#: knx-installer:410
 msgid "Load an existing configuration"
 msgstr "Var olan yapılandırmayı yükle"
 
-#: knoppix-installer:411
+#: knx-installer:411
 msgid "Save config"
 msgstr "Yapılandırmayı kaydet"
 
-#: knoppix-installer:411
+#: knx-installer:411
 msgid "Save the configuration"
 msgstr "Yapılandırmayı kaydet"
 
-#: knoppix-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
+#: knx-installer:412 modules/00-dialog.bm:56 modules/00-dialog.bm:58
 #: modules/00-dialog.bm:64 modules/00-dialog.bm:75 modules/00-hd-tools.bm:174
 msgid "Quit"
 msgstr "Çık"
 
-#: knoppix-installer:412 modules/00-hd-tools.bm:174
+#: knx-installer:412 modules/00-hd-tools.bm:174
 msgid "Quit the program"
 msgstr "Programdan çık"
 
-#: knoppix-installer:417
+#: knx-installer:417
 msgid "$FLL_DISTRO_NAME-installer started"
 msgstr "$FLL_DISTRO_NAME Kurulum uygulaması başlatıldı"
 
-#: knoppix-installer:418
+#: knx-installer:418
 msgid ""
 "This script will install $FLL_DISTRO_NAME to harddisk. Note that this version is "
 "still an very early version and under heavy development.\n"
 "The author and knopper.net take no responsibility for data loss or hardware "
-"damage. \\n\\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de>\\n"
+"damage. \\n\\nAuthor: Fabian Franz <knx-installer@fabian-franz.de>\\n"
 "\\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de>"
-msgstr "Bu betik $FLL_DISTRO_NAME'i sabit diske kuracaktır. Bu sürümün çok yeni ve hala geliştirme aşamasında olduğunu unutmayın.\n Yazar ve knopper.net, oluşacak veri kayıpları veya donanım hasarlarında sorumluluk kabul etmez.\\n\\nYazar: Fabian Franz <knoppix-installer@fabian-franz.de>\\n\\n Cristian Perle'ün <perle@itm.tu-clausthal.de> bir çalışması üzerine geliştirilmiştir"
+msgstr "Bu betik $FLL_DISTRO_NAME'i sabit diske kuracaktır. Bu sürümün çok yeni ve hala geliştirme aşamasında olduğunu unutmayın.\n Yazar ve knopper.net, oluşacak veri kayıpları veya donanım hasarlarında sorumluluk kabul etmez.\\n\\nYazar: Fabian Franz <knx-installer@fabian-franz.de>\\n\\n Cristian Perle'ün <perle@itm.tu-clausthal.de> bir çalışması üzerine geliştirilmiştir"
 
-#: knoppix-installer:427
+#: knx-installer:427
 msgid ""
 "The installer detected that the installation requierements are not "
 "fullfilled yet.\\n\\nPlease make sure that you have an free partition with "
@@ -255,14 +255,14 @@ msgid ""
 "swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB "
 "Memory or more.\\n\\nIn the following menu, you can start some tools to "
 "partition your harddrive.\\nIf you really really know what you are doing "
-"start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu."
-msgstr "Kurulum uygulaması, kurulum için gerekli şartların sağlanmadığını tespit etti \\n\\nLütfen $FLL_DISTRO_NAME kurmak için gerekli olan $[ROOT_MIN/(1024*1024)] GB boyutlarında boş bir bölüme sahip olduğunuzdan emin olun. Bunun haricinde bir de (eğer 512 MB veya daha fazla hafızaya sahip değilseniz) en az $[SWAP_MIN/1024] MB boyurlarında bir takas alanına ihtiyacınız var.\\n\\nGelecek olan menüde sabit diskiniz bölümlemek için kullanabileceğiniz bir kaç aracı seçebileceksiniz\\n Eğer ne yaptığınızı biliyorsanız, menüyü görmemek için IGNORE_CHECK=1 sudo knoppix-installer komutuyla başlatın"
+"start with: IGNORE_CHECK=1 sudo knx-installer to avoid the menu."
+msgstr "Kurulum uygulaması, kurulum için gerekli şartların sağlanmadığını tespit etti \\n\\nLütfen $FLL_DISTRO_NAME kurmak için gerekli olan $[ROOT_MIN/(1024*1024)] GB boyutlarında boş bir bölüme sahip olduğunuzdan emin olun. Bunun haricinde bir de (eğer 512 MB veya daha fazla hafızaya sahip değilseniz) en az $[SWAP_MIN/1024] MB boyurlarında bir takas alanına ihtiyacınız var.\\n\\nGelecek olan menüde sabit diskiniz bölümlemek için kullanabileceğiniz bir kaç aracı seçebileceksiniz\\n Eğer ne yaptığınızı biliyorsanız, menüyü görmemek için IGNORE_CHECK=1 sudo knx-installer komutuyla başlatın"
 
-#: knoppix-installer:434
+#: knx-installer:434
 msgid "Partition check succeeded"
 msgstr "Bölüm denetimi başarılı"
 
-#: knoppix-installer:447
+#: knx-installer:447
 msgid "root permission needed."
 msgstr "root hakları gerekli"
 

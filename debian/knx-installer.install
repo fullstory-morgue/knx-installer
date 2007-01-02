@@ -1,4 +1,4 @@
-k*x-installer				usr/sbin/
+*-installer				usr/sbin/
 tools/mkext2fs				usr/sbin/
-modules 				usr/share/knoppix-installer/
-templates 				usr/share/knoppix-installer/
+modules 				usr/share/knx-installer/
+templates 				usr/share/knx-installer/

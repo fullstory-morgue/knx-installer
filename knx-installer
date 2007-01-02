@@ -27,14 +27,14 @@ TARGET_MNT_NAME="hdinstall" # TR1 in old installer
 FLL_DISTRO_NAME="sidux"
 
 # make use of distro-defaults
-if [ -f /etc/default/distro ]; then
-	source /etc/default/distro
+if [ -r /etc/default/distro ]; then
+	. /etc/default/distro
 
-	[ -n "$FLL_LIVE_USER" ] && DEFAULT_USER="$FLL_LIVE_USER" || DEFAULT_USER="knoppix"
-	[ -n "$FLL_MEDIA_DIR" ] && DEFAULT_DIR="$FLL_MEDIA_DIR"  || DEFAULT_DIR="KNOPPIX"
+	[ -n "$FLL_LIVE_USER" ] && DEFAULT_USER="$FLL_LIVE_USER" || DEFAULT_USER="sidux"
+	[ -n "$FLL_MEDIA_DIR" ] && DEFAULT_DIR="$FLL_MEDIA_DIR"  || DEFAULT_DIR="SIDUX"
 else
-	DEFAULT_USER="knoppix"
-	DEFAULT_DIR="KNOPPIX"
+	DEFAULT_USER="sidux"
+	DEFAULT_DIR="SIDUX"
 fi
 
 DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
@@ -54,13 +54,13 @@ ROOT_MIN=$(($ROOT_MIN_CORR*1024))
 
 # Localisation 
 export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=knoppix-installer
+export TEXTDOMAIN=knx-installer
 
 #
 # Include needed Bash-Modules
 #
 
-SEARCHPATH="/usr/share/knoppix-installer"
+SEARCHPATH="/usr/share/knx-installer"
 [ -f ./modules/00-knoppix-utils.bm ] && SEARCHPATH="."
 
 # workaround for buggy knoppix-installer-latest-web and self-made installations
@@ -135,7 +135,7 @@ function setup_dialog_messages()
 	N=1; # Step 1
 }
 
-setup_dialog "knoppix-installer" # FIXME! Check for Commandline-Params
+setup_dialog "knx-installer" # FIXME! Check for Commandline-Params
 setup_dialog_messages
 
 #
@@ -439,7 +439,7 @@ function main()
 		  \n\nPlease make sure that you have an free partition with at least $[ROOT_MIN/(1024*1024)] GB to install $FLL_DISTRO_NAME on. \
 		  Also we need a swap partition with at least $[SWAP_MIN/1024] MB, if you don't have 512 MB Memory or more.\
 		  \n\nIn the following menu, you can start some tools to partition your harddrive.\
-		  \nIf you really really know what you are doing start with: IGNORE_CHECK=1 sudo knoppix-installer to avoid the menu." 21 60
+		  \nIf you really really know what you are doing start with: IGNORE_CHECK=1 sudo knx-installer to avoid the menu." 21 60
 	  menu_part
 	done
 	logit $"Partition check succeeded"
