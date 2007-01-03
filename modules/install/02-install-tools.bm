@@ -168,15 +168,14 @@ system_install_templates()
 
 
 		# "normalize" /etc/inittab
-		rm -f "$TARGET_MNT_POINT/etc/inittab"
-		sed s/id\:[0-6]\:initdefault\:/id\:5\:initdefault\:/ "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" > "$TARGET_MNT_POINT/etc/inittab"
+        cp -f "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" "$TARGET_MNT_POINT/etc/inittab"
+        perl -pi -e 's#^([2-6]):23:respawn#$1:2345:respawn#;s#id:[0-6]:initdefault:#id:5:initdefault:#' "$TARGET_MNT_POINT/etc/inittab"
 	
 		# remove Knoppix entry from /etc/sudoers
 		cp -af "$TEMPLATE_PATH/etc/sudoers" "$TARGET_MNT_POINT/etc/sudoers"
 		chown root:root "$TARGET_MNT_POINT/etc/sudoers"
 		chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
 	else
-		debugit "Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 
 		echo $"Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 1>&2
 	fi
     cat <<EOF >> "$TARGET_MNT_POINT/etc/profile"
@@ -260,7 +259,7 @@ system_add_services()
 
 	chroot_it dpkg --purge	autofs \
 				checkmem \
-				busybox-sidux \
+				busybox \
 				fix-cdrom \
 				initscripts-sidux-live \
 				firewall-sidux \

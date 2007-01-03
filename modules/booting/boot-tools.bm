@@ -513,25 +513,6 @@ install_grub()
 	rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
-	# install grub
-	
-	# in case of jfs/xfs force installation to mbr - usually not needed
-
-	case $FS_TYPE in
-		jfs|xfs) BOOT_WHERE="mbr";;
-	esac
-
-	# install now
-		
-	case $BOOT_WHERE in
-		partition)
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
-			;;
-		mbr)
-			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
-			;;
-	esac
 	# change menu.lst
 
 	# Add german keybindings 
@@ -654,7 +635,27 @@ do_bootloader = no
 do_symlinks = Yes
 relative_links = Yes
 EOF
-	[ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
+    [ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
+
+	# install grub
+	
+	# in case of jfs/xfs force installation to mbr - usually not needed
+
+	case $FS_TYPE in
+		jfs|xfs) BOOT_WHERE="mbr";;
+	esac
+
+	# install now
+		
+	case $BOOT_WHERE in
+		partition)
+			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
+			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
+			;;
+		mbr)
+			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
+			;;
+	esac
 
 	return 0
 }
