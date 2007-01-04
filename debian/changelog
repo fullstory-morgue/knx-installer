@@ -1,9 +1,12 @@
-knx-installer (0.4.1.6) UNRELEASED; urgency=low
+knx-installer (0.4.1.6) unstable; urgency=low
 
-  * NOT RELEASED YET
+  [ Joaquim Boura ]
   * cleaned inittab.
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu,  4 Jan 2007 00:04:47 +0100
+  [ Stefan Lippers-Hollmann ]
+  * fix template handling.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  4 Jan 2007 22:03:22 +0100
 
 knx-installer (0.4.1.5) unstable; urgency=low
 
