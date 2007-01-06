@@ -628,14 +628,16 @@ EOF
 	# chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# hook update-grub -y into the kernel installing chain
-cat << EOF >$TARGET_MNT_POINT/etc/kernel-img.conf
-postinst_hook = update-grub
-postrm_hook = update-grub
-do_bootloader = no
+cat << EOF > "$TARGET_MNT_POINT/etc/kernel-img.conf"
+# Kernel Image management overrides
+# See kernel-img.conf(5) for details
 do_symlinks = Yes
+postinst_hook = /usr/sbin/update-grub
+postrm_hook = /usr/sbin/update-grub
+do_bootloader = no
+do_initrd = Yes
 relative_links = Yes
 EOF
-    [ -x /usr/sbin/mkinitrd.yaird -a ! -d /lib/modules/$BOOT_KERNEL/kernel/fs/cramfs ] && echo ramdisk = /usr/sbin/mkinitrd.yaird >> $TARGET_MNT_POINT/etc/kernel-img.conf
 
 	# install grub
 	
