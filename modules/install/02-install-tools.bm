@@ -257,7 +257,6 @@ system_add_services()
 				sudoers-sidux \
 				syslinux \
 				tftpd-hpa \
-				xsession-initscript-sidux \
 				xsession-sidux \
 				xf86config-sidux			&> /dev/null
 	

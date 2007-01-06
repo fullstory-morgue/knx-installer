@@ -1,8 +1,8 @@
-knx-installer (0.4.1.7) UNRELEASED; urgency=low
+knx-installer (0.4.1.7) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * xsession-initscript-sidux doesn't exist anymore.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  4 Jan 2007 22:04:58 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat,  6 Jan 2007 20:21:47 +0100
 
 knx-installer (0.4.1.6) unstable; urgency=low
 
