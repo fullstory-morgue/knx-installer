@@ -658,6 +658,7 @@ EOF
 			;;
 	esac
 
+	chroot_it update-grub -y
 	return 0
 }
 
