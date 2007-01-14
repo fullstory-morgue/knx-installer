@@ -1,6 +1,5 @@
-knx-installer (0.4.1.10) UNRELEASED; urgency=low
+knx-installer (0.4.1.10) unstable; urgency=low
 
-  * NOT RELEASED YET
   * try to rescue the cmdline that was used to boot
   * do not recommend reiserfs as default filesystem type anymore
 
