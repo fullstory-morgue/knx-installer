@@ -725,3 +725,26 @@ add_bootmanager()
 	[ -n "$BOOTMANAGER_PROC" ] && umount $TARGET_MNT_POINT/proc
 }
 
+# -------------------------
+function fix_grub_for_UUID
+{
+	local menuList
+	local rootDevice
+	debugit "fix_grub_for_UUID"
+	menuList="${TARGET_MNT_POINT}/boot/grub/menu.lst"
+	debugit "menuList=\"$menuList\""
+	rootDevice=$(grep '^# kopt=root=' ${menuList}|sed 's/^# kopt=root=//'|sed 's/ .*$//')
+	debugit "rootDevice=\"$rootDevice\""
+
+	#1. Make a backup of the old one
+	if grep -q root\=\\/dev\\/[hs]d[a-z][1-9][0-9]\\? ${menuList}; then
+		debugit "grep succeeded"
+		BACKUP="$(mktemp -p ${TARGET_MNT_POINT}/boot/grub/ menu.lst.XXXXXXXXXX)"
+		cat ${menuList} > "$BACKUP"
+	sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
+	else
+		debugit "grep failed"
+	fi
+	# sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
+}
+

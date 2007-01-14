@@ -68,6 +68,8 @@ EOF
 		fi
 		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >> "$TARGET_MNT_POINT/etc/fstab"
     grep -v "^${part}" $TMPDIR/fstab > $TMPDIR/fstab-1 
+    debugit "mkdir -p $TARGET_MNT_POINT$point"
+    mkdir -p "$TARGET_MNT_POINT$point"
     mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
@@ -119,5 +121,45 @@ EOF
 	rm -f "$TARGET_MNT_POINT/etc/fstab.new"
 	awk '{if (/^[ \t]*#/) print; else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
 	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
+}
+
+# -------------------------
+function fix_fstab_for_UUID
+{
+	local i
+	local myFstab
+
+	# 1. ensure that swap partitions do have a UUID
+	for i in $(awk '/^\/dev\//{print $1}' /proc/swaps); do
+		if [ -z "$(/lib/udev/vol_id -u $i 2>/dev/null)" ]; then
+			swapoff "$i"
+			mkswap -L swap "$i"
+			swapon "$i"
+		fi
+	done
+
+	# 2. convert fstab to uuid/ labels, this is mandatory for libata
+	myFstab="$TARGET_MNT_POINT/etc/fstab"
+
+	# make a Backup
+	if grep -q ^\\/dev\\/[hs]d[a-z] $myFstab; then
+		BACKUP="$(mktemp -p $TARGET_MNT_POINT/etc/ fstab.XXXXXXXXXX)"
+		cat $myFstab > "$BACKUP"
+	else
+		debugit "bad $myFstab"
+	fi
+
+	for i in $(awk '/^\/dev\/[hs]d[a-z][1-9][0-9]?[[:space:]]/{print $1}' $myFstab) ; do
+		TMP="$(scanpartitions -v uuids=1 $i | awk '{print $1}')"
+		debugit "Partiton: \"$i\" UUID: \"$TMP\""
+		if [ -n "$TMP" ]; then
+			sed -i "s%^${i}[[:space:]]%${TMP}\t%" $myFstab
+		else
+			# XXX:  comment out this fstab line, we're talking about
+			#   removable media which isn't current....ttached and
+			#   will lead to namespace collisions!
+			perl -pi -e "s%(^${i}[[:space:]].*)%\#\1%g" $myFstab
+		fi
+	done
 }
 

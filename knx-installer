@@ -379,6 +379,13 @@ function start_install
 	[ $RC -ne "0" ] && return 1
 
 	#
+	# FIX fstab and menu.lst for UUID
+	#
+	debugit "Fixing fstab and menu.lst for UUID"
+	fix_fstab_for_UUID
+	fix_grub_for_UUID
+
+	#
 	# FLOPPY DISK!
 	#
 
