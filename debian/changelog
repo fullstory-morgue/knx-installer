@@ -1,6 +1,5 @@
-knx-installer (0.4.1.9) UNRELEASED; urgency=low
+knx-installer (0.4.1.9) unstable; urgency=low
 
-  * NOT RELEASED YET
   * hacked to fix grub and fstab to use UUID
 
  -- Joaquim Boura <x-un-i@sidux.com>  Sun, 14 Jan 2007 12:54:51 +0100
