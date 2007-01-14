@@ -622,10 +622,6 @@ EOF
 		esac
 	done < /etc/fstab >> $TARGET_MNT_POINT/boot/grub/menu.lst
 
-	# update menu.lst
-	rm -f $TARGET_MNT_POINT/boot/vmlinuz $TARGET_MNT_POINT/boot/System.map $TARGET_MNT_POINT/boot/initrd.img
-	# chroot_it update-grub -y >/dev/null 2>/dev/null
-
 	# hook update-grub -y into the kernel installing chain
 cat << EOF > "$TARGET_MNT_POINT/etc/kernel-img.conf"
 # Kernel Image management overrides
@@ -697,13 +693,6 @@ add_bootmanager()
 		set -- $BOOT_KERNELS
 		BOOT_RUNNING_KERNEL="$1"
 	fi
-
-	# Remove default links
-
-	rm -f $TARGET_MNT_POINT/vmlinuz
-	rm -f $TARGET_MNT_POINT/boot/vmlinuz
-	rm -f $TARGET_MNT_POINT/boot/initrd.img
-	rm -f $TARGET_MNT_POINT/boot/System.map
 
 	# TODO: Add error handler
 
