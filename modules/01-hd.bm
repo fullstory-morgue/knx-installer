@@ -139,7 +139,8 @@ function module_hd
 	CB_EXT3="off"
 	[ "$HD_FSTYPE" = "ext3" ] && CB_EXT3="on"
 	[ "$HD_FSTYPE" = "ext2" ] && CB_EXT3="on"
-	[ "$HD_FSTYPE" = "reiserfs" ] && CB_REISER="on"
+	# do not recomend resiserfs
+	[ "$HD_FSTYPE" = "reiserfs" ] && CB_REISER="off"
 	[ "$HD_FSTYPE" = "jfs" ] && CB_JFS="on"
     
 	radiolist $"Here you must choose one of the available filesystem types." $"Choose filesystem-type." \
