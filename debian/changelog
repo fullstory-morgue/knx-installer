@@ -2,9 +2,10 @@ knx-installer (0.4.1.11) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
   * for the current kernel the vmlinuz, initrd links were missing in /boot
-  * so there was only an entry for it. 
+  * so there was only an entry for it.
+  * create the directories under /media for the other pastitions
 
- -- Joaquim Boura <x-un-i@sidux.com>  Sun, 14 Jan 2007 22:29:51 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Mon, 15 Jan 2007 00:41:55 +0100
 
 knx-installer (0.4.1.10) unstable; urgency=low
 
