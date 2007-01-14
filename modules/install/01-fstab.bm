@@ -121,6 +121,12 @@ EOF
 	rm -f "$TARGET_MNT_POINT/etc/fstab.new"
 	awk '{if (/^[ \t]*#/) print; else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
 	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
+
+    # create the dirs under media
+    myDirs=$(awk '/\/media\/[h,s]d/ "$TARGET_MNT_POINT/etc/fstab")
+    for myDir in "${myDirs}"; do
+        mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
+    done
 }
 
 # -------------------------
