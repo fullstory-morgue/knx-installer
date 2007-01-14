@@ -569,16 +569,15 @@ EOF
 		fi
 	fi
 
-	if [ "$BOOT_WHERE" = "partition" ]
-    then
-        perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
-		 sed "s/^root.*$/root\t\t${GROOT}/" $TARGET_MNT_POINT/boot/grub/menu.lst >/tmp/m.tmp
-		 mv -f /tmp/m.tmp $TARGET_MNT_POINT/boot/grub/menu.lst 
-    fi
+	perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+
 	# Create a new cmdline
 	
 	GRUB_CMDLINE=$(module_system_get_cmdlines)
 	
+	debugit "$GRUB_CMDLINE"
+
 	# Fallback :-)
 	if [ -z "$GRUB_CMDLINE" ]
 	then
