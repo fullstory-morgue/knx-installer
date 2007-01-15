@@ -510,7 +510,7 @@ install_grub()
 
 	# Create initital menu.lst
 	
-	rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
+	# rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# change menu.lst

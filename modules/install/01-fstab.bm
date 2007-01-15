@@ -123,7 +123,7 @@ EOF
 	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
 
     # create the dirs under media
-    myDirs=$(awk '/\/media\/[h,s]d/ "$TARGET_MNT_POINT/etc/fstab")
+    myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
     for myDir in "${myDirs}"; do
         mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
     done
