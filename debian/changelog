@@ -1,6 +1,5 @@
-knx-installer (0.4.1.13) UNRELEASED; urgency=low
+knx-installer (0.4.1.13) unstable; urgency=low
 
-  * NOT RELEASED YET
   * missing link to initrd.img
   * get rid of that sysconfig heritage
 
