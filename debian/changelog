@@ -1,7 +1,6 @@
-knx-installer (0.4.1.12) UNRELEASED; urgency=low
+knx-installer (0.4.1.12) unstable; urgency=low
 
-  * NOT RELEASED YET
-  * why ??
+  * fix last upload.
 
  -- Joaquim Boura <x-un-i@sidux.com>  Mon, 15 Jan 2007 18:15:59 +0100
 
