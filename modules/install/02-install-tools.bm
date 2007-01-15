@@ -311,6 +311,8 @@ EOF
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
     debugit "ReturnCode 4: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
+    # get rid of it...
+    rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
     debugit "ReturnCode 5: \"$?\""
 }
 
