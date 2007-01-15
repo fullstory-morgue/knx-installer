@@ -1,8 +1,9 @@
 knx-installer (0.4.1.13) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * missing link to initrd.img
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 15 Jan 2007 18:26:46 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Mon, 15 Jan 2007 20:10:52 +0100
 
 knx-installer (0.4.1.12) unstable; urgency=low
 

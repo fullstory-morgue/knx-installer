@@ -654,7 +654,8 @@ EOF
 			;;
 	esac
 
-	chroot_it update-grub -y
+    (cd $TARGET_MNT_POINT/boot; ln -sf initrd.img-$BOOT_RUNNING_KERNEL initrd.img)
+	chroot_it update-grub -y >/dev/null 2>/dev/null
 	return 0
 }
 
