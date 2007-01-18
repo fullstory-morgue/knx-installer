@@ -506,10 +506,10 @@ function ni-main
 	exit 0
 }
 
-if [ "$1" = "--non-interactive" ]; then
+if [ "$1" = "nonInteractive" ]; then
 	INSTALL_MODE=non-interactive ni-main
 	exit 1 # something did go wrong
-elif [ "$1" = "--installer" ]; then
+elif [ "$1" = "installer" ]; then
 	INSTALL_MODE=installer ni-main
 	exit 1 # something did go wrong
 fi
