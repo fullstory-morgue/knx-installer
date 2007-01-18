@@ -1,6 +1,5 @@
-knx-installer (0.4.1.15) UNRELEASED; urgency=low
+knx-installer (0.4.1.15) unstable; urgency=low
 
-  * NOT RELEASED YET
   * removed "long-options" use parameters forn nonInteractive or Installer
   * remove the desktop file from the deb
 
