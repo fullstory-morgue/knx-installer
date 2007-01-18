@@ -219,7 +219,13 @@ system_add_services()
 	pidof powernowd &> /dev/null && chroot_it update-rc.d powernowd defaults &>/dev/null
 
 	# start powersaved
-	pidof powersaved &> /dev/null && chroot_it update-rc.d powersaved defaults &>/dev/null
+	if pidof powersaved &> /dev/null; then
+		chroot_it update-rc.d powersaved defaults &>/dev/null
+		# reverse live-mode inhibition of suspend
+		if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
+			sed -i 's/^\(DISABLE_USER_SUSPEND2.*\)=.*$/\1=""/' $TARGET_MNT_POINT/etc/powersave/sleep
+		fi
+	fi
 	
 	# start sl-modem-daemon
 	pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
