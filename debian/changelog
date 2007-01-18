@@ -1,6 +1,5 @@
-knx-installer (0.4.1.16) UNRELEASED; urgency=low
+knx-installer (0.4.1.16) unstable; urgency=low
 
-  * NOT RELEASED YET
   * the UUID is also needed when running in nonInteractive mode
 
  -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 18 Jan 2007 20:45:30 +0100
