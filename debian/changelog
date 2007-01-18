@@ -1,3 +1,9 @@
+knx-installer (0.4.1.16) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 18 Jan 2007 20:45:30 +0100
+
 knx-installer (0.4.1.15) unstable; urgency=low
 
   * removed "long-options" use parameters forn nonInteractive or Installer
