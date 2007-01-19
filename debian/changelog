@@ -1,8 +1,9 @@
 knx-installer (0.4.1.17) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * when called by the installer show the user a success message.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 18 Jan 2007 23:10:28 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat, 20 Jan 2007 00:22:53 +0100
 
 knx-installer (0.4.1.16) unstable; urgency=low
 
