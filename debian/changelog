@@ -1,8 +1,9 @@
 knx-installer (0.4.1.18) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * do not put a label on the created filesystem
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 20 Jan 2007 00:44:03 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat, 20 Jan 2007 13:41:01 +0100
 
 knx-installer (0.4.1.17) unstable; urgency=low
 

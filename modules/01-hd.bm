@@ -64,19 +64,18 @@ function module_hd_doaction
 		
 		dd if=/dev/zero of=$HD_CHOICE bs=1k count=16 >/dev/null 2>/dev/null # shutup! :-)
 
-        LABEL="${FLL_DISTRO_NAME}_${RANDOM}"
 		case $HD_FSTYPE in
 			xfs)
-				mkfs.$HD_FSTYPE -f -L "${LABEL}" $HD_CHOICE 2> $TMP 1>&2
+				mkfs.$HD_FSTYPE -f $HD_CHOICE 2> $TMP 1>&2
 				;;
 			reiser*)
-				echo y | mkfs.$HD_FSTYPE -l "${LABEL}" $HD_CHOICE 2> $TMP 1>&2
+				echo y | mkfs.$HD_FSTYPE  $HD_CHOICE 2> $TMP 1>&2
 				;;
 			jfs)
-				echo y | mkfs.$HD_FSTYPE -L "${LABEL}" $HD_CHOICE 2> $TMP 1>&2
+				echo y | mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
 				;;
 			*)
-				mkfs.$HD_FSTYPE -L "${LABEL}" $HD_CHOICE 2> $TMP 1>&2
+				mkfs.$HD_FSTYPE $HD_CHOICE 2> $TMP 1>&2
 				;;
 		esac
 		
