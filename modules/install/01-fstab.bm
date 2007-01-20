@@ -73,12 +73,12 @@ EOF
     mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
-	# Let Kanotix detect all other partitions
+	# Let detect all other partitions
 	mount --bind /proc "$TARGET_MNT_POINT/proc"
 	chroot "$TARGET_MNT_POINT" rebuildfstab -r
 	umount "$TARGET_MNT_POINT/proc"
 
-	# Partitionen auf nicht verwechselbare Platten automatisch mounten (Kanotix)
+	# Partitionen auf nicht verwechselbare Platten automatisch mounten
 	USBDEVS=$(get_usb_devices)
 	[ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
 	perl -pi -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^/dev/(cciss/c[0-7].*|[sh]d.*)noauto(.*)$#/dev/${1}auto${2}# }' "$TARGET_MNT_POINT/etc/fstab"
@@ -134,6 +134,7 @@ function fix_fstab_for_UUID
 {
 	local i
 	local myFstab
+	local BACKUP
 
 	# 1. ensure that swap partitions do have a UUID
 	for i in $(awk '/^\/dev\//{print $1}' /proc/swaps); do
@@ -149,8 +150,11 @@ function fix_fstab_for_UUID
 
 	# make a Backup
 	if grep -q ^\\/dev\\/[hs]d[a-z] $myFstab; then
-		BACKUP="$(mktemp -p $TARGET_MNT_POINT/etc/ fstab.XXXXXXXXXX)"
-		cat $myFstab > "$BACKUP"
+		if [ ${debug_it} -eq 1 ];  then
+			BACKUP="$(mktemp -p $TARGET_MNT_POINT/etc/ fstab.XXXXXXXXXX)"
+			cat $myFstab > "$BACKUP"
+		fi
+
 	else
 		debugit "bad $myFstab"
 	fi

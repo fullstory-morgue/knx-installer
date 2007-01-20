@@ -720,6 +720,8 @@ function fix_grub_for_UUID
 {
 	local menuList
 	local rootDevice
+	local BACKUP
+
 	debugit "fix_grub_for_UUID"
 	menuList="${TARGET_MNT_POINT}/boot/grub/menu.lst"
 	debugit "menuList=\"$menuList\""
@@ -728,10 +730,14 @@ function fix_grub_for_UUID
 
 	#1. Make a backup of the old one
 	if grep -q root\=\\/dev\\/[hs]d[a-z][1-9][0-9]\\? ${menuList}; then
-		debugit "grep succeeded"
-		BACKUP="$(mktemp -p ${TARGET_MNT_POINT}/boot/grub/ menu.lst.XXXXXXXXXX)"
-		cat ${menuList} > "$BACKUP"
-	sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
+
+		if [ ${debug_it} -eq 1 ];  then
+			debugit "grep succeeded"
+			BACKUP="$(mktemp -p ${TARGET_MNT_POINT}/boot/grub/ menu.lst.XXXXXXXXXX)"
+			cat ${menuList} > "$BACKUP"
+		fi
+
+		sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
 	else
 		debugit "grep failed"
 	fi
