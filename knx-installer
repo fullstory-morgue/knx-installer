@@ -385,6 +385,11 @@ function start_install
 	fix_fstab_for_UUID
 	fix_grub_for_UUID
 
+	# 
+	# FIX append grub for other OS
+	#
+	appendGrubForOtherOS
+
 	#
 	# FLOPPY DISK!
 	#
@@ -487,6 +492,11 @@ function ni-main
 	debugit "Fixing fstab and menu.lst for UUID"
 	fix_fstab_for_UUID
 	fix_grub_for_UUID
+
+	# 
+	# FIX append grub for other OS
+	#
+	appendGrubForOtherOS
 
 	if [ "$BOOT_DISK" = "yes" -a "$INSTALL_MODE" = "installer" ]; then
 		$DIALOG --backtitle "$BT" --title $"Creating floppy disk" --defaultno --yesno $"Please insert now an empty floppy disk into your floppydrive. Warning: All data on it will be lost. If you don't want to create a disk you can choose No." 0 0

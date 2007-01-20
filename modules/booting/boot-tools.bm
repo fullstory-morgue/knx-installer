@@ -743,4 +743,58 @@ function fix_grub_for_UUID
 	fi
 	# sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
 }
+# -------------------------
+function appendGrubForOtherOS
+{
+	local TempFile
+	local TempDir
+	local GRUBFile
+	local mounted_grub_file
+	local found
+	local menuList
 
+	menuList="${TARGET_MNT_POINT}/boot/grub/menu.lst"
+
+	TempFile="$(mktemp -p /tmp/ .XXXXXXXXXX)"
+	MyGrubTemp="$(mktemp -p /tmp/ myGrub.XXXXXXXXXX)"
+	TempDir=/tmp/knx-installer_tempdir
+	GRUBFile="/boot/grub/menu.lst"
+	mounted_grub_file="${TempDir}${GRUBFile}"
+	mkdir -p $TempDir
+
+	os-prober > $TempFile
+
+	while IFS=: read device longName shortName kindOf; do
+		# skip current root device
+		if [ "$device" = "$HD_CHOICE" ]; then
+			if [ "$kindOf" = "linux" ]; then
+				mount $device $TempDir 2>&1 >>/dev/null
+				if [ $? -eq 0 ] ; then
+					if [ -r "$mounted_grub_file" ]; then
+						found=0
+						while read line; do
+							if [[ $line =~ "^title.*" ]]; then
+								if [ $found -eq 0 ] ;then
+									found=1
+									echo  "$line ($device)" >> "$MyGrubTemp"
+								else
+									break
+								fi
+							else
+								test $found -eq 1 && echo $line >> "$MyGrubTemp"
+							fi
+						done < "$mounted_grub_file"
+					fi
+					umount $TempDir
+				fi
+			else
+				# place for other OS's
+				:
+			fi
+		fi
+	done < "$TempFile"
+	# do it
+	cat $MyGrubTemp >> $menuList
+	# clean up
+	rm $TempFile $MyGrubTemp
+}

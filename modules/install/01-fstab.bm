@@ -171,5 +171,11 @@ function fix_fstab_for_UUID
 			perl -pi -e "s%(^${i}[[:space:]].*)%\#\1%g" $myFstab
 		fi
 	done
+	# strange they are missing...
+    # create the dirs under media
+    myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
+    for myDir in "${myDirs}"; do
+        mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
+    done
 }
 

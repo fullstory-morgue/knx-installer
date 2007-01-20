@@ -249,6 +249,7 @@ system_add_services()
 				firewall-sidux \
 				sidux-setpassword \
 				sidux-terminalserver \
+				install-gui \
 				knxinstaller \
 				knx-installer \
 				kde-services-sidux \
