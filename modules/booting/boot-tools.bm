@@ -766,7 +766,7 @@ function appendGrubForOtherOS
 
 	while IFS=: read device longName shortName kindOf; do
 		# skip current root device
-		if [ "$device" = "$HD_CHOICE" ]; then
+		if [ "$device" != "$HD_CHOICE" ]; then
 			if [ "$kindOf" = "linux" ]; then
 				mount $device $TempDir 2>&1 >>/dev/null
 				if [ $? -eq 0 ] ; then
