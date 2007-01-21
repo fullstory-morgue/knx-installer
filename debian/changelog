@@ -1,6 +1,5 @@
-knx-installer (0.4.1.18) UNRELEASED; urgency=low
+knx-installer (0.4.1.18) unstable; urgency=low
 
-  * NOT RELEASED YET
   * do not put a label on the created filesystem
   * dont create backup files for oldstyle fstab/menu.lst unless we are running
     in debug mode
