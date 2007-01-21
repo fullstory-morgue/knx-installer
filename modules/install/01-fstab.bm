@@ -67,10 +67,6 @@ EOF
 			hd_map_fstype="auto"
 		fi
 		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >> "$TARGET_MNT_POINT/etc/fstab"
-    grep -v "^${part}" $TMPDIR/fstab > $TMPDIR/fstab-1 
-    debugit "mkdir -p $TARGET_MNT_POINT$point"
-    mkdir -p "$TARGET_MNT_POINT$point"
-    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
 	# Let detect all other partitions
@@ -124,7 +120,7 @@ EOF
 
     # create the dirs under media
     myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
-    for myDir in "${myDirs}"; do
+    for myDir in ${myDirs}; do
         mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
     done
 }
@@ -171,11 +167,5 @@ function fix_fstab_for_UUID
 			perl -pi -e "s%(^${i}[[:space:]].*)%\#\1%g" $myFstab
 		fi
 	done
-	# strange they are missing...
-    # create the dirs under media
-    myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
-    for myDir in "${myDirs}"; do
-        mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
-    done
 }
 
