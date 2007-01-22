@@ -151,14 +151,39 @@ function action-part-cfdisk
 	cfdisk /dev/$PART
 }
 
+function kded-medianotifer
+{
+	[ -x /usr/bin/dcop ] && dcop kded >/dev/null 2>&1 || return
+
+	case "$1" in
+		unload)
+			dcop kded kded unloadModule medianotifier >/dev/null
+			;;
+		load)
+			dcop kded kded loadModule medianotifier >/dev/null
+			;;
+	esac
+}
+
 function action-part
 {
 	if [ $DIALOG = "dialog" ]
 		then
 		action-part-cfdisk
 	else
-		[ -x "/usr/bin/gparted" ] && gparted || action-part-cfdisk
+		if [ -x "/usr/bin/gparted" ]; then
+			# disable KDE's medianotifier
+			kded-medianotifer unload
+			
+			gparted
+			
+			# enable KDE's medianotifier
+			kded-medianotifer load
+		else
+			action-part-cfdisk
+		fi
 	fi
+
 	rebuildfstab -r
 }
 
