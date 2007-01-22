@@ -1,9 +1,5 @@
-knx-installer (0.4.1.20) UNRELEASED; urgency=low
+knx-installer (0.4.1.20) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Add dirty hack to disable kde's notifier before launching gparted, and
     restart it after gparted exits.
 
