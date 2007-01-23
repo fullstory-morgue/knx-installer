@@ -497,9 +497,8 @@ install_grub()
 	# create device.map
 	grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
 	[ $? -ne 0 ] && grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
-
 	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-
+# echo 501; read
 	if [ "$BOOT_WHERE" = "mbr" ]
 	then
 		GRUB_MBR=$(grep "(hd0)" $TARGET_MNT_POINT/boot/grub/device.map | awk '{ print $2 }')
@@ -511,6 +510,7 @@ install_grub()
 	# Create initital menu.lst
 	
 	# rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
+    	(cd $TARGET_MNT_POINT/boot; ln -sf initrd.img-$BOOT_RUNNING_KERNEL initrd.img)
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# change menu.lst
@@ -521,7 +521,6 @@ install_grub()
 			cp -f $TARGET_MNT_POINT/boot/grub/menu.lst $TMPDIR/menu.lst
 			cat > $TARGET_MNT_POINT/boot/grub/menu.lst << EOF
 # Deutsche Tastaturbelegung
-
 setkey y z
 setkey z y
 setkey Y Z
@@ -547,21 +546,16 @@ EOF
 	cat $TMPDIR/menu.lst >> $TARGET_MNT_POINT/boot/grub/menu.lst
 		;;
 	esac
-	
+
 	# no alternatives please
 	perl -pi -e 's/^# alternative=true/# alternative=false/g' $TARGET_MNT_POINT/boot/grub/menu.lst
 	# save the default setting
 	perl -pi -e 's/^default .*/default saved/g' $TARGET_MNT_POINT/boot/grub/menu.lst
 
-
 	# add graphical menu
-	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-    export kernel_vers=$(uname -r)
-    root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |grep -v "single" |sed 's#^kernel.*root=##'|sed 's# .*$##')
-    GROOT=$(translate_linux_to_grub $root_device)
+    GROOT=$(egrep "^# groot=" $TARGET_MNT_POINT/boot/grub/menu.lst | sed 's/# groot=//g')
 
 	if [ -n "$GROOT" -a -s $TARGET_MNT_POINT/boot/message ]; then
-
 		if { mount | grep -q $TARGET_MNT_POINT/boot ; }; then
 			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 		else
@@ -569,15 +563,10 @@ EOF
 		fi
 	fi
 
-	perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
-	perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
-
 	# Create a new cmdline
 	
 	GRUB_CMDLINE=$(module_system_get_cmdlines)
 	
-	debugit "$GRUB_CMDLINE"
-
 	# Fallback :-)
 	if [ -z "$GRUB_CMDLINE" ]
 	then
@@ -592,14 +581,13 @@ EOF
 	[ -z "$GRUB_VGA" ] && GRUB_VGA="$GRUB_DEFVGA"
 
 	GRUB_CMDLINE="$GRUB_CMDLINE vga=$GRUB_VGA"
-
 	perl -pi -e "s|^# kopt=root=(.*) ro|# kopt=root=\1 ro $GRUB_CMDLINE|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Add other OS' :-)
 	# Sorry x86-only for now ... :-/
 
 	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-
+# echo 601; read
 	while read p m f relax;
 	do
 		[ "${p:5:2}" != "fd" ] && case "$f" in
@@ -654,8 +642,6 @@ EOF
 			;;
 	esac
 
-    (cd $TARGET_MNT_POINT/boot; ln -sf initrd.img-$BOOT_RUNNING_KERNEL initrd.img)
-	chroot_it update-grub -y >/dev/null 2>/dev/null
 	return 0
 }
 
@@ -682,7 +668,7 @@ add_bootmanager()
 	do
 		BOOT_KERNEL=$(basename $i)
 		BOOT_KERNELS="$BOOT_KERNELS $BOOT_KERNEL"
-		update_status $"Creating initrd for kernel $BOOT_KERNEL ..."
+		# update_status $"Creating initrd for kernel $BOOT_KERNEL ..."
 		create_initrd
 	done
 
@@ -697,7 +683,7 @@ add_bootmanager()
 
 	# TODO: Add error handler
 
-	update_status $"Installing $BOOT_LOADER to $BOOT_WHERE"
+	# update_status $"Installing $BOOT_LOADER to $BOOT_WHERE"
 
 	if [ "$BOOT_LOADER" = "grub" ]
 	then
