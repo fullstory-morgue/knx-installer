@@ -450,7 +450,7 @@ system_services()
 # Everything needed for hw-detection
 system_create_modules()
 {
-	if grep -g ^capability /proc/modules; then
+	if grep -q ^capability /proc/modules; then
 		echo capability >> "$TARGET_MNT_POINT/etc/modules"
 	fi
 }
