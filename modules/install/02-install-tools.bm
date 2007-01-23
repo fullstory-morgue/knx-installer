@@ -191,12 +191,6 @@ system_add_services()
 	
 	[ -x /etc/init.d/mountall.sh ] &&  chroot_it update-rc.d mountall.sh start 35 S . &>/dev/null
 
-	# activate 855resolution if needed
-	if [ -r /etc/default/855resolution ]; then
-		source /etc/default/855resolution
-		[ "$MODE" ] && chroot_it update-rc.d 855resolution defaults &>/dev/null
-	fi
-
 	# activate 915resolution if needed
 	if [ -r /etc/default/915resolution ]; then
 		source /etc/default/915resolution
@@ -220,6 +214,9 @@ system_add_services()
 	
 	# start sl-modem-daemon
 	pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
+
+	# ipw3945d
+	pidof ipw3945d &> /dev/null && chroot_it update-rc.d ipw3945d start 38 S . stop 34 0 6 . &>/dev/null
 	
 	# configure /etc/kernel-pkg.conf
 	[ -f "$TARGET_MNT_POINT/etc/kernel-pkg.conf" ] && \
@@ -405,9 +402,6 @@ system_services()
 
 	# hplip
 	chroot_it update-rc.d hplip 		defaults 19							&>/dev/null
-	
-	# ipw3945d
-	chroot_it update-rc.d ipw3945d 		start 38 S . stop 34 0 6 .					&>/dev/null
 	
 	# additional startups found in etch (not all tools are installed, but does not matter)
 
