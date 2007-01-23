@@ -126,16 +126,6 @@ Icon=html
 Terminal=0
 EOF
 
-	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/KNOPPIX.desktop" <<EOF
-[Desktop Entry]
-Name=KNOPPIX
-# Exec=kfmclient openProfile webbrowsing http://knoppix.com/
-Exec=konqueror --geometry 800x600+110+40 http://knoppix.com/
-Type=Application
-Icon=html
-Terminal=0
-EOF
-
 }
 
 system_setup_kdm()
@@ -162,7 +152,8 @@ system_install_templates()
 	if [ -n "$TEMPLATE_PATH" ]; then 
 		# don't allow everyone to use sudo.
 		cat "$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
-
+		
+		# XXX: this needs looking at
 		# "normalize" /etc/inittab
 	        cp -f "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" "$TARGET_MNT_POINT/etc/inittab"
 	        perl -pi -e 's#^([2-6]):23:respawn#$1:2345:respawn#;s#id:[0-6]:initdefault:#id:5:initdefault:#' "$TARGET_MNT_POINT/etc/inittab"
@@ -468,14 +459,18 @@ system_services()
 	# system_add_services # started by the different modes
 }
 
+# XXX: this should already be done in live-autoconfig
 system_install_keymap()
 {
+	[ -f "$TARGET_MNT_POINT"/etc/console/boottime.kmap.gz ] && return
+
 	[ -f /etc/sysconfig/keyboard ] && source /etc/sysconfig/keyboard
 
 	# Add correct keymap (thx to Joerg Schirottke)
 	[ -n "$KEYTABLE" ] && chroot_it install-keymap "$KEYTABLE" 2>/dev/null
 }
 
+# XXX: live-autoconfig knows about KDE, get rid of sysconfig
 system_install_i18n()
 {
 	# Environment korrekt setzen
@@ -590,17 +585,6 @@ EOF
 
 system_fix_menus()
 {
-	[ -d "$TARGET_MNT_POINT/usr/share/applnk/Knoppix" ] && suknoppixmenus "$TARGET_MNT_POINT/usr/share/applnk/Knoppix" kdesu
-
-	for i in `egrep -l -r -e '(xcdroast|ethereal|kbackup)' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; do
-        	perl -pi -e 's|Exec=sudo /|Exec=/|g' "$TARGET_MNT_POINT$i"
-	done
-
-	# Replace sudo (does not work from hd) by kdesu (does)
-	for i in `grep -l -r 'Exec=sudo -H ' /usr/share/applications/. /usr/share/applnk/. /var/lib/menu-xdg/applications/menu-xdg/.`; 	do
-        	perl -pi -e 's|Exec=sudo -H |Exec=kdesu -- |g' "$TARGET_MNT_POINT$i"
-	done
-
 	chroot_it update-menus
 }
 
