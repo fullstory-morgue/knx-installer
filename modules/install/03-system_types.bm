@@ -23,8 +23,6 @@ system_type_beginner()
 
 	system_install_templates
 	
-	system_install_keymap
-	
 	system_update_files
 	
 	system_install_i18n

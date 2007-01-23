@@ -441,17 +441,6 @@ system_services()
 	# system_add_services # started by the different modes
 }
 
-# XXX: this should already be done in live-autoconfig
-system_install_keymap()
-{
-	[ -f "$TARGET_MNT_POINT"/etc/console/boottime.kmap.gz ] && return
-
-	[ -f /etc/sysconfig/keyboard ] && source /etc/sysconfig/keyboard
-
-	# Add correct keymap (thx to Joerg Schirottke)
-	[ -n "$KEYTABLE" ] && chroot_it install-keymap "$KEYTABLE" 2>/dev/null
-}
-
 # XXX: live-autoconfig knows about KDE, get rid of sysconfig
 system_install_i18n()
 {
