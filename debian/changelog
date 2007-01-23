@@ -1,7 +1,4 @@
-knx-installer (0.4.1.22) UNRELEASED; urgency=low
-
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
+knx-installer (0.4.1.22) unstable; urgency=low
 
   [ Kel Modderman ]
   * Remove very ugly hack to kdesktoprc, don't hide unmounted hdd's, and
@@ -16,7 +13,11 @@ knx-installer (0.4.1.22) UNRELEASED; urgency=low
   * Move ipw3945d detection to system_add_services().
   * filter some uninteresting lines on menu.lst that can be confusing
 
- -- Joaquim Boura <x-un-i@sidux.com>  Tue, 23 Jan 2007 07:06:59 +0100
+  [ Stefan Lippers-Hollmann ]
+  * adapt sidux-installer to call install-gui.
+  * revert to standard debian .bashrc.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 23 Jan 2007 11:06:21 +0100
 
 knx-installer (0.4.1.21) unstable; urgency=low
 

@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ $# -eq 0 ] && [ -n "$DISPLAY" ] && [ -x /usr/bin/knxinstaller ]; then
-	exec /usr/bin/knxinstaller
+if [ $# -eq 0 ] && [ -n "$DISPLAY" ] && [ -x /usr/bin/install-gui ]; then
+	exec /usr/bin/install-gui
 else
 	exec /usr/sbin/knx-installer "$@"
 fi

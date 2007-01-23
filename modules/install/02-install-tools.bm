@@ -125,7 +125,9 @@ Type=Application
 Icon=html
 Terminal=0
 EOF
-
+	
+	# revert to plain debian .bashrc
+	cat "$TARGET_MNT_POINT/etc/skel/.bashrc" > "$TARGET_MNT_POINT/home/$USER_NAME/.bashrc"
 }
 
 system_setup_kdm()
