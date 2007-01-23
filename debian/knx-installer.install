@@ -1,3 +1,2 @@
 *-installer	usr/sbin/
 modules 	usr/share/knx-installer/
-templates 	usr/share/knx-installer/
