@@ -498,7 +498,7 @@ install_grub()
 	grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
 	[ $? -ne 0 ] && grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
 	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-# echo 501; read
+
 	if [ "$BOOT_WHERE" = "mbr" ]
 	then
 		GRUB_MBR=$(grep "(hd0)" $TARGET_MNT_POINT/boot/grub/device.map | awk '{ print $2 }')
@@ -553,7 +553,10 @@ EOF
 	perl -pi -e 's/^default .*/default saved/g' $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# add graphical menu
-    GROOT=$(egrep "^# groot=" $TARGET_MNT_POINT/boot/grub/menu.lst | sed 's/# groot=//g')
+    export device_map=$TARGET_MNT_POINT/boot/grub/device.map
+    export kernel_vers=$(uname -r)
+    root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |grep -v "single" |sed 's#^kernel.*root=##'|sed 's# .*$##')
+    GROOT=$(translate_linux_to_grub $root_device)
 
 	if [ -n "$GROOT" -a -s $TARGET_MNT_POINT/boot/message ]; then
 		if { mount | grep -q $TARGET_MNT_POINT/boot ; }; then
@@ -562,6 +565,9 @@ EOF
 			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/boot/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 		fi
 	fi
+
+    perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+    perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Create a new cmdline
 	
@@ -587,7 +593,7 @@ EOF
 	# Sorry x86-only for now ... :-/
 
 	export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-# echo 601; read
+
 	while read p m f relax;
 	do
 		[ "${p:5:2}" != "fd" ] && case "$f" in
