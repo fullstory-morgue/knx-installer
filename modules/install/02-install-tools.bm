@@ -261,20 +261,6 @@ system_add_services()
 	[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
 		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
 
-	# enable udev, if installed
-	if [ -x /etc/init.d/udev ]; then
-		pidof cardmgr >/dev/null || chroot_it dpkg --purge pcmcia-cs	&> /dev/null
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9]
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/[sh]d[a-z][1-9][0-9]
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom\]
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/CD-ROM\ \[cdrom[1-9]\]
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/Floppy
-		rm -f "$TARGET_MNT_POINT/etc/skel/Desktop"/Floppy
-		
-		# fix ownership
-		chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
-	fi
-
 	# enable splashy, if installed
 	if [ -x /etc/init.d/splashy-init ]; then
 		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
