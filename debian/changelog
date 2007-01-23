@@ -1,3 +1,9 @@
+knx-installer (0.4.1.26) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 23 Jan 2007 17:59:48 +0100
+
 knx-installer (0.4.1.25) unstable; urgency=low
 
   * Fix another typo (grep -g, doh!).
