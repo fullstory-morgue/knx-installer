@@ -1,7 +1,6 @@
-knx-installer (0.4.1.21) UNRELEASED; urgency=low
+knx-installer (0.4.1.21) unstable; urgency=low
 
-  * NOT RELEASED YET
-  * made some cleanup. menu.lst now also contains recovery entries
+  * some cleanup. menu.lst now contains recovery entries
 
  -- Joaquim Boura <x-un-i@sidux.com>  Tue, 23 Jan 2007 00:52:22 +0100
 
