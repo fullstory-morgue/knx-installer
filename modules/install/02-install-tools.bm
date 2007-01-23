@@ -12,31 +12,13 @@ system_findchanged(){
 	fi
 }
 
-#
-# Needed for all modes that feature nohwsetup.
-#
-
-system_add_hd_autoconfig()
-{
-	echo "SYSTEM_HW_PROFILE=yes" >>		"$TARGET_MNT_POINT/etc/default/knoppix"
-	
-	chroot_it update-rc.d -f live-autoconfig    remove . &>/dev/null
-}
-
 system_copy_etc()
 {
 	update_status $"Copying custom configuration ..."
 	
 	# copy changed files in /etc
-	( cd "$TARGET_MNT_POINT"; system_findchanged /etc /${FLL_IMAGE_DIR}/etc | egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf -) 2>/dev/null
-
-	# TODO: Add support for installing nvidia drivers here if they are there
-	# install_nvidia_drivers
-	# For now we will just use the old one ...
-	[ -r /etc/X11/xorg.conf.1st ] && mv -f "$TARGET_MNT_POINT/etc/X11/xorg.conf.1st" "$TARGET_MNT_POINT/etc/X11/xorg.conf"
-
-	# activate xorg-common
-	[ -x "$TARGET_MNT_POINT/etc/init.d/x11-common" ]  && chroot_it update-rc.d x11-common  start 70 S . >/dev/null
+	( cd "$TARGET_MNT_POINT"; system_findchanged /etc "$FLL_MOUNTPOINT"/etc | \
+		egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf - ) 2>/dev/null
 
   	# Save ALSA sound volume
 	[ -e /proc/asound/modules -a -x /usr/sbin/alsactl ] && /usr/sbin/alsactl store
@@ -45,13 +27,18 @@ system_copy_etc()
 	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
 
 	# Add dpi setting from cheatcode to hd install
-	[ ! -e /etc/sysconfig/base ] && [ -e /etc/sysconfig/knoppix ] && source /etc/sysconfig/knoppix
 	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
 	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
 	if [ "$CUSTOM_DPI" != "auto" -a "$CUSTOM_DPI" ]; then
-		[ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
+				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		fi
 	else
-		[ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]    && perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|"                   "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
+				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		fi
 	fi
 
 	# Auto login
@@ -78,23 +65,13 @@ system_copy_home()
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
 		cp -a "/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home"
-		[ "$USER_NAME" != "$DEFAULT_USER" ] && mv "$TARGET_MNT_POINT/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home/$USER_NAME"
+		if [ "$USER_NAME" != "$DEFAULT_USER" ]; then
+			mv "$TARGET_MNT_POINT/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home/$USER_NAME"
+		fi
 	else
 		cp -a "$TARGET_MNT_POINT/etc/skel" "$TARGET_MNT_POINT/home"
 		mv "$TARGET_MNT_POINT/home/skel" "$TARGET_MNT_POINT/home/$USER_NAME"
 	fi
-
-	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
-
-	# LOKALE ANPASSUNGEN
-
-	# Remove autostart scripts
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop"
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/sorticons.desktop"
-
-	# Fix background
-	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.jpg" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.jpg|/usr/local/lib/sidux.jpg|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-	[ -e "$DEFAULT_DIR/usr/local/lib/sidux.png" ] && perl -pi -e "s|/cdrom/$DEFAULT_DIR/background.png|/usr/local/lib/sidux.png|" "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
 
 	# Mozilla Konfigdateien korrigieren
 	if [ "$USER_NAME" != "$DEFAULT_USER" ];	then
@@ -102,11 +79,16 @@ system_copy_home()
 		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/pluginreg.dat"
 		# TODO: Test if symlink works ...
 		if [ -e "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER" ]; then
-			[ -e "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default" ] || mv "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER" "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default"
-			perl -pi -e 's/.*general.useragent.*\n?//' "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js"
+			if [ ! -e "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default" ]; then
+				mv "$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/$DEFAULT_USER" \
+					"$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default"
+			fi
+			perl -pi -e 's/.*general.useragent.*\n?//' \
+				"$TARGET_MNT_POINT/home/$USER_NAME/.mozilla/default/*/prefs.js"
 		fi
 
-		# Bei unterschiedlichem OLD/NEWHOME muss man die Pfade anpassen, sonst funktionieren die Anwendungen nicht korrekt
+		# Bei unterschiedlichem OLD/NEWHOME muss man die Pfade anpassen
+		# sonst funktionieren die Anwendungen nicht korrekt
 		OLDHOME="/home/$DEFAULT_USER"
 		NEWHOME="/home/$USER_NAME"
 		PART="$TARGET_MNT_POINT"
@@ -116,7 +98,8 @@ system_copy_home()
 	fi
 
 	# Neue Symbole für KANOTIX und KNOPPIX auf dem Desktop
-	[ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" ] && cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" <<EOF
+	if [ -e "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" ]; then
+		cat >"$TARGET_MNT_POINT/home/$USER_NAME/Desktop/sidux.desktop" <<EOF
 [Desktop Entry]
 Name=sidux
 # Exec=kfmclient openProfile webbrowsing http://sidux.com/
@@ -125,112 +108,29 @@ Type=Application
 Icon=html
 Terminal=0
 EOF
+	fi
 	
 	# revert to plain debian .bashrc
 	cat "$TARGET_MNT_POINT/etc/skel/.bashrc" > "$TARGET_MNT_POINT/home/$USER_NAME/.bashrc"
-}
 
-system_setup_kdm()
-{
 	# force kde first time configuration
 	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]; then
-		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc"
+		perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' \
+			"$TARGET_MNT_POINT/etc/skel/.kde/share/config/kpersonalizerrc"
 
 		# The users kde should be perfect, unless we just copied from template ...
-		[ ! -d "/home/$DEFAULT_USER/.kde" ] && perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kpersonalizerrc"
-	fi
-
-	# Add kde3 to .wmrc
-	[ ! -r "$TARGET_MNT_POINT/home/$USER_NAME/.wmrc" ] && echo "kde3" > "$TARGET_MNT_POINT/home/$USER_NAME/.wmrc"
-
-	# Start kdm in runlevel 5
-	chroot_it update-rc.d kdm start 99 5 . >/dev/null  
-}
-
-system_install_templates()
-{
-	TEMPLATE_PATH=""
-	[ -d "$SEARCHPATH/templates" ] && TEMPLATE_PATH="$SEARCHPATH/templates"
-	if [ -n "$TEMPLATE_PATH" ]; then 
-		# don't allow everyone to use sudo.
-		cat "$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
-		
-		# XXX: this needs looking at
-		# "normalize" /etc/inittab
-	        cp -f "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" "$TARGET_MNT_POINT/etc/inittab"
-	        perl -pi -e 's#^([2-6]):23:respawn#$1:2345:respawn#;s#id:[0-6]:initdefault:#id:5:initdefault:#' "$TARGET_MNT_POINT/etc/inittab"
-	
-		# remove Knoppix entry from /etc/sudoers
-		cp -af "$TEMPLATE_PATH/etc/sudoers" "$TARGET_MNT_POINT/etc/sudoers"
-		chown root:root "$TARGET_MNT_POINT/etc/sudoers"
-		chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
-	else
-		echo $"Warning: Templates could not be found. Not updating: profile, inittab, sudoers, hosts.allow!" 1>&2
-	fi
-	
-	# disable all services in /etc/inetd.conf
-	chroot_it update-inetd --multi --disable '*'
-}
-
-# These are additional services that can be used with _all_ modes.
-system_add_services()
-{
-	# FCDSL Anpassung
-	[ -e /etc/rc0.d/K15isdnactivecards ] &&	chroot_it update-rc.d isdnactivecards defaults 13 15 >/dev/null
-	[ -e /etc/rc0.d/K21capiutils ] &&	chroot_it update-rc.d capiutils defaults 13 21 >/dev/null
-
-	# ALSA aktivieren, wenn möglich
-	if [ -e /proc/asound/modules ]; then
-		if [ -x /etc/init.d/alsa-utils ]; then
-			# chroot_it update-rc.d alsa-utils defaults
-			chroot_it update-rc.d alsa-utils start 50 S . stop 50 0 6 .
-		elif [ -x /etc/init.d/alsa ]; then
-			chroot_it update-rc.d alsa defaults
-		fi
-	fi
-
-	[ -x /etc/init.d/cupsys ] && chroot_it update-rc.d cupsys defaults &>/dev/null
-	
-	[ -x /etc/init.d/mountall.sh ] &&  chroot_it update-rc.d mountall.sh start 35 S . &>/dev/null
-
-	# activate 915resolution if needed
-	if [ -r /etc/default/915resolution ]; then
-		source /etc/default/915resolution
-		[ "$MODE" ] && chroot_it update-rc.d 915resolution defaults &>/dev/null
-	fi
-	
-	# disable portmap
-	chroot_it update-rc.d -f portmap remove &>/dev/null
-
-	# start powernowd
-	pidof powernowd &> /dev/null && chroot_it update-rc.d powernowd defaults &>/dev/null
-
-	# start powersaved
-	if pidof powersaved &> /dev/null; then
-		chroot_it update-rc.d powersaved defaults &>/dev/null
-		# reverse live-mode inhibition of suspend
-		if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
-			sed -i 's/^\(DISABLE_USER_SUSPEND2.*\)=.*$/\1=""/' $TARGET_MNT_POINT/etc/powersave/sleep
+		if [ ! -d "/home/$DEFAULT_USER/.kde" ]; then
+			perl -pi -e 's/FirstLogin=false/FirstLogin=true/g' \
+				"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kpersonalizerrc"
 		fi
 	fi
 	
-	# start sl-modem-daemon
-	pidof slmodemd &> /dev/null && chroot_it update-rc.d sl-modem-daemon defaults &>/dev/null
+	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
+}
 
-	# ipw3945d
-	pidof ipw3945d &> /dev/null && chroot_it update-rc.d ipw3945d start 38 S . stop 34 0 6 . &>/dev/null
-	
-	# configure /etc/kernel-pkg.conf
-	[ -f "$TARGET_MNT_POINT/etc/kernel-pkg.conf" ] && \
-		perl -pi -e "s/^maintainer.*\=.*/maintainer \:\= $NAME_NAME/;s/^email.*\=.*/email \:\= $USER_NAME\@$HOST_NAME\.local/" "$TARGET_MNT_POINT/etc/kernel-pkg.conf"
-	
-	# enable KDE sounds
-	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/knotifyrc"
-	# create ssh keys
-	#[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" ] || ssh-keygen -q -t rsa1 -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_key" -C '' -N ''
-	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ] || ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
-	[ -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ] || ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
-
+system_purge_live_only_stuff()
+{
+	# purge live-specific packages
 	chroot_it dpkg --purge	autofs \
 				checkmem \
 				busybox \
@@ -255,270 +155,28 @@ system_add_services()
 				syslinux \
 				tftpd-hpa \
 				xsession-sidux \
-				xf86config-sidux			&> /dev/null
+				xf86config-sidux &> /dev/null
 	
 	#  disable live config
-	[ -f "$TARGET_MNT_POINT/etc/default/distro" ] && \
-		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" "$TARGET_MNT_POINT/etc/default/distro"
-
-	# enable splashy, if installed
-	if [ -x /etc/init.d/splashy-init ]; then
-		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
-		chroot_it update-rc.d splashy-init start 01 S . stop 01 0 6 . &>/dev/null
+	if [ -f "$TARGET_MNT_POINT/etc/default/distro" ]; then
+		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" \
+			"$TARGET_MNT_POINT/etc/default/distro"
 	fi
 
-	# enable acpi-support, if installed
-	[ -x /etc/init.d/acpi-support ] && chroot_it update-rc.d acpi-support start 99 2 3 4 5 . stop 20 0 1 6 . &>/dev/null
-	
 	# remove temporary kde- user files
 	debugit "remove temporary kde- user files"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.DCOPserver_*_*"
-    debugit "ReturnCode 1: \"$?\""
+	debugit "ReturnCode 1: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/cache-*"
-    debugit "ReturnCode 2: \"$?\""
+	debugit "ReturnCode 2: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/socket-*"
-    debugit "ReturnCode 3: \"$?\""
+	debugit "ReturnCode 3: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
-    debugit "ReturnCode 4: \"$?\""
+	debugit "ReturnCode 4: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
-    # get rid of it...
-    rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
-    debugit "ReturnCode 5: \"$?\""
-}
-
-system_services()
-{
-	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:89 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:11 cron:89:11"
-	# delete knoppix specific programs from runlevel directories
-	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,live-autoconfig,live-halt,live-reboot}"
-
-	# start services wanted in config ...
-	for i in $SERVICES_START; do
-		chroot_it update-rc.d $i defaults								&>/dev/null
-	done
-	
-	### initscripts ###
-	# create basic system runlevel
-	chroot_it update-rc.d mountvirtfs       start 2 S . start 36 S .					&>/dev/null
-	chroot_it update-rc.d mountkernfs.sh	start 2 S .							&>/dev/null
-	chroot_it update-rc.d mountdevsubfs.sh	start 4 S .							&>/dev/null
-	chroot_it update-rc.d bootlogd		start 5 S .							&>/dev/null
-	chroot_it update-rc.d checkroot.sh	start 10 S .							&>/dev/null
-	chroot_it update-rc.d modutils		start 20 S .							&>/dev/null
-	chroot_it update-rc.d checkfs.sh	start 30 S .							&>/dev/null
-	chroot_it update-rc.d mountall.sh	start 35 S .							&>/dev/null
-	chroot_it update-rc.d hostname.sh	start 40 S .							&>/dev/null
-	chroot_it update-rc.d network		start 40 S .							&>/dev/null
-	chroot_it update-rc.d mountnfs.sh	start 45 S .							&>/dev/null
-	chroot_it update-rc.d bootmisc.sh	start 55 S .							&>/dev/null
-	chroot_it update-rc.d urandom		start 55 S . start 30 0 6 .					&>/dev/null
-	#
-	#       Links in "normal" runlevels.
-	#
-	chroot_it update-rc.d sendsigs		start 20 0 6 .							&>/dev/null
-	chroot_it update-rc.d umountnfs.sh	start 31 0 6 .							&>/dev/null
-	chroot_it update-rc.d umountfs		start 40 0 6 .							&>/dev/null
-	chroot_it update-rc.d umountroot	start 60 0 6 .							&>/dev/null
-	chroot_it update-rc.d halt		start 90 0 .							&>/dev/null
-	chroot_it update-rc.d reboot		start 90 6 .							&>/dev/null
-	chroot_it update-rc.d rmnologin		start 99 2 3 4 5 .						&>/dev/null
-	chroot_it update-rc.d single		start 90 1 .							&>/dev/null
-	chroot_it update-rc.d stop-bootlogd	start 99 2 3 4 5 .						&>/dev/null
-	chroot_it update-rc.d stop-bootlogd-single	start 99 S .						&>/dev/null
-
-	### console-tools ###	
-	chroot_it update-rc.d console-screen.sh start 48 S .							&>/dev/null
-
-	### pppconfig ###
-	chroot_it update-rc.d dns-clean		start 39 S .							&>/dev/null
-
-	### util-linux ###
-	chroot_it update-rc.d hwclock.sh	start 22 S . stop 25 0 6 .					&>/dev/null
-	chroot_it update-rc.d hwclockfirst.sh	start 18 S .							&>/dev/null
-	
-	### ifupdown ###
-	chroot_it update-rc.d ifupdown		start 39 S . start 36 0 6 .					&>/dev/null
-	chroot_it update-rc.d ifupdown-clean	start 18 S .							&>/dev/null
-	
-	### initrd-tools ###	
-	chroot_it update-rc.d initrd-tools.sh	start 05 S .							&>/dev/null
-
-	### isapnptools ###
-	chroot_it update-rc.d isapnp		start 15 S .							&>/dev/null
-
-	### console-common ###
-	chroot_it update-rc.d keymap.sh		start 05 S .							&>/dev/null
-
-	### module-init-tools ###
-	chroot_it update-rc.d module-init-tools	start 20 S .							&>/dev/null
-
-	### netbase ###
-	chroot_it update-rc.d networking	start 40 S . start 35 0 6 .					&>/dev/null
-	
-	### portmap ###
-	#chroot_it update-rc.d portmap		start 43 S . start 32 0 6 . start 18 2 3 4 5 . stop 81 1 .	&>/dev/null
-	chroot_it update-rc.d portmap		start 32 0 6 . start 43 S . stop 81 1 .				&>/dev/null
-
-	### ppp ###
-	chroot_it update-rc.d ppp		start 14 2 3 4 5 . stop 86 0 1 6 .				&>/dev/null
-	chroot_it update-rc.d pppd-dns		start 38 S .							&>/dev/null
-
-	### procps ###
-	chroot_it update-rc.d procps.sh		start 30 S .							&>/dev/null
-
-	### setserial ###
-	chroot_it update-rc.d etc-setserial	start 30 S . stop 30 0 6 .					&>/dev/null
-	chroot_it update-rc.d setserial		start 46 S . stop 19 0 6 .					&>/dev/null
-
-	# Start hotplug
-	chroot_it update-rc.d hotplug		start 40 S .							&>/dev/null
-	chroot_it update-rc.d hotplug-net	start 41 S . stop 89 0 6 .					&>/dev/null
-
-	# udev
-	chroot_it update-rc.d udev		start 03 S .							&>/dev/null
-	chroot_it update-rc.d udev-mtab		start 36 S .							&>/dev/null
-
-	# dbus
-	if [ -x /etc/init.d/dbus-1 ]; then
-		chroot_it update-rc.d dbus-1	defaults							&>/dev/null
-	elif [ -x /etc/init.d/dbus ]; then
-		chroot_it update-rc.d dbus	defaults							&>/dev/null
-	fi
-
-	# bluetooth
-	chroot_it update-rc.d bluetooth		start 25 2 3 4 5 . stop 74 0 1 6 .				&>/dev/null
-
-	# hplip
-	chroot_it update-rc.d hplip 		defaults 19							&>/dev/null
-	
-	# additional startups found in etch (not all tools are installed, but does not matter)
-
-	# discover is more or less useless, so keeps disabled.
-        #chroot_it update-rc.d discover		start 36 S .							&>/dev/null
-        chroot_it update-rc.d exim4 		defaults							&>/dev/null
-        chroot_it update-rc.d glibc.sh 		start 01 S .							&>/dev/null
-        chroot_it update-rc.d hotkey-setup 	defaults							&>/dev/null
-	# installation-report should stay disabled (!)
-        #chroot_it update-rc.d installation-report start 80 S .							&>/dev/null
-        chroot_it update-rc.d killprocs		start 30 1 .							&>/dev/null
-        chroot_it update-rc.d libdevmapper1.02	start 25 S .							&>/dev/null
-        chroot_it update-rc.d lpd		defaults							&>/dev/null
-        chroot_it update-rc.d mountall-bootclean.sh start 36 S .						&>/dev/null
-        chroot_it update-rc.d mountnfs-bootclean.sh start 46 S .						&>/dev/null
-        chroot_it update-rc.d mtab.sh 		start 36 S .							&>/dev/null
-        chroot_it update-rc.d nfs-common	start 21 2 3 4 5 . stop 79 0 1 6 .				&>/dev/null
-	# openbsd-inetd is usally not needed, stays disabled
-        #chroot_it update-rc.d openbsd-inetd defaults								&>/dev/null
-        chroot_it update-rc.d sudo		start 75 S .							&>/dev/null
-
-	# Add default scripts to runlevels
-	for i in $SYSTEM_SERVICES_D; do
-		SYSTEM_SERVICE=$(echo $i | cut -d: -f1)
-		SYSTEM_START=$(echo $i | cut -d: -f2)
-		SYSTEM_STOP=$(echo $i | cut -d: -f3)
-		chroot_it update-rc.d "$SYSTEM_SERVICE" defaults "$SYSTEM_START" "$SYSTEM_STOP"			&>/dev/null
-	done
-
-	# Display Manager "korrekt" starten - also nur im Runlevel 5
-	#	(das gilt aber auch eigentlich nur für nicht-debian Systeme ;-))
-	
-	for DM in kdm xdm gdm; do
-		if [ -e "$TARGET_MNT_POINT/etc/init.d/$DM" ]; then
-	 		chroot_it update-rc.d -f "$DM"	remove							&>/dev/null
-	 		chroot_it update-rc.d "$DM"	start 99 5 . stop 1 0 1 2 3 4 6 .			>/dev/null
-		fi
-	done
-
-	# PCMCIA ausschalten, wenn nicht nötig
-	pidof cardmgr >/dev/null || chroot_it update-rc.d -f pcmcia remove >/dev/null 2>/dev/null
-	
-	# ACPI Anpassung
-	[ -d /proc/acpi -a -x /etc/init.d/acpid ] && chroot_it update-rc.d acpid defaults >/dev/null
-
-	# Startuplinks einfrieren
-	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d
-
-	# system_add_services # started by the different modes
-}
-
-# XXX: live-autoconfig knows about KDE, get rid of sysconfig
-system_install_i18n()
-{
-	# Environment korrekt setzen
-
-	if [ -e "$TARGET_MNT_POINT/etc/sysconfig/i18n" ]; then
-		source "$TARGET_MNT_POINT/etc/sysconfig/i18n"
-		echo LANG=$LANG >> "$TARGET_MNT_POINT/etc/environment"
-		if [ "$LANG" = "el_GR" ]; then
-			echo LANGUAGE=$(echo $LANG|perl -pe '($_)=/(..)/') >> "$TARGET_MNT_POINT/etc/environment"
-	  		echo LC_ALL=$LANG >> "$TARGET_MNT_POINT/etc/environment"
-	 	fi
-
-		# Add localisation for kde3
-		 cat << EOF >> "$TARGET_MNT_POINT/etc/kde3/system.kdeglobals"
-[Locale]
-Charset=$CHARSET
-Country=$COUNTRY
-Language=$LANGUAGE
-EOF
-
-		# Add localisation for kdm
-		# (Language could be commented out)
-		perl -pi -e "s/#Language=.*/Language=$LANGUAGE/g" "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		perl -pi -e "s/Language=.*/Language=$LANGUAGE/g" "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-	fi
-}
-
-# Everything needed for hw-detection
-system_create_modules()
-{
-	# create device symlink /dev/mouse ( normally done by hwsetup )
-	cp -a /dev/mouse "$TARGET_MNT_POINT/dev/"
-
-	# create /etc/modules from current loaded modules
-	cat <<EOF >$TMP
-# /etc/modules: kernel modules to load at boot time.
-#
-# This file should contain the names of kernel modules that are
-# to be loaded at boot time, one per line.  Comments begin with
-# a '#', and everything on the line after them are ignored.
-EOF
-
-	BLACKLIST=$(cut -f1 -d' ' /lib/modules/$(uname -r)/modules.usbmap|sort|uniq|perl -pe 's/#\n//;s/\n/|/g')"cloop|snd|radeon|fsam7400|capi|hisax|fcpci|fcdsl|ieee80211|slam|unionfs|dri"
-	cat /proc/modules | tac | grep -v '\[.*\]' | egrep -v "$BLACKLIST" |
-	while read mod x; do
-		if [ "$mod" = apm ]; then
-			echo "apm power_off=1" >>$TMP
-		elif [ "$mod" = sbp2 ]; then
-			echo "sbp2 serialize_io=1" >>$TMP
-		else
-			echo "$mod" >>$TMP
-		fi
-	done
-
-	WHITELIST="ipw2100|ipw2200"
-	cat /proc/modules | tac | grep -v '\[.*\]' | egrep "$WHITELIST" |
-	while read mod x; do
-		echo "$mod" >>$TMP
-	done
-
-	cp -f $TMP "$TARGET_MNT_POINT/etc/modules"
-	
-	# for the future :-)
-	cp -f $TMP "$TARGET_MNT_POINT/etc/modules-$(uname -r)"
-
-	# udev fixes
-	mount --bind /proc "$TARGET_MNT_POINT/proc"
-	mount --bind /sys "$TARGET_MNT_POINT/sys"
-	chroot_it fix-udev-modules	&>/dev/null
-	chroot_it fix-udev-lan		&>/dev/null
-	umount "$TARGET_MNT_POINT/sys"
-	umount "$TARGET_MNT_POINT/proc"
-	
-	# Also save /etc/sysconfig/
-	mkdir -p "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)"
-	cp -f /etc/sysconfig/{i18n,keyboard,desktop,knoppix,netcard,mouse,sound,xserver,floppy} "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/" 2>/dev/null # silence messages
-	cp -f /etc/X11/xorg.conf* "$TARGET_MNT_POINT/etc/sysconfig/$(uname -r)/" 2>/dev/null # silence messages
+	# get rid of it...
+	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
+	debugit "ReturnCode 5: \"$?\""
 }
 
 system_update_files()
@@ -526,23 +184,42 @@ system_update_files()
 	# update /etc/motd
 	echo -e $"Welcome to $FLL_DISTRO_NAME" "(Kernel $(uname -r))\n" > "$TARGET_MNT_POINT/etc/motd"
 
-	cat <<EOF >$TARGET_MNT_POINT/etc/hosts
-127.0.0.1	localhost
-127.0.0.1	$HOST_NAME
-
-# The following lines are desirable for IPv6 capable hosts
-# (added automatically by netbase upgrade)
-
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
-ff02::3 ip6-allhosts
-EOF
-
+	# hostname
+	sed -i '/localhost/!s/^\(127.0.0.1[ \t]\+\)\(.\+\)$/\1'"$HOST_NAME"'/' \
+		"$TARGET_MNT_POINT"/etc/hosts
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/hostname"
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/mailname"
+
+	# don't allow everyone to use sudo.
+	cat "$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
+	
+	# also fix sudoers
+	cat > "$TARGET_MNT_POINT/etc/sudoers" <<EOF
+# /etc/sudoers
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the man page for details on how to write a sudoers file.
+#
+
+Defaults	env_reset
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root	ALL=(ALL) ALL
+EOF
+	chown root:root "$TARGET_MNT_POINT/etc/sudoers"
+	chmod 0440 "$TARGET_MNT_POINT/etc/sudoers"
+
+	# "normalize" /etc/inittab
+	cp -f "$TARGET_MNT_POINT/usr/share/sysvinit/inittab" "$TARGET_MNT_POINT/etc/inittab"
+	perl -pi -e 's#^([2-6]):23:respawn#$1:2345:respawn#;s#id:[0-6]:initdefault:#id:5:initdefault:#' \
+		"$TARGET_MNT_POINT/etc/inittab"
 	
 	# create "real" /tmp with mode 1777
 	rm -f "$TARGET_MNT_POINT/tmp" 2>/dev/null
@@ -552,10 +229,224 @@ EOF
 	# create /etc/mtab as a regular file
 	rm -f "$TARGET_MNT_POINT/etc/mtab"
 	touch "$TARGET_MNT_POINT/etc/mtab"
-}
 
-system_fix_menus()
-{
+	# update menu entries
 	chroot_it update-menus
 }
 
+in_service_array()
+{
+	[[ ${SERVICE_WHITELIST[@]} ]] || return 1
+
+	# grep for item in service array
+	for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
+		[[ $1 == ${SERVICE_WHITELIST[$i]} ]] && return 0
+	done
+	
+	return 1
+}
+
+push_service_array()
+{
+	[[ ${SERVICE_WHITELIST[@]} ]] || return 1
+
+	# arrays start with index=0, therefore, the total amount of
+	# members now is index of next array member
+	local IDX=${#SERVICE_WHITELIST[@]}
+	
+	if ! in_service_array "$1"; then
+		eval SERVICE_WHITELIST[${IDX}]="$1"
+	fi
+}
+
+system_services()
+{
+	local SERVICE_WHITELIST=(
+		alsa
+		alsa-utils
+		aumix
+		avahi-daemon
+		atd
+		bootclean
+		bootlogd
+		bootmisc.sh
+		capiutils
+		checkfs.sh
+		checkroot.sh
+		console-screen.sh
+		console-screen.kbd.sh
+		cron
+		cupsys
+		dbus
+		etc-setserial
+		glibc.sh
+		halt
+		hibernate
+		hostname.sh
+		hotkey-setup
+		hwclock.sh
+		hwclockfirst.sh
+		ifupdown
+		ifupdown-clean
+		isdnactivecards
+		keymap.sh
+		kill-uswsusp-image
+		killprocs
+		klogd
+		libdevmapper1.02
+		module-init-tools
+		modutils
+		mountall-bootclean.sh
+		mountall.sh
+		mountdevsubfs.sh
+		mountkernfs.sh
+		mountnfs-bootclean.sh
+		mountnfs.sh
+		mtab.sh
+		networking
+		pcmciautils
+		ppp
+		pppd-dns
+		procps.sh
+		rc.local
+		reboot
+		rmnologin
+		screen-cleanup
+		sendsigs
+		setserial
+		single
+		stop-bootlogd
+		stop-bootlogd-single
+		sudo
+		sysklogd
+		udev
+		udev-mtab
+		umountfs
+		umountnfs.sh
+		umountroot
+		urandom
+		vbesave
+		wpa-ifupdown
+		x11-common
+	)
+
+	if [ -x /etc/init.d/acpid ]; then
+		if [ -d /proc/acpi ]; then
+			push_service_array acpid
+			if [ -x /etc/init.d/acpi-support ]; then
+				# add acpi-support for laptops
+				if laptop-detect &>/dev/null; then
+					push_service_array acpi-support
+				else
+					chroot_it dpkg --purge acpi-support
+				fi
+			fi
+		else
+			chroot_it dpkg --purge acpid
+		fi
+	fi
+
+	if [ -x /etc/init.d/powersaved ]; then
+		if pidof powersaved &> /dev/null; then
+			push_service_array powersaved
+			# reverse live-mode inhibition of suspend
+			if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
+				sed -i 's/^\(DISABLE_USER_SUSPEND2.*\)=.*$/\1=""/' \
+					$TARGET_MNT_POINT/etc/powersave/sleep
+			fi
+		else
+			chroot_it dpkg --purge powersaved
+		fi
+	elif [ -x /etc/init.d/powernowd ]; then
+		if pidof powernowd &> /dev/null; then
+			push_service_array powernowd
+		else
+			chroot_it dpkg --purge powersaved
+		fi
+	fi
+
+	if [ -x /usr/sbin/915resolution ]; then
+		if 915resolution -l &>/dev/null; then
+			push_service_array 915resolution
+		else
+			chroot_it dpkg --purge 915resolution
+		fi
+	fi
+
+	# enable splashy, if installed
+	if [ -x /etc/init.d/splashy-init ]; then
+		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
+		push_service_array splashy-init
+	fi
+	
+	# add a window manager or two to the array
+	for WM in kdm gdm wdm xdm; do
+		if [ -x /etc/init.d/"$WM" ]; then
+			push_service_array "$WM"
+		fi
+	done
+	
+	# non-free
+	if [ -x /etc/init.d/ipw3945d ]; then
+		# non-free, still keep them in mind
+		if pidof ipw3945d &>/dev/null; then
+			push_service_array ipw3945d
+		else
+			chroot_it dpkg --purge ipw3945d
+		fi
+	fi
+	
+	# non-free
+	if [ -x /etc/init.d/sl-modem-daemon ]; then
+		if pidof slmodemd &>/dev/null; then
+			push_service_array sl-modem-daemon
+		else
+			chroot_it dpkg --purge sl-modem-daemon
+		fi
+	fi
+
+	#for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
+	#	echo "SERVICE_WHITELIST[$i]=${SERVICE_WHITELIST[$i]}"
+	#done
+
+	for service in /etc/init.d/*; do
+		test -x $service || continue
+		
+		case "${service##*/}" in 
+			rc|rc.local|rcS)
+				continue
+				;;
+		esac
+		
+		# if its not in whitelist, deactivate it
+		if ! in_service_array ${service##*/}; then
+			chroot_it update-rc.d -f ${service##*/} remove
+		fi
+	done
+
+	# disable all services in /etc/inetd.conf
+	if [ -x /etc/init.d/openbsd-inetd ]; then
+		chroot_it update-inetd --multi --disable '*'
+	fi
+	
+	# prepare ssh
+	if [ /etc/init.d/ssh ]; then
+		if [ ! -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" ]; then
+			ssh-keygen -q -t rsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_rsa_key" -C '' -N ''
+		fi
+		if [ ! -e "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" ]; then
+			ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
+		fi
+	fi
+
+	# sysv-freeze the rc.d configuration
+	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d	
+}
+
+# Everything needed for hw-detection
+system_create_modules()
+{
+	if grep -g ^capability /proc/modules; then
+		echo capability >> "$TARGET_MNT_POINT/etc/modules"
+	fi
+}
