@@ -281,19 +281,6 @@ system_add_services()
 		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop"/Floppy
 		rm -f "$TARGET_MNT_POINT/etc/skel/Desktop"/Floppy
 		
-		mkdir -p "$TARGET_MNT_POINT/etc/skel/.kde/share/config" \
-			 "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config"
-		touch "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
-		awk '/^\[Media\]/ { f = 1; next } /^\[.+\]/ { f = 0 } ! f' "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc" \
-			> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-		cat << EOF >> "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc"
-[Media]
-enabled=true
-exclude=media/hdd_unmounted
-EOF
-		cat "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesktoprc" \
-			> "$TARGET_MNT_POINT/etc/skel/.kde/share/config/kdesktoprc"
-
 		# fix ownership
 		chroot_it chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 	fi
