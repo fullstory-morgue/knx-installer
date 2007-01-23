@@ -302,7 +302,7 @@ system_services()
 {
 	SYSTEM_SERVICES_D="sysklogd:10:90 klogd:11:89 kerneld:12:12 ppp:14:14 pcmcia:15:15 logoutd:20:20 makedev:20:20 atd:89:11 cron:89:11"
 	# delete knoppix specific programs from runlevel directories
-	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,knoppix-autoconfig,knoppix-hd-config,knoppix-reboot,knoppix-halt,live-autoconfig,live-halt,live-reboot}"
+	rm -f "$TARGET_MNT_POINT/etc/rc[023456S].d/[SK]??{xsession,live-autoconfig,live-halt,live-reboot}"
 
 	# start services wanted in config ...
 	for i in $SERVICES_START; do
