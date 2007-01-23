@@ -588,6 +588,7 @@ EOF
 
 	GRUB_CMDLINE="$GRUB_CMDLINE vga=$GRUB_VGA"
 	perl -pi -e "s|^# kopt=root=(.*) ro|# kopt=root=\1 ro $GRUB_CMDLINE|g" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^kernel(.*) ro|kernel\1 ro $GRUB_CMDLINE|g" $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Add other OS' :-)
 	# Sorry x86-only for now ... :-/
