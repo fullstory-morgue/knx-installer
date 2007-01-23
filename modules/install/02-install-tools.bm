@@ -109,6 +109,11 @@ Icon=html
 Terminal=0
 EOF
 	fi
+
+	# stop loading browser
+	if [ -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.dekstop" ]; then
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.dekstop"
+	fi
 	
 	# revert to plain debian .bashrc
 	cat "$TARGET_MNT_POINT/etc/skel/.bashrc" > "$TARGET_MNT_POINT/home/$USER_NAME/.bashrc"
