@@ -761,6 +761,7 @@ function appendGrubForOtherOS
 						while read line; do
                             # well we take the first kernel found 
                             # and dont care this is the default one or not
+                            #skip comented lines
 							if [[ $line =~ "^title.*" ]]; then
 								if [ $found -eq 0 ] ;then
 									found=1
@@ -772,7 +773,10 @@ function appendGrubForOtherOS
 									break
 								fi
 							else
-								test $found -eq 1 && echo $line >> "$MyGrubTemp"
+                                # skip uninteresting lines
+                                # remove leading spaces..
+                                line=$(echo "$line" | sed -e 's/^[ \t]*//' )
+								test $found -eq 1 && echo $line | grep -v '^#' >> "$MyGrubTemp"
 							fi
 						done < "$mounted_grub_file"
 					fi
