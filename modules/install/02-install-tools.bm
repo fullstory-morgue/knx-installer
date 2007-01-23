@@ -361,7 +361,7 @@ system_services()
 		if pidof powernowd &> /dev/null; then
 			push_service_array powernowd
 		else
-			chroot_it dpkg --purge powersaved
+			chroot_it dpkg --purge powernowd
 		fi
 	fi
 
