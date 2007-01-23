@@ -1,9 +1,5 @@
-knx-installer (0.4.1.25) UNRELEASED; urgency=low
+knx-installer (0.4.1.25) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Fix another typo (grep -g, doh!).
   * Remove showindex.desktop from installed users Autostart dir.
 

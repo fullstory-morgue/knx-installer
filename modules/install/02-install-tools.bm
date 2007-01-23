@@ -111,8 +111,8 @@ EOF
 	fi
 
 	# stop loading browser
-	if [ -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.dekstop" ]; then
-		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.dekstop"
+	if [ -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop" ]; then
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop"
 	fi
 	
 	# revert to plain debian .bashrc
