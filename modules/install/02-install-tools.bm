@@ -355,13 +355,16 @@ system_services()
 					$TARGET_MNT_POINT/etc/powersave/sleep
 			fi
 		else
-			chroot_it dpkg --purge powersaved
+			:
+			# kpowersaved
+			#chroot_it dpkg --purge powersaved
 		fi
 	elif [ -x /etc/init.d/powernowd ]; then
 		if pidof powernowd &> /dev/null; then
 			push_service_array powernowd
 		else
-			chroot_it dpkg --purge powernowd
+			:
+			#chroot_it dpkg --purge powernowd
 		fi
 	fi
 
@@ -369,7 +372,8 @@ system_services()
 		if 915resolution -l &>/dev/null; then
 			push_service_array 915resolution
 		else
-			chroot_it dpkg --purge 915resolution
+			:
+			#chroot_it dpkg --purge 915resolution
 		fi
 	fi
 
