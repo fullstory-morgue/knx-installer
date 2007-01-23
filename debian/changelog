@@ -1,7 +1,4 @@
-knx-installer (0.4.1.23) UNRELEASED; urgency=low
-
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
+knx-installer (0.4.1.23) unstable; urgency=low
 
   [ Kel Modderman ]
   * Remove system_install_keymap, that is handled during live-mode now.
