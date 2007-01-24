@@ -1,7 +1,26 @@
 #!/bin/sh
-if [ $# -eq 0 ] && [ -n "$DISPLAY" ] && [ -x /usr/bin/install-gui ]; then
-	exec /usr/bin/install-gui
+
+if [ -s /etc/default/distro ]; then
+	. /etc/default/distro
 else
-	exec /usr/sbin/knx-installer "$@"
+	FLL_LIVE_USER="sidux"
 fi
 
+if [ "$FLL_DISTRO_MODE" != live ]; then
+	echo "This script can only be used from the live environment."
+	exit 1
+fi
+
+if [ -x /usr/bin/dcop ] && dcop --user "$FLL_LIVE_USER" kded >/dev/null 2>&1; then
+	dcop --user "$FLL_LIVE_USER" kded kded unloadModule medianotifier >/dev/null
+fi
+
+if [ "$#" -eq 0 ] && [ -n "$DISPLAY" ] && [ -x /usr/bin/install-gui ]; then
+	/usr/bin/install-gui
+else
+	/usr/sbin/knx-installer "$@"
+fi
+
+if [ -x /usr/bin/dcop ] && dcop --user "$FLL_LIVE_USER" kded >/dev/null 2>&1; then
+	dcop --user "$FLL_LIVE_USER" kded kded loadModule medianotifier >/dev/null
+fi
