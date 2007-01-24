@@ -23,7 +23,6 @@ function setup_dialog()
 	DIALOG="dialog"
 	[ -n "$DISPLAY" ] && [ -x /usr/bin/Xdialog ] && DIALOG="Xdialog"
 
-	[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
 }
 
 function error_code
