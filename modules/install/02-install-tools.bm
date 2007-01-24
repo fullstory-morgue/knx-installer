@@ -295,7 +295,6 @@ system_services()
 		kill-uswsusp-image
 		killprocs
 		klogd
-		libdevmapper1.02
 		module-init-tools
 		modutils
 		mountall-bootclean.sh
