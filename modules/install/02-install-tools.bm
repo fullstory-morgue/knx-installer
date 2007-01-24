@@ -343,11 +343,13 @@ system_services()
 				if laptop-detect &>/dev/null; then
 					push_service_array acpi-support
 				else
-					chroot_it dpkg --purge acpi-support
+					:
+					#chroot_it dpkg --purge acpi-support
 				fi
 			fi
 		else
-			chroot_it dpkg --purge acpid
+			:
+			#chroot_it dpkg --purge acpid
 		fi
 	fi
 

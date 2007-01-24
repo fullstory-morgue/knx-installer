@@ -9,11 +9,13 @@ knx-installer (0.4.1.27) UNRELEASED; urgency=low
   * Remove kmdeianotifier hack from knx-installer.
   * Remove suknoppixmenus, it is unused.
   * Don't source sysconfig/i18n in dialog.bm.
+  * Play it safe and do not purge acpid or apci-support for now when they fail
+    service test.
 
   [ Joaquim Boura ]
   * sidux does not be converted to debian....
 
- -- Kel Modderman <kel@otaku42.de>  Wed, 24 Jan 2007 17:23:27 +1000
+ -- Kel Modderman <kel@otaku42.de>  Wed, 24 Jan 2007 17:32:47 +1000
 
 knx-installer (0.4.1.26) unstable; urgency=low
 
