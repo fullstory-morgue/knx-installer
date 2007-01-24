@@ -1,3 +1,9 @@
+knx-installer (0.4.1.29) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 24 Jan 2007 15:05:59 +0100
+
 knx-installer (0.4.1.28) unstable; urgency=low
 
   * Remove erroneous attempt to save current KDE session via dcop/ksmserver.
