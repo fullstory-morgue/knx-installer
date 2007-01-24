@@ -331,7 +331,7 @@ function old_installer
 {
 	system_type_beginner
 	
-	update_status $"Converting $FLL_DISTRO_NAME to Debian..."
+	update_status $"Converting live system to Debian..."
 
 	system_services
 
