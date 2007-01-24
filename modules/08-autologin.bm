@@ -15,5 +15,5 @@ function module_autologin
 
 function module_autologin_showinfo
 {
-    [ "$AUTOLOGIN_MODULE" = "configured" ] && echo AutoLogin configure || echo "AutoLogin not configured"
+    [ "$AUTOLOGIN_MODULE" = "configured" ] && echo "AutoLogin configured" || echo "AutoLogin not configured"
 }
