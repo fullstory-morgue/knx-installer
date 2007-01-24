@@ -29,30 +29,3 @@ function update_passwd
 	# change user in /etc/group
 	sed "s/$DEFAULT_USER/$USER_NAME/g;" $TMPDIR/group > $TARGET_MNT_POINT/etc/group
 }
-
-function suknoppixmenus
-{
-	[ "$#" -lt "2" ] && return 1
-
-	supath=$1
-	suprog=$2
-	
-	# This menu entries do not need root-rights
-	SU_WHITELIST="configure_xawtv kppp knx-live-inst"
-	
-	SUTMPDIR="$TMPDIR/suknxmenus"
-	mkdir -p $SUTMPDIR
-
-	cp -a $supath/* $SUTMPDIR
-	(
-		cd $SUTMPDIR
-		for i in $(find . -name "*.desktop")
-		  do
-		  stringinstring "$(basename ${i/.desktop/})" "$SU_WHITELIST" && continue
-		  sed 's/Exec=/Exec='$suprog' \-\- /g' $i > $supath/$i
-		done
-	)
-
-	# Cleanup
-	rm -rf $SUTMPDIR
-}
