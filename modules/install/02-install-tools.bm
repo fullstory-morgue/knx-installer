@@ -59,8 +59,9 @@ system_copy_home()
 		return 0
 	fi
 
-	# save current session
-	dcop ksmserver ksmserver saveCurrentSession
+	# save current session, this never worked due to `--user "$DEFAULT_USER"' being ommitted
+	# do we really want to save the current session?
+	# dcop --user "$DEFAULT_USER" ksmserver ksmserver saveCurrentSession
 
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
