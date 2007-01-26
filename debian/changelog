@@ -1,8 +1,18 @@
 knx-installer (0.4.1.30) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 25 Jan 2007 12:30:45 +0100
+  [ Kel Modderman ]
+  * Cleanup comments in system_services(), purge 915resolution and
+    acpi-support when they are undesired.
+  * Move alsa state saving and kdm hacking stuff from system_copy_etc() to
+    system_update_files().
+  * Add hack to make networking non-blocking, use allow-hotplug instead of
+    auto in /etc/network/interfaces.
+  * Comment out perl dpi hack that tainted /etc/kde3/kdm/kdmrc.
+
+ -- Kel Modderman <kel@otaku42.de>  Fri, 26 Jan 2007 16:25:37 +1000
 
 knx-installer (0.4.1.29) unstable; urgency=low
 

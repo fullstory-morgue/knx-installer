@@ -20,32 +20,6 @@ system_copy_etc()
 	( cd "$TARGET_MNT_POINT"; system_findchanged /etc "$FLL_MOUNTPOINT"/etc | \
 		egrep -v "fstab|passwd|shadow|group" | tar -T - -cf - | tar xf - ) 2>/dev/null
 
-  	# Save ALSA sound volume
-	[ -e /proc/asound/modules -a -x /usr/sbin/alsactl ] && /usr/sbin/alsactl store
-	
-	# Copy volume setting
-	[ -f /var/lib/alsa/asound.state ] && cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
-
-	# Add dpi setting from cheatcode to hd install
-	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
-	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
-	if [ "$CUSTOM_DPI" != "auto" -a "$CUSTOM_DPI" ]; then
-		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
-				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		fi
-	else
-		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
-				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		fi
-	fi
-
-	# Auto login
-	if [ "$AUTOLOGIN" = "yes" -a -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-	fi
 }
 
 system_copy_home()
@@ -188,9 +162,12 @@ system_update_files()
 
 	# hostname
 	sed -i '/localhost/!s/^\(127.0.0.1[ \t]\+\)\(.\+\)$/\1'"$HOST_NAME"'/' \
-		"$TARGET_MNT_POINT"/etc/hosts
+		"$TARGET_MNT_POINT/etc/hosts"
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/hostname"
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/mailname"
+
+	# make networking non-blocking, use allow-hotplug instead of auto
+	sed -i '/^auto lo/!s/^auto/allow-hotplug/' "$TARGET_MNT_POINT/etc/network/interfaces"
 
 	# don't allow everyone to use sudo.
 	cat "$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
@@ -234,6 +211,37 @@ EOF
 
 	# update menu entries
 	chroot_it update-menus
+
+	# Save ALSA sound volume
+	if [ -e /proc/asound/modules ] && [ -x /usr/sbin/alsactl ]; then
+		/usr/sbin/alsactl store
+		if [ -f /var/lib/alsa/asound.state ]; then
+			cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
+		fi
+	fi
+	
+	# XXX: this seems a bit hackish IMHO, we could do better once /etc/sysconfig is gone
+	# Add dpi setting from cheatcode to hd install
+	#[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
+	#[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
+	#if [ "$CUSTOM_DPI" != "auto" ] && [ "$CUSTOM_DPI" ]; then
+	#	if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+	#		perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
+	#			"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+	#	fi
+	#else
+	#	if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+	#		perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
+	#			"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+	#	fi
+	#fi
+
+	# Auto login
+	if [ "$AUTOLOGIN" = "yes" ] && [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+	fi
+
 }
 
 in_service_array()
@@ -339,13 +347,12 @@ system_services()
 				if laptop-detect &>/dev/null; then
 					push_service_array acpi-support
 				else
-					:
-					#chroot_it dpkg --purge acpi-support
+					chroot_it dpkg --purge acpi-support
+					rm -rf "$TARGET_MNT_POINT/var/lib/acpi-support/"
 				fi
 			fi
 		else
-			:
-			#chroot_it dpkg --purge acpid
+			: #chroot_it dpkg --purge acpid
 		fi
 	fi
 
@@ -355,19 +362,16 @@ system_services()
 			# reverse live-mode inhibition of suspend
 			if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
 				sed -i 's/^\(DISABLE_USER_SUSPEND2.*\)=.*$/\1=""/' \
-					$TARGET_MNT_POINT/etc/powersave/sleep
+					"$TARGET_MNT_POINT/etc/powersave/sleep"
 			fi
 		else
-			:
-			# kpowersaved
-			#chroot_it dpkg --purge powersaved
+			: #chroot_it dpkg --purge powersaved => kpowersave currently depends on this
 		fi
 	elif [ -x /etc/init.d/powernowd ]; then
 		if pidof powernowd &> /dev/null; then
 			push_service_array powernowd
 		else
-			:
-			#chroot_it dpkg --purge powernowd
+			: #chroot_it dpkg --purge powernowd
 		fi
 	fi
 
@@ -375,8 +379,7 @@ system_services()
 		if 915resolution -l &>/dev/null; then
 			push_service_array 915resolution
 		else
-			:
-			#chroot_it dpkg --purge 915resolution
+			chroot_it dpkg --purge 915resolution
 		fi
 	fi
 
@@ -411,11 +414,7 @@ system_services()
 			chroot_it dpkg --purge sl-modem-daemon
 		fi
 	fi
-
-	#for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
-	#	echo "SERVICE_WHITELIST[$i]=${SERVICE_WHITELIST[$i]}"
-	#done
-
+	
 	for service in /etc/init.d/*; do
 		test -x $service || continue
 		
