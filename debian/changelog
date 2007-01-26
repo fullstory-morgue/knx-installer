@@ -1,9 +1,5 @@
-knx-installer (0.4.1.31) UNRELEASED; urgency=low
+knx-installer (0.4.1.31) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Don't trust variable substitution. Add extra check to esure init script
     glob match is actually a file, and then use basename to strip /etc/init.d
     from init pathname to get a service name that update-rc.d knows about.
