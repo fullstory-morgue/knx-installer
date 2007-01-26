@@ -222,19 +222,19 @@ EOF
 	
 	# XXX: this seems a bit hackish IMHO, we could do better once /etc/sysconfig is gone
 	# Add dpi setting from cheatcode to hd install
-	#[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
-	#[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
-	#if [ "$CUSTOM_DPI" != "auto" ] && [ "$CUSTOM_DPI" ]; then
-	#	if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-	#		perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
-	#			"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-	#	fi
-	#else
-	#	if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-	#		perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
-	#			"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-	#	fi
-	#fi
+	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
+	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
+	if [ "$CUSTOM_DPI" != "auto" ] && [ "$CUSTOM_DPI" ]; then
+		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
+				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		fi
+	else
+		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
+			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
+				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+		fi
+	fi
 
 	# Auto login
 	if [ "$AUTOLOGIN" = "yes" ] && [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
