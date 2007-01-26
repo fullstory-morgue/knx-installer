@@ -244,31 +244,6 @@ EOF
 
 }
 
-in_service_array()
-{
-	[[ ${SERVICE_WHITELIST[@]} ]] || return 1
-
-	# grep for item in service array
-	for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
-		[[ $1 == ${SERVICE_WHITELIST[$i]} ]] && return 0
-	done
-	
-	return 1
-}
-
-push_service_array()
-{
-	[[ ${SERVICE_WHITELIST[@]} ]] || return 1
-
-	# arrays start with index=0, therefore, the total amount of
-	# members now is index of next array member
-	local IDX=${#SERVICE_WHITELIST[@]}
-	
-	if ! in_service_array "$1"; then
-		eval SERVICE_WHITELIST[${IDX}]="$1"
-	fi
-}
-
 system_services()
 {
 	local SERVICE_WHITELIST=(
@@ -341,11 +316,11 @@ system_services()
 
 	if [ -x /etc/init.d/acpid ]; then
 		if [ -d /proc/acpi ]; then
-			push_service_array acpid
+			SERVICE_WHITELIST+=( acpid )
 			if [ -x /etc/init.d/acpi-support ]; then
 				# add acpi-support for laptops
 				if laptop-detect &>/dev/null; then
-					push_service_array acpi-support
+					SERVICE_WHITELIST+=( acpi-support )
 				else
 					chroot_it dpkg --purge acpi-support
 					rm -rf "$TARGET_MNT_POINT/var/lib/acpi-support/"
@@ -358,7 +333,7 @@ system_services()
 
 	if [ -x /etc/init.d/powersaved ]; then
 		if pidof powersaved &>/dev/null; then
-			push_service_array powersaved
+			SERVICE_WHITELIST+=( powersaved )
 			# reverse live-mode inhibition of suspend
 			if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
 				sed -i 's/^\(DISABLE_USER_SUSPEND2.*\)=.*$/\1=""/' \
@@ -369,7 +344,7 @@ system_services()
 		fi
 	elif [ -x /etc/init.d/powernowd ]; then
 		if pidof powernowd &>/dev/null; then
-			push_service_array powernowd
+			SERVICE_WHITELIST+=( powernowd )
 		else
 			: #chroot_it dpkg --purge powernowd
 		fi
@@ -377,7 +352,7 @@ system_services()
 
 	if [ -x /etc/init.d/bluetooth ]; then
 		if pidof hcid &>/dev/null || pidof sdpd &>/dev/null; then
-			push_service_array bluetooth
+			SERVICE_WHITELIST+=( bluetooth )
 		else
 			: #chroot_it dpkg --purge bluez-utils
 		fi
@@ -385,7 +360,7 @@ system_services()
 
 	if [ -x /usr/sbin/915resolution ]; then
 		if 915resolution -l &>/dev/null; then
-			push_service_array 915resolution
+			SERVICE_WHITELIST+=( 915resolution )
 		else
 			chroot_it dpkg --purge 915resolution
 		fi
@@ -394,13 +369,13 @@ system_services()
 	# enable splashy, if installed
 	if [ -x /etc/init.d/splashy-init ]; then
 		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
-		push_service_array splashy-init
+		SERVICE_WHITELIST+=( splashy-init )
 	fi
 	
 	# add a window manager or two to the array
 	for WM in kdm gdm wdm xdm; do
 		if [ -x /etc/init.d/"$WM" ]; then
-			push_service_array "$WM"
+			SERVICE_WHITELIST+=( "$WM" )
 		fi
 	done
 	
@@ -408,7 +383,7 @@ system_services()
 	if [ -x /etc/init.d/ipw3945d ]; then
 		# non-free, still keep them in mind
 		if pidof ipw3945d &>/dev/null; then
-			push_service_array ipw3945d
+			SERVICE_WHITELIST+=( ipw3945d )
 		else
 			chroot_it dpkg --purge ipw3945d
 		fi
@@ -417,7 +392,7 @@ system_services()
 	# non-free
 	if [ -x /etc/init.d/sl-modem-daemon ]; then
 		if pidof slmodemd &>/dev/null; then
-			push_service_array sl-modem-daemon
+			SERVICE_WHITELIST+=( sl-modem-daemon )
 		else
 			chroot_it dpkg --purge sl-modem-daemon
 		fi
@@ -432,10 +407,12 @@ system_services()
 				;;
 		esac
 		
-		# if its not in whitelist, deactivate it
-		if ! in_service_array ${service##*/}; then
-			chroot_it update-rc.d -f ${service##*/} remove
-		fi
+		for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
+			# service is in whitelist, next please (loop depth = 2)
+			[[ ${service##*/} == ${SERVICE_WHITELIST[$i]} ]] && continue 2
+		done
+
+		chroot_it update-rc.d -f ${service##*/} remove
 	done
 
 	# disable all services in /etc/inetd.conf
