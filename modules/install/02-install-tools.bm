@@ -88,6 +88,11 @@ EOF
 	
 	# revert to plain debian .bashrc
 	cat "$TARGET_MNT_POINT/etc/skel/.bashrc" > "$TARGET_MNT_POINT/home/$USER_NAME/.bashrc"
+	
+	# revert kdesu/sudo workaround
+	if grep -q sudo "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesurc" 2>/dev/null; then
+		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kdesurc"
+	fi
 
 	# force kde first time configuration
 	if [ -f /etc/skel/.kde/share/config/kpersonalizerrc ]; then
