@@ -1,9 +1,5 @@
-knx-installer (0.4.1.30) UNRELEASED; urgency=low
+knx-installer (0.4.1.30) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Cleanup comments in system_services(), purge 915resolution and
     acpi-support when they are undesired.
   * Move alsa state saving and kdm hacking stuff from system_copy_etc() to
