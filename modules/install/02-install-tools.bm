@@ -357,7 +357,7 @@ system_services()
 	fi
 
 	if [ -x /etc/init.d/powersaved ]; then
-		if pidof powersaved &> /dev/null; then
+		if pidof powersaved &>/dev/null; then
 			push_service_array powersaved
 			# reverse live-mode inhibition of suspend
 			if [ -w $TARGET_MNT_POINT/etc/powersave/sleep ]; then
@@ -368,10 +368,18 @@ system_services()
 			: #chroot_it dpkg --purge powersaved => kpowersave currently depends on this
 		fi
 	elif [ -x /etc/init.d/powernowd ]; then
-		if pidof powernowd &> /dev/null; then
+		if pidof powernowd &>/dev/null; then
 			push_service_array powernowd
 		else
 			: #chroot_it dpkg --purge powernowd
+		fi
+	fi
+
+	if [ -x /etc/init.d/bluetooth ]; then
+		if pidof hcid &>/dev/null || pidof sdpd &>/dev/null; then
+			push_service_array bluetooth
+		else
+			: #chroot_it dpkg --purge bluez-utils
 		fi
 	fi
 
