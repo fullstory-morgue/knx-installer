@@ -399,9 +399,12 @@ system_services()
 	fi
 	
 	for service in /etc/init.d/*; do
-		test -x $service || continue
+		test -f "$service" || continue
+		test -x "$service" || continue
+
+		service=$(basename $service)
 		
-		case "${service##*/}" in 
+		case "$service" in 
 			rc|rc.local|rcS)
 				continue
 				;;
@@ -409,10 +412,11 @@ system_services()
 		
 		for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
 			# service is in whitelist, next please (loop depth = 2)
-			[[ ${service##*/} == ${SERVICE_WHITELIST[$i]} ]] && continue 2
+			[[ $service == ${SERVICE_WHITELIST[$i]} ]] && continue 2
 		done
-
-		chroot_it update-rc.d -f ${service##*/} remove
+		
+		# service didn't have a match in whitelist, purge it
+		chroot_it update-rc.d -f "$service" remove
 	done
 
 	# disable all services in /etc/inetd.conf
