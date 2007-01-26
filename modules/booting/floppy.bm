@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Requirements:	
+#		$TARGET_MNT_POINT
+#		floppy in /dev/fd0
+#		valid /etc/lilo.conf
+
+# Function: creates a boot-floppy for BOOT_WHERE="partition"
+#	    it is _no_ rescue-floppy
+
+# TODO: If grub is used, there must be an alternative ...
+# TODO: Make it possible to rescue an installed system (in cheatcodes)
+
+function make_floppy
+{
+	if [ "$BOOT_LOADER" = "grub" ]
+	then
+		mformat a:
+		mkdir -p $TARGET_MNT_POINT/floppy
+		mount /dev/fd0 $TARGET_MNT_POINT/floppy
+		grub-install --recheck --root-directory=$TARGET_MNT_POINT/floppy "(fd0)"
+		cp $TARGET_MNT_POINT/boot/grub/menu.lst $TARGET_MNT_POINT/floppy/boot/grub/
+		[ -e $DEFAULT_DIR/boot/message ] && \
+		    cp $DEFAULT_DIR/boot/message $TARGET_MNT_POINT/floppy/boot/
+		umount $TARGET_MNT_POINT/floppy
+	else
+		mke2fs /dev/fd0
+		mkdir -p $TARGET_MNT_POINT/floppy
+		mount /dev/fd0 $TARGET_MNT_POINT/floppy
+		lilo -r $TARGET_MNT_POINT -b /dev/fd0 -i /floppy/boot.b -c -m /floppy/map
+		umount $TARGET_MNT_POINT/floppy
+	fi
+}
