@@ -514,7 +514,7 @@ install_grub()
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# change menu.lst
-
+    # TODO other languages
 	# Add german keybindings 
 	case "$LANG" in
 		de*|at*|ch*)
@@ -553,11 +553,27 @@ EOF
 	perl -pi -e 's/^default .*/default saved/g' $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# add graphical menu
-    export device_map=$TARGET_MNT_POINT/boot/grub/device.map
-    export kernel_vers=$(uname -r)
-    root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |grep -v "single" |sed 's#^kernel.*root=##'|sed 's# .*$##')
-    GROOT=$(translate_linux_to_grub $root_device)
+	# if there is a "/boot" mounted then this is grub root
+	# otherwise we have /boot over the / partition
+	bootpart=
+	for i in $HD_MAP; do
+		point=$(echo $i | cut -d":" -f2)
+		if [ "$point" = "/boot" ]; then
+			bootpart=$(echo $i | cut -d":" -f1)
+		fi
+	done
 
+	# bad handle boot partition
+	if [ -n "$bootpart" ]; then
+		GROOT=$(translate_linux_to_grub $bootpart)
+	else
+		export device_map=$TARGET_MNT_POINT/boot/grub/device.map
+		export kernel_vers=$(uname -r)
+		root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |\
+			grep -v "single" |\
+			sed 's#^kernel.*root=##'|sed 's# .*$##')
+		GROOT=$(translate_linux_to_grub $root_device)
+	fi
 	if [ -n "$GROOT" -a -s $TARGET_MNT_POINT/boot/message ]; then
 		if { mount | grep -q $TARGET_MNT_POINT/boot ; }; then
 			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
@@ -566,8 +582,8 @@ EOF
 		fi
 	fi
 
-    perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
-    perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Create a new cmdline
 	
@@ -698,8 +714,10 @@ add_bootmanager()
 	else
 		ln -sf vmlinuz-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/vmlinuz
 		ln -sf /boot/vmlinuz $TARGET_MNT_POINT/vmlinuz
-		[ -e $TARGET_MNT_POINT/boot/initrd.img-$BOOT_RUNNING_KERNEL ] && ln -sf initrd.img-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/initrd.img
-		[ -e $TARGET_MNT_POINT/boot/System.map-$BOOT_RUNNING_KERNEL ] && ln -sf System.map-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/System.map
+		[ -e $TARGET_MNT_POINT/boot/initrd.img-$BOOT_RUNNING_KERNEL ] && \
+			ln -sf initrd.img-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/initrd.img
+		[ -e $TARGET_MNT_POINT/boot/System.map-$BOOT_RUNNING_KERNEL ] && \
+			ln -sf System.map-$BOOT_RUNNING_KERNEL $TARGET_MNT_POINT/boot/System.map
 		install_lilo
 	fi
 	# TODO: Add error handler
@@ -775,7 +793,8 @@ function appendGrubForOtherOS
                                     # one empty line
                                     echo >> "$MyGrubTemp"
                                     # and remove the word [D,d]efault it it's there
-                                    echo $(echo $line | sed -e 's#[D,d]efault##') \($device\) >> "$MyGrubTemp"
+                                    echo $(echo $line | \
+										sed -e 's#[D,d]efault##') \(${device:5}\) >> "$MyGrubTemp"
 								else
 									break
 								fi
@@ -790,6 +809,9 @@ function appendGrubForOtherOS
 					umount $TempDir
 				fi
 			else
+				# elif [ "$kindOf" = "windows" ]; then
+				#     
+				#else
 				# place for other OS's
 				:
 			fi

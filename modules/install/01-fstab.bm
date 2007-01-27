@@ -23,7 +23,8 @@ function get_usb_devices
 			L="${L##.*/}"
 
 			# Beware of the difference between ${VAR+string} and ${VAR:+string} !!
-			# The former will use string if $VAR = undef or "", while the latter will only use string if $VAR is not empty!
+			# The former will use string if $VAR = undef or "", 
+			# while the latter will only use string if $VAR is not empty!
 			DEV="${DEV}${DEV:+ }$L"
 		done
 		shopt $S nullglob
@@ -36,7 +37,9 @@ function update_fstab
 {
 	update_status $"Updating /etc/fstab..."
 
-	grep "^/dev/" /etc/fstab |grep -v '^/dev/fd' |grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
+	grep "^/dev/" /etc/fstab | \
+	    grep -v '^/dev/fd' | \
+	    grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
 
 	cat <<EOF > "$TARGET_MNT_POINT/etc/fstab"
 # /etc/fstab: static file system information.
@@ -83,17 +86,20 @@ EOF
 		m=${c#/dev}
 		[ "$m" = "/cdrom" ] && m="/cdrom0"
 		[ -d "$TARGET_MNT_POINT/media$m" ] || mkdir -p "$TARGET_MNT_POINT/media$m"
-		stringinfile "/dev/$(readlink $c)" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
-    grep -v "^/dev/$(readlink $c)" $TMPDIR/fstab > $TMPDIR/fstab-1 
-    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
+		stringinfile "/dev/$(readlink $c)" "$TARGET_MNT_POINT/etc/fstab" || \
+		    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
+		grep -v "^/dev/$(readlink $c)" $TMPDIR/fstab > $TMPDIR/fstab-1 
+		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done	
 
 	# Add floppy devices to /etc/fstab
 	for f in $(ls -d /sys/block/fd* 2>/dev/null); do
-		[ -d "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}" ] || mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
-		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
-    grep -v "^/dev${f#/sys/block}" $TMPDIR/fstab > $TMPDIR/fstab-1 
-    mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
+		[ -d "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}" ] || \
+		    mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
+		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || \
+		    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
+		grep -v "^/dev${f#/sys/block}" $TMPDIR/fstab > $TMPDIR/fstab-1 
+		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
 	# Remove not needed device links
@@ -111,14 +117,18 @@ EOF
 
 	# Reformat /etc/fstab
 	rm -f "$TARGET_MNT_POINT/etc/fstab.new"
-	awk '{if (/^[ \t]*#/) print; else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
+	awk '{\
+		if (/^[ \t]*#/) print; \
+		else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6\
+	}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
+
 	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
 
-    # create the dirs under media
-    myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
-    for myDir in ${myDirs}; do
-        mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
-    done
+	# create the dirs under media
+	myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
+	for myDir in ${myDirs}; do
+		mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
+	done
 }
 
 # -------------------------
@@ -155,7 +165,10 @@ function fix_fstab_for_UUID
 		TMP="$(scanpartitions -v uuids=1 $i | awk '{print $1}')"
 		debugit "Partiton: \"$i\" UUID: \"$TMP\""
 		if [ -n "$TMP" ]; then
-			sed -i "s%^${i}[[:space:]]%${TMP}\t%" $myFstab
+			# check if this UUID is there more than once
+			if [ "$(scanpartitions -v uuids=1 | grep "$TMP" | wc -l)" -eq 1 ]; then   
+				sed -i "s%^${i}[[:space:]]%${TMP}\t%" $myFstab
+			fi
 		else
 			# XXX:  comment out this fstab line, we're talking about
 			#   removable media which isn't current....ttached and
