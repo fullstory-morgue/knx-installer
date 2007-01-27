@@ -560,6 +560,7 @@ EOF
 		point=$(echo $i | cut -d":" -f2)
 		if [ "$point" = "/boot" ]; then
 			bootpart=$(echo $i | cut -d":" -f1)
+            break
 		fi
 	done
 
