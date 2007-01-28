@@ -4,8 +4,9 @@ knx-installer (0.4.1.33) UNRELEASED; urgency=low
   * FIXED: installing with a separate /boot
   * FIXED: partitions with duplicate UUID remain with old style fstab entry
   * enhancing readability on a couple of files
+  * NEW script to fix an installation on USB-HD
 
- -- Joaquim Boura <x-un-i@sidux.com>  Sat, 27 Jan 2007 13:34:06 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sun, 28 Jan 2007 01:08:49 +0100
 
 knx-installer (0.4.1.32) unstable; urgency=low
 

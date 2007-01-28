@@ -1,2 +1,3 @@
 *-installer	usr/sbin/
+fix-usb-install usr/sbin/
 modules 	usr/share/knx-installer/

@@ -1,0 +1,136 @@
+#!/bin/bash
+#----------------------------------------------------------------------
+# (c) sidux Foundation
+# Script to fix a sidux installation on USB disk
+#
+# it uses the .knofig file and  from there the following
+# HD_COICE   - root of the installation
+# HD_MAP     - additional device mapping
+# BOOT_WHERE - if it was set to "mbr" that has overwritten the
+#              MBR of hda and the user will gonna have probs.
+#              he can be warned, and if he agrees, we can fix that issue
+#              using lilo.
+#-----------------------------------------------------------------------
+if [ "$(id -u)" -ne 0 ]; then
+	[ -x /usr/bin/su-me ] && DISPLAY="" exec su-me "$0" "$@"
+
+	echo Error: You must be root to run this script!
+	exit 1
+fi
+
+#-----------------------------------------------------------------------
+RED="[1;31m"
+NORMAL="[1;39m"
+#-----------------------------------------------------------------------
+if [ -e "$HOME/.knofig" ]; then
+    CONFIG=$HOME/.knofig
+elif [-e ~sidux/.knofig ]; then
+    CONFIG="~sidux/.knofig"
+elif [-e /home/sidux/.knofig ]; then
+    CONFIG="/home/sidux/.knofig"
+else
+    echo "Could not find a .knofig file. ${RED}STOP!!!${NORMAL}"
+fi
+ROOT_PARTITION=$(grep "^HD_CHOICE" $CONFIG|cut -d"'" -f2)
+ROOT_DEVICE=${ROOT_PARTITION:0:8}
+BOOT_WHERE=$(grep "^BOOT_WHERE" $CONFIG|cut -d"'" -f2)
+
+MNT_POINT=$(mktemp -d -p /tmp)
+
+
+#-----------------------------------------------------------------------
+function get_boot_part()
+{
+    local bootpart
+    local point
+
+    bootpart=
+    for i in $HD_MAP; do
+        point=$(echo $i | cut -d":" -f2)
+        if [ "$point" = "/boot" ]; then
+            bootpart=$(echo $i | cut -d":" -f1)
+            break
+        fi
+    done
+    echo "${bootpart:-$ROOT_PARTITION}"
+}
+#-----------------------------------------------------------------------
+function reset_MBR()
+{
+    local answer
+    MSG1="You have choosen \"boot from MBR\" on the installer\n"
+    MSG2="That can break your system.!!\n"
+    MSG3="Should i restor it ?  please answer Yes to do it  "
+    MSG4="and decided not to restore the MBR.\n\n${RED}STOP!!!${NORMAL}"
+    
+    echo -e ${MSG1}${MSG2}
+    echo -n ${MSG3}
+    read answer
+    if [ "$answer" = "Yes" ]; then
+        # 1. from the devices map get the (hd0) device 
+        # -- here was the MBR overwritten
+        lilo -M $OLD_MBR_DEVICE -s /dev/null
+        return 0
+    else
+        # STOP
+        echo
+        echo ${MSG1}${MSG4}
+
+        # we dont go further ...
+        cleanup_and_exit 
+
+        # never reached ..
+        return 1
+    fi
+}
+#-----------------------------------------------------------------------
+function cleanup_and_exit()
+{
+    # check if we have something mounted if so 
+    # unmount it
+    if grep -q ${MNT_POINT} /etc/mtab ;then
+        if ! umount ${MNT_POINT} 2>/dev/null ; then
+            echo "Could not unmount the device"
+        fi
+    fi
+    exit
+}
+#-----------------------------------------------------------------------
+# MAIN
+#-----------------------------------------------------------------------
+
+device=$(get_boot_part) 
+
+mount $device ${MNT_POINT}
+test -d "${MNT_POINT}/boot/grub" && GRUB_DIR=${MNT_POINT}/boot/grub || \
+    GRUB_DIR=${MNT_POINT}/grub
+
+DEVICE_MAP=${GRUB_DIR}/device.map
+MENU_LST=${GRUB_DIR}/menu.lst
+cp -f ${DEVICE_MAP} ${DEVICE_MAP}.bak
+cp -f ${MENU_LST} ${MENU_LST}.bak
+
+OLD_MBR_DEVICE=$(awk '/hd0/{print $2}' ${DEVICE_MAP})
+OLD_HDMAP_DEV=$(grep $ROOT_DEVICE $DEVICE_MAP|awk '{print $1}')
+
+# get rid of () on the hd_map
+OLD_HD_MAP_DEV=$(echo $OLD_HDMAP_DEV |sed -e "s/[\(,\)]//g")
+
+if [ "$BOOT_WHERE" = "mbr" ]; then
+    reset_MBR 
+fi
+
+# install grub on MBR of the USB device
+grub-install --root-directory=$MNT_POINT $ROOT_DEVICE 2>/dev/null 1>/dev/null
+
+# fix the device.map file
+sed -i -e "s|(hd0)|(hdX)|" -e "s|${OLD_HDMAP_DEV}|(hd0)|" \
+    -e "s|(hdX)|${OLD_HDMAP_DEV}|" ${DEVICE_MAP}
+
+# fix the menu.lst
+sed -i -e "s|hd0|hdX|" -e "s|${OLD_HD_MAP_DEV}\,|hd0,|" \
+    -e "s|hdX|${OLD_HD_MAP_DEV}|" ${MENU_LST}
+
+echo "done."
+cleanup_and_exit 
+# end
