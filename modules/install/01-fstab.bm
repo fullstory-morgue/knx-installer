@@ -102,16 +102,6 @@ EOF
 		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
 
-	# Remove not needed device links
-	for I in $HD_MAP; do
-		if [[ $I != /dev/*:/media/* && -n $TARGET_MNT_POINT ]]; then
-			I="(${I//:/ })"
-			I="${I[0]##*/}"
-			rmdir "$TARGET_MNT_POINT/media/$I" &>/dev/null
-			rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/$I"
-		fi
-	done
-
 	# Change /etc/fstab to defaults and remove uid/gid
 	perl -pi -e 's|([^n][^o])auto,users,exec,|\1|;s|([^n][^o])auto,users,exec|\1defaults|;s|(defaults),auto|\1|;s|^# Added by.*\n||;s|(,uid=\w*)||;s|(,gid=\w*)||' "$TARGET_MNT_POINT/etc/fstab"
 
@@ -125,10 +115,25 @@ EOF
 	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
 
 	# create the dirs under media
+	# only for those not found in HD_MAP or HD_CHOICE or from swap type
 	myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
-	for myDir in ${myDirs}; do
-		mkdir -p "$TARGET_MNT_POINT/${myDir}" 2>&1 > /dev/null
+
+	used_parts=
+	for i in $HD_MAP ; do
+		used_parts="$used_parts $(echo $i|cut -d":" -f 1)"
 	done
+	used_parts="$HD_CHOICE $SWAP_CHOICES $used_parts "
+
+
+	for myDir in ${myDirs}; do
+		echo "$used_parts" |grep -qw "/dev/${myDir:7}"
+		if [ "$?" -eq 1 ]; then  
+			mkdir -p "${TARGET_MNT_POINT}${myDir}" 2>&1 > /dev/null
+		else
+			rmdir "${TARGET_MNT_POINT}${myDir}"
+		fi
+	done
+
 }
 
 # -------------------------
