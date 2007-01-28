@@ -1,6 +1,5 @@
-knx-installer (0.4.1.33) UNRELEASED; urgency=low
+knx-installer (0.4.1.33) unstable; urgency=low
 
-  * NOT RELEASED YET
   * FIXED: installing with a separate /boot
   * FIXED: partitions with duplicate UUID remain with old style fstab entry
   * enhancing readability on a couple of files
