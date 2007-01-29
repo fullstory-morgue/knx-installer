@@ -35,8 +35,6 @@ ROOT_PARTITION=$(grep "^HD_CHOICE" $CONFIG|cut -d"'" -f2)
 ROOT_DEVICE=${ROOT_PARTITION:0:8}
 BOOT_WHERE=$(grep "^BOOT_WHERE" $CONFIG|cut -d"'" -f2)
 
-MNT_POINT=$(mktemp -d -p /tmp)
-
 
 #-----------------------------------------------------------------------
 function get_boot_part()
@@ -100,6 +98,7 @@ function cleanup_and_exit()
 #-----------------------------------------------------------------------
 
 device=$(get_boot_part) 
+MNT_POINT=/media/${device:5}
 
 mount $device ${MNT_POINT}
 test -d "${MNT_POINT}/boot/grub" && GRUB_DIR=${MNT_POINT}/boot/grub || \
