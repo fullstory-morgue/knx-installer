@@ -1,11 +1,11 @@
-knx-installer (0.4.1.34) UNRELEASED; urgency=low
+knx-installer (0.4.1.34) unstable; urgency=low
 
   [ Joaquim Boura ]
-  * NOT RELEASED YET
-  * do not create directories(mountpoints)  for partitions that are used elsewhere
-  * usb-fix-installer had probs with temp directory, use instead directory in
-    /media
-  * kdm dependency changed to suggestion
+  * do not create directories(mountpoints)  for partitions that are used 
+    elsewhere.
+  * usb-fix-installer had probs with temp directory, use instead directory
+    in /media.
+  * kdm dependency changed to suggestion.
 
   [ Kel Modderman ]
   * Don't hack /etc/network/interfaces.
