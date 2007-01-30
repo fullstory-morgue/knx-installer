@@ -171,9 +171,6 @@ system_update_files()
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/hostname"
 	echo "$HOST_NAME" > "$TARGET_MNT_POINT/etc/mailname"
 
-	# make networking non-blocking, use allow-hotplug instead of auto
-	sed -i '/^auto lo/!s/^auto/allow-hotplug/' "$TARGET_MNT_POINT/etc/network/interfaces"
-
 	# don't allow everyone to use sudo.
 	cat "$TARGET_MNT_POINT/usr/share/base-files/profile" > "$TARGET_MNT_POINT/etc/profile"
 	
