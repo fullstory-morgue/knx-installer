@@ -33,18 +33,6 @@ system_copy_home()
 		return 0
 	fi
 
-	# save current kde desktop session
-	if [ -x /usr/bin/dcop ]; then
-		if dcop --user "$DEFAULT_USER" ksmserver ksmserver saveCurrentSession >/dev/null 2>&1; then
-			# ensure the saved session is restored on next login
-			if [ -d /home/"$DEFAULT_USER"/.kde/share/config/ ]; then
-				echo '[General]' 			> /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
-				echo 'loginMode=restoreSavedSession'	>> /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
-				chown "$DEFAULT_USER":"$DEFAULT_USER" /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
-			fi
-		fi
-	fi
-
 	# does testing for .kde _really_ make any sense here?
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
