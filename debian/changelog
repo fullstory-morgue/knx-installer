@@ -1,9 +1,5 @@
-knx-installer (0.4.1.36) UNRELEASED; urgency=low
+knx-installer (0.4.1.36) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * BUGFIX: really add the desktop manager service to the service whitelist,
     this prevents it from being purged from rc.d system a few lines of code
     down.
