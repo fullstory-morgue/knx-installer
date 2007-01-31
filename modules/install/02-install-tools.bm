@@ -87,11 +87,6 @@ EOF
 		rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/showindex.desktop"
 	fi
 
-	# load kmix if it was started in live-mode
-	if [ -x /usr/bin/kmix ] && pgrep -x kmix >/dev/null; then
-		ln -s /usr/bin/kmix "$TARGET_MNT_POINT/home/$USER_NAME/.kde/Autostart/kmix"
-	fi
-	
 	# revert to plain debian .bashrc
 	cat "$TARGET_MNT_POINT/etc/skel/.bashrc" > "$TARGET_MNT_POINT/home/$USER_NAME/.bashrc"
 	
