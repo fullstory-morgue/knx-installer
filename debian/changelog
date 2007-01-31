@@ -1,3 +1,9 @@
+knx-installer (0.4.1.38) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 31 Jan 2007 18:13:53 +0100
+
 knx-installer (0.4.1.37) unstable; urgency=low
 
   * Use hand crafted rules loop to install bash modules with executable bit
