@@ -1,12 +1,8 @@
-knx-installer (0.4.1.37) UNRELEASED; urgency=low
+knx-installer (0.4.1.37) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Use hand crafted rules loop to install bash modules with executable bit
     set.
-  * Disbale perl hack of knx-installer version number, this hack needs to be
+  * Disable perl hack of knx-installer version number, this hack needs to be
     done differently to work.
   * Suggest 915resolution.
   * Change default kdm wallapaper to our own.
