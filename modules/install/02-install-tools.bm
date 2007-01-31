@@ -377,9 +377,10 @@ system_services()
 	# add a display manager or two to the array
 	for DM in kdm gdm wdm xdm; do
 		if [ -x /etc/init.d/"$DM" ]; then
-			# SERVICE_WHITELIST+=( "$DM" )
+			SERVICE_WHITELIST+=( "$DM" )
 			
 			# diverge from debian's plain runlevels and follow the lsb
+			chroot_it update-rc.d -f "$DM" remove
 			chroot_it update-rc.d "$DM" start 99 5 . stop 01 0 1 2 3 4 6 .
 		fi
 	done
