@@ -6,7 +6,14 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 PACKAGE_VER   = "$(shell dpkg-parsechangelog | grep ^Vers | cut -d\  -f2)"
 
 build/knx-installer::
-	perl -pi -e "s|VERSION=.*|VERSION=\"$(PACKAGE_VER)\"|" $(CURDIR)/debian/knx-installer/usr/sbin/knx-installer
-	
+	# this is carp
+	#perl -pi -e "s|VERSION=.*|VERSION=\"$(PACKAGE_VER)\"|" \
+	#	debian/knx-installer/usr/sbin/knx-installer
 	# Gettext Internationalisation (i18n)
 	DESTDIR=$(CURDIR)/debian/knx-installer po/make_po.sh knx-installer.mo
+
+install/knx-installer::
+	# loop install modules with executable bit
+	for bm in modules/*.bm modules/install/*.bm modules/booting/*.bm; do \
+		install -D -m 0755 $$bm debian/knx-installer/usr/share/knx-installer/$$bm; \
+	done

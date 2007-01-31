@@ -33,6 +33,19 @@ system_copy_home()
 		return 0
 	fi
 
+	# save current kde desktop session
+	if [ -x /usr/bin/dcop ]; then
+		if dcop --user "$DEFAULT_USER" ksmserver ksmserver saveCurrentSession >/dev/null 2>&1; then
+			# ensure the saved session is restored on next login
+			if [ -d /home/"$DEFAULT_USER"/.kde/share/config/ ]; then
+				echo '[General]' 			> /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
+				echo 'loginMode=restoreSavedSession'	>> /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
+				chown "$DEFAULT_USER":"$DEFAULT_USER" /home/"$DEFAULT_USER"/.kde/share/config/ksmserverrc
+			fi
+		fi
+	fi
+
+	# does testing for .kde _really_ make any sense here?
 	if [ -d "/home/$DEFAULT_USER/.kde" ]; then
 		rm -rf "$TARGET_MNT_POINT/home/$DEFAULT_USER"
 		cp -a "/home/$DEFAULT_USER" "$TARGET_MNT_POINT/home"
@@ -243,7 +256,14 @@ EOF
 		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
 	fi
-
+	
+	# set KDM wallapaper
+	if [ -e "$FLL_WALLPAPER" ] && [ -w "$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc" ]; then
+		if grep -q "^Wallpaper=" "$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc" 2>/dev/null; then
+			sed -i 's#Wallpaper=.*#Wallpaper='"$FLL_WALLPAPER"'#' \
+				"$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc"
+		fi
+	fi
 }
 
 system_services()
