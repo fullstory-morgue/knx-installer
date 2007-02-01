@@ -43,7 +43,7 @@ create_initrd()
 	# Make the real initrd
 	#
 	chroot_it mount -t sysfs sysfs /sys
-	chroot_it mkinitramfs -o "/boot/initrd.img-$BOOT_KERNEL" "$BOOT_KERNEL"
+	chroot_it update-initramfs -c -k "$BOOT_KERNEL" 
 	chroot_it umount /sys
  
 	# Be verbose ...

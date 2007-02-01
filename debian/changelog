@@ -1,8 +1,9 @@
 knx-installer (0.4.1.38) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * use update-initramfs instead of mkinitramfs
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 31 Jan 2007 18:13:53 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Thu,  1 Feb 2007 21:04:45 +0100
 
 knx-installer (0.4.1.37) unstable; urgency=low
 
