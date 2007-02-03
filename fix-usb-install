@@ -35,6 +35,17 @@ ROOT_PARTITION=$(grep "^HD_CHOICE" $CONFIG|cut -d"'" -f2)
 ROOT_DEVICE=${ROOT_PARTITION:0:8}
 BOOT_WHERE=$(grep "^BOOT_WHERE" $CONFIG|cut -d"'" -f2)
 
+DEVICE=$(echo $ROOT_DEVICE|cut -d / -f3)
+
+USB_DEVICE=$(cat /sys/block/$DEVICE/dev |cut -d : -f1)
+if [ "${USB_DEVICE}" -ne 8 ]; then
+    echo "install device is not an USB device"
+    exit 1
+fi
+# ----------------------------------------------
+# if the USB device is a USB-pen then it has 1
+# harddisk have a 0 here
+# REMOVABLE=$(cat /sys/block/$DEVICE/removable)
 
 #-----------------------------------------------------------------------
 function get_boot_part()

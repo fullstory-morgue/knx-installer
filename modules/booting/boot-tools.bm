@@ -824,3 +824,50 @@ function appendGrubForOtherOS
 	rm $TempFile $MyGrubTemp
     rmdir $TempDir
 }
+# -------------------------
+function fix-usb-install-intern
+{
+    local root_partition
+    local root_device
+    local device
+    local usb_dev
+    local grub_dir
+    local menu_lst
+    local device_map
+    local old_mbr_device
+    local old_hdmap_dev
+    local old_hd_map_dev
+
+    root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
+    root_device="${root_partition:0:8}"
+    device=$(echo $root_device|cut -d / -f3)
+    usb_dev=$(cat /sys/block/${device}/dev |cut -d : -f1)
+    if [ "${usb_dev}" -ne "8"  ]; then
+        # nothing to do
+        :
+    else
+        grub_dir="${TARGET_MNT_POINT}/boot/grub"
+        device_map="${grub_dir}/device.map"
+        menu_lst="${grub_dir}/menu.lst"
+        old_mbr_device=$(awk '/hd0/{print $2}' ${device_map})
+        old_hdmap_dev=$(grep ${root_device} ${device_map}|awk '{print $1}')
+        # get rid of () on the hd_map
+        old_hd_map_dev=$(echo ${old_hdmap_dev} |sed -e "s/[\(,\)]//g")
+
+        if [ "$BOOT_WHERE" = "mbr" ]; then
+            # reset_MBR
+            lilo -M ${old_mbr_device} -s /dev/null
+        fi
+        
+        # install grub on MBR of the USB device
+        grub-install --root-directory=${TARGET_MNT_POINT} $ROOT_DEVICE 2>/dev/null 1>/dev/null
+
+        # fix the device.map file
+        sed -i -e "s|(hd0)|(hdX)|" -e "s|${old_hdmap_dev}|(hd0)|" \
+            -e "s|(hdX)|${old_hdmap_dev}|" ${device_map}
+
+        # fix the menu.lst
+        sed -i -e "s|hd0|hdX|" -e "s|${old_hd_map_dev}\,|hd0,|" \
+           -e "s|hdX|${old_hd_map_dev}|" ${menu_lst}
+    fi
+}

@@ -341,8 +341,8 @@ function old_installer
 function do_install
 {
 	echo ""
-	INSTALL_LIST="module_hd_doaction module_swap_doaction update_fstab old_installer add_bootmanager :"
-	INSTALL_LIST_NUM=$[6-1]
+	INSTALL_LIST="module_hd_doaction module_swap_doaction update_fstab old_installer add_bootmanager sidux_fixes :"
+	INSTALL_LIST_NUM=$[7-1]
 	N=0;
 	for i in $INSTALL_LIST; do
 		echo $[$N*100/$INSTALL_LIST_NUM]
@@ -377,18 +377,6 @@ function start_install
 		return 1
 	fi
 	[ $RC -ne "0" ] && return 1
-
-	#
-	# FIX fstab and menu.lst for UUID
-	#
-	debugit "Fixing fstab and menu.lst for UUID"
-	fix_fstab_for_UUID
-	fix_grub_for_UUID
-
-	# 
-	# FIX append grub for other OS
-	#
-	appendGrubForOtherOS
 
 	#
 	# FLOPPY DISK!
@@ -486,18 +474,6 @@ function ni-main
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
 	
-	#
-	# FIX fstab and menu.lst for UUID
-	#
-	debugit "Fixing fstab and menu.lst for UUID"
-	fix_fstab_for_UUID
-	fix_grub_for_UUID
-
-	# 
-	# FIX append grub for other OS
-	#
-	appendGrubForOtherOS
-
 	if [ "$BOOT_DISK" = "yes" -a "$INSTALL_MODE" = "installer" ]; then
 		$DIALOG --backtitle "$BT" --title $"Creating floppy disk" --defaultno --yesno $"Please insert now an empty floppy disk into your floppydrive. Warning: All data on it will be lost. If you don't want to create a disk you can choose No." 0 0
 		if [ $? -eq 0 ]; then
