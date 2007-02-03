@@ -3,7 +3,9 @@ knx-installer (0.4.1.39) UNRELEASED; urgency=low
   * NOT RELEASED YET
   * If an USB install is recognized the grub config files are fixed
   * new module that calls all our fixes
- -- Joaquim Boura <x-un-i@sidux.com>  Sat,  3 Feb 2007 23:40:49 +0100
+  * fix-usb-install file is no longer needed.
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat,  3 Feb 2007 23:54:56 +0100
 
 knx-installer (0.4.1.38) unstable; urgency=low
 
