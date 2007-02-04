@@ -4,8 +4,9 @@ knx-installer (0.4.1.39) UNRELEASED; urgency=low
   * If an USB install is recognized the grub config files are fixed
   * new module that calls all our fixes
   * fix-usb-install file is no longer needed.
+  * when installing on USB the set BOOT_WHERE always to "partition"
 
- -- Joaquim Boura <x-un-i@sidux.com>  Sat,  3 Feb 2007 23:54:56 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sun,  4 Feb 2007 15:12:03 +0100
 
 knx-installer (0.4.1.38) unstable; urgency=low
 
