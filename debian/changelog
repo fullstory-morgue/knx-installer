@@ -1,3 +1,9 @@
+knx-installer (0.4.1.40) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  4 Feb 2007 19:10:24 +0100
+
 knx-installer (0.4.1.39) unstable; urgency=low
 
   * If an USB install is recognized the grub config files are fixed
