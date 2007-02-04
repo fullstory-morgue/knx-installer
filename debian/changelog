@@ -1,3 +1,9 @@
+knx-installer (0.4.1.41) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun,  4 Feb 2007 21:41:59 +0100
+
 knx-installer (0.4.1.40) unstable; urgency=low
 
   * fixed  the condition to recognize usb device
