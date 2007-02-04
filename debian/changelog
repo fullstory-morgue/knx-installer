@@ -1,6 +1,5 @@
-knx-installer (0.4.1.39) UNRELEASED; urgency=low
+knx-installer (0.4.1.39) unstable; urgency=low
 
-  * NOT RELEASED YET
   * If an USB install is recognized the grub config files are fixed
   * new module that calls all our fixes
   * fix-usb-install file is no longer needed.
