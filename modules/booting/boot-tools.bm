@@ -499,7 +499,7 @@ root_device="${root_partition:0:8}"
 device=$(echo $root_device|cut -d / -f3)
 usb_dev=$(cat /sys/block/${device}/dev |cut -d : -f1)
 
-if [ "${usb_dev}" -ne "8"  ]; then
+if [ "${usb_dev}" -eq "8"  ]; then
 #
 # USB install must have first Grub on partition
 BOOT_WHERE="partition"
