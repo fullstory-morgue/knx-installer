@@ -3,7 +3,7 @@ knx-installer (0.4.1.40) UNRELEASED; urgency=low
   * NOT RELEASED YET
   * fixed  the condition to recognize usb device
 
- -- Joaquim Boura <x-un-i@sidux.com>  Sun,  4 Feb 2007 20:34:38 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sun,  4 Feb 2007 20:50:26 +0100
 
 knx-installer (0.4.1.39) unstable; urgency=low
 
