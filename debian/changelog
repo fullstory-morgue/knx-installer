@@ -1,3 +1,9 @@
+knx-installer (0.4.1.42) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue,  6 Feb 2007 16:44:05 +0100
+
 knx-installer (0.4.1.41) unstable; urgency=low
 
   * Commit fix for typo in boot-tools (usb_dev1) (by Joaquim)
