@@ -861,7 +861,7 @@ function fix-usb-install-intern
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
     usb_dev=$(cat /sys/block/${device}/dev )
-    if [ "${usb_dev}" !=  "8:0"  ]; then
+    if [ "${usb_dev}" =  "8:0"  ]; then
         # nothing to do
         :
     else  # its an USB install

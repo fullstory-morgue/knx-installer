@@ -4,9 +4,10 @@ knx-installer (0.4.1.41) UNRELEASED; urgency=low
   * NOT RELEASED YET
 
   [ Niall Walsh ]
-  * Commit fix for typo in boot-tools (usb_dev1) for Joaquim
+  * Commit fix for typo in boot-tools (usb_dev1) (by Joaquim)
+  * Commit fix to test in boot-tools so usb install bootable (by Joaquim)
 
- -- Niall Walsh <niallwalsh@users.berlios.de>  Tue,  6 Feb 2007 11:42:19 +0000
+ -- Niall Walsh <niallwalsh@users.berlios.de>  Tue,  6 Feb 2007 12:42:32 +0000
 
 knx-installer (0.4.1.40) unstable; urgency=low
 
