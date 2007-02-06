@@ -1,9 +1,5 @@
-knx-installer (0.4.1.41) UNRELEASED; urgency=low
+knx-installer (0.4.1.41) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Niall Walsh ]
   * Commit fix for typo in boot-tools (usb_dev1) (by Joaquim)
   * Commit fix to test in boot-tools so usb install bootable (by Joaquim)
 
