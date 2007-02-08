@@ -2,8 +2,10 @@ knx-installer (0.4.1.43) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
   * changed config and log file name
+  * I didn't think we chased out all the knoppix to replace them with
+     sidux ;-) 
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu,  8 Feb 2007 20:39:07 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Thu,  8 Feb 2007 20:44:44 +0100
 
 knx-installer (0.4.1.42) unstable; urgency=low
 
