@@ -31,8 +31,8 @@ else
 	DEFAULT_DIR="SIDUX"
 fi
 
-CONFIG_FILE="$HOME/.${FLL_DISTRO_NAME}.conf"
-LOG="$HOME/.${FLL_DISTRO_NAME}.log"
+CONFIG_FILE="$HOME/.sidconf"
+LOG="$HOME/.sidlog"
 
 TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
 TARGET_MNT_NAME="hdinstall" # TR1 in old installer
