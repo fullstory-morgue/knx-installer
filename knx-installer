@@ -18,8 +18,8 @@
 #
 
 VERSION="0.4"
-CONFIG_FILE="$HOME/.knofig"
-LOG="$HOME/.knofig_log"
+CONFIG_FILE="$HOME/.sidconf"
+LOG="$HOME/.sidlog"
 
 TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
 TARGET_MNT_NAME="hdinstall" # TR1 in old installer
@@ -84,7 +84,7 @@ do
 done
 shift $(($OPTIND - 1))
 
-LOG_DEBUG=${HOME}/.knofig.debug
+LOG_DEBUG=${HOME}/.sidconf.debug
 function debugit
 {
     if test ${debug_it} -eq 1
