@@ -1,3 +1,9 @@
+knx-installer (0.4.1.43) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  8 Feb 2007 19:50:17 +0100
+
 knx-installer (0.4.1.42) unstable; urgency=low
 
   * fixed check for usb device
