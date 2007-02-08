@@ -499,7 +499,7 @@ install_grub()
     device=$(echo $root_device|cut -d / -f3)
     usb_dev=$(cat /sys/block/${device}/dev)
 
-    if [ "${usb_dev}" !=  "8:0" ]; then
+    if echo $usb_dev | grep -q "^8\:" && [ "${usb_dev}" = "8:0"  ]; then
     #
         # USB install must have first Grub on partition
         BOOT_WHERE="partition"
@@ -861,10 +861,8 @@ function fix-usb-install-intern
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
     usb_dev=$(cat /sys/block/${device}/dev )
-    if [ "${usb_dev}" =  "8:0"  ]; then
-        # nothing to do
-        :
-    else  # its an USB install
+    if echo $usb_dev | grep -q "^8\:" && [ "${usb_dev}" = "8:0"  ]; then
+        # its an USB install
         grub_dir="${TARGET_MNT_POINT}/boot/grub"
         device_map="${grub_dir}/device.map"
         menu_lst="${grub_dir}/menu.lst"
@@ -873,10 +871,10 @@ function fix-usb-install-intern
         # get rid of () on the hd_map
         old_hd_map_dev=$(echo ${old_hdmap_dev} |sed -e "s/[\(,\)]//g")
 
-        if [ "$BOOT_WHERE" = "mbr" ]; then
-            # reset_MBR
-            lilo -M ${old_mbr_device} -s /dev/null
-        fi
+#        if [ "$BOOT_WHERE" = "mbr" ]; then
+#            # reset_MBR
+#            lilo -M ${old_mbr_device} -s /dev/null
+#        fi
         
         # install grub on MBR of the USB device
         grub-install --root-directory=${TARGET_MNT_POINT} $ROOT_DEVICE 2>/dev/null 1>/dev/null
