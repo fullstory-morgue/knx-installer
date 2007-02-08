@@ -1,6 +1,5 @@
-knx-installer (0.4.1.42) UNRELEASED; urgency=low
+knx-installer (0.4.1.42) unstable; urgency=low
 
-  * NOT RELEASED YET
   * fixed check for usb device
   * one second try
 
