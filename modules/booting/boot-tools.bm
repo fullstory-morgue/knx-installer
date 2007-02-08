@@ -497,9 +497,10 @@ install_grub()
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
-    usb_dev=$(cat /sys/block/${device}/dev)
 
-    if echo $usb_dev | grep -q "^8\:" && [ "${usb_dev}" = "8:0"  ]; then
+    usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+
+    if [ -n "${usb_dev}" ]; then
     #
         # USB install must have first Grub on partition
         BOOT_WHERE="partition"
@@ -860,8 +861,10 @@ function fix-usb-install-intern
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
-    usb_dev=$(cat /sys/block/${device}/dev )
-    if echo $usb_dev | grep -q "^8\:" && [ "${usb_dev}" = "8:0"  ]; then
+
+    usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+
+    if [ -n "${usb_dev}" ]; then
         # its an USB install
         grub_dir="${TARGET_MNT_POINT}/boot/grub"
         device_map="${grub_dir}/device.map"

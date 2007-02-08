@@ -2,8 +2,9 @@ knx-installer (0.4.1.42) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
   * fixed check for usb device
+  * one second try
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu,  8 Feb 2007 17:54:43 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Thu,  8 Feb 2007 18:34:08 +0100
 
 knx-installer (0.4.1.41) unstable; urgency=low
 
