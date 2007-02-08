@@ -497,6 +497,7 @@ install_grub()
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
+    device=${device:0:3}
 
     usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
 
@@ -861,6 +862,7 @@ function fix-usb-install-intern
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
+    device=${device:0:3}
 
     usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
 
@@ -873,11 +875,6 @@ function fix-usb-install-intern
         old_hdmap_dev=$(grep ${root_device} ${device_map}|awk '{print $1}')
         # get rid of () on the hd_map
         old_hd_map_dev=$(echo ${old_hdmap_dev} |sed -e "s/[\(,\)]//g")
-
-#        if [ "$BOOT_WHERE" = "mbr" ]; then
-#            # reset_MBR
-#            lilo -M ${old_mbr_device} -s /dev/null
-#        fi
         
         # install grub on MBR of the USB device
         grub-install --root-directory=${TARGET_MNT_POINT} $ROOT_DEVICE 2>/dev/null 1>/dev/null
