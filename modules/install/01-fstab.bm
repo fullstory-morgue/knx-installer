@@ -133,7 +133,6 @@ EOF
 			rmdir "${TARGET_MNT_POINT}${myDir}"
 		fi
 	done
-
 }
 
 # -------------------------
@@ -168,7 +167,6 @@ function fix_fstab_for_UUID
 
 	for i in $(awk '/^\/dev\/[hs]d[a-z][1-9][0-9]?[[:space:]]/{print $1}' $myFstab) ; do
 		TMP="$(scanpartitions -v uuids=1 $i | awk '{print $1}')"
-		debugit "Partiton: \"$i\" UUID: \"$TMP\""
 		if [ -n "$TMP" ]; then
 			# check if this UUID is there more than once
 			if [ "$(scanpartitions -v uuids=1 | grep "$TMP" | wc -l)" -eq 1 ]; then   

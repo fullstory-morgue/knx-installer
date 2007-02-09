@@ -67,7 +67,7 @@ create_initrd()
 # TODO: Need a mode to parse SYSTEM_ALIAS
 #	for several boot-entries in the same image
 
-# TODO: Need a nice knoppix boot-image
+# TODO: Need a nice ${FLL_DISTRO_NAME} boot-image
 
 make_lilo_conf()
 {
@@ -328,7 +328,7 @@ EOF
 # Functions: 
 #	- Creates /etc/lilo.conf
 #	- installs lilo
-#	- creates backup of mbr in /boot/knoppix-oldmbr-$(date -I)
+#	- creates backup of mbr in /boot/${FLL_DISTRO_NAME}-oldmbr-$(date -I)
 #	   (where -I is the ISO-Standard. (Year-Month-Day))
 #	- creates /linboot.img for use with boot.ini in NT/Win2k/XP/...
 
@@ -351,7 +351,7 @@ install_lilo()
 		[ -z "$LILO_BOOT" ] && LILO_BOOT="/dev/$(egrep 'sd|hd' /proc/partitions |awk '{print $4}'|sort|head -1)"
 
 		# Make a backup of the old mbr
-		dd if=$LILO_BOOT of=$TARGET_MNT_POINT/boot/knoppix-old-mbr.$(date -I) bs=512 count=1 >/dev/null 2>/dev/null
+		dd if=$LILO_BOOT of=$TARGET_MNT_POINT/boot/${FLL_DISTRO_NAME}-old-mbr.$(date -I) bs=512 count=1 >/dev/null 2>/dev/null
 	else
   		LILO_BOOT=$HD_CHOICE
 	fi
@@ -494,12 +494,14 @@ translate_linux_to_grub () {
 
 install_grub()
 {
+    debugit "Starting install_grub"
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
     device=${device:0:3}
-
+    debugit "device=$device"
     usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+    debugit "usb_dev=$usb_dev"
 
     if [ -n "${usb_dev}" ]; then
     #
@@ -508,12 +510,14 @@ install_grub()
     else
         # in case of jfs/xfs force installation to mbr - usually not needed
         # but only if HD is not on USB
-
+        debugit "No change"
         case $FS_TYPE in
             jfs|xfs) BOOT_WHERE="mbr";;
         esac
 
     fi
+
+    debugit "create device.map"
 
 	# create device.map
 	grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
@@ -525,7 +529,7 @@ install_grub()
 		GRUB_MBR=$(grep "(hd0)" $TARGET_MNT_POINT/boot/grub/device.map | awk '{ print $2 }')
 		[ -z "$GRUB_MBR" ] && return 1
 		# Make a backup of the old mbr
-		dd if=$GRUB_MBR of=$TARGET_MNT_POINT/boot/knoppix-old-mbr.$(date -I) bs=512 count=1 >/dev/null 2>/dev/null
+		dd if=$GRUB_MBR of=$TARGET_MNT_POINT/boot/${FLL_DISTRO_NAME}-old-mbr.$(date -I) bs=512 count=1 >/dev/null 2>/dev/null
 	fi
 
 	# Create initital menu.lst
@@ -669,20 +673,16 @@ EOF
 
 	# install grub
 	
-	# in case of jfs/xfs force installation to mbr - usually not needed
-
-	case $FS_TYPE in
-		jfs|xfs) BOOT_WHERE="mbr";;
-	esac
-
 	# install now
 		
 	case $BOOT_WHERE in
 		partition)
+			debugit "partition"
 			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
 			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
 			;;
 		mbr)
+			debugit "mbr"
 			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
 			;;
 	esac
@@ -774,7 +774,6 @@ function fix_grub_for_UUID
 	else
 		debugit "grep failed"
 	fi
-	# sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
 }
 # -------------------------
 function appendGrubForOtherOS
@@ -863,11 +862,10 @@ function fix-usb-install-intern
     root_device="${root_partition:0:8}"
     device=$(echo $root_device|cut -d / -f3)
     device=${device:0:3}
-
     usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
 
+
     if [ -n "${usb_dev}" ]; then
-        # its an USB install
         grub_dir="${TARGET_MNT_POINT}/boot/grub"
         device_map="${grub_dir}/device.map"
         menu_lst="${grub_dir}/menu.lst"
@@ -877,7 +875,7 @@ function fix-usb-install-intern
         old_hd_map_dev=$(echo ${old_hdmap_dev} |sed -e "s/[\(,\)]//g")
         
         # install grub on MBR of the USB device
-        grub-install --root-directory=${TARGET_MNT_POINT} $ROOT_DEVICE 2>/dev/null 1>/dev/null
+        grub-install --root-directory=${TARGET_MNT_POINT} $root_device 2>/dev/null 1>/dev/null
 
         # fix the device.map file
         sed -i -e "s|(hd0)|(hdX)|" -e "s|${old_hdmap_dev}|(hd0)|" \

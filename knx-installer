@@ -16,8 +16,13 @@
 #
 # Constants
 #
-
 VERSION="0.4"
+CONFIG_FILE="$HOME/.sidconf"
+LOG="$HOME/.sidlog"
+
+TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
+TARGET_MNT_NAME="hdinstall" # TR1 in old installer
+
 FLL_DISTRO_NAME="sidux"
 
 # make use of distro-defaults
@@ -30,13 +35,6 @@ else
 	DEFAULT_USER="sidux"
 	DEFAULT_DIR="SIDUX"
 fi
-
-CONFIG_FILE="$HOME/.sidconf"
-LOG="$HOME/.sidlog"
-
-TARGET_MNT_POINT="/media/hdinstall" # TR1 in old installer
-TARGET_MNT_NAME="hdinstall" # TR1 in old installer
-
 
 DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
 
@@ -85,7 +83,7 @@ do
 done
 shift $(($OPTIND - 1))
 
-LOG_DEBUG=${HOME}/.${FLL_DISTRO_NAME}conf.debug
+LOG_DEBUG=${HOME}/.sidconf.debug
 function debugit
 {
     if test ${debug_it} -eq 1

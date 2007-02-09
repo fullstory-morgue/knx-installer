@@ -6,8 +6,9 @@ knx-installer (0.4.1.43) UNRELEASED; urgency=low
      sidux ;-)
   * well hope now the usb HD ar right recognized
   * going back with conf and log name...
+  * made intensiv tests hope now all glitches are fixed
 
- -- Joaquim Boura <x-un-i@sidux.com>  Thu,  8 Feb 2007 22:08:03 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Fri,  9 Feb 2007 22:21:31 +0100
 
 knx-installer (0.4.1.42) unstable; urgency=low
 
