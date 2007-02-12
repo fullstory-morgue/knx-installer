@@ -1,4 +1,4 @@
-knx-installer (0.4.1.44) UNRELEASED; urgency=low
+knx-installer (0.4.1.44) unstable; urgency=low
 
   * includes the call of the install-meta program, thx to x-un-i 
 
