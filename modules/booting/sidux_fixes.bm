@@ -1,3 +1,4 @@
+#!/bin/bash
 #------------------------------------------------------------
 # This fuctions are found in boot_tools.bm and 01-fstab.bm
 # and set th efstab and grub to use UUID
