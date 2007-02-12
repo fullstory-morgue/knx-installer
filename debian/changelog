@@ -1,3 +1,9 @@
+knx-installer (0.4.1.45) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Feb 2007 00:12:19 +0100
+
 knx-installer (0.4.1.44) unstable; urgency=low
 
   * includes the call of the install-meta program, thx to x-un-i 
