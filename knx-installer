@@ -485,21 +485,28 @@ function ni-main
 		return 1
 	fi
 
-	for i in $HD_MAP; do
-		point=$(echo $i | cut -d":" -f2)
-		umount $TARGET_MNT_POINT$point
-	done
+#
+# for future use
+#
+	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then
+		exec /usr/bin/install-meta --chroot=$TARGET_MNT_POINT
+	else
+ 		for i in $HD_MAP; do
+			point=$(echo $i | cut -d":" -f2)
+			umount $TARGET_MNT_POINT$point
+		done
 	
-	# Just to be sure :-)
-	#umount $TARGET_MNT_POINT/proc
-	umount $TARGET_MNT_POINT
-	# Success Message and end installer
-	logit $"$FLL_DISTRO_NAME was successfully installed to hd."
-	if [ "$INSTALL_MODE" = "installer" ]; then
-		#T1=$"Success!"
-		T1=$ST
+		# Just to be sure :-)
+		#umount $TARGET_MNT_POINT/proc
+		umount $TARGET_MNT_POINT
+		# Success Message and end installer
+		logit $"$FLL_DISTRO_NAME was successfully installed to hd."
+		if [ "$INSTALL_MODE" = "installer" ]; then
+			#T1=$"Success!"
+			T1=$ST
 	
-		msgbox $"$FLL_DISTRO_NAME was successfully installed to hd." 15 60
+			msgbox $"$FLL_DISTRO_NAME was successfully installed to hd." 15 60
+		fi
 	fi
 	exit 0
 }

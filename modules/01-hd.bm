@@ -100,6 +100,7 @@ function module_hd_doaction
 	update_status $"Mounting $HD_CHOICE r/w..."
 	mkdir -p $TARGET_MNT_POINT
 	mount -t $HD_FSTYPE $HD_CHOICE $TARGET_MNT_POINT
+	mount -o remount,dev $TARGET_MNT_POINT
 
 	if [ $? -ne 0 ]; then
 		ERROR_MESSAGES=$(tail -8 $TMP)
@@ -117,6 +118,7 @@ function module_hd_doaction
 		point=$(echo $i | cut -d":" -f2)
 		mkdir -p $TARGET_MNT_POINT$point
 		mount $part $TARGET_MNT_POINT$point 2> /dev/null
+		mount -o remount,dev $TARGET_MNT_POINT$point
 	done
 	
 	module_hd_knoppix_copy
