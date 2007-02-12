@@ -223,34 +223,11 @@ EOF
 		fi
 	fi
 	
-	# XXX: this seems a bit hackish IMHO, we could do better once /etc/sysconfig is gone
-	# Add dpi setting from cheatcode to hd install
-	[ -e /etc/sysconfig/base ] && source /etc/sysconfig/base
-	[ -z "$CUSTOM_DPI" ] && CUSTOM_DPI=72
-	if [ "$CUSTOM_DPI" != "auto" ] && [ "$CUSTOM_DPI" ]; then
-		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -dpi "$CUSTOM_DPI" -br|" \
-				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		fi
-	else
-		if [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-			perl -pi -e "s|(ServerArgsLocal=-nolisten tcp).*|\1 -br|" \
-				"$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		fi
-	fi
-
-	# Auto login
-	if [ "$AUTOLOGIN" = "yes" ] && [ -e "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc" ]; then
-		perl -pi -e "s|^[#\s]*(AutoLoginEnable).*|\1=true|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-		perl -pi -e "s|^[#\s]*(AutoLoginUser).*|\1=$USER_NAME|"  "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
-	fi
-	
 	# set KDM wallapaper
-	if [ -e "$FLL_WALLPAPER" ] && [ -w "$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc" ]; then
-		if grep -q "^Wallpaper=" "$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc" 2>/dev/null; then
-			sed -i 's#Wallpaper=.*#Wallpaper='"$FLL_WALLPAPER"'#' \
-				"$TARGET_MNT_POINT/etc/kde3/kdm/backgroundrc"
-		fi
+	if [ -e "$FLL_WALLPAPER" ] && [ -d "$TARGET_MNT_POINT/etc/default/kdm.d" ]; then
+		# possible overrides: USEBACKGROUND BACKGROUNDCFG USETHEME THEME WALLPAPER
+		# requires kdm >= 4:3.5.5a.dfsg.1-6
+		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "$TARGET_MNT_POINT/etc/default/kdm.d/sidux_wallpaper"
 	fi
 }
 

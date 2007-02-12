@@ -1,5 +1,6 @@
 knx-installer (0.4.1.43) UNRELEASED; urgency=low
 
+  [ Joaquim Boura ]
   * NOT RELEASED YET
   * changed config and log file name
   * I didn't think we chased out all the knoppix to replace them with
@@ -9,7 +10,16 @@ knx-installer (0.4.1.43) UNRELEASED; urgency=low
   * made intensiv tests hope now all glitches are fixed
   * 01-fstab do not return if we tried to remove non existent dirs in /media
 
- -- Joaquim Boura <x-un-i@sidux.com>  Sun, 11 Feb 2007 01:00:10 +0100
+  [ Kel Modderman ]
+  * Remove CUSTOM_DPI hack that depended on /etc/sysconfig and tainting a
+    conffile.
+  * Ditto for user autologin. IIRC that feature is not used in our current
+    installer UI and should probably be best left to a post-install tweak
+    anyway.
+  * Take advantage of override variables allowed by kdm >= 4:3.5.5a.dfsg.1-6.
+    Set WALLPAPER varible in the appropriate non-tainting location.
+
+ -- Kel Modderman <kel@otaku42.de>  Mon, 12 Feb 2007 15:30:45 +1000
 
 knx-installer (0.4.1.42) unstable; urgency=low
 
