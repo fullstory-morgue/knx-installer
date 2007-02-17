@@ -159,6 +159,8 @@ system_purge_live_only_stuff()
 	# get rid of it...
 	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
 	debugit "ReturnCode 5: \"$?\""
+	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/install-gui.desktop" 
+	debugit "ReturnCode 6: \"$?\""
 }
 
 system_update_files()

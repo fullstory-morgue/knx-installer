@@ -1,8 +1,9 @@
 knx-installer (0.4.1.45) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * remove desktop icon on hd install
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Feb 2007 00:12:19 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat, 17 Feb 2007 11:10:38 +0100
 
 knx-installer (0.4.1.44) unstable; urgency=low
 
