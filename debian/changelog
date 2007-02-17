@@ -1,6 +1,5 @@
-knx-installer (0.4.1.45) UNRELEASED; urgency=low
+knx-installer (0.4.1.45) unstable; urgency=low
 
-  * NOT RELEASED YET
   * remove desktop icon on hd install
 
  -- Joaquim Boura <x-un-i@sidux.com>  Sat, 17 Feb 2007 11:10:38 +0100
@@ -11,10 +10,9 @@ knx-installer (0.4.1.44) unstable; urgency=low
 
  -- Horst Tritremmel <peter_weber69@gmx.at>  Mon, 12 Feb 2007 16:21:01 +0100
 
-knx-installer (0.4.1.43) UNRELEASED; urgency=low
+knx-installer (0.4.1.43) unstable; urgency=low
 
   [ Joaquim Boura ]
-  * NOT RELEASED YET
   * changed config and log file name
   * I didn't think we chased out all the knoppix to replace them with
      sidux ;-)
