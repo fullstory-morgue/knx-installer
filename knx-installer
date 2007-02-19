@@ -502,10 +502,8 @@ function ni-main
 		# Success Message and end installer
 		logit $"$FLL_DISTRO_NAME was successfully installed to hd."
 		if [ "$INSTALL_MODE" = "installer" ]; then
-			#T1=$"Success!"
-			T1=$ST
-	
-			msgbox $"$FLL_DISTRO_NAME was successfully installed to hd." 15 60
+			exec /usr/bin/install-meta -q
+			exit 0
 		fi
 	fi
 	exit 0
