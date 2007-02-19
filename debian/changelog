@@ -1,6 +1,5 @@
-knx-installer (0.4.1.46) UNRELEASED; urgency=low
+knx-installer (0.4.1.46) unstable; urgency=low
 
-  * NOT RELEASED YET
   * call install-meta -q  to close nicely the install procedure
 
  -- Joaquim Boura <x-un-i@sidux.com>  Mon, 19 Feb 2007 21:06:57 +0100
