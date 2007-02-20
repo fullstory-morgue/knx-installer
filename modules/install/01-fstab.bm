@@ -2,8 +2,8 @@
 
 function stringinfile()
 {
-        case "$(cat $2)" in *$1*) return 0;; esac
-        return 1
+	case "$(cat $2)" in *$1*) return 0;; esac
+	return 1
 }
 
 function get_usb_devices
@@ -38,8 +38,8 @@ function update_fstab
 	update_status $"Updating /etc/fstab..."
 
 	grep "^/dev/" /etc/fstab | \
-	    grep -v '^/dev/fd' | \
-	    grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
+		grep -v '^/dev/fd' | \
+		grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
 
 	cat <<EOF > "$TARGET_MNT_POINT/etc/fstab"
 # /etc/fstab: static file system information.
@@ -66,6 +66,8 @@ EOF
 			hd_map_fstype="auto"
 		fi
 		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >> "$TARGET_MNT_POINT/etc/fstab"
+		grep -vw "$part" "$TMPDIR/fstab" > "$TMPDIR/fstab-1" && \
+		mv -f "$TMPDIR/fstab-1" "$TMPDIR/fstab"
 	done
 
 	# Let detect all other partitions
@@ -95,9 +97,9 @@ EOF
 	# Add floppy devices to /etc/fstab
 	for f in $(ls -d /sys/block/fd* 2>/dev/null); do
 		[ -d "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}" ] || \
-		    mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
+			mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
 		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || \
-		    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
+			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
 		grep -v "^/dev${f#/sys/block}" $TMPDIR/fstab > $TMPDIR/fstab-1 
 		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
 	done
@@ -131,10 +133,10 @@ EOF
 			mkdir -p "${TARGET_MNT_POINT}${myDir}" 2>&1 > /dev/null
 		else
 			test ! -d "${TARGET_MNT_POINT}${myDir}" || \
-                rmdir "${TARGET_MNT_POINT}${myDir}"
+			rmdir "${TARGET_MNT_POINT}${myDir}"
 		fi
 	done
-    return 0
+	return 0
 }
 
 # -------------------------
