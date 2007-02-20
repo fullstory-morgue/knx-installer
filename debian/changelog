@@ -1,7 +1,7 @@
-knx-installer (0.4.1.47) UNRELEASED; urgency=low
+knx-installer (0.4.1.47) unstable; urgency=low
 
-  * NOT RELEASED YET
-  * no more double entries for partitions from HD_MAP in fstab 
+  * no more double entries for partitions from HD_MAP in fstab.
+
  -- Joaquim Boura <x-un-i@sidux.com>  Tue, 20 Feb 2007 01:21:03 +0100
 
 knx-installer (0.4.1.46) unstable; urgency=low
