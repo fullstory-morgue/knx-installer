@@ -7,7 +7,8 @@ Standards-Version: 3.7.2
 
 Package: knx-installer
 Architecture: all
-Depends: dialog, initramfs-tools, lilo, grub-gfxboot | grub, procps, udev-config-sidux, whois, os-prober, install-meta
+Depends: dialog, initramfs-tools, lilo, grub-gfxboot | grub, procps, udev-config-sidux, whois, os-prober
+Recommends: install-meta
 Suggests: gparted, xdialog, distro-defaults, 915resolution, kdm
 Conflicts: ifrename, initscripts-kanotix
 Description: installs sidux to hd
