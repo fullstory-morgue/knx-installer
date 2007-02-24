@@ -253,6 +253,7 @@ system_services()
 		cupsys
 		dbus
 		etc-setserial
+		fuse-utils
 		glibc.sh
 		halt
 		hibernate
