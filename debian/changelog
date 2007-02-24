@@ -1,14 +1,14 @@
-knx-installer (0.4.1.48) UNRELEASED; urgency=low
-
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
+knx-installer (0.4.1.48) unstable; urgency=low
 
   [ Kel Modderman ]
   * Whitelist fuse-utils init script.
   * Make install-meta a Recommends, it depends on X11 and inhibits a truly
     minimal fll-builder product.
 
- -- Kel Modderman <kel@otaku42.de>  Sun, 25 Feb 2007 09:11:48 +1000
+  [ Stefan Lippers-Hollmann ]
+  * really make install-meta optional.
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 25 Feb 2007 00:22:49 +0100
 
 knx-installer (0.4.1.47) unstable; urgency=low
 

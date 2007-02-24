@@ -489,7 +489,11 @@ function ni-main
 # for future use
 #
 	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then
-		exec /usr/bin/install-meta --chroot=$TARGET_MNT_POINT
+		if [ -x /usr/bin/install-meta ]; then
+			exec /usr/bin/install-meta --chroot=$TARGET_MNT_POINT
+		else
+			echo "install-meta is not available" 1>&2
+		fi
 	else
  		for i in $HD_MAP; do
 			point=$(echo $i | cut -d":" -f2)
@@ -499,9 +503,10 @@ function ni-main
 		# Just to be sure :-)
 		#umount $TARGET_MNT_POINT/proc
 		umount $TARGET_MNT_POINT
+
 		# Success Message and end installer
 		logit $"$FLL_DISTRO_NAME was successfully installed to hd."
-		if [ "$INSTALL_MODE" = "installer" ]; then
+		if [ "$INSTALL_MODE" = "installer" -a -x /usr/bin/install-meta ]; then
 			exec /usr/bin/install-meta -q
 			exit 0
 		fi
