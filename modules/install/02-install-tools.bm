@@ -137,7 +137,7 @@ system_purge_live_only_stuff()
 				syslinux \
 				tftpd-hpa \
 				xsession-sidux \
-				xf86config-sidux &> /dev/null
+				xorgconfig-sidux &> /dev/null
 	
 	#  disable live config
 	if [ -f "$TARGET_MNT_POINT/etc/default/distro" ]; then

@@ -1,8 +1,9 @@
 knx-installer (0.4.2.1) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * remove xorgconfig-sidux instead of xf86config-sidux
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu,  1 Mar 2007 17:29:44 +0100
+ -- Joaquim Boura <x-un-i@sidux.com>  Mon,  5 Mar 2007 00:35:39 +0100
 
 knx-installer (0.4.2.0) unstable; urgency=low
 
