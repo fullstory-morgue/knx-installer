@@ -215,6 +215,11 @@ EOF
 		# requires kdm >= 4:3.5.5a.dfsg.1-6
 		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "$TARGET_MNT_POINT/etc/default/kdm.d/sidux_wallpaper"
 	fi
+
+	# revert KDM autologin
+	if [ -f "$FLL_MOUNTPOINT/etc/kde3/kdm/kdmrc" ]; then
+		cat "$FLL_MOUNTPOINT/etc/kde3/kdm/kdmrc" > "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+	fi
 }
 
 system_services()
