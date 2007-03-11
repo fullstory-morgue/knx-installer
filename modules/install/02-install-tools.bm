@@ -113,30 +113,14 @@ EOF
 system_purge_live_only_stuff()
 {
 	# purge live-specific packages
-	chroot_it dpkg --purge	autofs \
-				checkmem \
-				busybox \
-				fix-cdrom \
+	chroot_it dpkg --purge	checkmem \
 				initscripts-sidux-live \
-				firewall-sidux \
 				sidux-setpassword \
-				sidux-terminalserver \
 				install-gui \
-				knxinstaller \
 				knx-installer \
 				kde-services-sidux \
 				live-initrd-sidux \
-				mkdosswapfile \
-				mknbi \
-				mkpersistenthome \
-				restartx \
-				sambastart-sidux \
-				saveconfig \
 				startsyslog-sidux \
-				sudoers-sidux \
-				syslinux \
-				tftpd-hpa \
-				xsession-sidux \
 				xorgconfig-sidux &> /dev/null
 	
 	#  disable live config
