@@ -1,7 +1,6 @@
-knx-installer (0.4.2.2) UNRELEASED; urgency=low
+knx-installer (0.4.2.2) unstable; urgency=low
 
   [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
   * remove obsolete from postinstall purge.
 
   [ Kel Modderman ]
