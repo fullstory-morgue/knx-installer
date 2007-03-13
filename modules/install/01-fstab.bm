@@ -70,10 +70,12 @@ EOF
 		mv -f "$TMPDIR/fstab-1" "$TMPDIR/fstab"
 	done
 
-	# Let detect all other partitions
-	mount --bind /proc "$TARGET_MNT_POINT/proc"
-	chroot "$TARGET_MNT_POINT" rebuildfstab -r
-	umount "$TARGET_MNT_POINT/proc"
+	# XXX: should we have not already detected these and written them to
+	# live /etc/fstab which was used as template for installed fstab at
+	# top of this function? 
+	#mount --bind /proc "$TARGET_MNT_POINT/proc"
+	#chroot "$TARGET_MNT_POINT" rebuildfstab -r
+	#umount "$TARGET_MNT_POINT/proc"
 
 	# Partitionen auf nicht verwechselbare Platten automatisch mounten
 	USBDEVS=$(get_usb_devices)
