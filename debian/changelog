@@ -1,9 +1,5 @@
-knx-installer (0.4.2.3) UNRELEASED; urgency=low
+knx-installer (0.4.2.3) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Kel Modderman ]
   * Use new rebuildfstab syntax in action-part.
   * Disable superfluous use of rebuildfstab from within the installed chroot.
 
