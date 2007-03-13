@@ -192,8 +192,10 @@ function action-part
 	else
 		[ -x /usr/bin/gparted ] && gparted || action-part-cfdisk
 	fi
-
-	rebuildfstab -r
+	
+	# make sure new partitions are present in /etc/fstab
+	/usr/sbin/rebuildfstab --write-fstab --make-mountpoints --user "$FLL_LIVE_USER" \
+		--group "$(getent passwd "$FLL_LIVE_USER" | cut -d\: -f 4)"
 }
 
 function action-part-later

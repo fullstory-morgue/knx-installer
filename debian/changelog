@@ -1,8 +1,12 @@
 knx-installer (0.4.2.3) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 12 Mar 2007 01:16:45 +0100
+  [ Kel Modderman ]
+  * Use new rebuildfstab syntax in action-part-cfdisk.
+
+ -- Kel Modderman <kel@otaku42.de>  Tue, 13 Mar 2007 13:34:57 +1000
 
 knx-installer (0.4.2.2) unstable; urgency=low
 
