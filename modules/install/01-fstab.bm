@@ -1,189 +1,21 @@
 #!/bin/bash
 
-function stringinfile()
-{
-	case "$(cat $2)" in *$1*) return 0;; esac
-	return 1
-}
-
-function get_usb_devices
-{
-	local DEV UMOUNT=0 S I L
-	# If the user is not root before the mount command, mount will fail with error 1 and nothing will be detected.
-	mount -t sysfs sysfs "$TARGET_MNT_POINT/sys" 2>/dev/null
-	RET=$?
-	if [ "$RET" = 0 -o "$RET" = 32 ]; then
-		((UMOUNT++))
-		shopt -q nullglob && S="-s" || S="-u"
-		shopt -s nullglob
-		for I in $TARGET_MNT_POINT/sys/bus/usb/devices/*/*/*/block $TARGET_MNT_POINT/sys/bus/usb/devices/*/*/*/*/block; do
-			L=$(readlink "$I")
-			# Usb sticks will have '8:0' in /sys/block/$L/dev and '1' in removable
-			# Usb harddrives will have '8:0' in /sys/block/$L/dev and '0' in 'removable'
-			L="${L##.*/}"
-
-			# Beware of the difference between ${VAR+string} and ${VAR:+string} !!
-			# The former will use string if $VAR = undef or "", 
-			# while the latter will only use string if $VAR is not empty!
-			DEV="${DEV}${DEV:+ }$L"
-		done
-		shopt $S nullglob
-		echo "$DEV"
-	fi
-	((UMOUNT)) && umount "$TARGET_MNT_POINT/sys"
-}
-
+#-----------------------------------
 function update_fstab
 {
 	update_status $"Updating /etc/fstab..."
+	# 1. mount /proc, /dev and /sys on chroot
+	mount --bind /proc "$TARGET_MNT_POINT/proc"
+	mount --bind /dev "$TARGET_MNT_POINT/dev"
+	mount --bind /sys "$TARGET_MNT_POINT/sys"
 
-	grep "^/dev/" /etc/fstab | \
-		grep -v '^/dev/fd' | \
-		grep -v "^${HD_CHOICE}" > "$TMPDIR/fstab"
+	# 2. rebuild the fstab, creating the mountpoints
+	chroot "$TARGET_MNT_POINT" rebuildfstab --uuids --make-mountpoints --write-fstab \
+		--user ${USER_NAME} --group ${USER_NAME}
 
-	cat <<EOF > "$TARGET_MNT_POINT/etc/fstab"
-# /etc/fstab: static file system information.
-#
-# <file system> <mount point>   <type>  <options>       <dump>  <pass>
-EOF
-
-	case "$HD_FSTYPE" in
-		ext3|ext4|reiser*|xfs|jfs)
-			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$HD_CHOICE" "/" "$HD_FSTYPE" "defaults" "0" "1" >> "$TARGET_MNT_POINT/etc/fstab"
-			;;
-		*)
-			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$HD_CHOICE" "/" "$HD_FSTYPE" "defaults,errors=remount-ro" "0" "1" >>"$TARGET_MNT_POINT/etc/fstab"
-			;;
-	esac
-
-	# Add other HD-mappings
-	for i in $HD_MAP; do
-		part=$(echo $i | cut -d":" -f1)
-		point=$(echo $i | cut -d":" -f2)
-		if { mount | grep -q $part ; }; then
-			hd_map_fstype="`LC_ALL=C mount | grep $part | awk '{ print $5 }'`"
-		else
-			hd_map_fstype="auto"
-		fi
-		printf "%-15s %-15s %-7s %-15s %-7s %s\n" "$part" "$point" "$hd_map_fstype" "defaults" "0" "2" >> "$TARGET_MNT_POINT/etc/fstab"
-		grep -vw "$part" "$TMPDIR/fstab" > "$TMPDIR/fstab-1" && \
-		mv -f "$TMPDIR/fstab-1" "$TMPDIR/fstab"
-	done
-
-	# XXX: should we have not already detected these and written them to
-	# live /etc/fstab which was used as template for installed fstab at
-	# top of this function? 
-	#mount --bind /proc "$TARGET_MNT_POINT/proc"
-	#chroot "$TARGET_MNT_POINT" rebuildfstab -r
-	#umount "$TARGET_MNT_POINT/proc"
-
-	# Partitionen auf nicht verwechselbare Platten automatisch mounten
-	USBDEVS=$(get_usb_devices)
-	[ -n "$USBDEVS" ] && PERLREGEX="${USBDEVS// /|}" || PERLREGEX=".\*"
-	perl -pi -e 'if (! m#^/dev/('$PERLREGEX')#) { s#^/dev/(cciss/c[0-7].*|[sh]d.*)noauto(.*)$#/dev/${1}auto${2}# }' "$TARGET_MNT_POINT/etc/fstab"
-
-	# Add swap devices
-	grep -v ^$ "$TMPDIR/fstab" >> "$TARGET_MNT_POINT/etc/fstab"
-
-	# Add cdrom devices to /etc/fstab
-	for c in $(ls -d /dev/cdrom* 2>/dev/null); do
-		m=${c#/dev}
-		[ "$m" = "/cdrom" ] && m="/cdrom0"
-		[ -d "$TARGET_MNT_POINT/media$m" ] || mkdir -p "$TARGET_MNT_POINT/media$m"
-		stringinfile "/dev/$(readlink $c)" "$TARGET_MNT_POINT/etc/fstab" || \
-		    printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev/$(readlink $c)" "/media$m" "udf,iso9660" "user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
-		grep -v "^/dev/$(readlink $c)" $TMPDIR/fstab > $TMPDIR/fstab-1 
-		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
-	done	
-
-	# Add floppy devices to /etc/fstab
-	for f in $(ls -d /sys/block/fd* 2>/dev/null); do
-		[ -d "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}" ] || \
-			mkdir -p "$TARGET_MNT_POINT/media/floppy${f#/sys/block/fd}"
-		stringinfile "$f" "$TARGET_MNT_POINT/etc/fstab" || \
-			printf "%-15s %-15s %-7s %-15s %-7s %s\n" "/dev${f#/sys/block}" "/media/floppy${f#/sys/block/fd}" "auto" "rw,user,noauto" "0" "0" >> "$TARGET_MNT_POINT/etc/fstab"
-		grep -v "^/dev${f#/sys/block}" $TMPDIR/fstab > $TMPDIR/fstab-1 
-		mv -f $TMPDIR/fstab-1 $TMPDIR/fstab
-	done
-
-	# Change /etc/fstab to defaults and remove uid/gid
-	perl -pi -e 's|([^n][^o])auto,users,exec,|\1|;s|([^n][^o])auto,users,exec|\1defaults|;s|(defaults),auto|\1|;s|^# Added by.*\n||;s|(,uid=\w*)||;s|(,gid=\w*)||' "$TARGET_MNT_POINT/etc/fstab"
-
-	# Reformat /etc/fstab
-	rm -f "$TARGET_MNT_POINT/etc/fstab.new"
-	awk '{\
-		if (/^[ \t]*#/) print; \
-		else printf "%-15s %-15s %-7s %-15s %-7s %s\n",$1,$2,$3,$4,$5,$6\
-	}' $TARGET_MNT_POINT/etc/fstab > $TARGET_MNT_POINT/etc/fstab.new
-
-	mv -f "$TARGET_MNT_POINT/etc/fstab.new" "$TARGET_MNT_POINT/etc/fstab"
-
-	# create the dirs under media
-	# only for those not found in HD_MAP or HD_CHOICE or from swap type
-	myDirs=$(awk '/\/media\/[h,s]d/ {print $2}' "$TARGET_MNT_POINT/etc/fstab")
-
-	used_parts=
-	for i in $HD_MAP ; do
-		used_parts="$used_parts $(echo $i|cut -d":" -f 1)"
-	done
-	used_parts="$HD_CHOICE $SWAP_CHOICES $used_parts "
-
-
-	for myDir in ${myDirs}; do
-		echo "$used_parts" |grep -qw "/dev/${myDir:7}"
-		if [ "$?" -eq 1 ]; then  
-			mkdir -p "${TARGET_MNT_POINT}${myDir}" 2>&1 > /dev/null
-		else
-			test ! -d "${TARGET_MNT_POINT}${myDir}" || \
-			rmdir "${TARGET_MNT_POINT}${myDir}"
-		fi
-	done
-	return 0
-}
-
-# -------------------------
-function fix_fstab_for_UUID
-{
-	local i
-	local myFstab
-	local BACKUP
-
-	# 1. ensure that swap partitions do have a UUID
-	for i in $(awk '/^\/dev\//{print $1}' /proc/swaps); do
-		if [ -z "$(/lib/udev/vol_id -u $i 2>/dev/null)" ]; then
-			swapoff "$i"
-			mkswap -L swap "$i"
-			swapon "$i"
-		fi
-	done
-
-	# 2. convert fstab to uuid/ labels, this is mandatory for libata
-	myFstab="$TARGET_MNT_POINT/etc/fstab"
-
-	# make a Backup
-	if grep -q ^\\/dev\\/[hs]d[a-z] $myFstab; then
-		if [ ${debug_it} -eq 1 ];  then
-			BACKUP="$(mktemp -p $TARGET_MNT_POINT/etc/ fstab.XXXXXXXXXX)"
-			cat $myFstab > "$BACKUP"
-		fi
-
-	else
-		debugit "bad $myFstab"
-	fi
-
-	for i in $(awk '/^\/dev\/[hs]d[a-z][1-9][0-9]?[[:space:]]/{print $1}' $myFstab) ; do
-		TMP="$(scanpartitions -v uuids=1 $i | awk '{print $1}')"
-		if [ -n "$TMP" ]; then
-			# check if this UUID is there more than once
-			if [ "$(scanpartitions -v uuids=1 | grep "$TMP" | wc -l)" -eq 1 ]; then   
-				sed -i "s%^${i}[[:space:]]%${TMP}\t%" $myFstab
-			fi
-		else
-			# XXX:  comment out this fstab line, we're talking about
-			#   removable media which isn't current....ttached and
-			#   will lead to namespace collisions!
-			perl -pi -e "s%(^${i}[[:space:]].*)%\#\1%g" $myFstab
-		fi
-	done
+	# 3. umount /proc, /dev and /sys on chroot
+	umount "$TARGET_MNT_POINT/sys"
+	umount "$TARGET_MNT_POINT/dev"
+	umount "$TARGET_MNT_POINT/proc"
 }
 

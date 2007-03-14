@@ -431,7 +431,7 @@ function main()
 		\n\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \
 		\n\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de> \
 		\nfixes by Joerg Schirottke <master@kanotix.de>" 20 60
-	rebuildfstab -r
+	rebuildfstab -w -m -q
 	while ! check_partition_ok;
 	  do
 	  msgbox $"The installer detected that the installation requierements are not fullfilled yet.\
@@ -458,7 +458,7 @@ function ni-main
 {
 	logit $"$FLL_DISTRO_NAME-installer started"
 	
-	rebuildfstab -r
+	rebuildfstab -w -m -q
 	logit $"Partition check succeeded"
 	
 	if [ ! -f "$CONFIG_FILE" ]; then

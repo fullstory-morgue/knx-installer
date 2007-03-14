@@ -494,30 +494,28 @@ translate_linux_to_grub () {
 
 install_grub()
 {
-    debugit "Starting install_grub"
-    root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
-    root_device="${root_partition:0:8}"
-    device=$(echo $root_device|cut -d / -f3)
-    device=${device:0:3}
-    debugit "device=$device"
-    usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
-    debugit "usb_dev=$usb_dev"
+	logit "Starting install_grub"
+	root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
+	root_device="${root_partition:0:8}"
+	device=$(echo $root_device|cut -d / -f3)
+	device=${device:0:3}
+	logit "device=$device"
+	usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+	logit "usb_dev=$usb_dev"
 
-    if [ -n "${usb_dev}" ]; then
-    #
-        # USB install must have first Grub on partition
-        BOOT_WHERE="partition"
-    else
-        # in case of jfs/xfs force installation to mbr - usually not needed
-        # but only if HD is not on USB
-        debugit "No change"
-        case $FS_TYPE in
-            jfs|xfs) BOOT_WHERE="mbr";;
-        esac
+	if [ -n "${usb_dev}" ]; then
+		# USB install must have first Grub on partition
+		BOOT_WHERE="partition"
+	else
+		# in case of jfs/xfs force installation to mbr - usually not needed
+		# but only if HD is not on USB
 
-    fi
+		case $FS_TYPE in
+		jfs|xfs) BOOT_WHERE="mbr";;
+		esac
+	fi
 
-    debugit "create device.map"
+    
 
 	# create device.map
 	grub-install --recheck --no-floppy --root-directory=$TARGET_MNT_POINT /dev/null &>/dev/null
@@ -529,7 +527,8 @@ install_grub()
 		GRUB_MBR=$(grep "(hd0)" $TARGET_MNT_POINT/boot/grub/device.map | awk '{ print $2 }')
 		[ -z "$GRUB_MBR" ] && return 1
 		# Make a backup of the old mbr
-		dd if=$GRUB_MBR of=$TARGET_MNT_POINT/boot/${FLL_DISTRO_NAME}-old-mbr.$(date -I) bs=512 count=1 >/dev/null 2>/dev/null
+		dd if=$GRUB_MBR of=$TARGET_MNT_POINT/boot/${FLL_DISTRO_NAME}-old-mbr.$(date -I) \
+			bs=512 count=1 >/dev/null 2>/dev/null
 	fi
 
 	# Create initital menu.lst
@@ -539,7 +538,7 @@ install_grub()
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# change menu.lst
-    # TODO other languages
+    	# TODO other languages
 	# Add german keybindings 
 	case "$LANG" in
 		de*|at*|ch*)
@@ -595,21 +594,26 @@ EOF
 	else
 		export device_map=$TARGET_MNT_POINT/boot/grub/device.map
 		export kernel_vers=$(uname -r)
-		root_device=$(grep "^kernel.*${kernel_ver}.*root=" $TARGET_MNT_POINT/boot/grub/menu.lst |\
+		root_device=$(grep "^kernel.*${kernel_ver}.*root=" \
+			$TARGET_MNT_POINT/boot/grub/menu.lst |\
 			grep -v "single" |\
 			sed 's#^kernel.*root=##'|sed 's# .*$##')
 		GROOT=$(translate_linux_to_grub $root_device)
 	fi
 	if [ -n "$GROOT" -a -s $TARGET_MNT_POINT/boot/message ]; then
 		if { mount | grep -q $TARGET_MNT_POINT/boot ; }; then
-			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
+			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/message|g" \
+				$TARGET_MNT_POINT/boot/grub/menu.lst
 		else
-			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/boot/message|g" $TARGET_MNT_POINT/boot/grub/menu.lst
+			perl -pi -e "s|^color (.*)|color \1\ngfxmenu $GROOT/boot/message|g" \
+				$TARGET_MNT_POINT/boot/grub/menu.lst
 		fi
 	fi
 
-	perl -pi -e "s|^root.*$|root\t\t${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
-	perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^root.*$|root\t\t${GROOT}|" \
+		$TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^# groot=.*$|# groot=${GROOT}|" \
+		$TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Create a new cmdline
 	
@@ -629,8 +633,10 @@ EOF
 	[ -z "$GRUB_VGA" ] && GRUB_VGA="$GRUB_DEFVGA"
 
 	GRUB_CMDLINE="$GRUB_CMDLINE vga=$GRUB_VGA"
-	perl -pi -e "s|^# kopt=root=(.*) ro|# kopt=root=\1 ro $GRUB_CMDLINE|g" $TARGET_MNT_POINT/boot/grub/menu.lst
-	perl -pi -e "s|^kernel(.*) ro|kernel\1 ro $GRUB_CMDLINE|g" $TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^# kopt=root=(.*) ro|# kopt=root=\1 ro $GRUB_CMDLINE|g" \
+		$TARGET_MNT_POINT/boot/grub/menu.lst
+	perl -pi -e "s|^kernel(.*) ro|kernel\1 ro $GRUB_CMDLINE|g" \
+		$TARGET_MNT_POINT/boot/grub/menu.lst
 
 	# Add other OS' :-)
 	# Sorry x86-only for now ... :-/
@@ -672,17 +678,14 @@ relative_links = Yes
 EOF
 
 	# install grub
-	
-	# install now
-		
 	case $BOOT_WHERE in
 		partition)
-			debugit "partition"
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null || \
-			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" >/dev/null 2>/dev/null
+			grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" \
+				>/dev/null 2>/dev/null || \
+				grub-install --root-directory=$TARGET_MNT_POINT "$HD_CHOICE" \
+					>/dev/null 2>/dev/null
 			;;
 		mbr)
-			debugit "mbr"
 			grub-install --root-directory=$TARGET_MNT_POINT "(hd0)" >/dev/null 2>/dev/null
 			;;
 	esac
@@ -755,24 +758,18 @@ function fix_grub_for_UUID
 	local rootDevice
 	local BACKUP
 
-	debugit "fix_grub_for_UUID"
+	logit "fix_grub_for_UUID"
 	menuList="${TARGET_MNT_POINT}/boot/grub/menu.lst"
-	debugit "menuList=\"$menuList\""
+	logit "menuList=\"$menuList\""
 	rootDevice=$(grep '^# kopt=root=' ${menuList}|sed 's/^# kopt=root=//'|sed 's/ .*$//')
-	debugit "rootDevice=\"$rootDevice\""
+	logit "rootDevice=\"$rootDevice\""
 
 	#1. Make a backup of the old one
 	if grep -q root\=\\/dev\\/[hs]d[a-z][1-9][0-9]\\? ${menuList}; then
 
-		if [ ${debug_it} -eq 1 ];  then
-			debugit "grep succeeded"
-			BACKUP="$(mktemp -p ${TARGET_MNT_POINT}/boot/grub/ menu.lst.XXXXXXXXXX)"
-			cat ${menuList} > "$BACKUP"
-		fi
-
 		sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
 	else
-		debugit "grep failed"
+		logit "grep failed"
 	fi
 }
 # -------------------------
@@ -805,15 +802,15 @@ function appendGrubForOtherOS
 					if [ -r "$mounted_grub_file" ]; then
 						found=0
 						while read line; do
-                            # well we take the first kernel found 
-                            # and dont care this is the default one or not
-                            #skip comented lines
+                           	# well we take the first kernel found 
+                           	# and dont care this is the default one or not
+                           	#skip comented lines
 							if [[ $line =~ "^title.*" ]]; then
 								if [ $found -eq 0 ] ;then
 									found=1
-                                    # one empty line
-                                    echo >> "$MyGrubTemp"
-                                    # and remove the word [D,d]efault it it's there
+                                   	# one empty line
+                                   	echo >> "$MyGrubTemp"
+                                   	# and remove the word [D,d]efault it it's there
                                     echo $(echo $line | \
 										sed -e 's#[D,d]efault##') \(${device:5}\) >> "$MyGrubTemp"
 								else

@@ -1,8 +1,12 @@
 knx-installer (0.4.2.4) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 13 Mar 2007 16:33:04 +0100
+  [ Joaquim Boura ]
+  * use new rebuildfstab 
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Wed, 14 Mar 2007 23:08:42 +0100
 
 knx-installer (0.4.2.3) unstable; urgency=low
 

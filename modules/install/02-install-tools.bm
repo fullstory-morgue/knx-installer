@@ -130,21 +130,14 @@ system_purge_live_only_stuff()
 	fi
 
 	# remove temporary kde- user files
-	debugit "remove temporary kde- user files"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.DCOPserver_*_*"
-	debugit "ReturnCode 1: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/cache-*"
-	debugit "ReturnCode 2: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/socket-*"
-	debugit "ReturnCode 3: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
-	debugit "ReturnCode 4: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
 	# get rid of it...
 	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
-	debugit "ReturnCode 5: \"$?\""
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/install-gui.desktop" 
-	debugit "ReturnCode 6: \"$?\""
 }
 
 system_update_files()
