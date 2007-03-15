@@ -21,7 +21,7 @@ function setup_dialog()
 	TMP="$TMPDIR/dialog"
 
 	DIALOG="dialog"
-	[ -n "$DISPLAY" ] && [ -x /usr/bin/Xdialog ] && DIALOG="Xdialog"
+	[ -n "$DISPLAY" ] && [ -x /usr/bin/Xdialog ] && DIALOG="echo"
 
 }
 

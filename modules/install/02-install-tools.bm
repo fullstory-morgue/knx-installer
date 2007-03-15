@@ -2,6 +2,7 @@
 
 # Find changes in (real) files of dir1 ... dir2
 # function taken from saveconfig
+#------------------
 system_findchanged(){
 	if [ -d "$1" ]; then
 		for i in $( cd "$1"; find . -type f | sed 's,^\./,,g' | grep -v ' ' ); do
@@ -12,6 +13,7 @@ system_findchanged(){
 	fi
 }
 
+#------------------
 system_copy_etc()
 {
 	update_status $"Copying custom configuration ..."
@@ -22,6 +24,7 @@ system_copy_etc()
 
 }
 
+#------------------
 system_copy_home()
 {
 	update_status $"Copying home directory ..."
@@ -110,6 +113,7 @@ EOF
 	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 }
 
+#------------------
 system_purge_live_only_stuff()
 {
 	# purge live-specific packages
@@ -135,11 +139,12 @@ system_purge_live_only_stuff()
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/socket-*"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.kde/tmp-*"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/.*uthority"
-	# get rid of it...
-	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/install-gui.desktop" 
+	# and this one also
+	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
 }
 
+#------------------
 system_update_files()
 {
 	# update /etc/motd
@@ -198,14 +203,14 @@ EOF
 	if [ -e /proc/asound/modules ] && [ -x /usr/sbin/alsactl ]; then
 		/usr/sbin/alsactl store
 		if [ -f /var/lib/alsa/asound.state ]; then
-			cp /var/lib/alsa/asound.state "$TARGET_MNT_POINT/var/lib/alsa"
+			cp /var/lib/alsa/asound.state \
+				"$TARGET_MNT_POINT/var/lib/alsa"
 		fi
 	fi
 	
 	# set KDM wallapaper
-	if [ -e "$FLL_WALLPAPER" ] && [ -d "$TARGET_MNT_POINT/etc/default/kdm.d" ]; then
-		# possible overrides: USEBACKGROUND BACKGROUNDCFG USETHEME THEME WALLPAPER
-		# requires kdm >= 4:3.5.5a.dfsg.1-6
+	if [ -e "$FLL_WALLPAPER" ] && \
+		[ -d "$TARGET_MNT_POINT/etc/default/kdm.d" ]; then
 		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "$TARGET_MNT_POINT/etc/default/kdm.d/sidux_wallpaper"
 	fi
 
@@ -215,6 +220,7 @@ EOF
 	fi
 }
 
+#------------------
 system_services()
 {
 	local SERVICE_WHITELIST=(
@@ -294,7 +300,7 @@ system_services()
 				if laptop-detect &>/dev/null; then
 					SERVICE_WHITELIST+=( acpi-support )
 				else
-					chroot_it dpkg --purge acpi-support
+					chroot_it dpkg --purge acpi-support &> /dev/null
 					rm -rf "$TARGET_MNT_POINT/var/lib/acpi-support/"
 				fi
 			fi
@@ -334,7 +340,7 @@ system_services()
 		if 915resolution -l &>/dev/null; then
 			SERVICE_WHITELIST+=( 915resolution )
 		else
-			chroot_it dpkg --purge 915resolution
+			chroot_it dpkg --purge 915resolution &> /dev/null
 		fi
 	fi
 
@@ -350,8 +356,8 @@ system_services()
 			SERVICE_WHITELIST+=( "$DM" )
 			
 			# diverge from debian's plain runlevels and follow the lsb
-			chroot_it update-rc.d -f "$DM" remove
-			chroot_it update-rc.d "$DM" start 99 5 . stop 01 0 1 2 3 4 6 .
+			chroot_it update-rc.d -f "$DM" remove &> /dev/null
+			chroot_it update-rc.d "$DM" start 99 5 . stop 01 0 1 2 3 4 6 . &> /dev/null
 		fi
 	done
 	
@@ -361,7 +367,7 @@ system_services()
 		if pidof ipw3945d &>/dev/null; then
 			SERVICE_WHITELIST+=( ipw3945d )
 		else
-			chroot_it dpkg --purge ipw3945d
+			chroot_it dpkg --purge ipw3945d &> /dev/null
 		fi
 	fi
 	
@@ -370,7 +376,7 @@ system_services()
 		if pidof slmodemd &>/dev/null; then
 			SERVICE_WHITELIST+=( sl-modem-daemon )
 		else
-			chroot_it dpkg --purge sl-modem-daemon
+			chroot_it dpkg --purge sl-modem-daemon &> /dev/null
 		fi
 	fi
 	
@@ -392,7 +398,7 @@ system_services()
 		done
 		
 		# service didn't have a match in whitelist, purge it
-		chroot_it update-rc.d -f "$service" remove
+		chroot_it update-rc.d -f "$service" remove &> /dev/null
 	done
 
 	# disable all services in /etc/inetd.conf
@@ -414,6 +420,7 @@ system_services()
 	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d	
 }
 
+#------------------
 # Everything needed for hw-detection
 system_create_modules()
 {

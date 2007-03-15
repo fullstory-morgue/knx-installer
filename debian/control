@@ -9,7 +9,7 @@ Package: knx-installer
 Architecture: all
 Depends: dialog, initramfs-tools, lilo, grub-gfxboot | grub, procps, udev-config-sidux, whois, os-prober
 Recommends: install-meta
-Suggests: gparted, xdialog, distro-defaults, 915resolution, kdm
+Suggests: gparted, distro-defaults, 915resolution, kdm
 Description: installs sidux to hd
  sidux-installer is an fully functional installation program
  to easily install sidux to hd. It has support for config-files, 

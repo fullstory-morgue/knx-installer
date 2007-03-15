@@ -6,6 +6,7 @@
 # Register vars: HD_MODULE, HD_FORMAT, HD_FSTYPE, HD_CHOICE
 #
 
+#------------------
 function module_hd_defaults
 {
 	register_var "HD_FORMAT" $"Determines if the HD should be formatted. (mkfs.*)" "yes|no" "" "yes"
@@ -15,12 +16,14 @@ function module_hd_defaults
 	register_var "HD_IGNORECHECK" $"If set to yes, the program will NOT check if there is enough space to install $FLL_DISTRO_NAME on the selected partition(s). Use at your own risk! Useful for example with HD_MAP if you only have a small root partition." "yes|no" "" "no"
 }
 
+#------------------
 function module_hd_showinfo
 {
 	echo $"Drive-Options:"
 	[ "$HD_FORMAT" = "yes" ] && echo "  " $"The Drive $HD_CHOICE will be formatted with the $HD_FSTYPE filesystem." || echo "  " $"The Drive $HD_CHOICE will be used for the installation."
 }
 
+#------------------
 function module_hd_check
 {
 	[ "$HD_IGNORECHECK" = "yes" ] && ROOT_MIN=0
@@ -30,6 +33,7 @@ function module_hd_check
 	return 1
 }
 
+#------------------
 function module_hd_progressbar
 {
 	PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
@@ -39,23 +43,33 @@ function module_hd_progressbar
 	while [ -d "/proc/$p" ]; do
 		PROGRESS=$(df -m 2>/dev/null| awk 'BEGIN{m=0};/'$TARGET_MNT_NAME'/{m+=$3};END{print m}')
 		PERC=$[PROGRESS*100/TOTAL]
-		[ "$PERC" -lt "100" ] && echo $PERC
+		if [ -z "$DISPLAY" ]; then
+			[ "$PERC" -lt "100" ] && echo $PERC
+		else
+			[ "$PERC" -lt "100" ] && echo "hd-copy-$PERC"
+		fi
 		sleep 10
 	done
 }
 
+#------------------
 function module_hd_knoppix_copy
 {
 	update_status $"Copying files. This can take a while. Please be patient."
 	(cd /$DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
 	module_hd_progressbar $!
 	# two beeps
-	echo -ne "\007" >/dev/tty1
+	if [ -z "$DISPLAY" ]; then
+		echo -ne "\007" >/dev/tty1
+	fi
 	sleep 0.5
-	echo -ne "\007" >/dev/tty1
+	if [ -z "$DISPLAY" ]; then
+		echo -ne "\007" >/dev/tty1
+	fi
 	sleep 0.5
 }
 
+#------------------
 function module_hd_doaction
 {
 	if [ $HD_FORMAT = "yes" ]; then
@@ -92,7 +106,7 @@ function module_hd_doaction
 		# Deactivate dir_index-feature of ext2/ext3-partitions
 		case $HD_FSTYPE in
 			*ext*)
-				tune2fs -O ^dir_index $HD_CHOICE
+				tune2fs -O ^dir_index $HD_CHOICE &>/dev/null
 				;;
 		esac
 	fi
@@ -124,6 +138,7 @@ function module_hd_doaction
 	module_hd_knoppix_copy
 }
 
+#------------------
 function module_hd
 {
 	module_hd_defaults # register some automatic variables

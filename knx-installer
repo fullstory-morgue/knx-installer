@@ -69,30 +69,6 @@ for i in $(find $SEARCHPATH -name "*.bm"); do
 	source $i
 done
 
-#
-# Main program
-#
-# well try to get some debug output
-debug_it=0
-
-while getopts d name
-do
-        case $name in
-        d)  debug_it=1;;
-        esac
-done
-shift $(($OPTIND - 1))
-
-LOG_DEBUG=${HOME}/.sidconf.debug
-function debugit
-{
-    if test ${debug_it} -eq 1
-    then
-	    TIME=$(date)
-	    [ -n "$*" ] && echo $TIME: "$@" >> ${LOG_DEBUG} || echo >> ${LOG_DEBUG}
-    fi
-}
-
 #------------------
 
 clean_exit(){
@@ -103,12 +79,14 @@ clean_exit(){
 
 trap clean_exit EXIT
 
+#------------------
 function logit
 {
 	TIME=$(date)
 	[ -n "$*" ] && echo $TIME: "$@" >> $LOG || echo >> $LOG
 }
 
+#------------------
 function exit_proc
 {
 	unset IFS
@@ -119,6 +97,7 @@ function exit_proc
 	RC=0
 }
 
+#------------------
 function setup_dialog_messages()
 {
 	MAX=5 # number of steps
@@ -141,12 +120,14 @@ setup_dialog_messages
 # Variables and Config File Management
 #
 
+#------------------
 function add_var
 {
 	case "$REGISTERED" in *$1*) return 1;; esac
 	REGISTERED="$REGISTERED $1"
 }
 
+#------------------
 function register_vars
 {
 	for i in $@; do
@@ -158,6 +139,7 @@ function register_vars
 # Syntax: base, comment, allowed, checkfunc, default
 #
 
+#------------------
 function register_var
 {
 	export $1"_COMMENT"="$2"
@@ -167,9 +149,14 @@ function register_var
 	[ -z "${!1}" -a -n "$5" ] && export $1="$5"
 }
 
+#------------------
 function update_status
 {
-	echo -e "XXX\n$*\nXXX"
+	if  [ -z "$DISPLAY" ]; then
+		echo -e "XXX\n$*\nXXX"
+	else
+		echo "$*"
+	fi
 	logit "$*"
 }
 
@@ -186,6 +173,7 @@ MODULES_AUTO="swap services"
 MODULES_NUMAUTO=$(echo $MODULES_AUTO | wc -w | tr -d ' ')
 MODULES_LOAD="hd swap services boot system"
 
+#------------------
 function create_config
 {
 	T1=$"Choose System Type"
@@ -219,6 +207,7 @@ function create_config
 	return 0
 }
 
+#------------------
 function check_param
 {
 	TEMP=$(eval echo \$$1"_ALLOWED")
@@ -248,6 +237,7 @@ function check_param
 	return 0
 }
 
+#------------------
 function load_config
 {
 	T1=$"Loading $FLL_DISTRO_NAME configuration"
@@ -275,6 +265,7 @@ function load_config
 	done
 }
 
+#------------------
 function save_config
 {
 	T1=$"Saving $FLL_DISTRO_NAME configuration"
@@ -306,6 +297,7 @@ function save_config
 	done
 }
 
+#------------------
 function show_install_options
 {
 	echo > $TMP
@@ -326,6 +318,7 @@ function show_install_options
 	wizard $"Make sure you agree to all parameters, if so proceed with the installation." --defaultno --yesno "$DISP_TEXT" 35 60
 }
 
+#------------------
 function old_installer
 {
 	system_type_beginner
@@ -337,6 +330,7 @@ function old_installer
 	return 0
 }
 
+#------------------
 function do_install
 {
 	echo ""
@@ -352,6 +346,7 @@ function do_install
 	return 0
 }
 
+#------------------
 function start_install
 {
 	if [ -z "$INSTALL_READY" ]; then
@@ -368,7 +363,13 @@ function start_install
 	touch $TMPDIR/errors
 	save_config $CONFIG_FILE
 	T1=$"Starting $FLL_DISTRO_NAME installation"
-	do_install | $DIALOG --backtitle "$BT" --title "$T1" --gauge $"Installing" 10 60
+	if  [ -z "$DISPLAY" ]; then
+		do_install | \
+		$DIALOG --backtitle "$BT" --title "$T1" \
+			--gauge $"Installing" 10 60
+	else
+		do_install 
+	fi
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
 	if [ -n "$MODULE_ERROR" ]; then
@@ -381,10 +382,12 @@ function start_install
 	# FLOPPY DISK!
 	#
 
-	if [ "$BOOT_DISK" = "yes" ]; then
+	if  [ -z "$DISPLAY" ]; then
+		if [ "$BOOT_DISK" = "yes" ]; then
 		$DIALOG --backtitle "$BT" --title $"Creating floppy disk" --defaultno --yesno $"Please insert now an empty floppy disk into your floppydrive. Warning: All data on it will be lost. If you don't want to create a disk you can choose No." 0 0
-		if [ $? -eq 0 ]; then
-			make_floppy
+			if [ $? -eq 0 ]; then
+				make_floppy
+			fi
 		fi
 	fi
 
@@ -408,6 +411,7 @@ function start_install
 	exit 0
 }
 
+#------------------
 function menu_main
 {
 	T1=$"$FLL_DISTRO_NAME Main-Menu"
@@ -420,6 +424,7 @@ function menu_main
 		"exit_proc" $"Quit" $"Quit the program"
 }
 
+#------------------
 function main()
 {
 	logit $"$FLL_DISTRO_NAME-installer started"
@@ -431,7 +436,7 @@ function main()
 		\n\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \
 		\n\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de> \
 		\nfixes by Joerg Schirottke <master@kanotix.de>" 20 60
-	rebuildfstab -w -m -q
+	rebuildfstab -r
 	while ! check_partition_ok;
 	  do
 	  msgbox $"The installer detected that the installation requierements are not fullfilled yet.\
@@ -449,17 +454,19 @@ function main()
 	done
 }
 
+#------------------
 #
-# UNTESTED-Please DO!
 # Added non-interactive mode, FF 29.09.2003
 #
+# thie is our main mode .(sidux)
+#------------------
 
 function ni-main
 {
 	logit $"$FLL_DISTRO_NAME-installer started"
 	
-	rebuildfstab -w -m -q
-	logit $"Partition check succeeded"
+	# rebuildfstab -r
+	# logit $"Partition check succeeded"
 	
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo $"Config file $CONFIG_FILE could not be found. This is necessary for non-interactive mode."
@@ -468,8 +475,13 @@ function ni-main
 	load_config $CONFIG_FILE # auto load of configuration
 	
 	touch $TMPDIR/errors
-	T1=$"Starting $FLL_DISTRO_NAME installation"
-	do_install | $DIALOG --backtitle "$BT" --title "$T1" --gauge $"Installing" 10 60
+	if  [ -z "$DISPLAY" ]; then
+		T1=$"Starting $FLL_DISTRO_NAME installation"
+		 do_install | $DIALOG --backtitle "$BT" \
+		 	--title "$T1" --gauge $"Installing" 10 60
+	else
+		do_install 
+	fi
 	RC=$?
 	MODULE_ERROR=$(<$TMPDIR/errors)
 	
@@ -485,9 +497,6 @@ function ni-main
 		return 1
 	fi
 
-#
-# for future use
-#
 	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then
 		if [ -x /usr/bin/install-meta ]; then
 			exec /usr/bin/install-meta --chroot=$TARGET_MNT_POINT

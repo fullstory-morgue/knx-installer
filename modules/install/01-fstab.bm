@@ -11,7 +11,7 @@ function update_fstab
 
 	# 2. rebuild the fstab, creating the mountpoints
 	chroot "$TARGET_MNT_POINT" rebuildfstab --uuids --make-mountpoints --write-fstab \
-		--user ${USER_NAME} --group ${USER_NAME}
+		--user ${USER_NAME} --group ${USER_NAME} --quiet
 
 	# 3. umount /proc, /dev and /sys on chroot
 	umount "$TARGET_MNT_POINT/sys"
