@@ -1,9 +1,5 @@
-knx-installer (0.4.2.5) UNRELEASED; urgency=low
+knx-installer (0.4.2.5) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * first steps to get rid of Xdialog
 
  -- Joaquim Boura <x-un-i@sidux.com>  Fri, 16 Mar 2007 00:06:43 +0100
