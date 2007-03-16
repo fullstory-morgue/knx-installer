@@ -1,8 +1,14 @@
 knx-installer (0.4.2.6) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 16 Mar 2007 00:38:23 +0100
+  [ Joaquim Boura ]
+  * removed old call to rebuildfstab
+  * build first the grub and then the fstab, the grub uses old-style fstab
+    and we want the new way.
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Fri, 16 Mar 2007 17:33:01 +0100
 
 knx-installer (0.4.2.5) unstable; urgency=low
 

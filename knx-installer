@@ -334,7 +334,7 @@ function old_installer
 function do_install
 {
 	echo ""
-	INSTALL_LIST="module_hd_doaction module_swap_doaction update_fstab old_installer add_bootmanager sidux_fixes :"
+	INSTALL_LIST="module_hd_doaction module_swap_doaction old_installer add_bootmanager  update_fstab sidux_fixes :"
 	INSTALL_LIST_NUM=$[7-1]
 	N=0;
 	for i in $INSTALL_LIST; do
@@ -436,7 +436,7 @@ function main()
 		\n\nAuthor: Fabian Franz <knoppix-installer@fabian-franz.de> \
 		\n\nbased on the very good work by Christian Perle <perle@itm.tu-clausthal.de> \
 		\nfixes by Joerg Schirottke <master@kanotix.de>" 20 60
-	rebuildfstab -r
+	rebuildfstab -w -m -q
 	while ! check_partition_ok;
 	  do
 	  msgbox $"The installer detected that the installation requierements are not fullfilled yet.\
@@ -464,9 +464,6 @@ function main()
 function ni-main
 {
 	logit $"$FLL_DISTRO_NAME-installer started"
-	
-	# rebuildfstab -r
-	# logit $"Partition check succeeded"
 	
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo $"Config file $CONFIG_FILE could not be found. This is necessary for non-interactive mode."

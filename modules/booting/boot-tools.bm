@@ -5,7 +5,7 @@
 # Status: Helper-Function
 
 # Function : Creates a name, suitable for use in BASH-Variables and echos it to stdout
-
+#------------------
 get_short_kernel_name()
 {
 	echo $1 | tr '.' '_' | tr '-' '_'
@@ -30,7 +30,7 @@ get_short_kernel_name()
 # string if mkext2fs instead of cramfs is used.
 #
 # Also the INITRD_$INITRD_POSTFIX must be appended to lilo  ...
-
+#------------------
 create_initrd()
 {
 	# Check for a wanted kernel, otherwise set a default
@@ -68,7 +68,7 @@ create_initrd()
 #	for several boot-entries in the same image
 
 # TODO: Need a nice ${FLL_DISTRO_NAME} boot-image
-
+#------------------
 make_lilo_conf()
 {
 
@@ -336,7 +336,7 @@ EOF
 
 # TODO: Needs much more error-handling.
 # TODO: BOOT_HD needed!
-
+#------------------
 install_lilo()
 {
 	if [ "$BOOT_WHERE" = "mbr" ]
@@ -385,6 +385,7 @@ install_lilo()
 # Usage: translate_linux_to_grub os_device
 # Convert an OS device to the corresponding GRUB drive.
 # This part is OS-specific.
+#------------------
 translate_linux_to_grub () {
     # First, check if the device file exists.
     if test -e "$1"; then
@@ -491,7 +492,7 @@ translate_linux_to_grub () {
     return 0
 }
 
-
+#------------------
 install_grub()
 {
 	logit "Starting install_grub"
@@ -691,6 +692,7 @@ EOF
 	return 0
 }
 
+
 # Requierements: $BOOT_WHERE, $TARGET_MNT_POINT
 #
 # Subfunctions:	create_initrd
@@ -703,7 +705,7 @@ EOF
 #	Creates initrd for each kernel 
 #       and installs the bootmanager lilo.
 
-
+#------------------
 add_bootmanager()
 {
 	BOOTMANAGER_PROC=""
@@ -731,6 +733,24 @@ add_bootmanager()
 
 	# update_status $"Installing $BOOT_LOADER to $BOOT_WHERE"
 
+	##
+	## workaround...start
+	##
+	# This can be probably changed later, but for now
+	# must be done as at least update-grub uses an old-style /etc/fstab
+	# so we create one for that
+
+	# mount --bind /proc "$TARGET_MNT_POINT/proc"
+	mount --bind /dev "$TARGET_MNT_POINT/dev"
+	mount --bind /sys "$TARGET_MNT_POINT/sys"
+
+	chroot "$TARGET_MNT_POINT" rebuildfstab --write-fstab --quiet \
+		--user ${USER_NAME} --group ${USER_NAME}
+
+	##
+	## workaround...end
+	##
+
 	if [ "$BOOT_LOADER" = "grub" ]
 	then
 		install_grub
@@ -745,8 +765,21 @@ add_bootmanager()
 	fi
 	# TODO: Add error handler
 
+	##
+	## workaround...start
+	##
+	# umount /proc, /dev and /sys on chroot
+	umount "$TARGET_MNT_POINT/sys"
+	umount "$TARGET_MNT_POINT/dev"
+	# umount "$TARGET_MNT_POINT/proc"
+	##
+	## workaround...end
+	##
+
+
 	update_status $"Finishing installation"
 	[ -n "$BOOTMANAGER_PROC" ] && umount $TARGET_MNT_POINT/proc
+
 }
 
 # -------------------------
@@ -800,24 +833,24 @@ function appendGrubForOtherOS
 					if [ -r "$mounted_grub_file" ]; then
 						found=0
 						while read line; do
-                           	# well we take the first kernel found 
-                           	# and dont care this is the default one or not
-                           	#skip comented lines
+							# well we take the first kernel found 
+							# and dont care this is the default one or not
+							#skip comented lines
 							if [[ $line =~ "^title.*" ]]; then
 								if [ $found -eq 0 ] ;then
 									found=1
-                                   	# one empty line
-                                   	echo >> "$MyGrubTemp"
-                                   	# and remove the word [D,d]efault it it's there
-                                    echo $(echo $line | \
+									# one empty line
+                                   					echo >> "$MyGrubTemp"
+                                   					# and remove the word [D,d]efault it it's there
+									echo $(echo $line | \
 										sed -e 's#[D,d]efault##') \(${device:5}\) >> "$MyGrubTemp"
 								else
 									break
 								fi
 							else
-                                # skip uninteresting lines
-                                # remove leading spaces..
-                                line=$(echo "$line" | sed -e 's/^[ \t]*//' )
+                                				# skip uninteresting lines
+                                				# remove leading spaces..
+                                				line=$(echo "$line" | sed -e 's/^[ \t]*//' )
 								test $found -eq 1 && echo $line | grep -v '^#' >> "$MyGrubTemp"
 							fi
 						done < "$mounted_grub_file"
