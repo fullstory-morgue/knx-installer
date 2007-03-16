@@ -1,3 +1,9 @@
+knx-installer (0.4.2.7) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 16 Mar 2007 17:55:17 +0100
+
 knx-installer (0.4.2.6) unstable; urgency=low
 
   * removed old call to rebuildfstab
