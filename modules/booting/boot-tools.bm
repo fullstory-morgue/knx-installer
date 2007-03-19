@@ -43,7 +43,7 @@ create_initrd()
 	# Make the real initrd
 	#
 	chroot_it mount -t sysfs sysfs /sys
-	chroot_it update-initramfs -c -k "$BOOT_KERNEL" 
+	(chroot_it update-initramfs -c -k "$BOOT_KERNEL" ) 2&1 > /dev/null
 	chroot_it umount /sys
  
 	# Be verbose ...
@@ -500,9 +500,8 @@ install_grub()
 	root_device="${root_partition:0:8}"
 	device=$(echo $root_device|cut -d / -f3)
 	device=${device:0:3}
-	logit "device=$device"
+	
 	usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
-	logit "usb_dev=$usb_dev"
 
 	if [ -n "${usb_dev}" ]; then
 		# USB install must have first Grub on partition
@@ -533,7 +532,7 @@ install_grub()
 	# Create initital menu.lst
 	
 	# rm -f $TARGET_MNT_POINT/boot/grub/menu.lst
-    	(cd $TARGET_MNT_POINT/boot; ln -sf initrd.img-$BOOT_RUNNING_KERNEL initrd.img)
+	(cd $TARGET_MNT_POINT/boot; ln -sf initrd.img-$BOOT_RUNNING_KERNEL initrd.img)
 	chroot_it update-grub -y >/dev/null 2>/dev/null
 
 	# change menu.lst
@@ -716,7 +715,8 @@ add_bootmanager()
 	do
 		BOOT_KERNEL=$(basename $i)
 		BOOT_KERNELS="$BOOT_KERNELS $BOOT_KERNEL"
-		# update_status $"Creating initrd for kernel $BOOT_KERNEL ..."
+		logit $"Creating initrd for kernel $BOOT_KERNEL ..."
+		progress "Creating initrd for kernel $BOOT_KERNEL ..."
 		create_initrd
 	done
 
@@ -731,7 +731,8 @@ add_bootmanager()
 
 	# TODO: Add error handler
 
-	# update_status $"Installing $BOOT_LOADER to $BOOT_WHERE"
+	update_status $"Installing $BOOT_LOADER to $BOOT_WHERE"
+	progress "Installing $BOOT_LOADER to $BOOT_WHERE"
 
 	##
 	## workaround...start
@@ -789,18 +790,13 @@ function fix_grub_for_UUID
 	local rootDevice
 	local BACKUP
 
-	logit "fix_grub_for_UUID"
 	menuList="${TARGET_MNT_POINT}/boot/grub/menu.lst"
-	logit "menuList=\"$menuList\""
 	rootDevice=$(grep '^# kopt=root=' ${menuList}|sed 's/^# kopt=root=//'|sed 's/ .*$//')
-	logit "rootDevice=\"$rootDevice\""
 
 	#1. Make a backup of the old one
 	if grep -q root\=\\/dev\\/[hs]d[a-z][1-9][0-9]\\? ${menuList}; then
 
 		sed -i "s%root\=$rootDevice%root\=UUID\=$(/lib/udev/vol_id -u $rootDevice)%" ${menuList}
-	else
-		logit "grep failed"
 	fi
 }
 # -------------------------
@@ -840,17 +836,17 @@ function appendGrubForOtherOS
 								if [ $found -eq 0 ] ;then
 									found=1
 									# one empty line
-                                   					echo >> "$MyGrubTemp"
-                                   					# and remove the word [D,d]efault it it's there
+									echo >> "$MyGrubTemp"
+									# and remove the word [D,d]efault it it's there
 									echo $(echo $line | \
 										sed -e 's#[D,d]efault##') \(${device:5}\) >> "$MyGrubTemp"
 								else
 									break
 								fi
 							else
-                                				# skip uninteresting lines
-                                				# remove leading spaces..
-                                				line=$(echo "$line" | sed -e 's/^[ \t]*//' )
+								# skip uninteresting lines
+								# remove leading spaces..
+								line=$(echo "$line" | sed -e 's/^[ \t]*//' )
 								test $found -eq 1 && echo $line | grep -v '^#' >> "$MyGrubTemp"
 							fi
 						done < "$mounted_grub_file"
@@ -891,7 +887,6 @@ function fix-usb-install-intern
     device=$(echo $root_device|cut -d / -f3)
     device=${device:0:3}
     usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
-
 
     if [ -n "${usb_dev}" ]; then
         grub_dir="${TARGET_MNT_POINT}/boot/grub"

@@ -36,8 +36,9 @@ function module_swap_check
 
 function module_swap_doaction
 {
+	logit "Adding swap-devices to /etc/fstab ..."
+	progress "Adding swap-devices to /etc/fstab ..."
 	update_status $"Adding swap-devices to /etc/fstab ..."
-  #cp /etc/fstab $TARGET_MNT_POINT/etc/fstab
 
 	echo > $TARGET_MNT_POINT/etc/fstab
 	if [ "$SWAP_AUTODETECT" = "no" ]

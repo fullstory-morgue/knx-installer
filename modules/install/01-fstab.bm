@@ -4,6 +4,7 @@
 function update_fstab
 {
 	update_status $"Updating /etc/fstab..."
+	progress "Updating /etc/fstab..."
 	# 1. mount /proc, /dev and /sys on chroot
 	mount --bind /proc "$TARGET_MNT_POINT/proc"
 	mount --bind /dev "$TARGET_MNT_POINT/dev"

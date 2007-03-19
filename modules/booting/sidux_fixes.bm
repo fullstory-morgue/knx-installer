@@ -10,11 +10,13 @@
 sidux_fixes ()
 {
 	update_status $"Cleaning grub configuration"
-        fix_grub_for_UUID
+	progress "Cleaning grub configuration"
+	fix_grub_for_UUID
 
 	update_status $"checking and fix an USB install"
-        fix-usb-install-intern
+	fix-usb-install-intern
 
 	update_status $"Appending entries for other OS to grub's menu.lst"
+	progress "Appending entries for other OS to grub's menu.lst"
 	appendGrubForOtherOS
 }

@@ -28,6 +28,7 @@ system_copy_etc()
 system_copy_home()
 {
 	update_status $"Copying home directory ..."
+	progress "Copying home directory ..."
 	
 	#copy home directory from running user
 	#check if already data is there then stop

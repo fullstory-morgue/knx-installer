@@ -8,7 +8,7 @@ function update_passwd
 	cp $TARGET_MNT_POINT/etc/shadow $TMPDIR/
 	cp $TARGET_MNT_POINT/etc/group $TMPDIR/
 	# Change user in passwd
-	sed "s/$DEFAULT_USER/$USER_NAME/g; s,/home/$DEFAULT_USER,/home/$USER_NAME,g; s/$DEFAULT_NAME/$NAME_NAME/g" $TMPDIR/passwd > $TARGET_MNT_POINT/etc/passwd
+	sed "s|^$DEFAULT_USER|$USER_NAME|; s|/home/$DEFAULT_USER|/home/$USER_NAME|; s|:$DEFAULT_NAME,|:$NAME_NAME,|" $TMPDIR/passwd > $TARGET_MNT_POINT/etc/passwd
 	
 	# Change home of root to /home/root in passwd
 	#  -> Not needed anymore ?
@@ -18,14 +18,14 @@ function update_passwd
 	# sed 's,/home/root,/root,g' /etc/passwd > $TARGET_MNT_POINT/etc/passwd
 
 	# Change user in shadow
-	sed "s/$DEFAULT_USER/$USER_NAME/g;" $TMPDIR/shadow > $TARGET_MNT_POINT/etc/shadow
+	sed "s/^$DEFAULT_USER/$USER_NAME/;" $TMPDIR/shadow > $TARGET_MNT_POINT/etc/shadow
 	
-	update_status $"Setting passwords ..."
+#	update_status $"Setting passwords ..."
 	# Change password of user/root
 	chroot $TARGET_MNT_POINT sh -c "echo \"root:$ROOTPASS_CRYPT\" | chpasswd -e"
 	chroot $TARGET_MNT_POINT sh -c "echo \"$USER_NAME:$USERPASS_CRYPT\" | chpasswd -e"
 
 	update_status $"Updating group ..."
 	# change user in /etc/group
-	sed "s/$DEFAULT_USER/$USER_NAME/g;" $TMPDIR/group > $TARGET_MNT_POINT/etc/group
+	sed "s/^$DEFAULT_USER/$USER_NAME/;" $TMPDIR/group > $TARGET_MNT_POINT/etc/group
 }

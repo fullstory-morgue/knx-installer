@@ -16,6 +16,8 @@
 #
 # Constants
 #
+INSTALLER_FIFO="/tmp/fifo_inst"
+
 VERSION="0.4"
 CONFIG_FILE="$HOME/.sidconf"
 LOG="$HOME/.sidlog"
@@ -154,10 +156,7 @@ function update_status
 {
 	if  [ -z "$DISPLAY" ]; then
 		echo -e "XXX\n$*\nXXX"
-	else
-		echo "$*"
 	fi
-	logit "$*"
 }
 
 
@@ -321,9 +320,13 @@ function show_install_options
 #------------------
 function old_installer
 {
+	logit "old_installer"
+	progress "Converting $FLL_DISTRO_NAME to Multi-User-System..."
 	system_type_beginner
 	
 	update_status $"Converting live system to Debian..."
+	logit "Converting live system to Debian..."
+	progress "Converting live system to Debian..."
 
 	system_services
 
@@ -338,7 +341,11 @@ function do_install
 	INSTALL_LIST_NUM=$[7-1]
 	N=0;
 	for i in $INSTALL_LIST; do
-		echo $[$N*100/$INSTALL_LIST_NUM]
+		if [ -n "$DISPLAY" ]; then
+			update_status "$N  $[$N*100/$INSTALL_LIST_NUM]"
+		else
+			echo $[$N*100/$INSTALL_LIST_NUM]
+		fi
 		"${i}"
 		[ $? -ne 0 ] && return 1
 		N=$[$N+1]
@@ -463,12 +470,18 @@ function main()
 
 function ni-main
 {
+	ACTION=0
 	logit $"$FLL_DISTRO_NAME-installer started"
-	
+
+	# TO clean up when fifo is contained in installer
+	start_bar_info
+
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo $"Config file $CONFIG_FILE could not be found. This is necessary for non-interactive mode."
 		return
 	fi
+
+	progress $"$FLL_DISTRO_NAME-installer started"
 	load_config $CONFIG_FILE # auto load of configuration
 	
 	touch $TMPDIR/errors
@@ -494,7 +507,10 @@ function ni-main
 		return 1
 	fi
 
+	[ -e /tmp/fifo_inst ] && printf "end\n" > ${INSTALLER_FIFO}
+
 	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then
+
 		if [ -x /usr/bin/install-meta ]; then
 			exec /usr/bin/install-meta --chroot=$TARGET_MNT_POINT
 		else
