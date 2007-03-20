@@ -492,16 +492,27 @@ translate_linux_to_grub () {
     return 0
 }
 
+#-------------------------------------
+# code snippet gotten from update-grub
+#-------------------------------------
+function get_root_device()
+{
+	echo "$1" | sed -e 's%\([sh]d[[:lower:]]\)[0-9]*$%\1%' \
+		-e 's%\(fd[0-9]*\)$%\1%' \
+		-e 's%/part[0-9]*$%/disc%' \
+		-e 's%\(c[0-7]d[0-9]*\).*$%\1%'
+}
 #------------------
 install_grub()
 {
 	logit "Starting install_grub"
 	root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
-	root_device="${root_partition:0:8}"
+
+	root_device=$(get_root_device $root_partition)
+
 	device=$(echo $root_device|cut -d / -f3)
-	device=${device:0:3}
 	
-	usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+	usb_dev=$(echo $(readlink -f /sys/block/${device}/device) | grep  "usb")
 
 	if [ -n "${usb_dev}" ]; then
 		# USB install must have first Grub on partition
@@ -883,10 +894,12 @@ function fix-usb-install-intern
     local old_hd_map_dev
 
     root_partition=$(echo ${HD_CHOICE} |cut -d"'" -f2)
-    root_device="${root_partition:0:8}"
+
+    root_device=$(get_root_device $root_partition)
+
     device=$(echo $root_device|cut -d / -f3)
-    device=${device:0:3}
-    usb_dev=$(ls -l /sys/block/${device}/device | grep  "usb")
+
+    usb_dev=$(echo $(readlink -f /sys/block/${device}/device) | grep  "usb")
 
     if [ -n "${usb_dev}" ]; then
         grub_dir="${TARGET_MNT_POINT}/boot/grub"
