@@ -1,9 +1,5 @@
-knx-installer (0.4.2.9) UNRELEASED; urgency=low
+knx-installer (0.4.2.9) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Horst Tritremmel ]
   * install-progressbar -watch  to  install-progressbar --watch  changed
 
  -- Horst Tritremmel <hjt@sidux.com>  Tue, 20 Mar 2007 14:00:29 +0100
