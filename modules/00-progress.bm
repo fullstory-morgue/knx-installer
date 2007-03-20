@@ -8,10 +8,10 @@ function start_bar_info()
 {
 	if [ -n "$DISPLAY" ];then
 		MyCounter=0
-		test -e /tmp/fifo_inst && rm -f /tmp/fifo_inst
+		#test -e /tmp/fifo_inst && rm -f /tmp/fifo_inst
 		INSTALLER_FIFI=/tmp/.install
-		test -e "${INSTALLER_FIFO}" && rm -f  "${INSTALLER_FIFO}"
-		install-progressbar -watch=${INSTALLER_FIFO} &
+		#test -e "${INSTALLER_FIFO}" && rm -f  "${INSTALLER_FIFO}"
+		install-progressbar --watch=${INSTALLER_FIFO} &
 		BAR_PID=$!
 		# give the progress bar sometime to start
 		sleep 2
