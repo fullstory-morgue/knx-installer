@@ -1,9 +1,5 @@
-knx-installer (0.4.2.8) UNRELEASED; urgency=low
+knx-installer (0.4.2.8) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * use get_root_device to determine the device name
 
  -- Joaquim Boura <x-un-i@sidux.com>  Tue, 20 Mar 2007 01:36:27 +0100
