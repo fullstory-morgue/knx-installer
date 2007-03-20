@@ -43,7 +43,7 @@ create_initrd()
 	# Make the real initrd
 	#
 	chroot_it mount -t sysfs sysfs /sys
-	(chroot_it update-initramfs -c -k "$BOOT_KERNEL" ) 2&1 > /dev/null
+	( chroot_it update-initramfs -c -k "$BOOT_KERNEL" ) > /dev/null 2>&1
 	chroot_it umount /sys
  
 	# Be verbose ...
