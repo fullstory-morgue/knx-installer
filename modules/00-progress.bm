@@ -14,7 +14,7 @@ function start_bar_info()
 		install-progressbar --watch=${INSTALLER_FIFO} &
 		BAR_PID=$!
 		# give the progress bar sometime to start
-		sleep 2
+		# sleep 2
 	fi
 }
 ##
@@ -37,12 +37,19 @@ function progress()
 	
 		ACTION=$((ACTION + 1))
 		text=$(echo "$@"|cut -d ":" -f 1)
+		perc=$(echo $ACTION |awk '{printf ("%1.2f", $1 / 23)'})
+		perci=$(echo $ACTION |awk '{printf ("%d", $1 * 100 / 23)'})
+		test "$perci" -gt 100 && perc="1.0"
+
 		# printf "$@" >> /tmp/install_progress
 		# printf "ACTION=$ACTION" >> /tmp/install_progress
-
-		perc=$(echo $ACTION |awk '{printf ("%f", $1 / 28)'})
+		# printf "PERC=$perc" >> /tmp/install_progress
+		# printf "text=$text\n" >> /tmp/install_progress
+		#
 		# sendd message to the gui
-		printf  "${perc}\n<span foreground=\"indianred4\" font_desc=\"Sans Bold 14\">Sidux Installation </span>\n\n<big>$text</big>\n" > $INSTALLER_FIFO
+		printf  "PERC=${perc}\n\
+CURRENT=<big><b>$text</b></big>\n\
+COMPLETE=completed ${ACTION} from 23" > $INSTALLER_FIFO
 	fi
 }
 
