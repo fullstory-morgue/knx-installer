@@ -37,8 +37,8 @@ function progress()
 	
 		ACTION=$((ACTION + 1))
 		text=$(echo "$@"|cut -d ":" -f 1)
-		perc=$(echo $ACTION |awk '{printf ("%1.2f", $1 / 23)'})
-		perci=$(echo $ACTION |awk '{printf ("%d", $1 * 100 / 23)'})
+		perc=$(awk -v action=$ACTION 'BEGIN{printf ("%1.2f", action / 23)}')
+		perci=$(awk -v action=$ACTION 'BEGIN{printf ("%d", action * 100 / 23)}')
 		test "$perci" -gt 100 && perc="1.0"
 
 		# printf "$@" >> /tmp/install_progress

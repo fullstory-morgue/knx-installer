@@ -1,8 +1,9 @@
 knx-installer (0.4.2.11) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * Bugfix awk usage in progress percentage function, curly bracket was placed
+    outside of strong quotes. Pass ACTION to awk as an awk variable with -v.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 24 Mar 2007 01:42:54 +0100
+ -- Kel Modderman <kel@otaku42.de>  Sat, 24 Mar 2007 10:59:16 +1000
 
 knx-installer (0.4.2.10) unstable; urgency=low
 
