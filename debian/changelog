@@ -1,3 +1,9 @@
+knx-installer (0.4.2.12) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 24 Mar 2007 02:17:13 +0100
+
 knx-installer (0.4.2.11) unstable; urgency=low
 
   * Bugfix awk usage in progress percentage function, curly bracket was placed
