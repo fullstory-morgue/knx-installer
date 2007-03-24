@@ -1,9 +1,5 @@
-knx-installer (0.4.2.10) UNRELEASED; urgency=low
+knx-installer (0.4.2.10) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * input for progressbar changed a bit
 
  -- Joaquim Boura <x-un-i@sidux.com>  Sat, 24 Mar 2007 00:23:19 +0100
