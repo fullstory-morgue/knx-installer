@@ -1,14 +1,12 @@
-#!/bin/bash
+f#!/bin/bash
 #
 # Abstraction Layer Functions needed for (X)dialog
 #
-
+#---------------------------------------------------
 # setup_dialog program_name
 function setup_dialog()
 {
 	# Set up dialog
-	XDIALOG_HIGH_DIALOG_COMPAT=1
-	export XDIALOG_HIGH_DIALOG_COMPAT
 	export DIALOG_ESC=1
 
 	TMPDIR="$(mktemp -dp /tmp/ knx-installer-XXXXXXXXXX)"
@@ -21,15 +19,15 @@ function setup_dialog()
 	TMP="$TMPDIR/dialog"
 
 	DIALOG="dialog"
-	[ -n "$DISPLAY" ] && [ -x /usr/bin/Xdialog ] && DIALOG="echo"
+	[ -n "$DISPLAY" ] && DIALOG="echo"
 
 }
-
+#---------------------------------------------------
 function error_code
 {
 	return "$1"
 }
-
+#---------------------------------------------------
 # Backtitle, Title, Help-Text, Wizard ?, ...
 function dialog_with_help
 {
@@ -47,29 +45,21 @@ function dialog_with_help
 	DIA_WIDTH=60
 	
 	while [ $RC -ne "0" ]; do
-		if [ "$DIALOG" = "Xdialog" ]; then
-			if [ "$DIA_WIZARD" = "yes" ]; then
-				$DIALOG --cr-wrap --backtitle "$DIA_BT" --title "$DIA_T" --wizard --cancel-label $"Quit" --help "$DIA_HELP" "$@" 2>$TMP
-			else
-				$DIALOG --cr-wrap --backtitle "$DIA_BT" --title "$DIA_T" --cancel-label $"Quit" --help "$DIA_HELP" "$@" 2>$TMP
+		if [ "$DIA_WIZARD" = "yes" ]; then
+			#$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --extra-button --cancel-label $"Quit" --ok-label $"Previous" --extra-label $"Next" --help-button "$@" 2>$TMP
+			$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --extra-button --cancel-label $"Previous" --ok-label $"Next" --extra-label $"Quit" --help-button --help-label $"Help" "$@" 2>$TMP
+			RC=$?
+		
+			if [ "$RC" -eq "1" ]; then
+				RC=3;
+			elif [ "$RC" -eq "3" ]; then
+				RC=1;  
 			fi
+			error_code $RC
 		else
-			if [ "$DIA_WIZARD" = "yes" ]; then
-				#$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --extra-button --cancel-label $"Quit" --ok-label $"Previous" --extra-label $"Next" --help-button "$@" 2>$TMP
-				$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --extra-button --cancel-label $"Previous" --ok-label $"Next" --extra-label $"Quit" --help-button --help-label $"Help" "$@" 2>$TMP
-				RC=$?
-			
-				if [ "$RC" -eq "1" ]; then
-					RC=3;
-				elif [ "$RC" -eq "3" ]; then
-					RC=1;  
-				fi
-
-				error_code $RC
-			else
-				$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --cancel-label $"Quit" --help-button "$@" 2>$TMP
-			fi
+			$DIALOG --backtitle "$DIA_BT" --title "$DIA_T" --cancel-label $"Quit" --help-button "$@" 2>$TMP
 		fi
+
 		RC=$?
 		[ "$RC" -eq "1" ] && exit_proc $RC
 		[ "$RC" -eq "255" ] && echo "$FATAL_DIALOG:" | cat - $TMP && exit $RC # exit on dialog error
@@ -78,7 +68,7 @@ function dialog_with_help
 	done
 	return $RC
 }
-
+#---------------------------------------------------
 # Backtitle, Title, Help-Text, Menu-Title, Menu-Items
 function menu
 {
@@ -98,7 +88,7 @@ function menu
 	
 	dialog_with_help "$MENU_BT" "$MENU_T" "$MENU_HELP" "no_wizard" "--menu" "$MENU_TITLE" $MENU_HEIGHT $MENU_WIDTH $MENU_NI "$@"
 }
-
+#---------------------------------------------------
 # Help, Title, ...
 function do_menu
 {
@@ -123,7 +113,7 @@ function do_menu
 	NUM_CH=$(echo $MENUPART_CHOICE | cut -d. -f1)
 	${MENU_ACTION[NUM_CH]}
 }
-
+#---------------------------------------------------
 function radiolist
 {
 	RADIO_HELP="$1"
@@ -136,7 +126,7 @@ function radiolist
 	RADIO_HEIGHT=$((10+$RADIO_NI*2))
 	dialog_with_help "$BT" "${T1/0/$N}" "$RADIO_HELP" "yes" --radiolist "$RADIO_TITLE" $RADIO_HEIGHT $RADIO_WIDTH $RADIO_NI "$@" # yes means use wizard
 }
-
+#---------------------------------------------------
 function checklist
 {
 	RADIO_HELP="$1"
@@ -154,14 +144,14 @@ function checklist
 # simple wrapper for dialog_with_help
 #
 # Syntax: wizard help-text, ...
-
+#---------------------------------------------------
 function wizard
 {
 	W_HELP="$1"
 	shift
 	dialog_with_help "$BT" "${T1/0/$N}" "$W_HELP" "yes" "$@" # yes means use wizard
 }
-
+#---------------------------------------------------
 function no_wizard
 {
 	W_HELP="$1"
@@ -179,7 +169,7 @@ function msgbox
 #
 # Syntax: help, height, width, text1, text2, err-text
 #
-
+#---------------------------------------------------
 function passwordbox
 {
 	PASSBOX_HELP=$1
@@ -194,19 +184,12 @@ function passwordbox
 	PASS2=""
 	
 	while true; do
-		if [ "$DIALOG" = "Xdialog" ]; then
-			wizard "$PASSBOX_HELP" --password --password --2inputsbox "" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH" "$PASSBOX_TITLE1" "$PASS1" "$PASSBOX_TITLE2" "$PASS2"
-			[ $? -eq 1 ] && return 1
-			PASS1=$(awk -F/ '{ print $1 }' $TMP)
-			PASS2=$(awk -F/ '{ print $2 }' $TMP)
-		else
-			wizard "$PASSBOX_HELP" --insecure --passwordbox "$PASSBOX_TITLE1" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH" ""
-			[ $? -eq 1 ] && return 1
-			PASS1=$(cat $TMP)
-			wizard "$PASSBOX_HELP" --insecure --passwordbox "$PASSBOX_TITLE2" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH" ""
-			[ $? -eq 1 ] && return 1
-			PASS2=$(cat $TMP)
-		fi
+		wizard "$PASSBOX_HELP" --insecure --passwordbox "$PASSBOX_TITLE1" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH" ""
+		[ $? -eq 1 ] && return 1
+		PASS1=$(cat $TMP)
+		wizard "$PASSBOX_HELP" --insecure --passwordbox "$PASSBOX_TITLE2" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH" ""
+		[ $? -eq 1 ] && return 1
+		PASS2=$(cat $TMP)
 
 		[ "$PASS1" = "$PASS2" -a -n "$PASS1" ] && break
 		msgbox "$PASSBOX_ERROR" "$PASSBOX_HEIGHT" "$PASSBOX_WIDTH"

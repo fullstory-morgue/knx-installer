@@ -4,26 +4,12 @@ HD_MSG1="Copying files. This can take a while. Please be patient."
 ##
 ##-------------------
 ##
-function start_bar_info()
+function end_progress()
 {
-	if [ -n "$DISPLAY" ];then
-		MyCounter=0
-		#test -e /tmp/fifo_inst && rm -f /tmp/fifo_inst
-		INSTALLER_FIFI=/tmp/.install
-		#test -e "${INSTALLER_FIFO}" && rm -f  "${INSTALLER_FIFO}"
-		install-progressbar --watch=${INSTALLER_FIFO} &
-		BAR_PID=$!
-		# give the progress bar sometime to start
-		# sleep 2
-	fi
+	[ -n "$DISPLAY" r] && [ -e "${INSTALLER_INOTIFY}" ] && \
+	printf "end\n" > ${INSTALLER_INOTIFY}
 }
-##
-##-------------------
-##
-function end_progess_bar()
-{
- printf "end\n" > ${INSTALLER_FIFO}
-}
+
 ##
 ##-------------------
 ##
@@ -49,7 +35,7 @@ function progress()
 		# sendd message to the gui
 		printf  "PERC=${perc}\n\
 CURRENT=<big><b>$text</b></big>\n\
-COMPLETE=completed ${ACTION} from 23" > $INSTALLER_FIFO
+COMPLETE=completed ${ACTION} from 23" > $INSTALLER_INOTIFY
 	fi
 }
 

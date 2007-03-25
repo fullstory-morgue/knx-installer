@@ -1,8 +1,12 @@
 knx-installer (0.4.2.12) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 24 Mar 2007 02:17:13 +0100
+  [ Joaquim Boura ]
+  * further xdialog cleanup, progressbar gives the file used as 2nd parameter
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Sun, 25 Mar 2007 15:50:07 +0200
 
 knx-installer (0.4.2.11) unstable; urgency=low
 

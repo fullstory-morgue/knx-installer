@@ -16,7 +16,6 @@
 #
 # Constants
 #
-INSTALLER_FIFO="/tmp/fifo_inst"
 
 VERSION="0.4"
 CONFIG_FILE="$HOME/.sidconf"
@@ -473,7 +472,7 @@ function ni-main
 	ACTION=0
 	logit $"$FLL_DISTRO_NAME-installer started"
 
-	# TO clean up when fifo is contained in installer
+	# TO clean up when this is contained in installer-gui
 	start_bar_info
 
 	if [ ! -f "$CONFIG_FILE" ]; then
@@ -507,7 +506,7 @@ function ni-main
 		return 1
 	fi
 
-	[ -e /tmp/fifo_inst ] && printf "end\n" > ${INSTALLER_FIFO}
+	end_progress
 
 	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then
 
@@ -540,6 +539,7 @@ if [ "$1" = "nonInteractive" ]; then
 	INSTALL_MODE=non-interactive ni-main
 	exit 1 # something did go wrong
 elif [ "$1" = "installer" ]; then
+	test -n "$2" && INSTALLER_INOTIFY="$2"
 	INSTALL_MODE=installer ni-main
 	exit 1 # something did go wrong
 fi
