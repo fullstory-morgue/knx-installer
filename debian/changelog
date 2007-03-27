@@ -1,3 +1,9 @@
+knx-installer (0.4.2.14) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 28 Mar 2007 01:56:52 +0200
+
 knx-installer (0.4.2.13) unstable; urgency=low
 
   * change the step increment to better take in account the time need for copy
