@@ -1,8 +1,13 @@
 knx-installer (0.4.2.13) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 25 Mar 2007 16:00:14 +0200
+  [ Joaquim Boura ]
+  * change the step increment to better take in account the time need for copy
+  * and fixed a typo in the end_progress function
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Tue, 27 Mar 2007 22:04:10 +0200
 
 knx-installer (0.4.2.12) unstable; urgency=low
 

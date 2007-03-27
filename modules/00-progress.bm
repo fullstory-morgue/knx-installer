@@ -6,7 +6,7 @@ HD_MSG1="Copying files. This can take a while. Please be patient."
 ##
 function end_progress()
 {
-	[ -n "$DISPLAY" r] && [ -e "${INSTALLER_INOTIFY}" ] && \
+	[ -n "$DISPLAY" ] && [ -e "${INSTALLER_INOTIFY}" ] && \
 	printf "end\n" > ${INSTALLER_INOTIFY}
 }
 
@@ -23,8 +23,8 @@ function progress()
 	
 		ACTION=$((ACTION + 1))
 		text=$(echo "$@"|cut -d ":" -f 1)
-		perc=$(awk -v action=$ACTION 'BEGIN{printf ("%1.2f", action / 23)}')
-		perci=$(awk -v action=$ACTION 'BEGIN{printf ("%d", action * 100 / 23)}')
+		perc=$(awk -v action=$ACTION 'BEGIN{printf ("%1.2f", action / 22)}')
+		perci=$(awk -v action=$ACTION 'BEGIN{printf ("%d", action * 100 / 22)}')
 		test "$perci" -gt 100 && perc="1.0"
 
 		# printf "$@" >> /tmp/install_progress

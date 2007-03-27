@@ -48,9 +48,44 @@ function module_hd_progressbar
 		if [ -z "$DISPLAY" ]; then
 			[ "$PERC" -lt "100" ] && echo $PERC
 		else
-			if [ "$PERC" -lt "100" ]; then
+			if   [ "$OLDPERC" -eq 0 ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 10 -a "$PERC" -gt "10" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 20 -a "$PERC" -gt "20" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 30 -a "$PERC" -gt "30" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 40 -a "$PERC" -gt "40" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 50 -a "$PERC" -gt "50" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 60 -a "$PERC" -gt "60" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 70 -a "$PERC" -gt "70" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 80 -a "$PERC" -gt "80" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 90 -a "$PERC" -gt "90" ]; then
+				OLDPERC="$PERC"
+				progress "Copying files. This can take a while. Please be patient." 
+			elif [ "$OLDPERC" -lt 100 -a "$PERC" -gt "100" ]; then
+				OLDPERC="$PERC"
 				progress "Copying files. This can take a while. Please be patient." 
 			fi
+
+#			if [ "$PERC" -lt "100" ]; then
+#				progress "Copying files. This can take a while. Please be patient." 
+#			fi
 		fi
 		sleep 10
 	done
@@ -59,6 +94,7 @@ function module_hd_progressbar
 #------------------
 function module_hd_knoppix_copy
 {
+	OLDPERC=0
 	update_status $"Copying files. This can take a while. Please be patient."
 	(cd /$DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
 	module_hd_progressbar $!
