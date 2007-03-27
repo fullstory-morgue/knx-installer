@@ -1,9 +1,5 @@
-knx-installer (0.4.2.13) UNRELEASED; urgency=low
+knx-installer (0.4.2.13) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * change the step increment to better take in account the time need for copy
   * and fixed a typo in the end_progress function
 
