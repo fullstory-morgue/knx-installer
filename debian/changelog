@@ -1,9 +1,5 @@
-knx-installer (0.4.2.14) UNRELEASED; urgency=low
+knx-installer (0.4.2.14) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * if HD_AUTO is set to yes mount partitions on boot
 
  -- Joaquim Boura <x-un-i@sidux.com>  Fri, 30 Mar 2007 20:59:36 +0200
