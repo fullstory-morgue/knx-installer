@@ -1,3 +1,9 @@
+knx-installer (0.4.2.15) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 31 Mar 2007 04:10:54 +0200
+
 knx-installer (0.4.2.14) unstable; urgency=low
 
   * if HD_AUTO is set to yes mount partitions on boot
