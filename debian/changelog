@@ -1,9 +1,5 @@
-knx-installer (0.4.2.15) UNRELEASED; urgency=low
+knx-installer (0.4.2.15) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * use 20 Actions and limit the count to that
 
  -- Joaquim Boura <x-un-i@sidux.com>  Tue, 03 Apr 2007 00:26:50 +0200
