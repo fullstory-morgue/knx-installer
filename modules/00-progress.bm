@@ -21,21 +21,16 @@ function progress()
 
 	if [ -n "$DISPLAY" ];then
 	
-		ACTION=$((ACTION + 1))
+		[ "${ACTION}" -lt 19 ] && ACTION=$((ACTION + 1))
 		text=$(echo "$@"|cut -d ":" -f 1)
-		perc=$(awk -v action=$ACTION 'BEGIN{printf ("%1.2f", action / 22)}')
-		perci=$(awk -v action=$ACTION 'BEGIN{printf ("%d", action * 100 / 22)}')
+		perc=$(awk -v action=$ACTION 'BEGIN{printf ("%1.2f", action / 20)}')
+		perci=$(awk -v action=$ACTION 'BEGIN{printf ("%d", action * 100 / 20)}')
 		test "$perci" -gt 100 && perc="1.0"
 
-		# printf "$@" >> /tmp/install_progress
-		# printf "ACTION=$ACTION" >> /tmp/install_progress
-		# printf "PERC=$perc" >> /tmp/install_progress
-		# printf "text=$text\n" >> /tmp/install_progress
-		#
 		# sendd message to the gui
 		printf  "PERC=${perc}\n\
 CURRENT=<big><b>$text</b></big>\n\
-COMPLETE=completed ${ACTION} from 23" > $INSTALLER_INOTIFY
+COMPLETE=completed ${ACTION} from 20" > $INSTALLER_INOTIFY
 	fi
 }
 
