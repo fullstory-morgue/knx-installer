@@ -1,8 +1,12 @@
 knx-installer (0.4.2.16) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 03 Apr 2007 01:17:32 +0200
+  [ Joaquim Boura ]
+  * changing user in /etc/group not always completed
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Tue, 03 Apr 2007 21:45:12 +0200
 
 knx-installer (0.4.2.15) unstable; urgency=low
 
