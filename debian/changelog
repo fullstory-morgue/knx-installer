@@ -1,8 +1,8 @@
-knx-installer (0.4.2.17) UNRELEASED; urgency=low
+knx-installer (0.4.2.17) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * revert gdm auto-login.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 03 Apr 2007 21:53:56 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 05 Apr 2007 21:53:56 +0200
 
 knx-installer (0.4.2.16) unstable; urgency=low
 

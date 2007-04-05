@@ -210,14 +210,19 @@ EOF
 	fi
 	
 	# set KDM wallapaper
-	if [ -e "$FLL_WALLPAPER" ] && \
-		[ -d "$TARGET_MNT_POINT/etc/default/kdm.d" ]; then
-		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "$TARGET_MNT_POINT/etc/default/kdm.d/sidux_wallpaper"
+	if [ -e "${FLL_WALLPAPER}" ] && \
+		[ -d "${TARGET_MNT_POINT}/etc/default/kdm.d" ]; then
+		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "${TARGET_MNT_POINT}/etc/default/kdm.d/sidux_wallpaper"
 	fi
 
 	# revert KDM autologin
-	if [ -f "$FLL_MOUNTPOINT/etc/kde3/kdm/kdmrc" ]; then
-		cat "$FLL_MOUNTPOINT/etc/kde3/kdm/kdmrc" > "$TARGET_MNT_POINT/etc/kde3/kdm/kdmrc"
+	if [ -f "${FLL_MOUNTPOINT}/etc/kde3/kdm/kdmrc" ]; then
+		cat "${FLL_MOUNTPOINT}/etc/kde3/kdm/kdmrc" > "${TARGET_MNT_POINT}/etc/kde3/kdm/kdmrc"
+	fi
+
+	# revert GDM autologin
+	if [ -f "${FLL_MOUNTPOINT}/etc/gdm/gdm.conf" ]; then
+		cat "${FLL_MOUNTPOINT}/etc/gdm/gdm.conf" > "${TARGET_MNT_POINT}/etc/gdm/gdm.conf"
 	fi
 }
 
