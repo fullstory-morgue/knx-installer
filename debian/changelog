@@ -1,4 +1,4 @@
-knx-installer (0.4.2.18) UNRELEASED; urgency=low
+knx-installer (0.4.2.18) unstable; urgency=low
 
   * Honor SERVICES_START variable by adding contents to SERVICE_WHITELIST
     array in modules/install/02-install-tools.bm. This variable will be made
