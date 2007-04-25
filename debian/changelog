@@ -1,9 +1,5 @@
-knx-installer (0.4.2.19) UNRELEASED; urgency=low
+knx-installer (0.4.2.19) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * on hd install remove install-progessbar.
 
  -- Joaquim Boura <x-un-i@sidux.com>  Tue, 24 Apr 2007 21:28:42 +0200
