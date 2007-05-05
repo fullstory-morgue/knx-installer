@@ -1,9 +1,5 @@
-knx-installer (0.4.2.21) UNRELEASED; urgency=low
+knx-installer (0.4.2.21) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * fixed typo
 
  -- Joaquim Boura <x-un-i@sidux.com>  Sat, 05 May 2007 21:54:27 +0200
