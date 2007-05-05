@@ -1,8 +1,12 @@
 knx-installer (0.4.2.21) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 29 Apr 2007 13:59:31 +0200
+  [ Joaquim Boura ]
+  * fixed typo
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Sat, 05 May 2007 21:54:27 +0200
 
 knx-installer (0.4.2.20) unstable; urgency=low
 
