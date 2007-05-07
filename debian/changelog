@@ -1,3 +1,9 @@
+knx-installer (0.4.2.23) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 07 May 2007 13:50:31 +0200
+
 knx-installer (0.4.2.22) unstable; urgency=low
 
   * remove /etc/default/kdm.d/autologin while installing.
