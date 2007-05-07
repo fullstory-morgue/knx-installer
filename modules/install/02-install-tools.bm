@@ -217,9 +217,7 @@ EOF
 	fi
 
 	# revert KDM autologin
-	if [ -f "${FLL_MOUNTPOINT}/etc/kde3/kdm/kdmrc" ]; then
-		cat "${FLL_MOUNTPOINT}/etc/kde3/kdm/kdmrc" > "${TARGET_MNT_POINT}/etc/kde3/kdm/kdmrc"
-	fi
+	rm -f "${TARGET_MNT_POINT}/etc/default/kdm.d/autologin"
 
 	# revert GDM autologin
 	if [ -f "${FLL_MOUNTPOINT}/etc/gdm/gdm.conf" ]; then
