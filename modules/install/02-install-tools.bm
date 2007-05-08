@@ -144,6 +144,12 @@ system_purge_live_only_stuff()
 	rm -f "$TARGET_MNT_POINT/home/$USER_NAME/Desktop/install-gui.desktop" 
 	# and this one also
 	rm -rf "$TARGET_MNT_POINT/etc/sysconfig"
+	
+	# update /root/.bashrc
+	if [ ! -f "$TARGET_MNT_POINT/root/.bashrc" ] || \
+		! grep -q /etc/bash_completion "$TARGET_MNT_POINT/root/.bashrc"; then
+		echo '[ -r /etc/bash_completion ] && . /etc/bash_completion' >> "$TARGET_MNT_POINT/root/.bashrc"
+	fi
 }
 
 #------------------
