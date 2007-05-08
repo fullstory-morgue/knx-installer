@@ -1,4 +1,4 @@
-knx-installer (0.4.2.23) UNRELEASED; urgency=low
+knx-installer (0.4.2.23) unstable; urgency=low
 
   * Remove handling on non-free/non-functional service components.
     (sl-modem-daemon, ipw3945d)
