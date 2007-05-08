@@ -1,3 +1,9 @@
+knx-installer (0.4.2.24) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 08 May 2007 11:52:13 +0200
+
 knx-installer (0.4.2.23) unstable; urgency=low
 
   * Remove handling on non-free/non-functional service components.
