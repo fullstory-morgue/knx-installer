@@ -7,12 +7,13 @@
 function module_services_showinfo
 {
 	echo $"Services-Options:"
-	echo "  " $"The following services will be started, after each system bootup: $SERVICES_START"
+	echo "  " $"The following optional services will be started at system bootup: $SERVICES_START"
 }
 
 function module_services_defaults
 {
-	register_var "SERVICES_START" $"Possible services are for now: kdm cupsys smail ssh samba" "" "" "kdm cupsys"
+	# default to no optional services starting by default
+	register_var "SERVICES_START" $"Possible services are for now: cupsys ssh" "" "" ""
 }
 
 function module_services
@@ -23,5 +24,3 @@ function module_services
 	register_vars "SERVICES_MODULE SERVICES_START"
 	return 0
 }
-
-# TODO: Add module_services_do_action

@@ -307,8 +307,8 @@ msgid ""
 msgstr "Nasledujúce služby budú spustené po každom štarte počítača: $SERVICES_START"
 
 #: knx-installer:627
-msgid "Possible services are for now: kdm cupsys smail ssh samba"
-msgstr "Momentálne môžete vybrať služby: kdm cupsys smail ssh samba"
+msgid "Possible services are for now: cupsys samba"
+msgstr "Momentálne môžete vybrať služby: cupsys samba"
 
 
 #: knx-installer:645

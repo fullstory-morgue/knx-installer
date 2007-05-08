@@ -619,7 +619,7 @@ msgid ""
 msgstr "Folgende Dienste werden bei jedem Systemboot gestartet: $SERVICES_START"
 
 #: modules/05-services.bm:15
-msgid "Possible services are for now: kdm cupsys smail ssh samba"
+msgid "Possible services are for now: cupsys samba"
 msgstr "Mögliche Dienste können bisher sein: kdm cupsd smail ssh samba"
 
 #: modules/06-boot.bm:9

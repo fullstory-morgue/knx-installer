@@ -9,7 +9,7 @@ system_findchanged(){
 			cmp -s "$1/$i" "$2/$i" || echo "$1/$i"
 		done
 	elif [ -e "$1" ]; then
-			cmp -s "$1" "$2" || echo "$1"
+		cmp -s "$1" "$2" || echo "$1"
 	fi
 }
 
@@ -210,12 +210,6 @@ EOF
 		fi
 	fi
 	
-	# set KDM wallapaper
-	if [ -e "${FLL_WALLPAPER}" ] && \
-		[ -d "${TARGET_MNT_POINT}/etc/default/kdm.d" ]; then
-		echo "WALLPAPER=\"$FLL_WALLPAPER\"" > "${TARGET_MNT_POINT}/etc/default/kdm.d/sidux_wallpaper"
-	fi
-
 	# revert KDM autologin
 	rm -f "${TARGET_MNT_POINT}/etc/default/kdm.d/autologin"
 
@@ -368,25 +362,6 @@ system_services()
 			chroot_it update-rc.d "$DM" start 99 5 . stop 01 0 1 2 3 4 6 . &> /dev/null
 		fi
 	done
-	
-	# non-free
-	if [ -x /etc/init.d/ipw3945d ]; then
-		# non-free, still keep them in mind
-		if pidof ipw3945d &>/dev/null; then
-			SERVICE_WHITELIST+=( ipw3945d )
-		else
-			chroot_it dpkg --purge ipw3945d &> /dev/null
-		fi
-	fi
-	
-	# non-free
-	if [ -x /etc/init.d/sl-modem-daemon ]; then
-		if pidof slmodemd &>/dev/null; then
-			SERVICE_WHITELIST+=( sl-modem-daemon )
-		else
-			chroot_it dpkg --purge sl-modem-daemon &> /dev/null
-		fi
-	fi
 	
 	for service in /etc/init.d/*; do
 		test -f "$service" || continue

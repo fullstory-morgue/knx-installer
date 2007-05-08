@@ -1,8 +1,15 @@
 knx-installer (0.4.2.23) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * Remove handling on non-free/non-functional service components.
+    (sl-modem-daemon, ipw3945d)
+  * Don't register kdm cupsys as default components of SERVICES_START
+    variable, that should be left to the ui or config file to allow these
+    modules to start.
+  * Don't pretend to support other optional services, some are rarely on any of
+    our releases. Update .po trnaslation files accordingly.
+  * Don't set kdm wallpaper here, this is already done by live-autoconfig.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 07 May 2007 13:50:31 +0200
+ -- Kel Modderman <kel@otaku42.de>  Tue, 08 May 2007 13:40:58 +1000
 
 knx-installer (0.4.2.22) unstable; urgency=low
 

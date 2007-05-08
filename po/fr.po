@@ -586,8 +586,8 @@ msgstr ""
 "$SERVICES_START"
 
 #: modules/05-services.bm:15
-msgid "Possible services are for now: kdm cupsys smail ssh samba"
-msgstr "Services disponibles: kdm cupsys smail ssh samba"
+msgid "Possible services are for now: cupsys samba"
+msgstr "Services disponibles: cupsys samba"
 
 #: modules/06-boot.bm:9
 msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"

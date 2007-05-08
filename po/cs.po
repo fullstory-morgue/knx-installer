@@ -305,8 +305,8 @@ msgid ""
 msgstr "Následující služby budou spuštěny po každém startu počítače: $SERVICES_START"
 
 #: knx-installer:627
-msgid "Possible services are for now: kdm cupsys smail ssh samba"
-msgstr "Momentálně můžete vybrat služby: kdm cupsys smail ssh samba"
+msgid "Possible services are for now: cupsys samba"
+msgstr "Momentálně můžete vybrat služby: cupsys samba"
 
 #: knx-installer:645
 msgid "Chooses the Boot-Loader (grub is non-functional at the moment)"
