@@ -1,4 +1,4 @@
-knx-installer (0.4.2.24) UNRELEASED; urgency=low
+knx-installer (0.4.2.24) unstable; urgency=low
 
   [ Kel Modderman ]
   * Add rudimentary addition of bash_completion to /root/.bashrc.
