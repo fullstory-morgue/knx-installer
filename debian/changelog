@@ -1,8 +1,12 @@
 knx-installer (0.4.2.24) UNRELEASED; urgency=low
 
+  [ Kel Modderman ]
   * Add rudimentary addition of bash_completion to /root/.bashrc.
 
- -- Kel Modderman <kel@otaku42.de>  Tue, 08 May 2007 23:06:30 +1000
+  [ Joaquim Boura ]
+  * use FLL_UNION_MOUNTPOINT as source for copy files into HD
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Wed, 09 May 2007 00:03:33 +0200
 
 knx-installer (0.4.2.23) unstable; urgency=low
 

@@ -31,10 +31,10 @@ if [ -r /etc/default/distro ]; then
 	. /etc/default/distro
 
 	[ -n "$FLL_LIVE_USER" ] && DEFAULT_USER="$FLL_LIVE_USER" || DEFAULT_USER="sidux"
-	[ -n "$FLL_MEDIA_DIR" ] && DEFAULT_DIR="$FLL_MEDIA_DIR"  || DEFAULT_DIR="SIDUX"
+	[ -n "$FLL_UNION_MOUNTPOINT" ] && DEFAULT_DIR="$FLL_UNION_MOUNTPOINT"  || DEFAULT_DIR="/UNIONFS"
 else
 	DEFAULT_USER="sidux"
-	DEFAULT_DIR="SIDUX"
+	DEFAULT_DIR="/UNIONFS"
 fi
 
 DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
@@ -44,9 +44,9 @@ DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
 MEM_SWAP_NEEDED=$((512*1000)) # need some lower so that people with 512 MB can use this option
 SWAP_MIN=$((128*1024))
 if grep -q unionfs /proc/mounts; then
-	ROOT_MIN_RAW=$(du -sm "/$DEFAULT_DIR" | awk '{print $1}')
+	ROOT_MIN_RAW=$(du -sm "$DEFAULT_DIR" | awk '{print $1}')
 else
-	ROOT_MIN_RAW=$(df -m "/$DEFAULT_DIR" | tail -1 | awk '{print $3}')
+	ROOT_MIN_RAW=$(df -m "$DEFAULT_DIR" | tail -1 | awk '{print $3}')
 	grep -q squashfs /proc/mounts && ROOT_MIN_RAW=$(($ROOT_MIN_RAW*270/100)) #fix status bar for squashfs
 fi
 ROOT_MIN_CORR=$[ROOT_MIN_RAW*115/100] # + 15% Filesystem overhead

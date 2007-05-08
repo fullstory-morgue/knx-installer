@@ -96,7 +96,7 @@ function module_hd_knoppix_copy
 {
 	OLDPERC=0
 	update_status $"Copying files. This can take a while. Please be patient."
-	(cd /$DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
+	(cd $DEFAULT_DIR ; cp -a * $TARGET_MNT_POINT ; mkdir -p $TARGET_MNT_POINT/proc ; sync) &
 	module_hd_progressbar $!
 	# two beeps
 	if [ -z "$DISPLAY" ]; then
