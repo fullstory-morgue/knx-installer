@@ -756,8 +756,7 @@ add_bootmanager()
 	mount --bind /dev "$TARGET_MNT_POINT/dev"
 	mount --bind /sys "$TARGET_MNT_POINT/sys"
 
-	chroot "$TARGET_MNT_POINT" rebuildfstab --write-fstab --quiet \
-		--user ${USER_NAME} --group ${USER_NAME}
+	chroot "$TARGET_MNT_POINT" rebuildfstab --write-fstab --quiet 
 
 	##
 	## workaround...end

@@ -194,8 +194,7 @@ function action-part
 	fi
 	
 	# make sure new partitions are present in /etc/fstab
-	/usr/sbin/rebuildfstab --write-fstab --make-mountpoints --user "$FLL_LIVE_USER" \
-		--group "$(getent passwd "$FLL_LIVE_USER" | cut -d\: -f 4)"
+	/usr/sbin/rebuildfstab --write-fstab --make-mountpoints 
 }
 
 function action-part-later
