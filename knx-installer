@@ -31,10 +31,12 @@ if [ -r /etc/default/distro ]; then
 	. /etc/default/distro
 
 	[ -n "$FLL_LIVE_USER" ] && DEFAULT_USER="$FLL_LIVE_USER" || DEFAULT_USER="sidux"
-	[ -n "$FLL_UNION_MOUNTPOINT" ] && DEFAULT_DIR="$FLL_UNION_MOUNTPOINT"  || DEFAULT_DIR="/UNIONFS"
+	#[ -n "$FLL_UNION_MOUNTPOINT" ] && DEFAULT_DIR="$FLL_UNION_MOUNTPOINT"  || DEFAULT_DIR="/UNIONFS"
+	[ -n "$FLL_MOUNTPOINT" ] && DEFAULT_DIR="$FLL_MOUNTPOINT"  || DEFAULT_DIR="/SIDUX"
 else
 	DEFAULT_USER="sidux"
-	DEFAULT_DIR="/UNIONFS"
+	#DEFAULT_DIR="/UNIONFS"
+	DEFAULT_DIR="/SIDUX"
 fi
 
 DEFAULT_NAME=$(getent passwd "$DEFAULT_USER" | cut -f5 -d: | cut -f1 -d,)
