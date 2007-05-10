@@ -1,3 +1,9 @@
+knx-installer (0.4.2.27) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 11 May 2007 00:32:24 +0200
+
 knx-installer (0.4.2.26) unstable; urgency=low
 
   * Mostly revert r6938. Our installer is not ready to copy directly from the
