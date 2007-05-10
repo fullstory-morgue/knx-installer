@@ -1,4 +1,4 @@
-knx-installer (0.4.2.26) UNRELEASED; urgency=low
+knx-installer (0.4.2.26) unstable; urgency=low
 
   * Mostly revert r6938. Our installer is not ready to copy directly from the
     union mount point as it has no real idea of how to reverse our live hacks.
