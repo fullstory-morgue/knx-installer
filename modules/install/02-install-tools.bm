@@ -301,21 +301,8 @@ system_services()
 		SERVICE_WHITELIST+=( $SERVICES_START )
 	fi
 
-	if [ -x /etc/init.d/acpid ]; then
-		if [ -d /proc/acpi ]; then
-			SERVICE_WHITELIST+=( acpid )
-			if [ -x /etc/init.d/acpi-support ]; then
-				# add acpi-support for laptops
-				if laptop-detect &>/dev/null; then
-					SERVICE_WHITELIST+=( acpi-support )
-				else
-					chroot_it dpkg --purge acpi-support &> /dev/null
-					rm -rf "$TARGET_MNT_POINT/var/lib/acpi-support/"
-				fi
-			fi
-		else
-			: #chroot_it dpkg --purge acpid
-		fi
+	if [ -x /etc/init.d/acpid ] && [ -d /proc/acpi ]; then
+		SERVICE_WHITELIST+=( acpid )
 	fi
 
 	if [ -x /etc/init.d/powersaved ]; then

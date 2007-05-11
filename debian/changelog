@@ -1,8 +1,9 @@
 knx-installer (0.4.2.27) UNRELEASED; urgency=low
 
   * Add gpm service to service whitelist.
+  * Simplify acpi service stuff, forget about acpi-support.
 
- -- Kel Modderman <kel@otaku42.de>  Fri, 11 May 2007 10:50:42 +1000
+ -- Kel Modderman <kel@otaku42.de>  Sat, 12 May 2007 00:44:38 +1000
 
 knx-installer (0.4.2.26) unstable; urgency=low
 
