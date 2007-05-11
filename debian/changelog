@@ -1,8 +1,8 @@
 knx-installer (0.4.2.27) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * Add gpm service to service whitelist.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 11 May 2007 00:32:24 +0200
+ -- Kel Modderman <kel@otaku42.de>  Fri, 11 May 2007 10:50:42 +1000
 
 knx-installer (0.4.2.26) unstable; urgency=low
 

@@ -247,6 +247,7 @@ system_services()
 		etc-setserial
 		fuse-utils
 		glibc.sh
+		gpm
 		halt
 		hibernate
 		hostname.sh
