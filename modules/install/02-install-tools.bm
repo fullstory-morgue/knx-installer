@@ -369,7 +369,7 @@ system_services()
 				;;
 		esac
 		
-		for ((i=0; i<${#SERVICE_WHITELIST[@]}; i++)); do
+		for i in ${!SERVICE_WHITELIST[@]}; do
 			# service is in whitelist, next please (loop depth = 2)
 			[[ $service == ${SERVICE_WHITELIST[$i]} ]] && continue 2
 		done
