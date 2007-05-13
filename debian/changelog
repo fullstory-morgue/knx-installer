@@ -1,4 +1,4 @@
-knx-installer (0.4.2.28) UNRELEASED; urgency=low
+knx-installer (0.4.2.28) unstable; urgency=low
 
   * Don't bother with arith in service whitelist checking loop.
 
