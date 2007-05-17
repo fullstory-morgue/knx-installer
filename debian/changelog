@@ -1,9 +1,5 @@
-knx-installer (0.4.2.29) UNRELEASED; urgency=low
+knx-installer (0.4.2.29) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * set theme for gnome. removed unneeded line
 
  -- Joaquim Boura <x-un-i@sidux.com>  Thu, 17 May 2007 15:57:57 +0200
