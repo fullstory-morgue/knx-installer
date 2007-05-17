@@ -474,9 +474,6 @@ function ni-main
 	ACTION=0
 	logit $"$FLL_DISTRO_NAME-installer started"
 
-	# TO clean up when this is contained in installer-gui
-	start_bar_info
-
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo $"Config file $CONFIG_FILE could not be found. This is necessary for non-interactive mode."
 		return

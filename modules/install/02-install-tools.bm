@@ -222,6 +222,11 @@ EOF
 	# revert GDM autologin
 	if [ -f "${FLL_MOUNTPOINT}/etc/gdm/gdm.conf" ]; then
 		cat "${FLL_MOUNTPOINT}/etc/gdm/gdm.conf" > "${TARGET_MNT_POINT}/etc/gdm/gdm.conf"
+
+		# set theme for gdm
+		if ! grep -q "^GraphicalTheme=" ${TARGET_MNT_POINT}/etc/gdm/gdm.conf ; then
+			sed -i 's/\[greeter\]/\[greeter\]\nGraphicalTheme=sidux-dawn/g' ${TARGET_MNT_POINT}/etc/gdm/gdm.conf
+		fi
 	fi
 }
 
