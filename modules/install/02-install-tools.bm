@@ -225,7 +225,7 @@ EOF
 
 		# set theme for gdm
 		if ! grep -q "^GraphicalTheme=" ${TARGET_MNT_POINT}/etc/gdm/gdm.conf ; then
-			sed -i 's/\[greeter\]/\[greeter\]\nGraphicalTheme=sidux-dawn/g' ${TARGET_MNT_POINT}/etc/gdm/gdm.conf
+			sed -i 's/\[greeter\]/\[greeter\]\nGraphicalTheme=sidux-dawn\nGraphicalThemedColor=#343434/g' ${TARGET_MNT_POINT}/etc/gdm/gdm.conf
 		fi
 	fi
 }
