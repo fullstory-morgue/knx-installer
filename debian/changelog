@@ -1,9 +1,5 @@
-knx-installer (0.4.2.30) UNRELEASED; urgency=low
+knx-installer (0.4.2.30) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Horst Tritremmel ]
   * gdm background color change
 
  -- Horst Tritremmel <hjt@sidux.com>  Fri, 18 May 2007 15:36:52 +0200
