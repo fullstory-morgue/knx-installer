@@ -119,6 +119,7 @@ system_purge_live_only_stuff()
 {
 	# purge live-specific packages
 	chroot_it dpkg --purge	checkmem \
+				configure-mouse \
 				fll-live-initramfs \
 				initscripts-sidux-live \
 				install-gui \
@@ -126,6 +127,7 @@ system_purge_live_only_stuff()
 				kde-services-sidux \
 				knx-installer \
 				sidux-setpassword \
+				sshstart-sidux \
 				startsyslog-sidux \
 				xorgconfig-sidux &> /dev/null
 	

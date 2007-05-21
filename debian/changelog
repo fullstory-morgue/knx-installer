@@ -1,8 +1,12 @@
 knx-installer (0.4.2.31) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 18 May 2007 16:32:00 +0200
+  [ Joaquim Boura ]
+  * remove sshstart-sidux and configure-mouse from HD installation
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Mon, 21 May 2007 20:43:25 +0200
 
 knx-installer (0.4.2.30) unstable; urgency=low
 
