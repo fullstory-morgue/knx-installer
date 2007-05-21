@@ -1,9 +1,5 @@
-knx-installer (0.4.2.31) UNRELEASED; urgency=low
+knx-installer (0.4.2.31) unstable; urgency=low
 
-  [ Stefan Lippers-Hollmann ]
-  * NOT RELEASED YET
-
-  [ Joaquim Boura ]
   * remove sshstart-sidux and configure-mouse from HD installation
     fix /etc/group
 
