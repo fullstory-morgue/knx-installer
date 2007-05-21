@@ -5,6 +5,7 @@ knx-installer (0.4.2.31) UNRELEASED; urgency=low
 
   [ Joaquim Boura ]
   * remove sshstart-sidux and configure-mouse from HD installation
+    fix /etc/group
 
  -- Joaquim Boura <x-un-i@sidux.com>  Mon, 21 May 2007 20:43:25 +0200
 

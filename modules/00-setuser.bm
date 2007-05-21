@@ -27,5 +27,6 @@ function update_passwd
 
 	update_status $"Updating group ..."
 	# change user in /etc/group
-	sed -e "s/^$DEFAULT_USER/$USER_NAME/;" -e "s/\:$DEFAULT_USER/:$USER_NAME/" $TMPDIR/group > $TARGET_MNT_POINT/etc/group
+	sed -e "s/^$DEFAULT_USER/$USER_NAME/;" -e "s/\:$DEFAULT_USER/:$USER_NAME/" \
+		-e "s/\,$DEFAULT_USER$/,$USER_NAME/" $TMPDIR/group > $TARGET_MNT_POINT/etc/group
 }
