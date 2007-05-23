@@ -1,8 +1,8 @@
-knx-installer (0.4.2.32) UNRELEASED; urgency=low
+knx-installer (0.4.2.32) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * hack powersaved to act on powerbutton events.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 21 May 2007 23:30:49 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 23 May 2007 11:02:24 +0200
 
 knx-installer (0.4.2.31) unstable; urgency=low
 
