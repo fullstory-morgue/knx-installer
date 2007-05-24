@@ -1,4 +1,4 @@
-knx-installer (0.4.2.36) UNRELEASED; urgency=low
+knx-installer (0.4.2.36) unstable; urgency=low
 
   * Purge rebuildfstab from the installed system.
 
