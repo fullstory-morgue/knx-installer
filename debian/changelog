@@ -1,8 +1,12 @@
 knx-installer (0.4.2.34) UNRELEASED; urgency=low
 
+  [ Stefan Lippers-Hollmann ]
   * NOT RELEASED YET
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 24 May 2007 13:36:11 +0200
+  [ Joaquim Boura ]
+  * remove autostart file for a gnome install
+
+ -- Joaquim Boura <x-un-i@sidux.com>  Thu, 24 May 2007 20:44:24 +0200
 
 knx-installer (0.4.2.33) unstable; urgency=low
 

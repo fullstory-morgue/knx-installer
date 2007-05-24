@@ -145,6 +145,10 @@ system_purge_live_only_stuff()
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/Desktop/install-gui.desktop" 
 	# and this one also
 	rm -rf "${TARGET_MNT_POINT}/etc/sysconfig"
+
+	# this is from a possible gnome install
+	[ -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop" ] && \
+		rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop"
 	
 	# Populate /root/.profile and /root/.bashrc
 	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.profile" /root/.profile
