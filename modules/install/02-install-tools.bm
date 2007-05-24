@@ -123,7 +123,6 @@ system_purge_live_only_stuff()
 				fll-live-initramfs \
 				initscripts-sidux-live \
 				install-gui \
-				install-progressbar \
 				kde-services-sidux \
 				knx-installer \
 				sidux-setpassword \
