@@ -1,8 +1,9 @@
-knx-installer (0.4.2.35) UNRELEASED; urgency=low
+knx-installer (0.4.2.35) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * the new hal handles power events on its own.
+  * we need to nuke /etc/hwsetup now.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 24 May 2007 21:22:40 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 24 May 2007 22:28:45 +0200
 
 knx-installer (0.4.2.34) unstable; urgency=low
 

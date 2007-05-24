@@ -144,7 +144,7 @@ system_purge_live_only_stuff()
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.*uthority"
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/Desktop/install-gui.desktop" 
 	# and this one also
-	rm -rf "${TARGET_MNT_POINT}/etc/sysconfig"
+	rm -rf "${TARGET_MNT_POINT}/etc/hwsetup"
 
 	# this is from a possible gnome install
 	[ -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop" ] && \
@@ -239,11 +239,6 @@ EOF
 		if ! grep -q "^GraphicalTheme=" ${TARGET_MNT_POINT}/etc/gdm/gdm.conf ; then
 			sed -i 's/\[greeter\]/\[greeter\]\nGraphicalTheme=sidux-dawn\nGraphicalThemedColor=#343434/g' "${TARGET_MNT_POINT}/etc/gdm/gdm.conf"
 		fi
-	fi
-
-	# hack powersaved to act on powerbutton events
-	if [ -f "${TARGET_MNT_POINT}/etc/powersave/events" ]; then
-		sed -i 's/^\(EVENT_BUTTON_POWER=\).*/\1"wm_shutdown"/' "${TARGET_MNT_POINT}/etc/powersave/events"
 	fi
 }
 
