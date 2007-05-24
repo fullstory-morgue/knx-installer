@@ -1,4 +1,4 @@
-knx-installer (0.4.2.33) UNRELEASED; urgency=low
+knx-installer (0.4.2.33) unstable; urgency=low
 
   [ Horst Tritremmel ]
   * install-progressbar now part of install-gui, dont remove it
