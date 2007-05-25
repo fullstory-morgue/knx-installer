@@ -202,17 +202,15 @@ EOF
 	fi
 
 	# Populate /root/.profile and /root/.bashrc
-	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.profile" /root/.profile
-	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.bashrc"  /root/.bashrc
+	cat "${TARGET_MNT_POINT}/usr/share/base-files/dot.profile"	> "${TARGET_MNT_POINT}/root/.profile"
+	cat "${TARGET_MNT_POINT}/usr/share/base-files/dot.bashrc"  	> "${TARGET_MNT_POINT}/root/.bashrc"
+	cat >> "${TARGET_MNT_POINT}/root/.bashrc" << EOF
 
-	if ! grep -q bash_completion "${TARGET_MNT_POINT}/root/.bashrc"; then
-		cat >> "${TARGET_MNT_POINT}/root/.bashrc" << EOF
 # enable bash completion in interactive shells
 if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
 EOF
-	fi
 }
 
 #------------------

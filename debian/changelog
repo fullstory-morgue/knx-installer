@@ -6,8 +6,9 @@ knx-installer (0.4.2.38) UNRELEASED; urgency=low
   * Move /root/.bashrc stuff into system_update_files().
   * Move stray cleanups to installed user's /home into system_copy_home() from
     system_purge_live_only_stuff().
+  * Really populate /root/.profile and /root/.bashrc.
 
- -- Kel Modderman <kel@otaku42.de>  Fri, 25 May 2007 16:09:36 +1000
+ -- Kel Modderman <kel@otaku42.de>  Fri, 25 May 2007 17:12:08 +1000
 
 knx-installer (0.4.2.37) unstable; urgency=low
 
