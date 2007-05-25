@@ -110,30 +110,10 @@ EOF
 				"$TARGET_MNT_POINT/home/$USER_NAME/.kde/share/config/kpersonalizerrc"
 		fi
 	fi
-	
-	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
-}
 
-#------------------
-system_purge_live_only_stuff()
-{
-	# purge live-specific packages
-	chroot_it dpkg --purge	checkmem \
-				configure-mouse \
-				fll-live-initramfs \
-				initscripts-sidux-live \
-				install-gui \
-				kde-services-sidux \
-				knx-installer \
-				sidux-setpassword \
-				sshstart-sidux \
-				startsyslog-sidux \
-				xorgconfig-sidux &> /dev/null
-	
-	#  disable live config
-	if [ -f "$TARGET_MNT_POINT/etc/default/distro" ]; then
-		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" \
-			"$TARGET_MNT_POINT/etc/default/distro"
+	# this is from a possible gnome install
+	if [ -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop" ]; then
+		rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop"
 	fi
 
 	# remove temporary kde- user files
@@ -142,26 +122,9 @@ system_purge_live_only_stuff()
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.kde/socket-*"
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.kde/tmp-*"
 	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.*uthority"
-	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/Desktop/install-gui.desktop" 
-	# and this one also
-	rm -rf "${TARGET_MNT_POINT}/etc/hwsetup"
-
-	# this is from a possible gnome install
-	[ -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop" ] && \
-		rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/.config/autostart/${FLL_DISTRO_NAME}-manual.desktop"
+	rm -f "${TARGET_MNT_POINT}/home/${USER_NAME}/Desktop/install-gui.desktop"
 	
-	# Populate /root/.profile and /root/.bashrc
-	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.profile" /root/.profile
-	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.bashrc"  /root/.bashrc
-
-	if ! grep -q bash_completion "${TARGET_MNT_POINT}/root/.bashrc"; then
-		cat >> "${TARGET_MNT_POINT}/root/.bashrc" << EOF
-# enable bash completion in interactive shells
-if [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
-fi
-EOF
-	fi
+	chroot "$TARGET_MNT_POINT" chown -R "$USER_NAME":"$USER_NAME" "/home/$USER_NAME"
 }
 
 #------------------
@@ -236,6 +199,19 @@ EOF
 		if ! grep -q "^GraphicalTheme=" ${TARGET_MNT_POINT}/etc/gdm/gdm.conf ; then
 			sed -i 's/\[greeter\]/\[greeter\]\nGraphicalTheme=sidux-dawn\nGraphicalThemedColor=#343434/g' "${TARGET_MNT_POINT}/etc/gdm/gdm.conf"
 		fi
+	fi
+
+	# Populate /root/.profile and /root/.bashrc
+	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.profile" /root/.profile
+	cp -f "${TARGET_MNT_POINT}/usr/share/base-files/dot.bashrc"  /root/.bashrc
+
+	if ! grep -q bash_completion "${TARGET_MNT_POINT}/root/.bashrc"; then
+		cat >> "${TARGET_MNT_POINT}/root/.bashrc" << EOF
+# enable bash completion in interactive shells
+if [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
+fi
+EOF
 	fi
 }
 

@@ -1,10 +1,13 @@
 knx-installer (0.4.2.38) UNRELEASED; urgency=low
 
-  * Brown bag: rebuildfstab is required. old_installer is run *before*
-    update_fstab and sidux_fixes. It removes rebuildfstab before the
-    hdinstall'd system has had a chance to do update fstab file.
+  * Take system_purge_live_only_stuff() out of system_types.bm and put it in
+    its own module. Call it at the tail on ni-main() just before calling
+    install-meta.
+  * Move /root/.bashrc stuff into system_update_files().
+  * Move stray cleanups to installed user's /home into system_copy_home() from
+    system_purge_live_only_stuff().
 
- -- Kel Modderman <kel@otaku42.de>  Fri, 25 May 2007 12:41:36 +1000
+ -- Kel Modderman <kel@otaku42.de>  Fri, 25 May 2007 16:09:36 +1000
 
 knx-installer (0.4.2.37) unstable; urgency=low
 

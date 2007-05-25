@@ -22,8 +22,6 @@ system_type_beginner()
 	
 	system_copy_home
 	
-	system_purge_live_only_stuff
-	
 	system_update_files
 	
 	system_create_modules

@@ -505,6 +505,9 @@ function ni-main
 		return 1
 	fi
 
+	# purge live-cd specific stuff
+	purge_live_only_stuff
+
 	end_progress
 
 	if [ "$INSTALL_META" = "yes" -a -n "$DISPLAY" ]; then

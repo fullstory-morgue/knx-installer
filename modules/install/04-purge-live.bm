@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#------------------
+purge_live_only_stuff()
+{
+	# purge live-specific packages
+	chroot_it dpkg --purge	checkmem \
+				configure-mouse \
+				fll-live-initramfs \
+				initscripts-sidux-live \
+				install-gui \
+				kde-services-sidux \
+				knx-installer \
+				rebuildfstab \
+				sidux-setpassword \
+				sshstart-sidux \
+				startsyslog-sidux \
+				xorgconfig-sidux &> /dev/null
+	
+	#  disable live config
+	if [ -f "${TARGET_MNT_POINT}/etc/default/distro" ]; then
+		perl -pi -e "s/^FLL_DISTRO_MODE\=.*/FLL_DISTRO_MODE\=\"installed\"/" \
+			"${TARGET_MNT_POINT}/etc/default/distro"
+	fi
+
+	# and this one also
+	rm -rf "${TARGET_MNT_POINT}/etc/hwsetup"
+
+}
