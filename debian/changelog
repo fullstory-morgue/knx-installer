@@ -1,8 +1,10 @@
 knx-installer (0.4.2.38) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * Brown bag: rebuildfstab is required. old_installer is run *before*
+    update_fstab and sidux_fixes. It removes rebuildfstab before the
+    hdinstall'd system has had a chance to do update fstab file.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 25 May 2007 03:15:08 +0200
+ -- Kel Modderman <kel@otaku42.de>  Fri, 25 May 2007 12:41:36 +1000
 
 knx-installer (0.4.2.37) unstable; urgency=low
 

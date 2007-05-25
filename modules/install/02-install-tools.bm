@@ -125,7 +125,6 @@ system_purge_live_only_stuff()
 				install-gui \
 				kde-services-sidux \
 				knx-installer \
-				rebuildfstab \
 				sidux-setpassword \
 				sshstart-sidux \
 				startsyslog-sidux \
