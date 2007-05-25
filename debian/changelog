@@ -1,3 +1,9 @@
+knx-installer (0.4.2.37) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 25 May 2007 02:05:30 +0200
+
 knx-installer (0.4.2.36) unstable; urgency=low
 
   * Purge rebuildfstab from the installed system.
