@@ -217,9 +217,6 @@ EOF
 	rm -f "$TARGET_MNT_POINT/etc/mtab"
 	touch "$TARGET_MNT_POINT/etc/mtab"
 
-	# update menu entries
-	chroot_it update-menus
-
 	# Save ALSA sound volume
 	if [ -e /proc/asound/modules ] && [ -x /usr/sbin/alsactl ]; then
 		/usr/sbin/alsactl store
@@ -359,12 +356,6 @@ system_services()
 		fi
 	fi
 
-	# enable splashy, if installed
-	if [ -x /etc/init.d/splashy-init ]; then
-		chroot_it mkfifo --mode=0700 /etc/splashy/splashy.fifo 2>/dev/null
-		SERVICE_WHITELIST+=( splashy-init )
-	fi
-	
 	# add a display manager or two to the array
 	for DM in kdm gdm wdm xdm; do
 		if [ -x /etc/init.d/"$DM" ]; then
@@ -411,9 +402,6 @@ system_services()
 			ssh-keygen -q -t dsa -f "$TARGET_MNT_POINT/etc/ssh/ssh_host_dsa_key" -C '' -N ''
 		fi
 	fi
-
-	# sysv-freeze the rc.d configuration
-	[ -x /usr/sbin/freeze-rc.d ] && chroot_it freeze-rc.d	
 }
 
 #------------------
