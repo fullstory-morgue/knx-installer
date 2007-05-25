@@ -1,4 +1,4 @@
-knx-installer (0.4.2.38) UNRELEASED; urgency=low
+knx-installer (0.4.2.38) unstable; urgency=low
 
   * Take system_purge_live_only_stuff() out of system_types.bm and put it in
     its own module. Call it at the tail on ni-main() just before calling
