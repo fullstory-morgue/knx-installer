@@ -1,4 +1,4 @@
-knx-installer (0.4.2.39) UNRELEASED; urgency=low
+knx-installer (0.4.2.39) unstable; urgency=low
 
   * Don't start aumix by default. We use alsa to handle persistent volume
     settings.
