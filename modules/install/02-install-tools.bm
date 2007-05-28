@@ -219,7 +219,6 @@ system_services()
 	local SERVICE_WHITELIST=(
 		alsa
 		alsa-utils
-		aumix
 		avahi-daemon
 		atd
 		bootclean
