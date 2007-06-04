@@ -7,9 +7,9 @@ purge_live_only_stuff()
 	chroot_it dpkg --purge	checkmem \
 				configure-mouse \
 				fll-live-initramfs \
-				initscripts-sidux-live \
+				fll-live-initscripts \
 				install-gui \
-				kde-services-sidux \
+				desktop-defaults-kde \
 				knx-installer \
 				rebuildfstab \
 				sidux-setpassword \
