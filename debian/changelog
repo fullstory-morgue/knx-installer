@@ -1,6 +1,7 @@
-knx-installer (0.4.2.41) UNRELEASED; urgency=low
+knx-installer (0.4.2.41) ORPHANED; urgency=low
 
   * NOT RELEASED YET
+  * ORPHAN PACKAGE
 
  -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Tue, 05 Jun 2007 14:08:20 +0200
 
